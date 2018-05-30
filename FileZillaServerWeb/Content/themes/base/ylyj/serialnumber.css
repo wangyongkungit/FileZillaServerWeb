@@ -1,0 +1,270 @@
+﻿body {
+    /*background:#fff url(/Images/bg_login.jpg) repeat top left;*/
+    padding-bottom:30px;
+}
+.container {
+    width:1100px;
+    margin:0 auto;
+    height:100%;
+    background-color:#f1f4f9;
+}
+.header {
+    width:100%;
+    /*height:460px;*/
+    height:auto;
+    background-color:#f1f4f9;
+}
+.fulltext {
+    cursor:pointer;
+    margin-top:59px;
+}
+.hidediv {
+    display:none;
+    transition-duration:0.3s;
+}
+hr {
+    background-color:#CD1637;
+    border:none;
+    height:2px;
+    clear:both;
+}
+h1 {
+    color:#CD1637;
+    text-align:center;
+    font-family:'Microsoft YaHei';
+    letter-spacing:4px;
+}
+.searchList {
+    /*background-color:aliceblue;   */
+    height:auto;
+}
+.formSearch {
+    width:250px;
+    height:45px;
+    /*margin:5px 0px 0px 5px;*/
+    padding:5px 0px 0px 5px;
+    float:left;
+    font-family:'Microsoft YaHei';
+    /*background-color:#fff;*/
+}
+.formSearchLeft {
+    width:85px;
+    height:45px;
+    margin:2px 0px 0px 5px;
+    float:left;
+    text-align:right;
+}
+.formSearchRight {
+    width:165px;
+    height:45px;
+    margin:5px 0px 0px 5px;
+    float:left;
+}
+label {
+    width:85px;
+    font-size:13px;
+    font-family:'Microsoft YaHei';
+}
+.formSearch input[type="text"],input[type="email"] {
+    width:120px;
+    color:#333;
+    line-height:normal;
+    font-family:"Microsoft YaHei",Tahoma,Verdana,SimSun;
+    font-style:normal;
+    font-size-adjust:none;margin-top:0px;
+    margin-bottom:0px;
+    margin-left:0px;
+    padding-top:4px;
+    padding-right:4px;
+    padding-bottom:4px;
+    padding-left:4px;
+    outline-width:medium;
+    outline-style:none;
+    outline-color:invert;
+    text-shadow:0px 1px 2px #fff;
+    background-attachment:scroll;
+    background-size:auto;
+    background-origin:padding-box;
+    background-clip:border-box;
+    background-color:rgb(255,255,255);
+    margin-right:8px;
+    border-top-color:#ccc;
+    border-right-color:#ccc;
+    border-bottom-color:#ccc;
+    border-left-color:#ccc;
+    border-top-width:1px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-left-width:1px;
+    border-top-style:solid;
+    border-right-style:solid;
+    border-bottom-style:solid;
+    border-left-style:solid;
+}
+.formSearch input:focus {
+    border:1px solid #fafafa;
+    -webkit-box-shadow:0px 0px 6px #007eff;
+    -moz-box-shadow:0px 0px 5px #007eff;
+    box-shadow:0px 0px 5px #007eff;
+}
+.formSearch textarea {
+    font-family:'Microsoft YaHei',sans-serif;
+    font-size:12px;
+    border:1px solid #333;
+}
+.txtOrderDate {
+    padding-right:0px;
+    margin-right:0px;
+    font-size:12px;
+}
+.txtrwbh {
+    border:none;
+}
+/*.asterisk {
+    color:red;
+    font-weight:bold;
+}*/
+.formSearch select {
+    border:1px solid #ccc;
+    width:130px;
+    height:30px;
+    font-family:'Microsoft YaHei';
+}
+.button {
+    width:100px;
+    height:28px;
+    border:1px solid #808080;
+    margin-left:5px;
+    background-color:#f0f0f0;
+    font-family:'Microsoft YaHei';
+    cursor:pointer;
+}
+.middle {
+    width:100%;
+    height:600px;
+    background-color:Background;
+}
+.result {
+    width:500px;
+    height:30px;
+    margin:0 auto;
+    padding:7px;
+    clear:both;
+    /*border-top:1px solid #ccc;*/
+}
+.result input[type="text"] {
+    width:300px;
+    height:28px;
+    border:1px solid #ccc;
+    background-color:#f0f0f0;
+    font-family:'Microsoft YaHei';
+}
+.wcg {
+    width: 120px; height: 30px; line-height: 40px; float: left; background-color: ActiveBorder;
+}
+.attach_bottom {
+    border-bottom:1px solid #d5d5d5;
+    height:32px;
+    /*background-repeat:no-repeat;*/
+}
+.attach_title {
+    /*width: 120px; height: 30px; line-height: 40px; background-color: ActiveBorder;*/
+    width:100px;height:29px;line-height:29px;border-style:solid;border-color:#e5e5e5;border-top:2px solid #5e9a30;
+    border-bottom:2px solid #fff;
+    text-align:center;color:#CD1637; font-family:'Microsoft YaHei';font-weight:bold;background-color:#fff;float:left;
+}
+.rwzlList {
+    width:100%;
+    padding-left:1em;
+    font-family:'KaiTi_GB2312', 'Microsoft YaHei';
+}
+.divGridView {
+    margin-top:5px;
+}
+.divModify {
+    width:100%;
+    height:auto;
+}
+.attachlist {
+    float:left;
+}
+#loadingProject {
+    width: 300px; height: 25px; float:left; padding:1px 1px; font-family:'FangSong'; visibility: hidden;
+}
+.divFinalScriptLabel {
+    width: 450px; height: 36px; line-height:36px; text-align:left;clear:left;
+}
+.divFinalScriptLabel img {
+    margin: 3px 1px 2px;
+    width:22px;
+    height:22px;
+}
+.divFinalScriptLabel span {
+    font-family:Arial, 'Microsoft YaHei';
+}
+#divProject {
+    width: 200px; height: 36px; display:inline;
+}
+.btnCompress {
+    background:#fafafa url('Images/ZIPCompress.png'); background-repeat:no-repeat; cursor:pointer; vertical-align:central; color:#666; padding-left:30px; width:80px; height:30px;
+    border-color: rgb(220, 220, 220); text-shadow:1px 1px 1px #fff;box-shadow:0 1px 2px #fff inset,0 -1px 0 #a8aba3 inset;
+    margin:5px;
+}
+.btnDownload {
+    background:#fafafa url('Images/download.png'); background-repeat:no-repeat; cursor:pointer; vertical-align:central; color:#666; padding-left:30px; width:80px; height:30px;
+    border-color: rgb(220, 220, 220);
+    margin:5px; cursor:no-drop;
+}
+#divModifyList {
+    width: 1000px; height: 40px;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    background: #e8f4ff;
+    border: 1px solid #99D3F5;
+    /*border-radius: 4px;*/
+    /*padding: 4px 12px;*/
+    overflow: hidden;
+    color: #006699;
+    text-decoration: none;
+    text-indent: 0;
+    /*line-height: 20px;*/
+    font-size:small;
+    text-align:center;
+    margin-top:5px;
+    cursor: hand;
+    font-style:normal;
+    width: 80px;
+    height: 22px;
+    cursor:pointer;
+}
+.file input {
+    position: absolute;
+    /*font-size: 100px;*/
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+.modifyTaskAdd {
+    width: 100%;
+    clear:left;
+}
+/*#bottom {
+    bottom:0px;
+    left:0px;
+    padding-top:5px;
+    width:100%;
+    height:30px;
+    background-color:#F0F0F0;
+    z-index:999;
+    font-size:12px;
+    text-align:center;
+    position:fixed;
+}*/

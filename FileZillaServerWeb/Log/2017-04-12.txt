@@ -1,0 +1,12 @@
+﻿[2017-04-12 12:57:21] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8'
+[2017-04-12 12:57:21] dtFinishedPerson:    0
+[2017-04-12 12:57:21] drFinishedPerson.Length :  0
+[2017-04-12 12:57:21] drFinishedPerson.Length :  0
+[2017-04-12 13:00:11] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8'
+[2017-04-12 13:00:11] dtFinishedPerson:    0
+[2017-04-12 13:00:11] drFinishedPerson.Length :  0
+[2017-04-12 13:00:11] drFinishedPerson.Length :  0
+[2017-04-12 13:00:26] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8'
+[2017-04-12 13:00:26] dtFinishedPerson:    0
+[2017-04-12 13:00:26] drFinishedPerson.Length :  0
+[2017-04-12 13:00:26] drFinishedPerson.Length :  0

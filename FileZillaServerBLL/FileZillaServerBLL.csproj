@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C479D5B-7A56-42ED-AC9A-B316E3191518}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FileZillaServerBLL</RootNamespace>
+    <AssemblyName>FileZillaServerBLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttachmentBLL.cs" />
+    <Compile Include="AttendanceBLL.cs" />
+    <Compile Include="CerficateBLL.cs" />
+    <Compile Include="ConfigureBLL.cs" />
+    <Compile Include="EmployeeAccountBLL.cs" />
+    <Compile Include="EmployeeBLL.cs" />
+    <Compile Include="EmployeeDominationBLL.cs" />
+    <Compile Include="EmployeeProportionBLL.cs" />
+    <Compile Include="Extension\SystemLogBLLex.cs" />
+    <Compile Include="FileZillaBLL.cs" />
+    <Compile Include="ProjectBLL.cs" />
+    <Compile Include="ProjectModifyBLL.cs" />
+    <Compile Include="ProjectSharingBLL.cs" />
+    <Compile Include="ProjectSpecialtyBLL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RightDownBLL.cs" />
+    <Compile Include="SalaryBLL.cs" />
+    <Compile Include="SalaryConfigBLL.cs" />
+    <Compile Include="SystemLogBLL.cs" />
+    <Compile Include="TaskAssignConfigBLL.cs" />
+    <Compile Include="TaskAssignConfigDetailsBLL.cs" />
+    <Compile Include="TaskRemindingBLL.cs" />
+    <Compile Include="TaskTrendBLL.cs" />
+    <Compile Include="TestBLL.cs" />
+    <Compile Include="WeightsConfigBLL.cs" />
+    <Compile Include="WithdrawDetailsBLL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileZillaServerCommonHelper\FileZillaServerCommonHelper.csproj">
+      <Project>{ec2c8776-ccce-4c5f-a26a-1bf84c864842}</Project>
+      <Name>FileZillaServerCommonHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerDLL\FileZillaServerDAL.csproj">
+      <Project>{1ed33f68-a839-41ba-a14d-94cb43cb22b1}</Project>
+      <Name>FileZillaServerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerModel\FileZillaServerModel.csproj">
+      <Project>{c2d735c0-93e4-4c59-b300-52f4c3bbe772}</Project>
+      <Name>FileZillaServerModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,10 @@
+﻿.cerficateList {
+    width:100%;
+    margin-top:25px;
+}
+    .cerficateList .item {
+        width:1000px;
+        height:600px;
+        line-height:600px;
+        vertical-align:middle;
+    }

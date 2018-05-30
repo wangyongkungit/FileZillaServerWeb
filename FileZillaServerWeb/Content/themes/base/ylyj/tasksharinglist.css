@@ -1,0 +1,12 @@
+﻿body {
+    font-family:'Microsoft YaHei';
+    background:#fff url(/Images/bg-grey-stripe.png) repeat top left;
+    padding-bottom:40px;
+}
+.container {
+    width:1100px;
+    min-height:890px;
+    _min-height:890px;
+    margin:0 auto;
+    margin-bottom:20px;
+}

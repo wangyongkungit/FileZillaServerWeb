@@ -1,0 +1,803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53D6C0A9-FC4E-444B-86F8-07697E7FC276}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FileZillaServerWeb</RootNamespace>
+    <AssemblyName>FileZillaServerWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AspNetPager, Version=7.2.0.0, Culture=neutral, PublicKeyToken=fb0a0fe055d40fd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AspNetPager.dll</HintPath>
+    </Reference>
+    <Reference Include="Brettle.Web.NeatUpload">
+      <HintPath>Lib\Brettle.Web.NeatUpload.dll</HintPath>
+    </Reference>
+    <Reference Include="Brettle.Web.NeatUpload.HashedInputFile">
+      <HintPath>Lib\Brettle.Web.NeatUpload.HashedInputFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Hitone.Web.SqlServerUploader">
+      <HintPath>Lib\Hitone.Web.SqlServerUploader.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.7.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery.UI.Combined">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.UI.Combined.1.8.20\lib\net45\AspNet.ScriptManager.jQuery.UI.Combined.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.MSAjax, Version=4.5.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.4.5.6\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.WebForms, Version=4.5.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.WebForms.4.5.6\lib\net45\Microsoft.ScriptManager.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Membership.OpenAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Membership.OpenAuth.1.0.0\lib\net45\Microsoft.AspNet.Membership.OpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="URLRewriter">
+      <HintPath>Lib\URLRewriter.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.0.0\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="Account\Login.aspx" />
+    <Content Include="Account\Manage.aspx" />
+    <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="AttendanceList.aspx" />
+    <Content Include="BuildingRotate.html" />
+    <Content Include="Config\Area.xml" />
+    <Content Include="Config\TaskCHSName.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Contact.aspx" />
+    <Content Include="Content\Fonts\fontomas-webfont.svg" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.editable-select.min.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\LoginCss\animate-custom.css" />
+    <Content Include="Content\themes\base\LoginCss\demo.css" />
+    <Content Include="Content\themes\base\LoginCss\style.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\WaterWave\default.css" />
+    <Content Include="Content\themes\base\WaterWave\normalize.css" />
+    <Content Include="Content\themes\base\ylyj\attendancelist.css" />
+    <Content Include="Content\themes\base\ylyj\employeeadd.css" />
+    <Content Include="Content\themes\base\ylyj\employeeDefaultProportionConfig.css" />
+    <Content Include="Content\themes\base\ylyj\employeeDemonation.css" />
+    <Content Include="Content\themes\base\ylyj\employeeDemonationDetails.css" />
+    <Content Include="Content\themes\base\ylyj\employeeHome.css" />
+    <Content Include="Content\themes\base\ylyj\employeelist.css" />
+    <Content Include="Content\themes\base\ylyj\loglist.css" />
+    <Content Include="Content\themes\base\ylyj\materialConfig.css" />
+    <Content Include="Content\themes\base\ylyj\salaryconfigmanage.css" />
+    <Content Include="Content\themes\base\ylyj\salarydetails.css" />
+    <Content Include="Content\themes\base\ylyj\serialnumber.css" />
+    <Content Include="Content\themes\base\ylyj\site.css" />
+    <Content Include="Content\themes\base\ylyj\specialtyqualityconfig.css" />
+    <Content Include="Content\themes\base\ylyj\taskassignconfiguration.css" />
+    <Content Include="Content\themes\base\ylyj\tasklist.css" />
+    <Content Include="Content\themes\base\ylyj\taskproportion.css" />
+    <Content Include="Content\themes\base\ylyj\tasksharinglist.css" />
+    <Content Include="Content\themes\base\ylyj\tasktransfer.css" />
+    <Content Include="Content\themes\base\ylyj\withdraw.css" />
+    <Content Include="Content\themes\base\ylyj\withdrawapprove.css" />
+    <Content Include="DingtalkTest.aspx" />
+    <Content Include="EmployeeAdd.aspx" />
+    <Content Include="EmployeeDemonation.aspx" />
+    <Content Include="EmployeeDemonationDetails.aspx" />
+    <Content Include="EmployeeHome.aspx" />
+    <Content Include="EmployeeManage\EmployeeList.aspx" />
+    <Content Include="Error\404.html" />
+    <Content Include="FileZillaLogs.aspx" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\beach.jpg" />
+    <Content Include="Images\bg-grey-stripe.png" />
+    <Content Include="Images\bg_login.jpg" />
+    <Content Include="Images\Building\2LXlE.png" />
+    <Content Include="Images\Building\hGf4V.png" />
+    <Content Include="Images\Building\lWCVU.png" />
+    <Content Include="Images\Building\lzWht.png" />
+    <Content Include="Images\Building\uP9er.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\download.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\filezillalogo.png" />
+    <Content Include="Images\folder.png" />
+    <Content Include="Images\hot.gif" />
+    <Content Include="Images\key40.png" />
+    <Content Include="Images\l04.png" />
+    <Content Include="Images\listdown.jpg" />
+    <Content Include="Images\listup.jpg" />
+    <Content Include="Images\ll04.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\loadinglist.gif" />
+    <Content Include="Images\log_list.jpg" />
+    <Content Include="Images\new.gif" />
+    <Content Include="Images\new.png" />
+    <Content Include="Images\sort_30X30.png" />
+    <Content Include="Images\user.png" />
+    <Content Include="Images\ylyj_logo.ico" />
+    <Content Include="Images\ylyj_logo.png" />
+    <Content Include="Images\ZIPCompress.png" />
+    <Content Include="Images\颜色值参考.jpg" />
+    <Content Include="Lib\AspNetPager.dll" />
+    <Content Include="Lib\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="Lib\Microsoft.Office.Interop.Excel.xml" />
+    <Content Include="Lib\MySql.Data.dll" />
+    <Content Include="Login.aspx" />
+    <Content Include="LogList.aspx" />
+    <Content Include="MaterialConfig.aspx" />
+    <Content Include="Materials\Images\drivinglicence.jpg" />
+    <Content Include="NeatUpload\cancel.png" />
+    <Content Include="NeatUpload\default.css" />
+    <Content Include="NeatUpload\Error413.aspx" />
+    <Content Include="NeatUpload\Progress.aspx" />
+    <Content Include="NeatUpload\Progress.js" />
+    <Content Include="NeatUpload\refresh.png" />
+    <Content Include="NeatUpload\stop_refresh.png" />
+    <Content Include="packages.config" />
+    <Content Include="PasswordModify.aspx" />
+    <Content Include="rwmb.aspx" />
+    <Content Include="SalaryConfigManagement.aspx" />
+    <Content Include="SalaryDetails.aspx" />
+    <Content Include="Scripts\base-loading.js" />
+    <Content Include="Scripts\ClientMAC.js" />
+    <Content Include="Scripts\clipboard.js" />
+    <Content Include="Scripts\clipboard.min.js" />
+    <Content Include="Scripts\dialog\jDialog.js" />
+    <Content Include="Scripts\dialog\jDialog\img\dialog-btns.gif" />
+    <Content Include="Scripts\dialog\jDialog\img\title-bg.png" />
+    <Content Include="Scripts\dialog\jDialog\jDialog.css" />
+    <Content Include="Scripts\dialog\jDialog\jquery.dialog.js" />
+    <Content Include="Scripts\dialog\jDialog\jquery.drag.js" />
+    <Content Include="Scripts\dialog\jDialog\jquery.mask.js" />
+    <Content Include="Scripts\dialog\jquery.js" />
+    <Content Include="Scripts\echarts\echarts.common.min.js" />
+    <Content Include="Scripts\echarts\echarts.simple.min.js" />
+    <Content Include="Scripts\jQuery-UI\jquery-ui.css" />
+    <Content Include="Scripts\jQuery-UI\jquery.multiselect.css" />
+    <Content Include="Scripts\jQuery-UI\jquery.multiselect.js" />
+    <Content Include="Scripts\jquery.editable-select.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\layer.class.js" />
+    <Content Include="Scripts\My97DatePicker\skin\twoer\datepicker-dev.css" />
+    <Content Include="Scripts\My97DatePicker\skin\twoer\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\twoer\img.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\twoer\img.png" />
+    <Content Include="Scripts\ProvinceLoad.js" />
+    <Content Include="Scripts\WaterWave\prefixfree.min.js" />
+    <Content Include="Scripts\ylyj\employeeadd.js" />
+    <Content Include="Scripts\ylyj\employeeDemonationDetails.js" />
+    <Content Include="Scripts\ylyj\employeeHome.js" />
+    <Content Include="Scripts\ylyj\serialnumbergenerating.js" />
+    <Content Include="Scripts\ylyj\site.js" />
+    <Content Include="Scripts\ylyj\taskassignconfiguration.js" />
+    <Content Include="Scripts\ylyj\tasklist.js" />
+    <Content Include="Scripts\ylyj\employeeDemonation.js" />
+    <Content Include="Scripts\ylyj\withdraw.js" />
+    <Content Include="SerialNumberGenerating.aspx" />
+    <Content Include="SpecialtyQualityConfig.aspx" />
+    <Content Include="TaskAssignConfiguration.aspx" />
+    <Content Include="EmployeeDefaultProportionConfig.aspx" />
+    <Content Include="TaskList.aspx" />
+    <Content Include="TaskProportionManagement.aspx" />
+    <Content Include="TaskSharingList.aspx" />
+    <Content Include="TaskTransfer.aspx" />
+    <Content Include="Tip.html" />
+    <Content Include="WebForm1.aspx" />
+    <Content Include="WebPageRedirect.aspx" />
+    <Content Include="Content\Fonts\fontomas-webfont.ttf" />
+    <Content Include="Content\Fonts\fontomas-webfont.eot" />
+    <Content Include="Content\Fonts\fontomas-webfont.woff" />
+    <Content Include="AttachmentHandler.ashx" />
+    <Content Include="Withdraw.aspx" />
+    <Content Include="WithdrawApprove.aspx" />
+    <Content Include="xs.html" />
+    <Content Include="MyHandler.ashx" />
+    <None Include="Properties\PublishProfiles\FileZillaLog.pubxml" />
+    <Content Include="Scripts\ck.layer.js" />
+    <None Include="Properties\PublishProfiles\FilezillaLog2.pubxml" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\My97DatePicker\calendar.js" />
+    <Content Include="Scripts\My97DatePicker\config.js" />
+    <Content Include="Scripts\My97DatePicker\demo_iframe.htm" />
+    <Content Include="Scripts\My97DatePicker\demo_iframe2.htm" />
+    <Content Include="Scripts\My97DatePicker\lang\en.js" />
+    <Content Include="Scripts\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="Scripts\My97DatePicker\left.htm" />
+    <Content Include="Scripts\My97DatePicker\main.htm" />
+    <Content Include="Scripts\My97DatePicker\My97DatePicker.htm" />
+    <Content Include="Scripts\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\default\down.jpg" />
+    <Content Include="Scripts\My97DatePicker\skin\default\img.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\left.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\navLeft.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\navRight.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\right.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\up.jpg" />
+    <Content Include="Scripts\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="Scripts\My97DatePicker\WdatePicker.js" />
+    <Content Include="Scripts\My97DatePicker\使用说明%28必读%29.htm" />
+    <Content Include="Scripts\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\readme.txt" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\whyGreen\img.gif" />
+    <Content Include="Scripts\WebForms\DetailsView.js" />
+    <Content Include="Scripts\WebForms\Focus.js" />
+    <Content Include="Scripts\WebForms\GridView.js" />
+    <Content Include="Scripts\WebForms\Menu.js" />
+    <Content Include="Scripts\WebForms\MenuStandards.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
+    <Content Include="Scripts\WebForms\SmartNav.js" />
+    <Content Include="Scripts\WebForms\TreeView.js" />
+    <Content Include="Scripts\WebForms\WebForms.js" />
+    <Content Include="Scripts\WebForms\WebParts.js" />
+    <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Default.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="TaskMonitoring.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Bundle.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Manage.aspx.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Manage.aspx.designer.cs">
+      <DependentUpon>Manage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\OpenAuthProviders.ascx.cs">
+      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
+      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AttachmentHandler.ashx.cs">
+      <DependentUpon>AttachmentHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="AttendanceList.aspx.cs">
+      <DependentUpon>AttendanceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AttendanceList.aspx.designer.cs">
+      <DependentUpon>AttendanceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DingtalkTest.aspx.cs">
+      <DependentUpon>DingtalkTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DingtalkTest.aspx.designer.cs">
+      <DependentUpon>DingtalkTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeAdd.aspx.cs">
+      <DependentUpon>EmployeeAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeAdd.aspx.designer.cs">
+      <DependentUpon>EmployeeAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDemonation.aspx.cs">
+      <DependentUpon>EmployeeDemonation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeDemonation.aspx.designer.cs">
+      <DependentUpon>EmployeeDemonation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDemonationDetails.aspx.cs">
+      <DependentUpon>EmployeeDemonationDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeDemonationDetails.aspx.designer.cs">
+      <DependentUpon>EmployeeDemonationDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeHome.aspx.cs">
+      <DependentUpon>EmployeeHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeHome.aspx.designer.cs">
+      <DependentUpon>EmployeeHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeManage\EmployeeList.aspx.cs">
+      <DependentUpon>EmployeeList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeManage\EmployeeList.aspx.designer.cs">
+      <DependentUpon>EmployeeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FileZillaLogs.aspx.cs">
+      <DependentUpon>FileZillaLogs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileZillaLogs.aspx.designer.cs">
+      <DependentUpon>FileZillaLogs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LogList.aspx.cs">
+      <DependentUpon>LogList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LogList.aspx.designer.cs">
+      <DependentUpon>LogList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialConfig.aspx.cs">
+      <DependentUpon>MaterialConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MaterialConfig.aspx.designer.cs">
+      <DependentUpon>MaterialConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyHandler.ashx.cs">
+      <DependentUpon>MyHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordModify.aspx.cs">
+      <DependentUpon>PasswordModify.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PasswordModify.aspx.designer.cs">
+      <DependentUpon>PasswordModify.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rwmb.aspx.cs">
+      <DependentUpon>rwmb.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="rwmb.aspx.designer.cs">
+      <DependentUpon>rwmb.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalaryConfigManagement.aspx.cs">
+      <DependentUpon>SalaryConfigManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalaryConfigManagement.aspx.designer.cs">
+      <DependentUpon>SalaryConfigManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SalaryDetails.aspx.cs">
+      <DependentUpon>SalaryDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SalaryDetails.aspx.designer.cs">
+      <DependentUpon>SalaryDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SerialNumberGenerating.aspx.cs">
+      <DependentUpon>SerialNumberGenerating.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SerialNumberGenerating.aspx.designer.cs">
+      <DependentUpon>SerialNumberGenerating.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SpecialtyQualityConfig.aspx.cs">
+      <DependentUpon>SpecialtyQualityConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SpecialtyQualityConfig.aspx.designer.cs">
+      <DependentUpon>SpecialtyQualityConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskAssignConfiguration.aspx.cs">
+      <DependentUpon>TaskAssignConfiguration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskAssignConfiguration.aspx.designer.cs">
+      <DependentUpon>TaskAssignConfiguration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDefaultProportionConfig.aspx.cs">
+      <DependentUpon>EmployeeDefaultProportionConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmployeeDefaultProportionConfig.aspx.designer.cs">
+      <DependentUpon>EmployeeDefaultProportionConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskList.aspx.cs">
+      <DependentUpon>TaskList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskList.aspx.designer.cs">
+      <DependentUpon>TaskList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskMonitoring.aspx.cs">
+      <DependentUpon>TaskMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskMonitoring.aspx.designer.cs">
+      <DependentUpon>TaskMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskProportionManagement.aspx.cs">
+      <DependentUpon>TaskProportionManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskProportionManagement.aspx.designer.cs">
+      <DependentUpon>TaskProportionManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskSharingList.aspx.cs">
+      <DependentUpon>TaskSharingList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskSharingList.aspx.designer.cs">
+      <DependentUpon>TaskSharingList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskTransfer.aspx.cs">
+      <DependentUpon>TaskTransfer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TaskTransfer.aspx.designer.cs">
+      <DependentUpon>TaskTransfer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebPageHelper.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPageRedirect.aspx.cs">
+      <DependentUpon>WebPageRedirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebPageRedirect.aspx.designer.cs">
+      <DependentUpon>WebPageRedirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Withdraw.aspx.cs">
+      <DependentUpon>Withdraw.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Withdraw.aspx.designer.cs">
+      <DependentUpon>Withdraw.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WithdrawApprove.aspx.cs">
+      <DependentUpon>WithdrawApprove.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WithdrawApprove.aspx.designer.cs">
+      <DependentUpon>WithdrawApprove.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\themes\base\dialog\" />
+    <Folder Include="Log\" />
+    <Folder Include="UploadFiles\" />
+    <Folder Include="Upload\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Account\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Site.Master" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileZillaServerBLL\FileZillaServerBLL.csproj">
+      <Project>{8c479d5b-7a56-42ed-ac9a-b316e3191518}</Project>
+      <Name>FileZillaServerBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerCommonHelper\FileZillaServerCommonHelper.csproj">
+      <Project>{ec2c8776-ccce-4c5f-a26a-1bf84c864842}</Project>
+      <Name>FileZillaServerCommonHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerDLL\FileZillaServerDAL.csproj">
+      <Project>{1ed33f68-a839-41ba-a14d-94cb43cb22b1}</Project>
+      <Name>FileZillaServerDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerModel\FileZillaServerModel.csproj">
+      <Project>{c2d735c0-93e4-4c59-b300-52f4c3bbe772}</Project>
+      <Name>FileZillaServerModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerProfile\FileZillaServerProfile.csproj">
+      <Project>{a5b2628b-b5f8-4112-a46e-fdd9be961b46}</Project>
+      <Name>FileZillaServerProfile</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Excel">
+      <Guid>{45541000-5750-5300-4B49-4E47534F4655}</Guid>
+      <VersionMajor>3</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:59649/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

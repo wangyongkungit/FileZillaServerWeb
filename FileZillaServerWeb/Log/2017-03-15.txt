@@ -1,0 +1,3 @@
+﻿[2017-03-15 18:50:57] 任务编号存在：2017031718-81703151850
+[2017-03-15 18:51:35] 未将对象引用设置到对象的实例。   在 FileZillaServerWeb.SerialNumberGenerating.FormDataFill() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 501
+[2017-03-15 18:51:43] 未将对象引用设置到对象的实例。   在 FileZillaServerWeb.SerialNumberGenerating.FormDataFill() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 501

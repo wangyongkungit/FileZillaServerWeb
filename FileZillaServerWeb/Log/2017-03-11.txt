@@ -1,0 +1,17 @@
+﻿[2017-03-11 15:03:07] project is null:False
+[2017-03-11 15:04:28] 列“CREATEDATE”不属于表 ds。
+[2017-03-11 15:04:57] 列“CREATEDATE”不属于表 ds。   在 System.Data.DataRow.GetDataColumn(String columnName)
+   在 System.Data.DataRow.get_Item(String columnName)
+   在 FileZillaServerDAL.AttachmentDAL.DataRowToModel(DataRow row) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerDLL\AttachmentDAL.cs:行号 209
+   在 FileZillaServerBLL.AttachmentBLL.DataTableToList(DataTable dt) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerBLL\AttachmentBLL.cs:行号 119
+   在 FileZillaServerBLL.AttachmentBLL.GetModelList(String strWhere) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerBLL\AttachmentBLL.cs:行号 105
+   在 FileZillaServerWeb.SerialNumberGenerating.GridViewTaskAndModifyDataBind(String projectID) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 508
+   在 FileZillaServerWeb.SerialNumberGenerating.FormDataFill() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 443
+[2017-03-11 15:09:43] project is null:False
+[2017-03-11 15:10:34] 列“CREATEDATE”不属于表 ds。
+[2017-03-11 15:10:49] 列“CREATEDATE”不属于表 ds。
+[2017-03-11 15:12:33] project is null:False
+[2017-03-11 15:52:12] DataBinding:“FileZillaServerModel.Attachment”不包含名为“FOLDER”的属性。
+[2017-03-11 15:53:53] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TASKID = '2e91c1a6-810e-4e4e-9f0a-46db901f14d8'' at line 1
+[2017-03-11 15:54:11] You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TASKID = '2e91c1a6-810e-4e4e-9f0a-46db901f14d8'' at line 1
+[2017-03-11 16:23:57] DataBinding:“System.Data.DataRowView”不包含名为“FOLDER”的属性。

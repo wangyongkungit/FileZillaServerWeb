@@ -1,0 +1,10 @@
+﻿[2017-03-25 13:55:55] 任务编号存在：2017032913-31703251353
+[2017-03-25 18:25:38] 任务编号存在：2017033018-11703241846
+[2017-03-25 18:26:25] 任务编号存在：2017033018-11703241846
+[2017-03-25 18:27:18] 任务编号存在：2017033018-11703241846
+[2017-03-25 18:28:12] 任务编号存在：2017033018-11703241846
+[2017-03-25 18:29:28] 任务编号存在：2017033018-11703241846
+[2017-03-25 18:35:32] Fatal error encountered during command execution.   在 FileZillaServerDAL.DbHelperMySQL.ExecuteSql(String SQLString, MySqlParameter[] cmdParms) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerDLL\DbHelperMySQL.cs:行号 539
+   在 FileZillaServerDAL.ProjectDAL.Update(Project model) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerDLL\ProjectDAL.cs:行号 237
+   在 FileZillaServerBLL.ProjectBLL.Update(Project model) 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerBLL\ProjectBLL.cs:行号 45
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 234

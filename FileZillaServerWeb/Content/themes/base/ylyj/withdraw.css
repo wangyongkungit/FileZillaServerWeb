@@ -1,0 +1,62 @@
+﻿h1 {
+    color:#CD1637;
+    text-align:center;
+    letter-spacing:4px;
+    font-family:'Microsoft YaHei','sans-serif';
+}
+.container {
+    width:1000px;
+    height:350px;
+    border:1px solid #bcccf0;
+    margin:0 auto;
+    background-color:#fcfcfd;
+}
+.row {
+    width:100%;
+    height:45px;
+    line-height:45px;
+}
+.row .left {
+    width:45%;
+    float:left;
+    text-align:right;
+    padding-right:15px;
+}
+.row .right {
+    width:45%;
+    float:left;
+}
+input[type='text'] {
+    width:70px;
+    height:22px;
+    padding:3px 8px;
+    border:none;
+    border-bottom:1px solid #CD1637;
+    background-color:#fff;
+    font-family:Consolas,'Microsoft YaHei',sans-serif;
+    font-size:18px;
+    outline:none;
+}
+input[type='button'],input[type='submit']
+{
+    color:#fff;
+    border:1px solid #cf5555;
+    background-color:#f65c5c;
+    font-size:13px;
+    font-family:Consolas,sans-serif;
+    padding:8px 16px;
+    text-align:center;
+    display:inline-block;
+    border-radius:3px;
+    text-decoration:none;
+    cursor:pointer;
+    transition-duration:0.3s;
+}
+input[type='button']:hover,input[type='submit']:hover
+{
+    color:#fff;
+    background-color:#cf5555;
+}
+.dialogDiv {
+    display:none;
+}

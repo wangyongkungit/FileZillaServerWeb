@@ -1,0 +1,93 @@
+﻿[2017-04-27 08:54:40] 登录异常。Thread was being aborted.
+   在 System.Threading.Thread.AbortInternal()
+   在 System.Threading.Thread.Abort(Object stateInfo)
+   在 System.Web.HttpResponse.AbortCurrentThread()
+   在 System.Web.HttpResponse.End()
+   在 System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   在 System.Web.HttpResponse.Redirect(String url)
+   在 FileZillaServerWeb.Login.LogIn() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 84
+[2017-04-27 08:58:03] 登录异常。Thread was being aborted.
+   在 System.Threading.Thread.AbortInternal()
+   在 System.Threading.Thread.Abort(Object stateInfo)
+   在 System.Web.HttpResponse.AbortCurrentThread()
+   在 System.Web.HttpResponse.End()
+   在 System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   在 System.Web.HttpResponse.Redirect(String url)
+   在 FileZillaServerWeb.Login.LogIn() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 84
+[2017-04-27 10:57:25] 登录异常。正在中止线程。
+   在 System.Threading.Thread.AbortInternal()
+   在 System.Threading.Thread.Abort(Object stateInfo)
+   在 System.Web.HttpResponse.AbortCurrentThread()
+   在 System.Web.HttpResponse.End()
+   在 System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   在 System.Web.HttpResponse.Redirect(String url)
+   在 FileZillaServerWeb.Login.LogIn() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 84
+[2017-04-27 13:41:59] 登录异常。正在中止线程。
+   在 System.Threading.Thread.AbortInternal()
+   在 System.Threading.Thread.Abort(Object stateInfo)
+   在 System.Web.HttpResponse.AbortCurrentThread()
+   在 System.Web.HttpResponse.End()
+   在 System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   在 System.Web.HttpResponse.Redirect(String url)
+   在 FileZillaServerWeb.Login.LogIn() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 84
+[2017-04-27 13:55:24] 登录异常。正在中止线程。
+   在 System.Threading.Thread.AbortInternal()
+   在 System.Threading.Thread.Abort(Object stateInfo)
+   在 System.Web.HttpResponse.AbortCurrentThread()
+   在 System.Web.HttpResponse.End()
+   在 System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   在 System.Web.HttpResponse.Redirect(String url)
+   在 FileZillaServerWeb.Login.LogIn() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 84
+[2017-04-27 14:05:22] 订单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:06:38] 订单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:06:53] 订单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:08:17] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:08:47] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:10:33] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:13:26] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:13:37] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:13:46] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:16:43] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:16:48] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:17:10] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:18:58] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:20:40] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:20:51] 下单时间错误：该字符串未被识别为有效的 DateTime。   在 System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   在 System.Convert.ToDateTime(String value)
+   在 FileZillaServerWeb.SerialNumberGenerating.GeneratingTask() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 127
+[2017-04-27 14:28:00] 登录异常。正在中止线程。
+   在 System.Threading.Thread.AbortInternal()
+   在 System.Threading.Thread.Abort(Object stateInfo)
+   在 System.Web.HttpResponse.AbortCurrentThread()
+   在 System.Web.HttpResponse.End()
+   在 System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   在 System.Web.HttpResponse.Redirect(String url)
+   在 FileZillaServerWeb.Login.LogIn() 位置 d:\Work\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 84

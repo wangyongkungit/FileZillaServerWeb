@@ -1,0 +1,42 @@
+﻿::selection {
+    background-color:#00C687;
+    color:#FFF;
+}
+
+body {
+    background:#fff url(/Images/bg-grey-stripe.png) repeat top left;
+}
+
+.marquee {
+    width:500px; height:30px; line-height:30px; position:fixed; top:30px;right:10px;
+}
+
+.asterisk {
+    color:red;
+    font-weight:bold;
+}
+
+#bottom {
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    padding-top:5px;
+    width:100%;
+    height:30px;
+    color:#666666;
+    background-color:#F0F0F0;
+    z-index:999;
+    font-size:12px;
+    font-family:'Microsoft YaHei';
+    text-align:center;
+}
+
+#leftsead{width:131px;height:60px;position:fixed;top:4%;left:26px;}
+*html #leftsead{margin-top:258px;position:absolute;top:expression(eval(document.documentelement.scrolltop));}
+
+#leftsead ul { list-style-type:none; }
+#leftsead li { width:131px; height:32px; text-decoration:none; }
+#leftsead li img { float:left; }
+#leftsead li a{ height:32px; float:left; display:block; min-width:47px; max-width:131px;}
+#leftsead li a .shows{ width:47px; height:32px; display:block; }
+#leftsead li a .hides{ width:131px; height:32px; display:none; margin-right:0px; cursor:pointer;}

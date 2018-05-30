@@ -1,0 +1,165 @@
+﻿.container {
+    width:1100px;
+    min-height:890px;
+    _min-height:890px;
+    margin:0 auto;
+    margin-bottom:20px;
+}
+.header {
+    width:100%;
+    height:120px;
+    margin-bottom:10px;
+    background-color:#f1f4f9;
+}
+.divTitle {
+    width:100%;
+    height:50px;
+}
+.divTitle h1{
+    color:#CD1637;
+    text-align:center;
+    letter-spacing:4px;
+    font-family:'Microsoft YaHei';
+}
+.formSearch {
+    width:250px;
+    height:28px;
+    margin:5px 0px 0px 5px;
+    float:left;
+    font-size:13px;
+    font-family:'Microsoft YaHei';
+}
+.formSearchDate {
+    width:500px;
+    height:28px;
+    margin:10px 10px 0px 10px;
+    float:left;
+    font-size:13px;
+    font-family:'Microsoft YaHei';
+}
+.formSearchLeft {
+    width:85px;
+    height:28px;
+    margin:2px 0px 0px 5px;
+    float:left;
+    text-align:right;
+}
+.formSearchLeftDate {
+    width:85px;
+    height:28px;
+    margin:2px 0px 0px 5px;
+    float:left;
+    text-align:right;
+}
+.formSearchRight {
+    width:165px;
+    height:28px;
+    margin:5px 0px 0px 5px;
+    float:left;
+}
+.header input[type="text"],input[type="email"] {
+    width:120px;
+    color:#333;
+    line-height:normal;
+    font-family:"Microsoft YaHei",Tahoma,Verdana,SimSun;
+    font-style:normal;
+    font-size-adjust:none;margin-top:0px;
+    margin-bottom:0px;
+    margin-left:0px;
+    padding-top:4px;
+    padding-right:4px;
+    padding-bottom:4px;
+    padding-left:4px;
+    outline-width:medium;
+    outline-style:none;
+    outline-color:invert;
+    /*border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    border-bottom-left-radius:3px;
+    border-bottom-right-radius:3px;*/
+    text-shadow:0px 1px 2px #fff;
+    background-attachment:scroll;
+    /*background-repeat:repeat-x;
+    background-position-x:left;
+    background-position-y:top;
+    background-size:auto;
+    background-origin:padding-box;
+    background-clip:border-box;
+    background-color:rgb(255,255,255);
+    margin-right:8px;*/
+    border-top-color:#ccc;
+    border-right-color:#ccc;
+    border-bottom-color:#ccc;
+    border-left-color:#ccc;
+    border-top-width:1px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-left-width:1px;
+    border-top-style:solid;
+    border-right-style:solid;
+    border-bottom-style:solid;
+    border-left-style:solid;
+}
+.formSearch input:focus {
+    border:1px solid #fafafa;
+    -webkit-box-shadow:0px 0px 6px #007eff;
+    -moz-box-shadow:0px 0px 5px #007eff;
+    box-shadow:0px 0px 5px #007eff;
+}
+.formSearch select {
+    border:1px solid #ccc;
+    width:130px;
+    height:30px;
+    font-family:'Microsoft YaHei';
+}
+.button {
+    width:70px;
+    height:28px;
+    border:1px solid #808080;
+    background-color:#f0f0f0;
+    font-family:'Microsoft YaHei';
+    cursor:pointer;
+}
+/*label {
+    font-size:12px;
+}*/
+.content {
+    width:100%;
+    min-height:635px;
+    _height:635px;
+}
+.tbl {
+    width:100%;
+    border-collapse:collapse;
+    background-color:#fff;
+}
+.tbHead {
+    height:28px;
+    line-height:28px;
+    font-size:14px;
+    padding:2px 0px 2px 4px;
+    background-color:#CD1637;
+    border-bottom:3px dotted groove;
+    font-weight:500;
+    color:#fff;
+}
+.tbTr {
+}
+.tbl tr {
+    height:23px;
+    line-height:23px;
+    font-size:13px;
+    border-left:none;
+    border-right:none;
+    border-bottom:solid 1px #d0dee5;
+    text-align:center;
+}
+    .tbl tr.odd {
+        background-color:#d0dee5;
+    }
+.tbl tr.alt2 {
+    background-color:#F8F0F0;
+}
+.tbl tr.over {
+    background: #EBEBE8; /*这个将是鼠标高亮行的背景色*/
+}

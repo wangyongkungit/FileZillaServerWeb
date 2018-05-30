@@ -1,0 +1,68 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="FileZillaServerWeb.Site1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="苏州,易量易价,金色经典,企业咨询,造价,邻宝,志华网" />
+    <meta name="description" content="苏州易量易价企业咨询管理有限公司" />
+    <meta name="author" content="Wang Yongkun" />
+    <title></title>
+    <link href="<%= ResolveUrl("~/Content/themes/base/ylyj/site.css?v=18426") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Scripts/dialog/jDialog/jDialog.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/Content/themes/base/ylyj/serialnumber.css?v=18426") %>" rel="stylesheet" />
+<%--    <%: System.Web.Optimization.Styles.Render("~/bundles/Site") %>--%>
+
+    <%--<script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>--%>
+    <script src="<%= ResolveUrl("~/Scripts/jquery-1.7.1.min.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/My97DatePicker/WdatePicker.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/ylyj/site.js?v=18426") %>"></script>    
+    <script src="<%= ResolveUrl("~/Scripts/jquery-ui-1.8.20.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/dialog/jquery.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/dialog/jDialog.js") %>"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <!--滚动文字
+        <div class="marquee">
+            <marquee style="width:500px;height:30px;" scrollamount="4" direction="left" loop="3" >
+                <b>多人协作任务完成稿下载异常问题已修复。</b>
+            </marquee>
+        </div>-->
+        <!--在线客服-->
+        <div id="leftsead" style="display:none;">
+            <ul>
+<%--                <li>
+                    <a href="tencent://message/?uin=763687776&Site=bimpan.iok.la:8&Menu=yes" target="_blank" title="在线客服">
+                        <img src="<%= ResolveUrl("~/images/ll04.png") %>" class="hides"/>
+                        <img src="<%= ResolveUrl("~/Images/l04.png") %>" class="shows" />
+                    </a>
+                </li>--%>
+                <li>
+                    <a href="WebPageRedirect.aspx" target="_blank">返回主菜单</a>
+                </li>
+                <% 
+                    if (lstMenu != null && lstMenu.Count > 0)
+                    {
+                        foreach (var menu in lstMenu)
+                        {%>
+                      <li>
+                          <a href="<%= menu.Path%>" target="_blank"><%= menu.Name%></a>
+                      </li>   
+                    <%}
+                    }
+                     %>
+            </ul>
+        </div>
+        <!--底部-->
+        <div id="bottom">&copy;<label id="lblCurrentYear"></label>
+            Soochow YiLiangYiJia Enterprise Consulting Management Co.,Ltd. All rights reserved.</div>
+</body>
+</html>

@@ -1,0 +1,377 @@
+﻿html {
+    padding-bottom:40px;
+}
+body {
+    padding:0px;
+    margin:0px;
+    min-width:1700px;
+    padding-bottom:40px;
+}
+.total {
+    width:100%;
+    height:100%;
+}
+.navbar {
+    height:50px;
+    margin-bottom:0px;
+    padding-right:20px;
+    background-color:#75b9e6;
+    border-radius:0;
+    border:none;
+    box-shadow:0 1px 1px rgba(0,0,0,0.1);
+}
+.pullLeft {
+    float:left;
+    margin-left:70px;
+    height:50px;
+    line-height:50px;
+    color:white;
+    font-size:x-large;
+    font-weight:600;
+    font-family:'Courier New',sans-serif;
+}
+.pullRight {
+    float:right;
+    width:200px;
+    height:50px;
+    line-height:50px;
+    color:white;
+    font-size:large;
+    font-family:KaiTi;
+}
+.sideNav {
+    width:190px;
+    height:100%;
+    min-height:600px;
+    background-color:#97d3c5;
+    position:fixed;
+    float:left;
+    padding-bottom:40px;
+}
+.treeview {
+    font-family:Consolas,sans-serif;
+}
+.content {
+    width:100%;
+    height:auto;
+    background-color:#64f3f3;
+}
+.content-left {
+    width:28%;
+    height:320px;
+    background-color:azure;
+    margin-left:210px;
+    float:left;
+}
+.content-left .one {
+    width:40%;
+    height:130px;
+    background-color:#be6e6e;
+    margin:14px 24px;
+}
+.content-left .one .title {
+    width:92%;
+    height:20px;
+    color:white;
+    margin:0px;
+    padding:5px 0px 5px 10px;
+    background-color:cadetblue;
+}
+.content-left .one .skill {
+    color:#fff;
+    font-family:STFangsong;
+    font-size:17px;
+    padding:8px 12px;
+}
+.skillSpan {
+    display:inline-block;
+    height:23px;
+    line-height:23px;
+    border:1px solid #dcdcdc;
+    background-color:#eae9e9;
+    margin-left:5px;
+    margin-top:4px;
+    padding:1px 4px;
+    font-size:12px;
+}
+.content-left .one .cerficate {
+    width:100%; height:96px;
+}
+.content-middle {
+    width:28%;
+    height:320px;
+    background-color:#fff;
+    float:left;
+    margin-left:18px;
+}
+.content-middle .moneyTitle {
+    width:99%;
+    height:40px;
+    line-height:40px;
+    color:#ffffff;
+    padding:5px 0px 5px 10px;
+    background-color:#ec70ff;
+}
+.content-middle .moneyLeft {
+    width:50%;
+    height:220px;
+    background-color:white;
+    float:left;
+}
+.content-middle .moneyRight {
+    width:50%;
+    height:270px;
+    background-color:#8891fb;
+    float:left;
+}
+.content-middle .moneyRight .container {
+    padding:16px 16px;
+    width:80%;
+    height:80%;
+}
+.lblfinished {
+    color:white;
+}
+#ContentPlaceHolder1_lblFinishedTaskCount, #ContentPlaceHolder1_lblCanWithdrawAmount {
+    font-size:40px;
+    font-family:Consolas,sans-serif;
+    color:white;
+    margin-right:15px;
+}
+#withdraw {
+    color:#fff;
+    border:1px solid #cf5555;
+    background-color:#f65c5c;
+    font-size:13px;
+    font-family:Consolas,sans-serif;
+    padding:8px 16px;
+    text-align:center;
+    display:inline-block;
+    border-radius:3px;
+    text-decoration:none;
+    cursor:pointer;
+    transition-duration:0.3s;
+}
+#withdrawRecords {
+    color:#333;
+    border:1px solid #33fc30;
+    background-color:#33fc30;
+    font-size:13px;
+    font-family:Consolas,sans-serif;
+    padding:8px 16px;
+    text-align:center;
+    display:inline-block;
+    border-radius:3px;
+    text-decoration:none;
+    cursor:pointer;
+    transition-duration:0.3s;
+}
+#withdraw:hover
+{
+    color:#fff;
+    background-color:#cf5555;
+}
+#withdrawRecords:hover {
+    color:#333;
+    background-color:#50b628;
+}
+.money .pie {
+    width:260px;
+    height:260px;
+    padding:4px 10px 1px 10px;
+    /*background-color:#ffffff;*/
+}
+#ContentPlaceHolder1_ChartMoney {
+    margin-top:20px;
+    margin-left:0 auto;
+    margin-right:0 auto;
+}
+.content-right {
+    width:25%;
+    height:320px;
+    background-color:aquamarine;
+    float:left;
+    margin-left:18px;
+}
+.content-right .trendTitle {
+    width:99%;
+    height:30px;
+    line-height:30px;
+    color:#ffffff;
+    padding:5px 0px 5px 10px;
+    background-color:#97d3c5;
+}
+.tasktrendtable {
+    width:97%;
+    margin:8px 4px;
+    text-align:center;
+    border-collapse:collapse;
+    border:1px solid #ddd;
+}
+.tasktrendtable tr th {
+    height:24px;
+    line-height:24px;
+    color:#fff;
+    border:1px solid #ddd;
+    background-color:#737afb;
+}
+.content-center {
+    width:84%;
+    height:auto;
+    margin-left:210px;
+    margin-top:20px;
+    float:left;
+}
+.content-center .title {
+    width:98%;
+    height:35px;
+    line-height:35px;
+    padding-left:15px;
+    background-color:#b2fa79;
+}
+.content-center .search {
+    width:400px;
+    height:inherit;
+    line-height:inherit;
+    background-color:azure;
+    float:right;
+}
+.content-center .text {
+  width: 300px;
+  height: 30px;
+  padding-left: 10px;
+  border: 2px solid #7BA7AB;
+  border-radius: 5px;
+  outline: none;
+  background: inherit;
+  color: #9E9C9C;
+}
+.content-center .button {
+  position: absolute; 
+  color:white;
+  /*top: 0;
+  right: 0px;*/
+  width: 42px;
+  height: 32px;
+  border: none;
+  background: #7BA7AB;
+  border-radius: 0 5px 5px 0;
+  margin-left:-2px;
+  margin-top:3px;
+  cursor: pointer;
+}
+.content-center .button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+.content-center .button:hover
+{
+    color:#fff;
+    background-color:#138083;
+}
+.aspNetPager {
+    height:30px;
+    line-height:30px;
+    float:right;
+}
+.aspNetPager span {
+    display:inline;
+}
+.aspNetPager label {
+    margin:5px;
+}
+.aspNetPager input[type="text"] {
+    width:35px;
+}
+.aspNetPager input[type="submit"] {
+    cursor:pointer;
+}
+.aspNetPager label {
+    width:45px;
+}
+#AspNetPager {
+    width:auto;
+    float:left;
+    margin-right:10px;
+}
+.pagination {
+    margin-top: 1px 2px;
+    padding-bottom:10px;
+    float:right;
+}
+.pagination a[disabled]{  color: #777;cursor: not-allowed;border-color: #ddd; float:left;}
+.pagination span.active{color: #fff;cursor: default;background-color: #337ab7;border-color: #337ab7;}
+.pagination ul li.active{color: #fff;cursor: default;background-color: #337ab7;border-color: #337ab7;}
+.pagination ul li {
+    list-style:none;
+    float:left;
+    padding:2px 7px;
+    margin:1px -1px;
+    border:1px solid #337ab7;
+    background-color:#e1e0e0;
+}
+.projectList {
+    
+}
+.projectList tr:nth-child(even) {
+    background-color:#e2e0e0;
+}
+.projectList tr th{
+    height:30px;
+    line-height:30px;
+    color:#fff;
+    background-color:cadetblue;
+}
+.projectList tr{
+    text-align:center;
+    color:#313131;
+    background-color:#cee2de;
+}
+.projectList tr:hover {
+    background-color:#98ccfe;
+}
+.taskmovebutton {
+    position: relative; 
+    overflow: visible; 
+    display: inline-block; 
+    padding: 0.2em 1em; 
+    border: 1px solid #d4d4d4; 
+    margin: 0;
+    text-decoration: none; 
+    text-shadow: 1px 1px 0 #fff; 
+    font:11px sans-serif; 
+    font-weight:800;
+    color: #333; 
+    cursor: pointer; 
+    outline: none; 
+    background-color: #ececec;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f4f4f4), to(#ececec));
+    background-image: -moz-linear-gradient(#f4f4f4, #ececec);
+    background-image: -o-linear-gradient(#f4f4f4, #ececec);
+    background-image: linear-gradient(#f4f4f4, #ececec);
+    -moz-background-clip: padding;
+    -o-background-clip: padding-box; 
+    /*background-clip: padding-box;*/ /* commented out due to Opera 11.10 bug */
+    -webkit-border-radius: 0.2em; 
+    -moz-border-radius: 0.2em; 
+    border-radius: 0.2em; 
+    /* IE hacks */
+    zoom: 1; 
+    *display: inline;
+}
+.taskmovebutton:hover,
+.taskmovebutton:focus,
+.taskmovebutton:active {
+    border-color: #3072b3;
+    border-bottom-color: #2a65a0;
+    text-decoration: none; 
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.3); 
+    color: #fff; 
+    background-color: #3072b3;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#599bdc), to(#3072b3));
+    background-image: -moz-linear-gradient(#599bdc, #3072b3);
+    background-image: -o-linear-gradient(#599bdc, #3072b3);
+    background-image: linear-gradient(#599bdc, #3072b3);
+}

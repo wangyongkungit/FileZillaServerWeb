@@ -1,0 +1,680 @@
+﻿[2017-04-14 16:51:02] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 16:51:02] dtFinishedPerson:    6
+[2017-04-14 16:51:02] drFinishedPerson.Length :  0
+[2017-04-14 16:51:02] drFinishedPerson.Length :  0
+[2017-04-14 16:51:02] drFinishedPerson.Length :  2
+[2017-04-14 16:51:02] drFinishedPerson.Length :  2
+[2017-04-14 16:51:02] drFinishedPerson.Length :  1
+[2017-04-14 16:51:02] drFinishedPerson.Length :  1
+[2017-04-14 16:51:02] drFinishedPerson.Length :  1
+[2017-04-14 16:51:02] drFinishedPerson.Length :  1
+[2017-04-14 17:24:12] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 17:24:12] dtFinishedPerson:    6
+[2017-04-14 17:24:12] drFinishedPerson.Length :  0
+[2017-04-14 17:24:12] drFinishedPerson.Length :  0
+[2017-04-14 17:24:12] drFinishedPerson.Length :  2
+[2017-04-14 17:24:12] drFinishedPerson.Length :  2
+[2017-04-14 17:24:12] drFinishedPerson.Length :  1
+[2017-04-14 17:24:12] drFinishedPerson.Length :  1
+[2017-04-14 17:24:12] drFinishedPerson.Length :  1
+[2017-04-14 17:24:12] drFinishedPerson.Length :  1
+[2017-04-14 17:57:37] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 17:57:37] dtFinishedPerson:    6
+[2017-04-14 17:57:37] drFinishedPerson.Length :  0
+[2017-04-14 17:57:37] drFinishedPerson.Length :  0
+[2017-04-14 17:57:37] drFinishedPerson.Length :  2
+[2017-04-14 17:57:37] drFinishedPerson.Length :  2
+[2017-04-14 17:57:37] drFinishedPerson.Length :  1
+[2017-04-14 17:57:37] drFinishedPerson.Length :  1
+[2017-04-14 17:57:37] drFinishedPerson.Length :  1
+[2017-04-14 17:57:37] drFinishedPerson.Length :  1
+[2017-04-14 17:58:19] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 17:58:19] dtFinishedPerson:    6
+[2017-04-14 17:58:19] drFinishedPerson.Length :  0
+[2017-04-14 17:58:19] drFinishedPerson.Length :  0
+[2017-04-14 17:58:19] drFinishedPerson.Length :  2
+[2017-04-14 17:58:19] drFinishedPerson.Length :  2
+[2017-04-14 17:58:19] drFinishedPerson.Length :  1
+[2017-04-14 17:58:19] drFinishedPerson.Length :  1
+[2017-04-14 17:58:19] drFinishedPerson.Length :  1
+[2017-04-14 17:58:19] drFinishedPerson.Length :  1
+[2017-04-14 17:58:26] 如果是管理员并且...004
+[2017-04-14 17:58:26] sids: ''
+[2017-04-14 17:58:26] dtFinishedPerson:    0
+[2017-04-14 17:58:26] 如果是管理员并且...004
+[2017-04-14 17:58:31] 如果是管理员并且...004
+[2017-04-14 17:58:31] sids: ''
+[2017-04-14 17:58:31] dtFinishedPerson:    0
+[2017-04-14 17:58:31] 如果是管理员并且...004
+[2017-04-14 17:58:38] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 17:58:38] dtFinishedPerson:    6
+[2017-04-14 17:58:38] drFinishedPerson.Length :  0
+[2017-04-14 17:58:38] drFinishedPerson.Length :  0
+[2017-04-14 17:58:38] drFinishedPerson.Length :  2
+[2017-04-14 17:58:38] drFinishedPerson.Length :  2
+[2017-04-14 17:58:38] drFinishedPerson.Length :  1
+[2017-04-14 17:58:38] drFinishedPerson.Length :  1
+[2017-04-14 17:58:38] drFinishedPerson.Length :  1
+[2017-04-14 17:58:38] drFinishedPerson.Length :  1
+[2017-04-14 18:02:00] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:00] dtFinishedPerson:    6
+[2017-04-14 18:02:00] drFinishedPerson.Length :  0
+[2017-04-14 18:02:00] drFinishedPerson.Length :  0
+[2017-04-14 18:02:00] drFinishedPerson.Length :  2
+[2017-04-14 18:02:00] drFinishedPerson.Length :  2
+[2017-04-14 18:02:00] drFinishedPerson.Length :  1
+[2017-04-14 18:02:00] drFinishedPerson.Length :  1
+[2017-04-14 18:02:00] drFinishedPerson.Length :  1
+[2017-04-14 18:02:00] drFinishedPerson.Length :  1
+[2017-04-14 18:02:02] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:02] dtFinishedPerson:    6
+[2017-04-14 18:02:02] drFinishedPerson.Length :  0
+[2017-04-14 18:02:02] drFinishedPerson.Length :  0
+[2017-04-14 18:02:02] drFinishedPerson.Length :  2
+[2017-04-14 18:02:02] drFinishedPerson.Length :  2
+[2017-04-14 18:02:02] drFinishedPerson.Length :  1
+[2017-04-14 18:02:02] drFinishedPerson.Length :  1
+[2017-04-14 18:02:02] drFinishedPerson.Length :  1
+[2017-04-14 18:02:02] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:03] dtFinishedPerson:    6
+[2017-04-14 18:02:03] drFinishedPerson.Length :  0
+[2017-04-14 18:02:03] drFinishedPerson.Length :  0
+[2017-04-14 18:02:03] drFinishedPerson.Length :  2
+[2017-04-14 18:02:03] drFinishedPerson.Length :  2
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:03] dtFinishedPerson:    6
+[2017-04-14 18:02:03] drFinishedPerson.Length :  0
+[2017-04-14 18:02:03] drFinishedPerson.Length :  0
+[2017-04-14 18:02:03] drFinishedPerson.Length :  2
+[2017-04-14 18:02:03] drFinishedPerson.Length :  2
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:03] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:04] dtFinishedPerson:    6
+[2017-04-14 18:02:04] drFinishedPerson.Length :  0
+[2017-04-14 18:02:04] drFinishedPerson.Length :  0
+[2017-04-14 18:02:04] drFinishedPerson.Length :  2
+[2017-04-14 18:02:04] drFinishedPerson.Length :  2
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:04] dtFinishedPerson:    6
+[2017-04-14 18:02:04] drFinishedPerson.Length :  0
+[2017-04-14 18:02:04] drFinishedPerson.Length :  0
+[2017-04-14 18:02:04] drFinishedPerson.Length :  2
+[2017-04-14 18:02:04] drFinishedPerson.Length :  2
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:04] drFinishedPerson.Length :  1
+[2017-04-14 18:02:47] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:02:47] dtFinishedPerson:    6
+[2017-04-14 18:02:47] drFinishedPerson.Length :  0
+[2017-04-14 18:02:47] drFinishedPerson.Length :  0
+[2017-04-14 18:02:47] drFinishedPerson.Length :  2
+[2017-04-14 18:02:47] drFinishedPerson.Length :  2
+[2017-04-14 18:02:47] drFinishedPerson.Length :  1
+[2017-04-14 18:02:47] drFinishedPerson.Length :  1
+[2017-04-14 18:02:47] drFinishedPerson.Length :  1
+[2017-04-14 18:02:47] drFinishedPerson.Length :  1
+[2017-04-14 18:48:47] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:48:47] dtFinishedPerson:    6
+[2017-04-14 18:48:47] drFinishedPerson.Length :  0
+[2017-04-14 18:48:47] drFinishedPerson.Length :  0
+[2017-04-14 18:48:47] drFinishedPerson.Length :  2
+[2017-04-14 18:48:47] drFinishedPerson.Length :  2
+[2017-04-14 18:48:47] drFinishedPerson.Length :  1
+[2017-04-14 18:48:47] drFinishedPerson.Length :  1
+[2017-04-14 18:48:47] drFinishedPerson.Length :  1
+[2017-04-14 18:48:47] drFinishedPerson.Length :  1
+[2017-04-14 18:55:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 18:55:15] dtFinishedPerson:    6
+[2017-04-14 18:55:15] drFinishedPerson.Length :  0
+[2017-04-14 18:55:15] drFinishedPerson.Length :  0
+[2017-04-14 18:55:15] drFinishedPerson.Length :  2
+[2017-04-14 18:55:15] drFinishedPerson.Length :  2
+[2017-04-14 18:55:15] drFinishedPerson.Length :  1
+[2017-04-14 18:55:15] drFinishedPerson.Length :  1
+[2017-04-14 18:55:15] drFinishedPerson.Length :  1
+[2017-04-14 18:55:15] drFinishedPerson.Length :  1
+[2017-04-14 19:48:05] sids: ''
+[2017-04-14 19:48:05] dtFinishedPerson:    0
+[2017-04-14 19:48:24] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 19:48:24] dtFinishedPerson:    6
+[2017-04-14 19:48:24] drFinishedPerson.Length :  0
+[2017-04-14 19:48:24] drFinishedPerson.Length :  0
+[2017-04-14 19:48:24] drFinishedPerson.Length :  2
+[2017-04-14 19:48:24] drFinishedPerson.Length :  2
+[2017-04-14 19:48:24] drFinishedPerson.Length :  1
+[2017-04-14 19:48:24] drFinishedPerson.Length :  1
+[2017-04-14 19:48:24] drFinishedPerson.Length :  1
+[2017-04-14 19:48:24] drFinishedPerson.Length :  1
+[2017-04-14 19:52:54] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 19:52:54] dtFinishedPerson:    6
+[2017-04-14 19:52:54] drFinishedPerson.Length :  0
+[2017-04-14 19:52:54] drFinishedPerson.Length :  0
+[2017-04-14 19:52:54] drFinishedPerson.Length :  2
+[2017-04-14 19:52:54] drFinishedPerson.Length :  2
+[2017-04-14 19:52:54] drFinishedPerson.Length :  1
+[2017-04-14 19:52:54] drFinishedPerson.Length :  1
+[2017-04-14 19:52:54] drFinishedPerson.Length :  1
+[2017-04-14 19:52:54] drFinishedPerson.Length :  1
+[2017-04-14 19:54:09] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 19:54:09] dtFinishedPerson:    6
+[2017-04-14 19:54:09] drFinishedPerson.Length :  0
+[2017-04-14 19:54:09] drFinishedPerson.Length :  0
+[2017-04-14 19:54:09] drFinishedPerson.Length :  2
+[2017-04-14 19:54:09] drFinishedPerson.Length :  2
+[2017-04-14 19:54:09] drFinishedPerson.Length :  1
+[2017-04-14 19:54:09] drFinishedPerson.Length :  1
+[2017-04-14 19:54:09] drFinishedPerson.Length :  1
+[2017-04-14 19:54:09] drFinishedPerson.Length :  1
+[2017-04-14 20:07:34] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 20:07:34] dtFinishedPerson:    6
+[2017-04-14 20:07:34] drFinishedPerson.Length :  0
+[2017-04-14 20:07:34] drFinishedPerson.Length :  0
+[2017-04-14 20:07:34] drFinishedPerson.Length :  2
+[2017-04-14 20:07:34] drFinishedPerson.Length :  2
+[2017-04-14 20:07:34] drFinishedPerson.Length :  1
+[2017-04-14 20:07:34] drFinishedPerson.Length :  1
+[2017-04-14 20:07:34] drFinishedPerson.Length :  1
+[2017-04-14 20:07:34] drFinishedPerson.Length :  1
+[2017-04-14 21:25:31] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:25:31] dtFinishedPerson:    6
+[2017-04-14 21:25:31] drFinishedPerson.Length :  0
+[2017-04-14 21:25:31] drFinishedPerson.Length :  0
+[2017-04-14 21:25:31] drFinishedPerson.Length :  2
+[2017-04-14 21:25:31] drFinishedPerson.Length :  2
+[2017-04-14 21:25:31] drFinishedPerson.Length :  1
+[2017-04-14 21:25:31] drFinishedPerson.Length :  1
+[2017-04-14 21:25:31] drFinishedPerson.Length :  1
+[2017-04-14 21:25:31] drFinishedPerson.Length :  1
+[2017-04-14 21:26:10] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:10] dtFinishedPerson:    6
+[2017-04-14 21:26:10] drFinishedPerson.Length :  0
+[2017-04-14 21:26:10] drFinishedPerson.Length :  0
+[2017-04-14 21:26:10] drFinishedPerson.Length :  2
+[2017-04-14 21:26:10] drFinishedPerson.Length :  2
+[2017-04-14 21:26:10] drFinishedPerson.Length :  1
+[2017-04-14 21:26:10] drFinishedPerson.Length :  1
+[2017-04-14 21:26:10] drFinishedPerson.Length :  1
+[2017-04-14 21:26:10] drFinishedPerson.Length :  1
+[2017-04-14 21:26:11] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:11] dtFinishedPerson:    6
+[2017-04-14 21:26:11] drFinishedPerson.Length :  0
+[2017-04-14 21:26:11] drFinishedPerson.Length :  0
+[2017-04-14 21:26:11] drFinishedPerson.Length :  2
+[2017-04-14 21:26:11] drFinishedPerson.Length :  2
+[2017-04-14 21:26:11] drFinishedPerson.Length :  1
+[2017-04-14 21:26:11] drFinishedPerson.Length :  1
+[2017-04-14 21:26:11] drFinishedPerson.Length :  1
+[2017-04-14 21:26:11] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:12] dtFinishedPerson:    6
+[2017-04-14 21:26:12] drFinishedPerson.Length :  0
+[2017-04-14 21:26:12] drFinishedPerson.Length :  0
+[2017-04-14 21:26:12] drFinishedPerson.Length :  2
+[2017-04-14 21:26:12] drFinishedPerson.Length :  2
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:12] dtFinishedPerson:    6
+[2017-04-14 21:26:12] drFinishedPerson.Length :  0
+[2017-04-14 21:26:12] drFinishedPerson.Length :  0
+[2017-04-14 21:26:12] drFinishedPerson.Length :  2
+[2017-04-14 21:26:12] drFinishedPerson.Length :  2
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:12] dtFinishedPerson:    6
+[2017-04-14 21:26:12] drFinishedPerson.Length :  0
+[2017-04-14 21:26:12] drFinishedPerson.Length :  0
+[2017-04-14 21:26:12] drFinishedPerson.Length :  2
+[2017-04-14 21:26:12] drFinishedPerson.Length :  2
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:12] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:13] dtFinishedPerson:    6
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:13] dtFinishedPerson:    6
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:13] dtFinishedPerson:    6
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:13] dtFinishedPerson:    6
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:13] dtFinishedPerson:    6
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:13] dtFinishedPerson:    6
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  0
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  2
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:13] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:14] dtFinishedPerson:    6
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:14] dtFinishedPerson:    6
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:14] dtFinishedPerson:    6
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:14] dtFinishedPerson:    6
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:14] dtFinishedPerson:    6
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:14] dtFinishedPerson:    6
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  0
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  2
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:14] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:15] dtFinishedPerson:    6
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:15] dtFinishedPerson:    6
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:15] dtFinishedPerson:    6
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:15] dtFinishedPerson:    6
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:15] dtFinishedPerson:    6
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:15] dtFinishedPerson:    6
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  0
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  2
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:15] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:16] dtFinishedPerson:    6
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:16] dtFinishedPerson:    6
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:16] dtFinishedPerson:    6
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:16] dtFinishedPerson:    6
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:16] dtFinishedPerson:    6
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  0
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  2
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:16] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:17] dtFinishedPerson:    6
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:17] dtFinishedPerson:    6
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:17] dtFinishedPerson:    6
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:17] dtFinishedPerson:    6
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  0
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  2
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:17] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:18] dtFinishedPerson:    6
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:18] dtFinishedPerson:    6
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:18] dtFinishedPerson:    6
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:18] dtFinishedPerson:    6
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:18] dtFinishedPerson:    6
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  0
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  2
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:18] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:19] dtFinishedPerson:    6
+[2017-04-14 21:26:19] drFinishedPerson.Length :  0
+[2017-04-14 21:26:19] drFinishedPerson.Length :  0
+[2017-04-14 21:26:19] drFinishedPerson.Length :  2
+[2017-04-14 21:26:19] drFinishedPerson.Length :  2
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:19] dtFinishedPerson:    6
+[2017-04-14 21:26:19] drFinishedPerson.Length :  0
+[2017-04-14 21:26:19] drFinishedPerson.Length :  0
+[2017-04-14 21:26:19] drFinishedPerson.Length :  2
+[2017-04-14 21:26:19] drFinishedPerson.Length :  2
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:19] drFinishedPerson.Length :  1
+[2017-04-14 21:26:28] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:28] dtFinishedPerson:    6
+[2017-04-14 21:26:28] drFinishedPerson.Length :  0
+[2017-04-14 21:26:28] drFinishedPerson.Length :  0
+[2017-04-14 21:26:28] drFinishedPerson.Length :  2
+[2017-04-14 21:26:28] drFinishedPerson.Length :  2
+[2017-04-14 21:26:28] drFinishedPerson.Length :  1
+[2017-04-14 21:26:28] drFinishedPerson.Length :  1
+[2017-04-14 21:26:28] drFinishedPerson.Length :  1
+[2017-04-14 21:26:28] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:29] dtFinishedPerson:    6
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:29] dtFinishedPerson:    6
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:29] dtFinishedPerson:    6
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:29] dtFinishedPerson:    6
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  0
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  2
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:29] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:30] dtFinishedPerson:    6
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:30] dtFinishedPerson:    6
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:30] dtFinishedPerson:    6
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] sids: '9d49379f-239d-430d-82c1-75214a3935be','a61a103d-9fda-472b-b4c4-01a9087945b8','96476936-e1fa-4b2f-be0f-f0b737ed585d','96476936-e1fa-4b2f-be0f-f0b737ed585d','4a9b48f7-5785-43cd-8cf1-60e52cd48133','ac151a08-fdbf-4724-9411-c916dd2707c0','bfb2f661-87ef-45b6-bdc4-fbe8f7196c10','2e91c1a6-810e-4e4e-9f0a-46db901f14d8'
+[2017-04-14 21:26:30] dtFinishedPerson:    6
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  0
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  2
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1
+[2017-04-14 21:26:30] drFinishedPerson.Length :  1

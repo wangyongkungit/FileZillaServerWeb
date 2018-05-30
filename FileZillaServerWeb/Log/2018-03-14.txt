@@ -1,0 +1,6 @@
+﻿[2018-03-14 22:16:56] 未找到列 [type]。   在 System.Data.NameNode.Bind(DataTable table, List`1 list)
+   在 System.Data.BinaryNode.Bind(DataTable table, List`1 list)
+   在 System.Data.DataExpression.Bind(DataTable table)
+   在 System.Data.DataExpression..ctor(DataTable table, String expression, Type type)
+   在 System.Data.DataTable.Select(String filterExpression)
+   在 FileZillaServerWeb.SerialNumberGenerating.FormDataFill() 位置 f:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 598

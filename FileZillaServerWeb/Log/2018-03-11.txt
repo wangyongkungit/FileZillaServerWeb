@@ -1,0 +1,17 @@
+﻿[2018-03-11 11:52:51] 未将对象引用设置到对象的实例。   在 FileZillaServerWeb.SerialNumberGenerating.DropDownListDataBind(DropDownList dropDownList, DataTable dtConfig, ConfigTypeName configTypeName, String tipString) 位置 f:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 468
+[2018-03-11 11:52:58] 未将对象引用设置到对象的实例。   在 FileZillaServerWeb.SerialNumberGenerating.DropDownListDataBind(DropDownList dropDownList, DataTable dtConfig, ConfigTypeName configTypeName, String tipString) 位置 f:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 468
+[2018-03-11 11:54:02] 未将对象引用设置到对象的实例。   在 FileZillaServerWeb.SerialNumberGenerating.DropDownListDataBind(DropDownList dropDownList, DataTable dtConfig, ConfigTypeName configTypeName, String tipString) 位置 f:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerWeb\SerialNumberGenerating.aspx.cs:行号 468
+[2018-03-11 21:56:00] finishedPerson: c57bd9d5-475f-4012-a429-66ae340923b1
+[2018-03-11 21:56:00] finishedPerson: c57bd9d5-475f-4012-a429-66ae340923b1
+[2018-03-11 21:56:00] employeeNo: C019
+[2018-03-11 21:56:00] taskNo: 2017080114-81707311446
+[2018-03-11 21:56:00] currentEmpPath: F:\Temporary\Cache\Dictionary\员工\C019
+[2018-03-11 21:56:00] 压缩失败！
+未能找到路径“F:\Temporary\Cache\Dictionary\员工\C019”的一部分。
+[2018-03-11 21:56:12] finishedPerson: c57bd9d5-475f-4012-a429-66ae340923b1
+[2018-03-11 21:56:12] finishedPerson: c57bd9d5-475f-4012-a429-66ae340923b1
+[2018-03-11 21:56:12] employeeNo: C019
+[2018-03-11 21:56:12] taskNo: 2017080114-81707311446
+[2018-03-11 21:56:12] currentEmpPath: F:\Temporary\Cache\Dictionary\员工\C019
+[2018-03-11 21:56:12] 压缩失败！
+未能找到路径“F:\Temporary\Cache\Dictionary\员工\C019”的一部分。

@@ -1,0 +1,98 @@
+﻿.container {
+    width:1100px;
+    margin:0 auto;
+    margin-bottom:20px;
+    font-family:'Microsoft YaHei',sans-serif;
+}
+.header {
+    width:100%;
+    height:auto;
+    margin-bottom:10px;
+    background-color:#f1f4f9;
+}
+.divTitle {
+    width:100%;
+    height:50px;
+}
+.divTitle h1{
+    color:#CD1637;
+    text-align:center;
+    letter-spacing:4px;
+    font-family:'Microsoft YaHei';
+}
+.formSearch {
+    width:250px;
+    height:28px;
+    margin:5px 0px 0px 5px;
+    float:left;
+    font-size:13px;
+    font-family:'Microsoft YaHei';
+}
+.formSearchDate {
+    width:500px;
+    height:28px;
+    margin:10px 10px 0px 10px;
+    float:left;
+    font-size:13px;
+    font-family:'Microsoft YaHei';
+}
+.formSearchLeft {
+    width:85px;
+    height:28px;
+    margin:2px 0px 0px 5px;
+    float:left;
+    text-align:right;
+}
+.tbl {
+    width:100%;
+    border-collapse:collapse;
+    border:1px solid #ddd;
+    /*background-color:#fff;*/
+}
+.tbl tr td {
+    height:28px;
+    /*line-height:28px;*/
+border:1px solid #ddd;
+text-align:center;
+}
+.tbl tr th {
+    height:32px;
+    line-height:32px;
+    color:#fff;
+border:1px solid #ddd;
+background-color:#666;
+}
+.tbl tr:not(:first-child):hover {
+    background-color:#eae5e5;
+}
+    .tbl tr.odd {
+        background-color:#d0dee5;
+    }
+.tbl tr.alt2 {
+    background-color:#F8F0F0;
+}
+.tbl tr.over {
+    background: #EBEBE8; /*这个将是鼠标高亮行的背景色*/
+}
+.mya
+{
+    color:#000;
+    border:1px solid #cf5555;
+    background-color:#fff;
+    height:20px;
+    line-height:20px;
+    font-size:13px;
+    font-family:Consolas,sans-serif;
+    padding:2px 10px;
+    text-align:center;
+    display:inline-block;
+    border-radius:5px;
+    text-decoration:none;
+    cursor:pointer;
+    transition-duration:0.3s;
+}
+.mya:hover
+{
+    color:#fff;
+    background-color:#cf5555;
+}
