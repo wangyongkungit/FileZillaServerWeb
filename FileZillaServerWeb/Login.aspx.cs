@@ -79,7 +79,7 @@ namespace FileZillaServerWeb
                     log.PHYSICALADDRESS = Mac;
                     SystemLogDAL slogDal = new SystemLogDAL();
                     slogDal.Add(log);
-                    //Response.Redirect("/WebPageRedirect.aspx");       //原来用重定向非常耗时
+                    //Response.Redirect("/WebPageRedirect.aspx");       //原来用重定向非常耗时 注意哦
                     ExecuteScript("window.location.href='WebPageRedirect.aspx';");
                 }
                 else
