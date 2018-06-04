@@ -55,6 +55,9 @@
     <Compile Include="EmployeeProportionDAL.cs" />
     <Compile Include="Extension\ProjectDAL.cs" />
     <Compile Include="Extension\SystemLogDALex.cs" />
+    <Compile Include="FileCategoryDAL.cs" />
+    <Compile Include="FileHistoryDAL.cs" />
+    <Compile Include="FileOperationLogDAL.cs" />
     <Compile Include="FileZillaDAL.cs" />
     <Compile Include="MySqlHelper.cs" />
     <Compile Include="ProjectDAL.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="TaskRemindingDAL.cs" />
     <Compile Include="TaskTrendDAL.cs" />
     <Compile Include="TestDAL.cs" />
+    <Compile Include="TransactionDetailsDAL.cs" />
     <Compile Include="WeightsConfigDAL.cs" />
     <Compile Include="WithdrawDetailsDAL.cs" />
   </ItemGroup>

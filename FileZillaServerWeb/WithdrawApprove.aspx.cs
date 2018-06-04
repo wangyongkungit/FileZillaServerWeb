@@ -21,6 +21,10 @@ namespace FileZillaServerWeb
             Title = "提现审批";
             if (!IsPostBack)
             {
+                if (!string.IsNullOrEmpty(Request.QueryString["employeeID"]))
+                {
+                    hTitle.InnerText = "我的提现记录";
+                }
                 LoadWithdraw();
             }
         }

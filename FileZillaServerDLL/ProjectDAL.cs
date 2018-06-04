@@ -998,6 +998,19 @@ namespace FileZillaServerDAL
             }
             return null;
         }
+
+        /// <summary>
+        /// 根据任务编号获取任务ID
+        /// </summary>
+        /// <param name="taskNo"></param>
+        /// <returns></returns>
+        public string GetPrjIDByTaskNo(string taskNo)
+        {
+            string sql = string.Format("SELECT ID from project WHERE taskNo = '{0}'", taskNo);
+            object obj = DbHelperMySQL.GetSingle(sql);
+            string projectID = Convert.ToString(obj);
+            return projectID;
+        }
         #endregion  ExtensionMethod
     }
 }

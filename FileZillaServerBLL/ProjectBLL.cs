@@ -269,6 +269,16 @@ namespace FileZillaServerBLL
         {
             return dal.GetProjectForEmployeeHome(employeeID, where, pageIndex, pageSize, out totalAmount);
         }
+
+        /// <summary>
+        /// 根据任务编号获取任务ID
+        /// </summary>
+        /// <param name="taskNo"></param>
+        /// <returns></returns>
+        public string GetPrjIDByTaskNo(string taskNo)
+        {
+            return dal.GetPrjIDByTaskNo(taskNo);
+        }
 		#endregion  ExtensionMethod
     }
 }

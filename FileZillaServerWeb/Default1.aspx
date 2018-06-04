@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="fileUpload.aspx.cs" Inherits="MyWebFormsApplication.Ylyj.FileUpload" EnableEventValidation="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
@@ -60,8 +60,8 @@
         <div class="total">
             <div style="width: 100%; height: auto;">
                 <asp:FileUpload ID="fup" runat="server" />
-                <asp:Button ID="btnSave" runat="server" Text="Save, Show doPostBack Parameters" OnClick="btnSave_Click" />
-                <asp:LinkButton ID="lbtnTest" runat="server" Text="Do WebServer Method (Post Back)" OnClick="lbtnTest_Click" CssClass="mya" />
+                <asp:Button ID="btnSave" runat="server" Text="Save, Show doPostBack Parameters" />
+                <asp:LinkButton ID="lbtnTest" runat="server" Text="Do WebServer Method (Post Back)" CssClass="mya" />
                 <input id="btn001" onclick="myDoPostBack();" type="button" value="Invoke Ajax Request" />
                 <input id="btn002" onclick="" type="button" value="Get All Student" />
             </div>
@@ -80,7 +80,14 @@
             <div class="chartContainer1" id="chart2">
 
             </div>
-
+            类型：
+            <select>
+                <option>修改完成</option>
+            </select>
+            &nbsp;
+            <select>
+                <option>修改1</option>
+            </select>
         </div>
         <script type="text/javascript">
             //window.onload = function () {

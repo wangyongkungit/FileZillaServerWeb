@@ -1,0 +1,10 @@
+﻿[2018-06-03 13:13:25] 登录异常。Unable to connect to any of the specified MySQL hosts.
+   在 FileZillaServerDAL.MySqlHelper.GetDataSet(String cmdText) 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerDLL\MySqlHelper.cs:行号 219
+   在 FileZillaServerProfile.GetDataSet.GetUesrProfileByUserIDandPwdNew(String employeeNO, String passWord) 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerProfile\GetDataSet.cs:行号 88
+   在 FileZillaServerProfile.UserProfile.GetUserProfileByUserIDNew(String employeeNO, String passWord) 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerProfile\UserProfile.cs:行号 120
+   在 FileZillaServerWeb.Login.LogIn() 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 60
+[2018-06-03 13:13:35] 登录异常。Unable to connect to any of the specified MySQL hosts.
+   在 FileZillaServerDAL.MySqlHelper.GetDataSet(String cmdText) 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerDLL\MySqlHelper.cs:行号 219
+   在 FileZillaServerProfile.GetDataSet.GetUesrProfileByUserIDandPwdNew(String employeeNO, String passWord) 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerProfile\GetDataSet.cs:行号 88
+   在 FileZillaServerProfile.UserProfile.GetUserProfileByUserIDNew(String employeeNO, String passWord) 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerProfile\UserProfile.cs:行号 120
+   在 FileZillaServerWeb.Login.LogIn() 位置 F:\Work\YiLiangYiJia\SourceCode\FileZillaServerWeb\FileZillaServerWeb\Login.aspx.cs:行号 60

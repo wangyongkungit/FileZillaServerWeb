@@ -3,7 +3,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <form id="form0001" runat="server">
         <div style="width: 900px; margin: 0 auto; text-align: center;">
-            <h1>提现申请审批</h1>
+            <h1 id="hTitle" runat="server">提现申请审批</h1>
             <div style="width: 1000px; margin: 0 auto;">
                 <asp:GridView ID="gvWithdrawApprove" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" CssClass="tbl" OnRowCommand="gvWithdrawApprove_RowCommand">
                     <Columns>
@@ -41,6 +41,7 @@
                     </Columns>
                 </asp:GridView>
         </div>
+            </div>
     </form>
 </asp:Content>
 

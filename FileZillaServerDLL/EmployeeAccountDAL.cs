@@ -35,30 +35,32 @@ namespace FileZillaServerDAL
 		/// </summary>
 		public bool Add(EmployeeAccount model)
 		{
-			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into employeeaccount(");
-			strSql.Append("ID,AMOUNT,PAIDAMOUNT,SURPLUSAMOUNT,OTHERSAMOUNT,CREATEDATE,EMPLOYEEID,LASTUPDATEDATE,ISDELETED)");
-			strSql.Append(" values (");
-			strSql.Append("@ID,@AMOUNT,@PAIDAMOUNT,@SURPLUSAMOUNT,@OTHERSAMOUNT,@CREATEDATE,@EMPLOYEEID,@LASTUPDATEDATE,@ISDELETED)");
-			MySqlParameter[] parameters = {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into employeeaccount(");
+            strSql.Append("ID,AMOUNT,PAIDAMOUNT,SURPLUSAMOUNT,REWARDANDAMERCEMENTAMOUNT,OTHERSAMOUNT,CREATEDATE,EMPLOYEEID,LASTUPDATEDATE,ISDELETED)");
+            strSql.Append(" values (");
+            strSql.Append("@ID,@AMOUNT,@PAIDAMOUNT,@SURPLUSAMOUNT,@REWARDANDAMERCEMENTAMOUNT,@OTHERSAMOUNT,@CREATEDATE,@EMPLOYEEID,@LASTUPDATEDATE,@ISDELETED)");
+            MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,36),
 					new MySqlParameter("@AMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@PAIDAMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@SURPLUSAMOUNT", MySqlDbType.Decimal,12),
+					new MySqlParameter("@REWARDANDAMERCEMENTAMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@OTHERSAMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
 					new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
 					new MySqlParameter("@LASTUPDATEDATE", MySqlDbType.DateTime),
 					new MySqlParameter("@ISDELETED", MySqlDbType.Bit)};
-			parameters[0].Value = model.ID;
-			parameters[1].Value = model.AMOUNT;
-			parameters[2].Value = model.PAIDAMOUNT;
-			parameters[3].Value = model.SURPLUSAMOUNT;
-			parameters[4].Value = model.OTHERSAMOUNT;
-			parameters[5].Value = model.CREATEDATE;
-			parameters[6].Value = model.EMPLOYEEID;
-			parameters[7].Value = model.LASTUPDATEDATE;
-			parameters[8].Value = model.ISDELETED;
+            parameters[0].Value = model.ID;
+            parameters[1].Value = model.AMOUNT;
+            parameters[2].Value = model.PAIDAMOUNT;
+            parameters[3].Value = model.SURPLUSAMOUNT;
+            parameters[4].Value = model.REWARDANDAMERCEMENTAMOUNT;
+            parameters[5].Value = model.OTHERSAMOUNT;
+            parameters[6].Value = model.CREATEDATE;
+            parameters[7].Value = model.EMPLOYEEID;
+            parameters[8].Value = model.LASTUPDATEDATE;
+            parameters[9].Value = model.ISDELETED;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -79,32 +81,35 @@ namespace FileZillaServerDAL
 			strSql.Append("update employeeaccount set ");
 			strSql.Append("AMOUNT=@AMOUNT,");
 			strSql.Append("PAIDAMOUNT=@PAIDAMOUNT,");
-			strSql.Append("SURPLUSAMOUNT=@SURPLUSAMOUNT,");
-			strSql.Append("OTHERSAMOUNT=@OTHERSAMOUNT,");
-			strSql.Append("CREATEDATE=@CREATEDATE,");
-			strSql.Append("EMPLOYEEID=@EMPLOYEEID,");
-			strSql.Append("LASTUPDATEDATE=@LASTUPDATEDATE,");
-			strSql.Append("ISDELETED=@ISDELETED");
-			strSql.Append(" where ID=@ID ");
-			MySqlParameter[] parameters = {
+            strSql.Append("SURPLUSAMOUNT=@SURPLUSAMOUNT,");
+            strSql.Append("REWARDANDAMERCEMENTAMOUNT=@REWARDANDAMERCEMENTAMOUNT,");
+            strSql.Append("OTHERSAMOUNT=@OTHERSAMOUNT,");
+            strSql.Append("CREATEDATE=@CREATEDATE,");
+            strSql.Append("EMPLOYEEID=@EMPLOYEEID,");
+            strSql.Append("LASTUPDATEDATE=@LASTUPDATEDATE,");
+            strSql.Append("ISDELETED=@ISDELETED");
+            strSql.Append(" where ID=@ID ");
+            MySqlParameter[] parameters = {
 					new MySqlParameter("@AMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@PAIDAMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@SURPLUSAMOUNT", MySqlDbType.Decimal,12),
+					new MySqlParameter("@REWARDANDAMERCEMENTAMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@OTHERSAMOUNT", MySqlDbType.Decimal,12),
 					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
 					new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
 					new MySqlParameter("@LASTUPDATEDATE", MySqlDbType.DateTime),
 					new MySqlParameter("@ISDELETED", MySqlDbType.Bit),
 					new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
-			parameters[0].Value = model.AMOUNT;
-			parameters[1].Value = model.PAIDAMOUNT;
-			parameters[2].Value = model.SURPLUSAMOUNT;
-			parameters[3].Value = model.OTHERSAMOUNT;
-			parameters[4].Value = model.CREATEDATE;
-			parameters[5].Value = model.EMPLOYEEID;
-			parameters[6].Value = model.LASTUPDATEDATE;
-			parameters[7].Value = model.ISDELETED;
-			parameters[8].Value = model.ID;
+            parameters[0].Value = model.AMOUNT;
+            parameters[1].Value = model.PAIDAMOUNT;
+            parameters[2].Value = model.SURPLUSAMOUNT;
+            parameters[3].Value = model.REWARDANDAMERCEMENTAMOUNT;
+            parameters[4].Value = model.OTHERSAMOUNT;
+            parameters[5].Value = model.CREATEDATE;
+            parameters[6].Value = model.EMPLOYEEID;
+            parameters[7].Value = model.LASTUPDATEDATE;
+            parameters[8].Value = model.ISDELETED;
+            parameters[9].Value = model.ID;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -167,7 +172,7 @@ namespace FileZillaServerDAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,AMOUNT,PAIDAMOUNT,SURPLUSAMOUNT,OTHERSAMOUNT,CREATEDATE,EMPLOYEEID,LASTUPDATEDATE,ISDELETED from employeeaccount ");
+            strSql.Append("select ID,AMOUNT,PAIDAMOUNT,SURPLUSAMOUNT,OTHERSAMOUNT,REWARDANDAMERCEMENTAMOUNT,CREATEDATE,EMPLOYEEID,LASTUPDATEDATE,ISDELETED from employeeaccount ");
 			strSql.Append(" where ID=@ID ");
 			MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,36)			};
@@ -209,7 +214,11 @@ namespace FileZillaServerDAL
 				if(row["SURPLUSAMOUNT"]!=null && row["SURPLUSAMOUNT"].ToString()!="")
 				{
 					model.SURPLUSAMOUNT=decimal.Parse(row["SURPLUSAMOUNT"].ToString());
-				}
+                }
+                if (row["REWARDANDAMERCEMENTAMOUNT"] != null && row["REWARDANDAMERCEMENTAMOUNT"].ToString() != "")
+                {
+                    model.REWARDANDAMERCEMENTAMOUNT = decimal.Parse(row["REWARDANDAMERCEMENTAMOUNT"].ToString());
+                }
 				if(row["OTHERSAMOUNT"]!=null && row["OTHERSAMOUNT"].ToString()!="")
 				{
 					model.OTHERSAMOUNT=decimal.Parse(row["OTHERSAMOUNT"].ToString());
@@ -247,7 +256,7 @@ namespace FileZillaServerDAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select ID,AMOUNT,PAIDAMOUNT,SURPLUSAMOUNT,OTHERSAMOUNT,CREATEDATE,EMPLOYEEID,LASTUPDATEDATE,ISDELETED ");
+            strSql.Append("select ID,AMOUNT,PAIDAMOUNT,SURPLUSAMOUNT,REWARDANDAMERCEMENTAMOUNT,OTHERSAMOUNT,CREATEDATE,EMPLOYEEID,LASTUPDATEDATE,ISDELETED ");
 			strSql.Append(" FROM employeeaccount ");
 			if(strWhere.Trim()!="")
 			{

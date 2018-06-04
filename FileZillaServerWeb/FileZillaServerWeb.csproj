@@ -19,6 +19,8 @@
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>true</IISExpressUseClassicPipelineMode>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,15 +53,22 @@
     <Reference Include="Hitone.Web.SqlServerUploader">
       <HintPath>Lib\Hitone.Web.SqlServerUploader.dll</HintPath>
     </Reference>
+    <Reference Include="Jil, Version=2.15.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jil.2.15.4\lib\net45\Jil.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Sigil, Version=4.7.0.0, Culture=neutral, PublicKeyToken=2d06c3494341c8ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sigil.4.7.0\lib\net45\Sigil.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -225,6 +234,7 @@
     <Content Include="Content\themes\base\ylyj\employeelist.css" />
     <Content Include="Content\themes\base\ylyj\loglist.css" />
     <Content Include="Content\themes\base\ylyj\materialConfig.css" />
+    <Content Include="Content\themes\base\ylyj\outgoings.css" />
     <Content Include="Content\themes\base\ylyj\salaryconfigmanage.css" />
     <Content Include="Content\themes\base\ylyj\salarydetails.css" />
     <Content Include="Content\themes\base\ylyj\serialnumber.css" />
@@ -245,6 +255,7 @@
     <Content Include="EmployeeManage\EmployeeList.aspx" />
     <Content Include="Error\404.html" />
     <Content Include="FileZillaLogs.aspx" />
+    <Content Include="Finance\Outgoings.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\beach.jpg" />
     <Content Include="Images\bg-grey-stripe.png" />
@@ -350,6 +361,7 @@
     <Content Include="WithdrawApprove.aspx" />
     <Content Include="xs.html" />
     <Content Include="MyHandler.ashx" />
+    <Content Include="HttpHandler\FileHandler.ashx" />
     <None Include="Properties\PublishProfiles\FileZillaLog.pubxml" />
     <Content Include="Scripts\ck.layer.js" />
     <None Include="Properties\PublishProfiles\FilezillaLog2.pubxml" />
@@ -540,8 +552,18 @@
     <Compile Include="FileZillaLogs.aspx.designer.cs">
       <DependentUpon>FileZillaLogs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Finance\Outgoings.aspx.cs">
+      <DependentUpon>Outgoings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Finance\Outgoings.aspx.designer.cs">
+      <DependentUpon>Outgoings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HttpHandler\FileHandler.ashx.cs">
+      <DependentUpon>FileHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -737,6 +759,10 @@
     <ProjectReference Include="..\FileZillaServerProfile\FileZillaServerProfile.csproj">
       <Project>{a5b2628b-b5f8-4112-a46e-fdd9be961b46}</Project>
       <Name>FileZillaServerProfile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yiliangyijia.Comm\Yiliangyijia.Comm.csproj">
+      <Project>{7ea32ee9-3008-43c4-8f4a-d477ece7e7a4}</Project>
+      <Name>Yiliangyijia.Comm</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,8 @@ namespace FileZillaServerCommonHelper
         交易状态 = 8,
         专业类别 = 9,
         省份 = 10,
-        专业类别小类 = 11
+        专业类别小类 = 11,
+        文件分类 = 12,
+        奖励与处罚类型 = 13
     }
 }

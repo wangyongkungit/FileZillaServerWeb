@@ -46,6 +46,9 @@
     <Compile Include="EmployeeAccount.cs" />
     <Compile Include="EmployeeDomination.cs" />
     <Compile Include="EmployeeProportion.cs" />
+    <Compile Include="FileCategory.cs" />
+    <Compile Include="FileHistory.cs" />
+    <Compile Include="FileOperationLog.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectModify.cs" />
     <Compile Include="ProjectSharing.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="TaskAssignConfig.cs" />
     <Compile Include="TaskAssignConfigDetails.cs" />
     <Compile Include="TaskTrend.cs" />
+    <Compile Include="TransactionDetails.cs" />
     <Compile Include="WeightsConfig.cs" />
     <Compile Include="WithdrawDetails.cs" />
   </ItemGroup>

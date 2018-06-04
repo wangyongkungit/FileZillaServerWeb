@@ -1,0 +1,12 @@
+﻿[2018-06-04 19:39:16] finishedPerson: fc834326-3c4a-4bb3-b6a1-4b6f793550ce
+[2018-06-04 19:39:16] finishedPerson: fc834326-3c4a-4bb3-b6a1-4b6f793550ce
+[2018-06-04 19:39:16] employeeNo: C009
+[2018-06-04 19:39:16] taskNo: 2017031418-61703081820
+[2018-06-04 19:39:16] currentEmpPath: F:\Temporary\Cache\Dictionary\员工\C009
+[2018-06-04 19:39:18] finishedPerson: fc834326-3c4a-4bb3-b6a1-4b6f793550ce
+[2018-06-04 19:39:18] finishedPerson: fc834326-3c4a-4bb3-b6a1-4b6f793550ce
+[2018-06-04 19:39:18] employeeNo: C009
+[2018-06-04 19:39:18] taskNo: 2017031418-61703081820
+[2018-06-04 19:39:18] currentEmpPath: F:\Temporary\Cache\Dictionary\员工\C009
+[2018-06-04 19:46:12] project is null:False
+[2018-06-04 19:47:41] project is null:False

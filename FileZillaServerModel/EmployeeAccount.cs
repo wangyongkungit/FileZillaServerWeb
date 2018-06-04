@@ -19,6 +19,7 @@ namespace FileZillaServerModel
         private decimal? _amount = 0.00M;
         private decimal? _paidamount = 0.00M;
         private decimal? _surplusamount = 0.00M;
+        private decimal? _rewardandamercementamount = 0.00M;
         private decimal? _othersamount = 0.00M;
         private DateTime? _createdate;
         private string _employeeid;
@@ -55,6 +56,14 @@ namespace FileZillaServerModel
         {
             set { _surplusamount = value; }
             get { return _surplusamount; }
+        }
+        /// <summary>
+        /// 奖罚
+        /// </summary>
+        public decimal? REWARDANDAMERCEMENTAMOUNT
+        {
+            set { _rewardandamercementamount = value; }
+            get { return _rewardandamercementamount; }
         }
         /// <summary>
         /// 

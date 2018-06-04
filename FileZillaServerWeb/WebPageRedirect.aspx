@@ -52,7 +52,7 @@
         }
         .nav ul li {
             width:300px;
-            height:200px;
+            height:130px;
 	        list-style-type: none;
 	        /*relative positioning for list items along with overflow hidden to contain the overflowing ripple
 	        position: relative;*/
@@ -90,7 +90,7 @@
 	        100% {opacity: 0; transform: scale(2.5);}
         }
         .diva {
-            width:300px; height:200px; float:left; background-color:#0072AA; position:relative;
+            width:300px; height:120px; float:left; background-color:#0072AA; position:relative;
         }
         .diva:hover {
             background-color:#0072CC;
@@ -184,9 +184,9 @@
 	        <ul>
                 <asp:Repeater ID="rptMenu" runat="server">
                     <ItemTemplate>
-                        <li style="width:300px; height:200px; line-height:200px; margin:5px 5px; float:left;">
+                        <li style="width:300px; height:120px; line-height:120px; margin:5px 5px; float:left;">
                             <div class="diva">
-                            <a href='<%# Eval("Path") %>' target="_blank" style="width:280px;height:160px;line-height:160px; display:block;" title='<%# Eval("Remarks") %>'><%# Eval("Name") %>
+                            <a href='<%# Eval("Path") %>' target="_blank" style="width:280px;height:100px;line-height:100px; display:block;" title='<%# Eval("Remarks") %>'><%# Eval("Name") %>
                                 <%--<asp:Image ID="Image1" runat="server" ImageUrl="~/Images/hot.gif" Visible='<%# Eval("Path").ToString() == "LogList.aspx" %>' />--%>
                             </a>
                                 <div class="ovrly">
