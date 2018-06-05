@@ -65,8 +65,9 @@ public class CCHttpHandler : IHttpHandler, IRequiresSessionState
                ""Blog"":""y976362357@163.com""}");
     }
 
-    public void GenerateJson(string callback, object result)
+    public void GenerateJson(object result)
     {
+        string callback = context.Request["callback"];
         if (String.IsNullOrEmpty(callback))
         {
             context.Response.Write(JSON.Serialize(result));

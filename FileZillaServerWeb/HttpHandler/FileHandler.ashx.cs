@@ -23,7 +23,8 @@ namespace FileZillaServerWeb.HttpHandler
             string[] parametersRequired = { "projectId", "categoryId", "description" };
             if (!CheckParamsRequired(parametersRequired, out returnMsg))
             {
-                context.Response.Write(returnMsg);
+                JsonResult<string> result = new JsonResult<string> { Code = 1, Message = returnMsg, Rows = 1, Result = null };
+                GenerateJson(result);
                 return;
             }
             FileCategoryBLL fcBll = new FileCategoryBLL();
@@ -31,7 +32,7 @@ namespace FileZillaServerWeb.HttpHandler
             {
                 string message = errCode == 0 ? "添加成功" : ErrorCode.GetCodeMessage(errCode);
                 JsonResult<string> result = new JsonResult<string> { Code = 0, Message = message, Rows = 1, Result = null };
-                context.Response.Write(JSON.Serialize(result));
+                GenerateJson(result);
             }
         }
 
