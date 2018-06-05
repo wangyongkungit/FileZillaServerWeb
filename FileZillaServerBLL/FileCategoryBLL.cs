@@ -1,11 +1,17 @@
 ﻿using FileZillaServerDAL;
 using FileZillaServerModel;
+using FileZillaServerModel.Config;
+using FileZillaServerModel.Interface;
+using Jil;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FileZillaServerBLL
 {
@@ -133,7 +139,121 @@ namespace FileZillaServerBLL
 
         #endregion  BasicMethod
         #region  ExtensionMethod
+        /// <summary>
+        /// 根据proejctId和category获取orderSort
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public int GetOrderSort(string projectId, string category)
+        {
+            return dal.GetOrderSort(projectId, category);
+        }
 
+        public bool AddFileCategory(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            ConfigureBLL configBll = new ConfigureBLL();
+            DataTable dtConfig = configBll.GetConfig("文件分类小类");
+            string projectId = context.Request["projectId"];
+            string categoryId = context.Request["categoryId"];
+            string parentId = context.Request["parentId"];
+            string description = context.Request["description"];
+            string title = dtConfig.AsEnumerable().Where(item => Convert.ToString(item["configKey"]) == categoryId).Select(item => item.Field<string>("configValue")).FirstOrDefault();
+            string rootPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
+            FileCategory fileCategory = new FileCategory();
+            fileCategory.ID = Guid.NewGuid().ToString();
+            fileCategory.PROJECTID = projectId;
+            fileCategory.CATEGORY = categoryId;
+            fileCategory.DESCRIPTION = description;
+            fileCategory.ORDERSORT = GetOrderSort(projectId, categoryId);
+            title += Convert.ToString(fileCategory.ORDERSORT);
+            fileCategory.TITLE = title;
+            fileCategory.FOLDERNAME = title;
+            fileCategory.CREATEDATE = DateTime.Now;
+            fileCategory.PARENTID = parentId;
+            fileCategory.CLASSSORT = GlobalConfig.dicMap[categoryId];
+            fileCategory.DIVISIONSORT = Convert.ToInt32(categoryId);
+            if (this.Add(fileCategory))
+            {
+                GetFilePathByProjectId(projectId, title, out errCode);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 根据任务ID和title创建目录
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="folderName"></param>
+        /// <returns></returns>
+        public bool GetFilePathByProjectId(string projectId, string folderName, out int errCode)
+        {
+            errCode = 0;
+            FileHistoryBLL fileHistoryBll = new FileHistoryBLL();
+            string taskNo = string.Empty;
+            string returnFileName = string.Empty;
+            try
+            {
+                // 根据任务ID获取任务编号和员工编号，如果有记录说明任务已分配，则需要到员工目录下寻找该文件
+                DataTable dtTaskNoAndEmpNo = fileHistoryBll.GetTaskNoAndEmpNoByPrjId(projectId).Tables[0];
+                // 任务已分配
+                if (dtTaskNoAndEmpNo != null && dtTaskNoAndEmpNo.Rows.Count > 0)
+                {
+                    string finishedPerson = Convert.ToString((dtTaskNoAndEmpNo.Rows[0]["FINISHEDPERSON"]));
+                    if (!string.IsNullOrEmpty(finishedPerson))
+                    {
+                        string rootPath = ConfigurationManager.AppSettings["employeePath"].ToString();
+
+                        string empNo = dtTaskNoAndEmpNo.AsEnumerable().Select(item => Convert.ToString(item["employeeNo"])).FirstOrDefault();
+                        string empNoFullPath = Path.Combine(rootPath, empNo);
+
+                        taskNo = dtTaskNoAndEmpNo.AsEnumerable().Select(item => Convert.ToString(item["taskNo"])).FirstOrDefault();
+                        string taskNoFinalFolder = Directory.GetDirectories(empNoFullPath, taskNo, SearchOption.AllDirectories).FirstOrDefault();
+                        if (!string.IsNullOrEmpty(taskNoFinalFolder))
+                        {
+                            returnFileName = Path.Combine(rootPath, empNo, taskNo, folderName);
+                        }
+                    }
+                    // 任务未分配
+                    else
+                    {
+                        Project prj = new ProjectBLL().GetModel(projectId);
+                        taskNo = prj.TASKNO;
+                        string rootPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
+                        string taskNoFinalFolder = Directory.GetDirectories(rootPath, taskNo, SearchOption.TopDirectoryOnly).FirstOrDefault();
+                        if (!string.IsNullOrEmpty(taskNoFinalFolder))
+                        {
+                            returnFileName = Path.Combine(rootPath, taskNo, folderName);
+                        }
+                    }
+                }
+                if (!Directory.Exists(returnFileName))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(returnFileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        errCode = 1;
+                    }
+                    finally
+                    {
+                        if (!Directory.Exists(returnFileName))
+                        {
+                            errCode = 6503;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                errCode = 1;
+            }
+            return errCode == 0;
+        }
         #endregion  ExtensionMethod
     }
 }

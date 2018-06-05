@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Yiliangyijia.Comm
+namespace FileZillaServerModel.Interface
 {
     public class JsonResult<T>
     {
@@ -15,5 +15,7 @@ namespace Yiliangyijia.Comm
         public int Rows { get; set; }
 
         public List<T> Result { get; set; }
+
+        public DateTime Req_Date { get; set; }
     }
 }

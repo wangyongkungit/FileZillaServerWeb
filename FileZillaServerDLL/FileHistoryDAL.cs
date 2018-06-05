@@ -350,7 +350,7 @@ namespace FileZillaServerDAL
         /// <returns></returns>
         public DataSet GetTaskNoAndEmpNoByPrjId(string projectID)
         {
-            string sql = string.Format(@"SELECT p.TASKNO, e.EMPLOYEENO FROM project p
+            string sql = string.Format(@"SELECT p.TASKNO, e.EMPLOYEENO, ps.FINISHEDPERSON FROM project p
                                          LEFT JOIN projectsharing ps
                                          ON p.id = ps.PROJECTID 
                                          LEFT JOIN employee e

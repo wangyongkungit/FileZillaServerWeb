@@ -1,8 +1,10 @@
 ﻿using FileZillaServerBLL;
 using FileZillaServerModel;
+using FileZillaServerModel.Interface;
 using Jil;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using Yiliangyijia.Comm;
@@ -16,19 +18,19 @@ namespace FileZillaServerWeb.HttpHandler
     {
         public void AddFileCategory()
         {
-            string projectId = context.Request["projectId"];
-            string categoryId = context.Request["categoryId"];
-            string description = context.Request["description"];
-            FileCategory fileCategory = new FileCategory();
-            FileCategoryBLL fcBll = new FileCategoryBLL();
-            fileCategory.ID = Guid.NewGuid().ToString();
-            fileCategory.CATEGORY = categoryId;
-            fileCategory.DESCRIPTION = description;
-            fileCategory.TITLE = "";
-            fileCategory.FOLDERNAME = "";
-            if (fcBll.Add(fileCategory))
+            string returnMsg = string.Empty;
+            int errCode = 0;
+            string[] parametersRequired = { "projectId", "categoryId", "description" };
+            if (!CheckParamsRequired(parametersRequired, out returnMsg))
             {
-                JsonResult<string> result = new JsonResult<string> { Code = 0, Message = "add success", Rows = 1, Result = null };
+                context.Response.Write(returnMsg);
+                return;
+            }
+            FileCategoryBLL fcBll = new FileCategoryBLL();
+            if (fcBll.AddFileCategory(context, out errCode))
+            {
+                string message = errCode == 0 ? "添加成功" : ErrorCode.GetCodeMessage(errCode);
+                JsonResult<string> result = new JsonResult<string> { Code = 0, Message = message, Rows = 1, Result = null };
                 context.Response.Write(JSON.Serialize(result));
             }
         }

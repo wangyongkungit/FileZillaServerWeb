@@ -342,7 +342,24 @@ namespace FileZillaServerDAL
 
         #endregion  BasicMethod
         #region  ExtensionMethod
-
+        /// <summary>
+        /// 根据proejctId和category获取orderSort
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public int GetOrderSort(string projectId, string category)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT IFNULL(max(ORDERSORT), 0) + 1 as ORDERSORT FROM filecategory WHERE PROJECTID = @projectId AND CATEGORY = @category");
+            MySqlParameter[] parameters = {
+                    new MySqlParameter("@projectId", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@category",MySqlDbType.String, 3) };
+            parameters[0].Value = projectId;
+            parameters[1].Value = category;
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString(), parameters);
+            return Convert.ToInt32(obj);
+        }
         #endregion  ExtensionMethod
     }
 }

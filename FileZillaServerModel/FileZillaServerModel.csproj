@@ -42,6 +42,7 @@
     <Compile Include="Attachment.cs" />
     <Compile Include="Attendance.cs" />
     <Compile Include="Cerficate.cs" />
+    <Compile Include="Config\GlobalConfig.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeAccount.cs" />
     <Compile Include="EmployeeDomination.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="FileCategory.cs" />
     <Compile Include="FileHistory.cs" />
     <Compile Include="FileOperationLog.cs" />
+    <Compile Include="Interface\JsonResult.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectModify.cs" />
     <Compile Include="ProjectSharing.cs" />
