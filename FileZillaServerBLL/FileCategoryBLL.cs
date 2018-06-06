@@ -150,6 +150,18 @@ namespace FileZillaServerBLL
             return dal.GetOrderSort(projectId, category);
         }
 
+        /// <summary>
+        /// 获取回复tab列表
+        /// </summary>
+        /// <param name="categoryId">配置表中的categoryId</param>
+        /// <param name="parentId">针对哪个记录进行的回复</param>
+        /// <returns></returns>
+        public DataSet GetReplayToTabList(string categoryId)
+        {
+            DataSet ds = dal.GetReplayToList(categoryId);
+            return ds;
+        }
+
         public bool AddFileCategory(HttpContext context, out int errCode)
         {
             errCode = 0;
@@ -174,10 +186,16 @@ namespace FileZillaServerBLL
             fileCategory.PARENTID = parentId;
             fileCategory.CLASSSORT = GlobalConfig.dicMap[categoryId];
             fileCategory.DIVISIONSORT = Convert.ToInt32(categoryId);
+            // 添加数据库记录
             if (this.Add(fileCategory))
             {
-                GetFilePathByProjectId(projectId, title, out errCode);
-                return true;
+                // 创建任务目录
+                if (!GetFilePathByProjectId(projectId, title, out errCode))
+                {
+                    // 目录创建失败时，需要将已添加到数据库的记录删除
+                    this.Delete(fileCategory.ID);
+                    return false;
+                }
             }
             return false;
         }
@@ -253,6 +271,14 @@ namespace FileZillaServerBLL
                 errCode = 1;
             }
             return errCode == 0;
+        }
+        public DataSet GetReplyToTab(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            string categoryId = context.Request["categoryId"];
+            //string parentId = context.Request["parentId"];
+            DataSet ds = this.GetReplayToTabList(categoryId);
+            return ds;
         }
         #endregion  ExtensionMethod
     }

@@ -96,14 +96,16 @@ public class CCHttpHandler : IHttpHandler, IRequiresSessionState
     /// <param name="paramsRequired">必输参数数组</param>
     /// <param name="returnMsg">返回消息</param>
     /// <returns>是否通过校验</returns>
-    public bool CheckParamsRequired(string[] paramsRequired, out string returnMsg)
+    public bool CheckParamsRequired(string[] paramsRequired, out int errorCode, out string errorMsg)
     {
-        returnMsg = string.Empty;
+        errorCode = 0;
+        errorMsg = string.Empty;
         string[] parametersGet = context.Request.Params.AllKeys;
         string param = paramsRequired.Except(parametersGet).FirstOrDefault();
         if (!string.IsNullOrEmpty(param))
         {
-            returnMsg = string.Format("{0}:{1}", ErrorCode.GetCodeMessage(2004), param);
+            errorCode = 2004;
+            errorMsg = string.Format("{0}:{1}", ErrorCode.GetCodeMessage(errorCode), param);
             return false;
         }
         return true;
