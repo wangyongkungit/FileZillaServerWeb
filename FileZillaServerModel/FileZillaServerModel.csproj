@@ -50,6 +50,7 @@
     <Compile Include="FileCategory.cs" />
     <Compile Include="FileHistory.cs" />
     <Compile Include="FileOperationLog.cs" />
+    <Compile Include="Interface\CategoryTabs.cs" />
     <Compile Include="Interface\JsonResult.cs" />
     <Compile Include="Interface\SubTabs.cs" />
     <Compile Include="Project.cs" />

@@ -201,6 +201,7 @@ namespace FileZillaServerBLL
             return false;
         }
 
+        #region 创建目录
         /// <summary>
         /// 根据任务ID和title创建目录
         /// </summary>
@@ -272,14 +273,32 @@ namespace FileZillaServerBLL
                 errCode = 1;
             }
             return errCode == 0;
-        }
+        } 
+        #endregion
+
         public DataSet GetReplyToTab(HttpContext context, out int errCode)
         {
             errCode = 0;
             string projectId = context.Request["projectId"];
             string categoryId = context.Request["categoryId"];
+            categoryId = GlobalConfig.dicMapForSubTab[categoryId].ToString();
             DataSet ds = this.GetReplayToTabList(projectId, categoryId);
             return ds;
+        }
+
+        /// <summary>
+        /// 获取 fileCategory tab 列表
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="errCode"></param>
+        /// <returns></returns>
+        public List<FileCategory> GetCategories(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            string projectId = context.Request["projectId"];
+            string where = string.Format(" projectId = '{0}'", projectId);
+            List<FileCategory> categories = this.GetModelList(where);
+            return categories;
         }
         #endregion  ExtensionMethod
     }

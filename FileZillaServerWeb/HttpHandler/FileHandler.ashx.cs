@@ -103,6 +103,11 @@ namespace FileZillaServerWeb.HttpHandler
             }
 
             FileCategoryBLL fcBll = new FileCategoryBLL();
+            List<FileCategory> categories = fcBll.GetCategories(context, out errorCode);
+            if (categories != null && categories.Count() > 0)
+            {
+
+            }
         }
 
         public bool IsReusable
