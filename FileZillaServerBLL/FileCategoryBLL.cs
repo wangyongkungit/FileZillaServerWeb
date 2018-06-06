@@ -156,9 +156,9 @@ namespace FileZillaServerBLL
         /// <param name="categoryId">配置表中的categoryId</param>
         /// <param name="parentId">针对哪个记录进行的回复</param>
         /// <returns></returns>
-        public DataSet GetReplayToTabList(string categoryId)
+        public DataSet GetReplayToTabList(string projectId, string categoryId)
         {
-            DataSet ds = dal.GetReplayToList(categoryId);
+            DataSet ds = dal.GetReplayToList(projectId, categoryId);
             return ds;
         }
 
@@ -276,9 +276,9 @@ namespace FileZillaServerBLL
         public DataSet GetReplyToTab(HttpContext context, out int errCode)
         {
             errCode = 0;
+            string projectId = context.Request["projectId"];
             string categoryId = context.Request["categoryId"];
-            //string parentId = context.Request["parentId"];
-            DataSet ds = this.GetReplayToTabList(categoryId);
+            DataSet ds = this.GetReplayToTabList(projectId, categoryId);
             return ds;
         }
         #endregion  ExtensionMethod

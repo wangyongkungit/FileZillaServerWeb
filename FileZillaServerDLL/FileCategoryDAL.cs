@@ -367,16 +367,18 @@ namespace FileZillaServerDAL
         /// <param name="categoryId">配置表中的categoryId</param>
         /// <param name="parentId">针对哪个记录进行的回复</param>
         /// <returns></returns>
-        public DataSet GetReplayToList(string category)
+        public DataSet GetReplayToList(string projectId, string category)
         {
             string strSql = @"SELECT case fc1.PARENTID WHEN 0 THEN 0 ELSE 1 END hasParent,
-                             fc1.ID, fc1.CATEGORY, fc1.TITLE FROM filecategory fc1
+                             fc1.ID, fc1.category categoryId, fc1.TITLE FROM filecategory fc1
 	                            LEFT JOIN filecategory fc2
                               ON fc1.ID = fc2.PARENTID
-                            WHERE fc1.category = @category ORDER BY fc1.orderSort ";
+                            WHERE fc1.PROJECTID = @projectId AND fc1.category = @category ORDER BY fc1.orderSort ";
             MySqlParameter[] parameters = {
+                    new MySqlParameter("@projectId", MySqlDbType.VarChar,36),
                     new MySqlParameter("@category", MySqlDbType.VarChar,3) };
-            parameters[0].Value = category;
+            parameters[0].Value = projectId;
+            parameters[1].Value = category;
             DataSet ds = DbHelperMySQL.Query(strSql, parameters);
             return ds;
         }

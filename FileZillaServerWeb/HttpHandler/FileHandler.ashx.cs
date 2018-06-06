@@ -17,6 +17,7 @@ namespace FileZillaServerWeb.HttpHandler
     /// </summary>
     public class FileHandler : CCHttpHandler
     {
+        #region AddFileCategory
         public void AddFileCategory()
         {
             string returnMsg = string.Empty;
@@ -37,7 +38,9 @@ namespace FileZillaServerWeb.HttpHandler
                 return;
             }
         }
+        #endregion
 
+        #region GetReplyToTab
         /// <summary>
         /// 根据选择的tal获取回复tab列表
         /// </summary>
@@ -46,7 +49,7 @@ namespace FileZillaServerWeb.HttpHandler
             string returnMsg = string.Empty;
             int errorCode = 0;
             // 校验参数
-            string[] parametersRequired = { "categoryId", "parentId" };
+            string[] parametersRequired = { "projectId", "categoryId"};
             if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
             {
                 JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
@@ -65,6 +68,7 @@ namespace FileZillaServerWeb.HttpHandler
                     SubTabs sub = new SubTabs();
                     sub.Id = fileCategories.Rows[i]["ID"].ToString();
                     sub.hasParent = fileCategories.Rows[i]["hasParent"].ToString() == "1";
+                    sub.categoryId = fileCategories.Rows[i]["categoryId"].ToString();
                     sub.Title = fileCategories.Rows[i]["title"].ToString();
                     subTabs.Add(sub);
                 }
@@ -75,12 +79,31 @@ namespace FileZillaServerWeb.HttpHandler
             else
             {
                 string message = ErrorCode.GetCodeMessage(errorCode);
-                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = null, Req_Date = DateTime.Now };
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = null };
                 GenerateJson(result);
                 return;
             }
         }
+        #endregion
 
+        /// <summary>
+        /// 获取 fileCategory 列表
+        /// </summary>
+        public void GetCategories()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            // 校验参数
+            string[] parametersRequired = { "projectId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+
+            FileCategoryBLL fcBll = new FileCategoryBLL();
+        }
 
         public bool IsReusable
         {

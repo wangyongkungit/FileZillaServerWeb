@@ -12,6 +12,8 @@ namespace FileZillaServerModel.Interface
 
         public string Id { get; set; }
 
+        public string categoryId { get; set; }
+
         public string Title { get; set; }
     }
 }
