@@ -196,6 +196,7 @@ namespace FileZillaServerBLL
                     this.Delete(fileCategory.ID);
                     return false;
                 }
+                return true;
             }
             return false;
         }
