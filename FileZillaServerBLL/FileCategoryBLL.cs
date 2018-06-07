@@ -73,16 +73,16 @@ namespace FileZillaServerBLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
+        public DataSet GetList(string strWhere, string orderBy)
         {
-            return dal.GetList(strWhere);
+            return dal.GetList(strWhere, orderBy);
         }
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<FileCategory> GetModelList(string strWhere)
+        public List<FileCategory> GetModelList(string strWhere, string orderBy)
         {
-            DataSet ds = dal.GetList(strWhere);
+            DataSet ds = dal.GetList(strWhere,orderBy);
             return DataTableToList(ds.Tables[0]);
         }
         /// <summary>
@@ -112,7 +112,7 @@ namespace FileZillaServerBLL
         /// </summary>
         public DataSet GetAllList()
         {
-            return GetList("");
+            return GetList(string.Empty, string.Empty);
         }
 
         /// <summary>
@@ -150,6 +150,7 @@ namespace FileZillaServerBLL
             return dal.GetOrderSort(projectId, category);
         }
 
+        #region 获取回复tab列表
         /// <summary>
         /// 获取回复tab列表
         /// </summary>
@@ -161,7 +162,10 @@ namespace FileZillaServerBLL
             DataSet ds = dal.GetReplayToList(projectId, categoryId);
             return ds;
         }
+        #endregion
 
+
+        #region 添加文件类别
         public bool AddFileCategory(HttpContext context, out int errCode)
         {
             errCode = 0;
@@ -207,6 +211,7 @@ namespace FileZillaServerBLL
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="folderName"></param>
+        /// <param name="errCode">返回码</param>
         /// <returns></returns>
         public bool GetFilePathByProjectId(string projectId, string folderName, out int errCode)
         {
@@ -224,7 +229,7 @@ namespace FileZillaServerBLL
                     string finishedPerson = Convert.ToString((dtTaskNoAndEmpNo.Rows[0]["FINISHEDPERSON"]));
                     if (!string.IsNullOrEmpty(finishedPerson))
                     {
-                        string rootPath = ConfigurationManager.AppSettings["employeePath"].ToString();
+                        string rootPath = Convert.ToString(ConfigurationManager.AppSettings["employeePath"]);
 
                         string empNo = dtTaskNoAndEmpNo.AsEnumerable().Select(item => Convert.ToString(item["employeeNo"])).FirstOrDefault();
                         string empNoFullPath = Path.Combine(rootPath, empNo);
@@ -241,7 +246,7 @@ namespace FileZillaServerBLL
                     {
                         Project prj = new ProjectBLL().GetModel(projectId);
                         taskNo = prj.TASKNO;
-                        string rootPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
+                        string rootPath = Convert.ToString(ConfigurationManager.AppSettings["taskAllotmentPath"]);
                         string taskNoFinalFolder = Directory.GetDirectories(rootPath, taskNo, SearchOption.TopDirectoryOnly).FirstOrDefault();
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
@@ -273,19 +278,29 @@ namespace FileZillaServerBLL
                 errCode = 1;
             }
             return errCode == 0;
-        } 
+        }
+        #endregion
         #endregion
 
+        #region 获取修改完成或者疑问答复的tab
+        /// <summary>
+        /// 获取修改完成或者疑问答复的tab
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="errCode"></param>
+        /// <returns></returns>
         public DataSet GetReplyToTab(HttpContext context, out int errCode)
         {
             errCode = 0;
             string projectId = context.Request["projectId"];
             string categoryId = context.Request["categoryId"];
-            categoryId = GlobalConfig.dicMapForSubTab[categoryId].ToString();
+            //categoryId = GlobalConfig.dicMapForSubTab[categoryId].ToString();
             DataSet ds = this.GetReplayToTabList(projectId, categoryId);
             return ds;
         }
-
+        #endregion
+        
+        #region 获取 fileCategory tab 列表
         /// <summary>
         /// 获取 fileCategory tab 列表
         /// </summary>
@@ -297,9 +312,12 @@ namespace FileZillaServerBLL
             errCode = 0;
             string projectId = context.Request["projectId"];
             string where = string.Format(" projectId = '{0}'", projectId);
-            List<FileCategory> categories = this.GetModelList(where);
+            // 加入排序字段
+            string orderBy = string.Format(" ORDER BY CLASSSORT, ORDERSORT, DIVISIONSORT");
+            List<FileCategory> categories = this.GetModelList(where, orderBy);
             return categories;
         }
+        #endregion
         #endregion  ExtensionMethod
     }
 }

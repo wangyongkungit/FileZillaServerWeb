@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FileZillaServerBLL
 {
@@ -67,16 +68,16 @@ namespace FileZillaServerBLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
+        public DataSet GetList(string strWhere, string orderBy)
         {
-            return dal.GetList(strWhere);
+            return dal.GetList(strWhere, orderBy);
         }
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<FileHistory> GetModelList(string strWhere)
+        public List<FileHistory> GetModelList(string strWhere, string orderBy)
         {
-            DataSet ds = dal.GetList(strWhere);
+            DataSet ds = dal.GetList(strWhere, orderBy);
             return DataTableToList(ds.Tables[0]);
         }
         /// <summary>
@@ -106,7 +107,7 @@ namespace FileZillaServerBLL
         /// </summary>
         public DataSet GetAllList()
         {
-            return GetList("");
+            return GetList("", "");
         }
 
         /// <summary>
@@ -146,6 +147,16 @@ namespace FileZillaServerBLL
         public DataSet GetTaskNoAndEmpNoByPrjId(string projectID)
         {
             return dal.GetTaskNoAndEmpNoByPrjId(projectID);
+        }
+        public List<FileHistory> GetFileHistories(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            string parentId = context.Request["categoryId"];
+            string where = string.Format(" projectId = '{0}'", parentId);
+            // 加入排序字段
+            string orderBy = string.Format(" ORDER BY operateDate");
+            List<FileHistory> fileHistories = this.GetModelList(where, orderBy);
+            return fileHistories;
         }
         #endregion  ExtensionMethod
     }

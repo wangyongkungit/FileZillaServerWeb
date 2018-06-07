@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FileZillaServerBLL
 {
@@ -67,16 +68,16 @@ namespace FileZillaServerBLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
+        public DataSet GetList(string strWhere, string orderBy)
         {
-            return dal.GetList(strWhere);
+            return dal.GetList(strWhere, orderBy);
         }
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<FileOperationLog> GetModelList(string strWhere)
+        public List<FileOperationLog> GetModelList(string strWhere, string orderBy)
         {
-            DataSet ds = dal.GetList(strWhere);
+            DataSet ds = dal.GetList(strWhere, orderBy);
             return DataTableToList(ds.Tables[0]);
         }
         /// <summary>
@@ -106,7 +107,7 @@ namespace FileZillaServerBLL
         /// </summary>
         public DataSet GetAllList()
         {
-            return GetList("");
+            return GetList("", "");
         }
 
         /// <summary>
@@ -119,7 +120,16 @@ namespace FileZillaServerBLL
 
         #endregion  BasicMethod
         #region  ExtensionMethod
-
+        public List<FileOperationLog> GetFileOperateLogs(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            string parentId = context.Request["projectId"];
+            string where = string.Format(" projectId = '{0}'", parentId);
+            // 加入排序字段
+            string orderBy = string.Format(" ORDER BY operateDate");
+            List<FileOperationLog> fileOperateLogs = this.GetModelList(where, orderBy);
+            return fileOperateLogs;
+        }
         #endregion  ExtensionMethod
     }
 }

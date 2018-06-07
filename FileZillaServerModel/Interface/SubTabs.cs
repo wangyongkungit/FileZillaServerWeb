@@ -8,7 +8,7 @@ namespace FileZillaServerModel.Interface
 {
     public class SubTabs
     {
-        public bool hasParent { get; set; }
+        //public bool hasParent { get; set; }
 
         public string Id { get; set; }
 

@@ -49,7 +49,7 @@ namespace FileZillaServerWeb.HttpHandler
             string returnMsg = string.Empty;
             int errorCode = 0;
             // 校验参数
-            string[] parametersRequired = { "projectId", "categoryId"};
+            string[] parametersRequired = { "projectId", "categoryId" };
             if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
             {
                 JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
@@ -61,18 +61,18 @@ namespace FileZillaServerWeb.HttpHandler
             DataTable fileCategories = fcBll.GetReplyToTab(context, out errorCode).Tables[0];
             if (fileCategories != null && fileCategories.Rows.Count > 0)
             {
-                string message = ErrorCode.GetCodeMessage(errorCode);
                 List<SubTabs> subTabs = new List<SubTabs>();
                 for (int i = 0; i < fileCategories.Rows.Count; i++)
                 {
                     SubTabs sub = new SubTabs();
                     sub.Id = fileCategories.Rows[i]["ID"].ToString();
-                    sub.hasParent = fileCategories.Rows[i]["hasParent"].ToString() == "1";
+                    //sub.hasParent = fileCategories.Rows[i]["hasParent"].ToString() == "1";
                     sub.categoryId = fileCategories.Rows[i]["categoryId"].ToString();
                     sub.Title = fileCategories.Rows[i]["title"].ToString();
                     subTabs.Add(sub);
                 }
-                JsonResult<SubTabs> result = new JsonResult<SubTabs> { Code = errorCode, Message = message, Rows = 0, Result = subTabs };
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<SubTabs> result = new JsonResult<SubTabs> { Code = errorCode, Message = message, Rows = subTabs.Count(), Result = subTabs };
                 GenerateJson(result);
                 return;
             }
@@ -104,9 +104,116 @@ namespace FileZillaServerWeb.HttpHandler
 
             FileCategoryBLL fcBll = new FileCategoryBLL();
             List<FileCategory> categories = fcBll.GetCategories(context, out errorCode);
+            // 获取到结果
             if (categories != null && categories.Count() > 0)
             {
+                List<CategoryTabs> categoryTabs = new List<CategoryTabs>();
+                foreach (var item in categories)
+                {
+                    CategoryTabs tab = new CategoryTabs();
+                    tab.Id = item.ID;
+                    tab.title = item.TITLE;
+                    tab.description = item.DESCRIPTION;
+                    categoryTabs.Add(tab);
+                }
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<CategoryTabs> result = new JsonResult<CategoryTabs> { Code = errorCode, Message = message, Rows = categoryTabs.Count, Result = categoryTabs };
+                GenerateJson(result);
+                return;
+            }
+            // 结果为空
+            else
+            {
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+        }
 
+        /// <summary>
+        /// 获取指定 tab 下的文件列表
+        /// </summary>
+        public void GetFilesByTab()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            // 校验参数
+            string[] parametersRequired = { "categoryId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+
+            FileHistoryBLL fileHistoryBLL = new FileHistoryBLL();
+            List<FileHistory> fileHistories = fileHistoryBLL.GetFileHistories(context, out errorCode);
+            // 如果有结果
+            if (fileHistories != null && fileHistories.Count() > 0)
+            {
+                List<FilesForTab> filesForTabs = new List<FilesForTab>();
+                foreach (var item in fileHistories)
+                {
+                    FilesForTab file = new FilesForTab();
+                    file.fileName = item.FILENAME;
+                    file.filePath = item.FILEFULLNAME;
+                    filesForTabs.Add(file);
+                }
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<FilesForTab> result = new JsonResult<FilesForTab> { Code = errorCode, Message = message, Rows = filesForTabs.Count, Result = filesForTabs };
+                GenerateJson(result);
+                return;
+            }
+            // 结果集为空
+            else
+            {
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+        }
+
+        public void GetProjectOperationLogs()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            // 校验参数
+            string[] parametersRequired = { "projectId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+
+            FileOperationLogBLL foBll = new FileOperationLogBLL();
+            List<FileOperationLog> fileOperationLogs = foBll.GetFileOperateLogs(context, out errorCode);
+            // 获取到结果
+            if (fileOperationLogs != null && fileOperationLogs.Count() > 0)
+            {
+                List<SubFileOperateLog> fileOperateLogs = new List<SubFileOperateLog>();
+                foreach (var item in fileOperationLogs)
+                {
+                    SubFileOperateLog file = new SubFileOperateLog();
+                    file.operateDate = DateTimeHelper.ConvertDateTimeInt(item.OPERATEDATE ?? DateTime.MinValue);
+                    file.operateUser = item.OPERATEUSER;
+                    file.operateContent = item.OPERATECONTENT;
+                    fileOperateLogs.Add(file);
+                }
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<SubFileOperateLog> result = new JsonResult<SubFileOperateLog> { Code = errorCode, Message = message, Rows = fileOperateLogs.Count, Result = fileOperateLogs };
+                GenerateJson(result);
+                return;
+            }
+            // 结果集为空
+            else
+            {
+                string message = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
             }
         }
 

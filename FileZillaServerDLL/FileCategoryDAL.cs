@@ -1,4 +1,5 @@
 ﻿using FileZillaServerModel;
+using FileZillaServerModel.Config;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -256,7 +257,7 @@ namespace FileZillaServerDAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
+        public DataSet GetList(string strWhere, string orderBy)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT ");
@@ -264,6 +265,10 @@ namespace FileZillaServerDAL
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                strSql.Append(orderBy);
             }
             return DbHelperMySQL.Query(strSql.ToString());
         }
@@ -369,17 +374,15 @@ namespace FileZillaServerDAL
         /// <returns></returns>
         public DataSet GetReplayToList(string projectId, string category)
         {
-            string strSql = @"SELECT case fc1.PARENTID WHEN 0 THEN 0 ELSE 1 END hasParent,
-                             fc1.ID, fc1.category categoryId, fc1.TITLE FROM filecategory fc1
-	                            LEFT JOIN filecategory fc2
-                              ON fc1.ID = fc2.PARENTID
-                            WHERE fc1.PROJECTID = @projectId AND fc1.category = @category ORDER BY fc1.orderSort ";
-            MySqlParameter[] parameters = {
-                    new MySqlParameter("@projectId", MySqlDbType.VarChar,36),
-                    new MySqlParameter("@category", MySqlDbType.VarChar,3) };
-            parameters[0].Value = projectId;
-            parameters[1].Value = category;
-            DataSet ds = DbHelperMySQL.Query(strSql, parameters);
+            string category2 = GlobalConfig.dicMapForSubTab[category].ToString();
+            string strSql = @"
+                            SELECT f.Id, f.CATEGORY CATEGORYId, f.TITLE FROM filecategory f
+                            WHERE PROJECTID = '"+projectId+ @"' AND CATEGORY = '"+category2+@"' 
+                            AND f.ID NOT IN (  
+	                            SELECT PARENTID FROM filecategory
+                              WHERE PROJECTID = '" + projectId + @"' AND CATEGORY = '"+ category + "' and PARENTID <> '0' )  ORDER BY f.orderSort ";
+
+            DataSet ds = DbHelperMySQL.Query(strSql);
             return ds;
         }
         #endregion  ExtensionMethod

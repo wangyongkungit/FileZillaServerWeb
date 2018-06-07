@@ -245,7 +245,7 @@ namespace FileZillaServerDAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetList(string strWhere)
+        public DataSet GetList(string strWhere, string orderBy)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,PARENTID,FILENAME,FILEEXTENSION,FILEFULLNAME,DESCRIPTION,OPERATEDATE,OPERATEUSER,ISDELETED ");
@@ -253,6 +253,10 @@ namespace FileZillaServerDAL
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
+            }
+            if (!String.IsNullOrEmpty(orderBy))
+            {
+                strSql.Append(orderBy);
             }
             return DbHelperMySQL.Query(strSql.ToString());
         }

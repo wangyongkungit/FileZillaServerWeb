@@ -10,6 +10,7 @@ namespace FileZillaServerModel.Config
     {
         public static Dictionary<string, int> dicMap = new Dictionary<string, int>();
         public static Dictionary<string, int> dicMapForSubTab = new Dictionary<string, int>();
+        public static Dictionary<string, int> dicMapForSubTab2 = new Dictionary<string, int>();
 
         static GlobalConfig()
         {
@@ -22,6 +23,9 @@ namespace FileZillaServerModel.Config
             
             dicMapForSubTab.Add("4", 3);
             dicMapForSubTab.Add("6", 5);
+
+            dicMapForSubTab2.Add("3", 4);
+            dicMapForSubTab2.Add("5", 6);
         }
 
     }
