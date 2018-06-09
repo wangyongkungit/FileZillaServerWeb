@@ -124,7 +124,7 @@ body {
     background-color:#8891fb;
     float:left;
 }
-.content-middle .moneyRight .container {
+.content-middle .moneyRight .firstcontainer {
     padding:16px 16px;
     width:80%;
     height:80%;
@@ -272,8 +272,8 @@ body {
     background-color:#138083;
 }
 .aspNetPager {
-    height:30px;
-    line-height:30px;
+    height:40px;
+    line-height:40px;
     float:right;
 }
 .aspNetPager span {
@@ -289,7 +289,7 @@ body {
     cursor:pointer;
 }
 .aspNetPager label {
-    width:45px;
+    width:36px;
 }
 #AspNetPager {
     width:auto;
@@ -298,8 +298,7 @@ body {
 }
 .pagination {
     margin-top: 1px 2px;
-    padding-bottom:10px;
-    float:right;
+    padding-bottom:2px;
 }
 .pagination a[disabled]{  color: #777;cursor: not-allowed;border-color: #ddd; float:left;}
 .pagination span.active{color: #fff;cursor: default;background-color: #337ab7;border-color: #337ab7;}

@@ -5,6 +5,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />    --%>
     <link href="Content/themes/base/ylyj/employeeHome.css" rel="stylesheet" />
+    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+    <link href="Scripts/webuploader/webuploader.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="Scripts/echarts/echarts.common.min.js"></script>
@@ -152,6 +154,7 @@
                             <asp:TemplateField HeaderText="操作">
                                 <ItemTemplate>
                                     <input type="button" id="btnTransfer" value="&#8658;" title="任务转移" class="taskmovebutton" onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
+                                    <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" onclick='ViewPrjFiles("<%# Eval("prjID") %>");' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -162,17 +165,172 @@
                             AlwaysShow="true" UrlPaging="False" ReverseUrlPageIndex="True" TextBeforePageIndexBox="跳到第" TextAfterPageIndexBox="页"
                             CssClass="pagination"  PagingButtonLayoutType="UnorderedList" PagingButtonSpacing="0" CurrentPageButtonClass="active" >
                         </webdiyer:AspNetPager>
-                        <div style="height:30px; line-height:30px; float:right;">
+<%--                        <div style="height:30px; line-height:30px;">
                         <label>跳转到</label><asp:TextBox ID="tb_pageindex" runat="server"></asp:TextBox><label>页</label>
                         <asp:Button ID="btnGoPage" runat="server" Text="转到" OnClick="btnGoPage_Click" ValidationGroup="pageGo" />
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="必须输入页索引" ForeColor="Red" ControlToValidate="tb_pageindex" Display="Dynamic" ValidationGroup="pageGo" />
                         <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="tb_pageindex" Operator="DataTypeCheck" Type="Integer" ErrorMessage="页索引必须是整数" ForeColor="Red" Display="Dynamic" />
                         <asp:Label ID="lbl_error" runat="server" ForeColor="Red" EnableViewState="false"></asp:Label>
-                            </div>
+                            </div>--%>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
+        <div id="project" class="container" style="clear:both;">
+
+        <div id="meun">
+            <div class="row">
+                <div class="col -12" style="text-align: left;">
+                    <div class="btn-group btn-group-lg">
+                        <button type="button" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">File</button>
+                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">History</button>
+                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">Add A New Tab</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="projectfile" v-show="showfile">
+            File Tab
+            <!-- Tab List -->
+            <div class="row">
+                <div class="col -12">
+                    <div class="btn-group btn-group-sm">
+                        <!-- change file list -->
+                        <button :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary " v-for="item in projectfile.filetabs">
+                            {{item.title}}</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File List -->
+            <div class="row">
+                <div class="col -12">
+                    <div id="showfiles" style="text-align: left">
+                        <table class="table table-bordered table-hover  table-striped">
+                            <tbody>
+                                <tr v-for=" file in projectfile.files">
+                                    <td>
+                                        图标:
+                                        <!-- <span :title="file.filedesc">{{file.fileName}}</span>
+                                        <span :title="">{{file.filePath}}</span>
+                                        <a href="dotPeek.rar">rar</a>
+                                        <a href="uploadfile.html">html</a> -->
+                                    </td>
+                                    <td>
+                                        上传时间
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button type="button" class="btn btn-default btn-primary">delete</button>
+                                            <button type="button" class="btn btn-default btn-success">download</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Upload File -->
+
+
+        </div>
+
+
+        <div id="projecthistory" v-show="showhistory">
+            history
+            <div class="row">
+                <div class="col-12">
+                    <h4>Project ID:{{projectid}}</h4>
+                    <div>
+                        <table class="table table-bordered table-hover  table-striped">
+                            <!-- 表头 -->
+                            <thead>
+                                <td>
+                                    OperateDate
+                                </td>
+                                <td>
+                                    OperateUser
+                                </td>
+                                <td>
+                                    operateContent
+                                </td>
+                            </thead>
+
+                            <!-- 内容 -->
+                            <tbody>
+                                <tr v-for=" item in projecthistory.data " :key="item.id ">
+                                    <td>
+                                        {{item.operateDate|convTime}}
+                                    </td>
+                                    <td>
+                                        {{item.operateUser}}
+                                    </td>
+                                    <td>
+                                        {{item.operateContent}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div id="addtab" v-show="showaddtab">
+            add new tab
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label for="category">选择列表 : </label>
+                            <select class="form-control" name="category" id="category" v-model="newtab.categoryselected" @change="categoryChange()">
+                                <option v-for="item in newtab.category" :value="item.key">{{item.value}}</option>
+                            </select>
+                            <span> {{newtab.categoryselected}}</span>
+                        </div>
+
+                        <div class="form-group" v-show="showreply">
+                            <label for="replyto">回复 : </label>
+                            <select class="form-control" name="replyto" id="replyto" v-model="newtab.replytoselected">
+                                <option v-for="item in newtab.replyto" :value="item.Id">
+                                    {{item.Title}}
+                                </option>
+                            </select>
+                            <span> {{newtab.replytoselected}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">描述 : </label>
+                            <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc">
+                        </div>
+                        <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
+                    </form>
+                    <div class="form-group">
+                        <p>{{this.newtab.returnmessage}}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+                <script src="<%= ResolveUrl("~/Scripts/jquery-3.3.1.min.js") %>"></script>
     <script src="Scripts/ylyj/employeeHome.js"></script>
+
+    <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
+    <script src="Scripts/webuploader/webuploader.js"></script>
+
+    <script src="Scripts/vue/vue.js"></script>
+    <script src="Scripts/ylyj/employeehome/func.js"></script>
+    <script src="Scripts/ylyj/employeehome/settings.js"></script>
+    <script src="Scripts/ylyj/employeehome/vuepage.js"></script>
 </asp:Content>

@@ -19,7 +19,7 @@ namespace FileZillaServerWeb
 
         protected void MenuListDataBind()
         {
-            lstMenu = UserProfile.GetInstance().Menu.Where(d => d.ParentID == string.Empty).ToList();
+            lstMenu = UserProfile.GetInstance()?.Menu.Where(d => d.ParentID == string.Empty).ToList();
         }
     }
 }

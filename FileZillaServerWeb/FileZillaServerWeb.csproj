@@ -150,6 +150,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="aa_WebForm2.aspx" />
     <Content Include="About.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
@@ -256,6 +257,7 @@
     <Content Include="Error\404.html" />
     <Content Include="FileZillaLogs.aspx" />
     <Content Include="Finance\Outgoings.aspx" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\beach.jpg" />
     <Content Include="Images\bg-grey-stripe.png" />
@@ -295,13 +297,25 @@
     <Content Include="LogList.aspx" />
     <Content Include="MaterialConfig.aspx" />
     <Content Include="Materials\Images\drivinglicence.jpg" />
-    <Content Include="NeatUpload\cancel.png" />
-    <Content Include="NeatUpload\default.css" />
-    <Content Include="NeatUpload\Error413.aspx" />
-    <Content Include="NeatUpload\Progress.aspx" />
-    <Content Include="NeatUpload\Progress.js" />
-    <Content Include="NeatUpload\refresh.png" />
-    <Content Include="NeatUpload\stop_refresh.png" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-grid.css" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-grid.min.css" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-reboot.css" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-reboot.min.css" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap.css" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.js" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.min1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\NeatUpload\cancel.png" />
+    <Content Include="Scripts\NeatUpload\default.css" />
+    <Content Include="Scripts\NeatUpload\Error413.aspx" />
+    <Content Include="Scripts\NeatUpload\Progress.aspx" />
+    <Content Include="Scripts\NeatUpload\Progress.js" />
+    <Content Include="Scripts\NeatUpload\refresh.png" />
+    <Content Include="Scripts\NeatUpload\stop_refresh.png" />
     <Content Include="packages.config" />
     <Content Include="PasswordModify.aspx" />
     <Content Include="rwmb.aspx" />
@@ -332,10 +346,54 @@
     <Content Include="Scripts\My97DatePicker\skin\twoer\img.gif" />
     <Content Include="Scripts\My97DatePicker\skin\twoer\img.png" />
     <Content Include="Scripts\ProvinceLoad.js" />
+    <Content Include="Scripts\UploadTest\about.js" />
+    <Content Include="Scripts\UploadTest\bootstrap.min.js" />
+    <Content Include="Scripts\UploadTest\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\Uploader.swf" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.css" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.custom.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.custom.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.fis.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.flashonly.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.flashonly.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.html5only.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.html5only.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.noimage.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.noimage.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.nolog.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.nolog.min.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.withoutimage.js" />
+    <Content Include="Scripts\UploadTest\webuploader\webuploader.withoutimage.min.js" />
+    <Content Include="Scripts\vue\vue.js" />
+    <Content Include="Scripts\vue\vue.min.js" />
     <Content Include="Scripts\WaterWave\prefixfree.min.js" />
+    <Content Include="Scripts\webuploader\Uploader.swf" />
+    <Content Include="Scripts\webuploader\webuploader.css" />
+    <Content Include="Scripts\webuploader\webuploader.custom.js" />
+    <Content Include="Scripts\webuploader\webuploader.custom.min.js" />
+    <Content Include="Scripts\webuploader\webuploader.fis.js" />
+    <Content Include="Scripts\webuploader\webuploader.flashonly.js" />
+    <Content Include="Scripts\webuploader\webuploader.flashonly.min.js" />
+    <Content Include="Scripts\webuploader\webuploader.html5only.js" />
+    <Content Include="Scripts\webuploader\webuploader.html5only.min.js" />
+    <Content Include="Scripts\webuploader\webuploader.js" />
+    <Content Include="Scripts\webuploader\webuploader.min.js" />
+    <Content Include="Scripts\webuploader\webuploader.noimage.js" />
+    <Content Include="Scripts\webuploader\webuploader.noimage.min.js" />
+    <Content Include="Scripts\webuploader\webuploader.nolog.js" />
+    <Content Include="Scripts\webuploader\webuploader.nolog.min.js" />
+    <Content Include="Scripts\webuploader\webuploader.withoutimage.js" />
+    <Content Include="Scripts\webuploader\webuploader.withoutimage.min.js" />
     <Content Include="Scripts\ylyj\employeeadd.js" />
     <Content Include="Scripts\ylyj\employeeDemonationDetails.js" />
     <Content Include="Scripts\ylyj\employeeHome.js" />
+    <Content Include="Scripts\ylyj\employeehome\about.js" />
+    <Content Include="Scripts\ylyj\employeehome\func.js" />
+    <Content Include="Scripts\ylyj\employeehome\jquery.js" />
+    <Content Include="Scripts\ylyj\employeehome\settings.js" />
+    <Content Include="Scripts\ylyj\employeehome\vuepage.js" />
     <Content Include="Scripts\ylyj\serialnumbergenerating.js" />
     <Content Include="Scripts\ylyj\site.js" />
     <Content Include="Scripts\ylyj\taskassignconfiguration.js" />
@@ -365,6 +423,16 @@
     <None Include="Properties\PublishProfiles\FileZillaLog.pubxml" />
     <Content Include="Scripts\ck.layer.js" />
     <None Include="Properties\PublishProfiles\FilezillaLog2.pubxml" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-grid.css.map" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-grid.min.css.map" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-reboot.css.map" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap.css.map" />
+    <Content Include="Scripts\bootstrap4\css\bootstrap.min.css.map" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap4\js\bootstrap.min.js.map" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -435,6 +503,13 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="aa_WebForm2.aspx.cs">
+      <DependentUpon>aa_WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aa_WebForm2.aspx.designer.cs">
+      <DependentUpon>aa_WebForm2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="About.aspx.cs">
@@ -732,6 +807,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />
+    <Content Include="Scripts\UploadTest\webuploader\README.md" />
+    <Content Include="Scripts\webuploader\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

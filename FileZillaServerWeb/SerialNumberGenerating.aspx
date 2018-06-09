@@ -2,6 +2,7 @@
 <%@ Register assembly="Brettle.Web.NeatUpload" namespace="Brettle.Web.NeatUpload" tagprefix="Upload" %>
 
 <asp:Content ID="head1" ContentPlaceHolderID="head" runat="server">
+    <%--<link href="<%= ResolveUrl("~/Content/themes/base/ylyj/serialnumber.css?v=18426") %>" rel="stylesheet" />--%>
     <link href="Content/themes/base/ylyj/serialnumber.css?v=18426" rel="stylesheet" />
     <script src="Scripts/clipboard.min.js?v=18426"></script>
     <script src="Scripts/ylyj/serialnumbergenerating.js?v=18426"></script>

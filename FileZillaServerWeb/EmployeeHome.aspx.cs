@@ -203,23 +203,23 @@ namespace FileZillaServerWeb
             LoadDataNeedReload();
         }
 
-        /// <summary>
-        /// 页码跳转
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnGoPage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int pageindex = int.Parse(tb_pageindex.Text);
-                AspNetPager1.CurrentPageIndex = pageindex;
-            }
-            catch (FormatException)
-            {
-                lbl_error.Text = "输入的页索引格式不正确";
-            }
-        }
+        ///// <summary>
+        ///// 页码跳转
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void btnGoPage_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        int pageindex = int.Parse(tb_pageindex.Text);
+        //        AspNetPager1.CurrentPageIndex = pageindex;
+        //    }
+        //    catch (FormatException)
+        //    {
+        //        lbl_error.Text = "输入的页索引格式不正确";
+        //    }
+        //}
         #endregion
 
         #region Repeat Databound

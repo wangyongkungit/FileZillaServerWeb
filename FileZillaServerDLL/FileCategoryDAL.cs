@@ -353,15 +353,29 @@ namespace FileZillaServerDAL
         /// <param name="projectId"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public int GetOrderSort(string projectId, string category)
+        public int GetOrderSort(string category)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT IFNULL(max(ORDERSORT), 0) + 1 as ORDERSORT FROM filecategory WHERE PROJECTID = @projectId AND CATEGORY = @category");
+            strSql.Append("SELECT IFNULL(max(ORDERSORT), 0) + 1 as ORDERSORT FROM filecategory WHERE CATEGORY = @category ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@projectId", MySqlDbType.VarChar,36),
-                    new MySqlParameter("@category",MySqlDbType.String, 3) };
-            parameters[0].Value = projectId;
-            parameters[1].Value = category;
+                    new MySqlParameter("@category", MySqlDbType.VarChar, 3) };
+            parameters[0].Value = category;
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString(), parameters);
+            return Convert.ToInt32(obj);
+        }
+
+        /// <summary>
+        /// 根据 parentId 获取序号
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        public int GetOrderSortForChildTab(string parentId)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT ORDERSORT FROM filecategory WHERE ID = @parentId");
+            MySqlParameter[] parameters = {
+                    new MySqlParameter("@parentId", MySqlDbType.VarChar,36) };
+            parameters[0].Value = parentId;
             object obj = DbHelperMySQL.GetSingle(strSql.ToString(), parameters);
             return Convert.ToInt32(obj);
         }
@@ -374,15 +388,23 @@ namespace FileZillaServerDAL
         /// <returns></returns>
         public DataSet GetReplayToList(string projectId, string category)
         {
-            string category2 = GlobalConfig.dicMapForSubTab[category].ToString();
+            // 需要对 parentCategory 进行转换，
+            string parentCategory = GlobalConfig.dicMapForSubTab[category].ToString();
             string strSql = @"
                             SELECT f.Id, f.CATEGORY CATEGORYId, f.TITLE FROM filecategory f
-                            WHERE PROJECTID = '"+projectId+ @"' AND CATEGORY = '"+category2+@"' 
+                            WHERE PROJECTID = @projectId AND CATEGORY = @parentCategory  
                             AND f.ID NOT IN (  
-	                            SELECT PARENTID FROM filecategory
-                              WHERE PROJECTID = '" + projectId + @"' AND CATEGORY = '"+ category + "' and PARENTID <> '0' )  ORDER BY f.orderSort ";
-
-            DataSet ds = DbHelperMySQL.Query(strSql);
+	                          SELECT PARENTID FROM filecategory
+                              WHERE PROJECTID = @projectId AND CATEGORY = @category and PARENTID <> '0' )  ORDER BY f.orderSort ";
+            MySqlParameter[] parameters = {
+                new MySqlParameter("@projectId", MySqlDbType.VarChar,36),
+                new MySqlParameter("@category",MySqlDbType.String, 3),
+                new MySqlParameter("@parentCategory", MySqlDbType.String,3)
+            };
+            parameters[0].Value = projectId;
+            parameters[1].Value = category;
+            parameters[2].Value = parentCategory;
+            DataSet ds = DbHelperMySQL.Query(strSql, parameters);
             return ds;
         }
         #endregion  ExtensionMethod

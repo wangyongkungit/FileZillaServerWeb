@@ -11,25 +11,30 @@
     <title></title>
     <link href="<%= ResolveUrl("~/Content/themes/base/ylyj/site.css?v=18426") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/Scripts/dialog/jDialog/jDialog.css") %>" rel="stylesheet" />
-    <link href="<%= ResolveUrl("~/Content/themes/base/ylyj/serialnumber.css?v=18426") %>" rel="stylesheet" />
+
 <%--    <%: System.Web.Optimization.Styles.Render("~/bundles/Site") %>--%>
 
-    <%--<script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>--%>
-    <script src="<%= ResolveUrl("~/Scripts/jquery-1.7.1.min.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>
+    <%--<script src="<%= ResolveUrl("~/Scripts/jquery-1.7.1.min.js") %>"></script>--%>
+
+
     <script src="<%= ResolveUrl("~/Scripts/My97DatePicker/WdatePicker.js") %>"></script>
     <script src="<%= ResolveUrl("~/Scripts/ylyj/site.js?v=18426") %>"></script>    
     <script src="<%= ResolveUrl("~/Scripts/jquery-ui-1.8.20.js") %>"></script>
-    <script src="<%= ResolveUrl("~/Scripts/dialog/jquery.js") %>"></script>
+    <%--<script src="<%= ResolveUrl("~/Scripts/dialog/jquery.js") %>"></script>--%>
     <script src="<%= ResolveUrl("~/Scripts/dialog/jDialog.js") %>"></script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-        <div>
+
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-        </div>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="FeaturedContent" runat="server"></asp:ContentPlaceHolder>
+
         <!--滚动文字
         <div class="marquee">
             <marquee style="width:500px;height:30px;" scrollamount="4" direction="left" loop="3" >

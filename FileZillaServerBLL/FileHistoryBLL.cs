@@ -3,6 +3,7 @@ using FileZillaServerModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -151,12 +152,27 @@ namespace FileZillaServerBLL
         public List<FileHistory> GetFileHistories(HttpContext context, out int errCode)
         {
             errCode = 0;
-            string parentId = context.Request["categoryId"];
-            string where = string.Format(" projectId = '{0}'", parentId);
+            string projectId = context.Request["projectId"];
+            string where = string.Format(" PARENTID IN ( SELECT ID FROM filecategory WHERE projectId = '{0}') ", projectId);
             // 加入排序字段
             string orderBy = string.Format(" ORDER BY operateDate");
             List<FileHistory> fileHistories = this.GetModelList(where, orderBy);
             return fileHistories;
+        }
+
+        public bool AddFileHistory(string parentId, string fileName, string description, string userId)
+        {
+            FileHistory fileHistory = new FileHistory();
+            fileHistory.ID = Guid.NewGuid().ToString();
+            fileHistory.PARENTID = parentId;
+            fileHistory.FILENAME = fileName;
+            fileHistory.FILEEXTENSION = Path.GetExtension(fileName);
+            fileHistory.DESCRIPTION = description;
+            fileHistory.OPERATEDATE = DateTime.Now;
+            fileHistory.OPERATEUSER = userId;
+            fileHistory.ISDELETED = false;
+            bool addFileHisFlag = this.Add(fileHistory);
+            return addFileHisFlag;
         }
         #endregion  ExtensionMethod
     }

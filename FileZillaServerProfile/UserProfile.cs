@@ -174,7 +174,6 @@ namespace FileZillaServerProfile
         {
             if (instance == null)
             {
-                HttpContext.Current.Response.Redirect("Tip.html", true);
                 return null;
             }
             else

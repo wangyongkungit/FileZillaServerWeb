@@ -1,4 +1,5 @@
-﻿using FileZillaServerProfile;
+﻿using FileZillaServerModel.Interface;
+using FileZillaServerProfile;
 using Jil;
 using System;
 using System.Linq;
@@ -50,12 +51,16 @@ public class CCHttpHandler : IHttpHandler, IRequiresSessionState
             }
             else
             {
-                context.Response.Write("No Such Method");
+                JsonResult<string> result = new JsonResult<string> { Code = 0, Message = "No Such Method", Rows = 0, Result = null };
+                GenerateJson();
+                return;
             }
         }
         catch (Exception ec)
         {
-            Console.WriteLine(ec.ToString());
+            JsonResult<string> result = new JsonResult<string> { Code = 0, Message = ec.Message, Rows = 0, Result = null };
+            GenerateJson();
+            return;
         }
     }
 

@@ -22,6 +22,10 @@ function TransferTask(prjID, employeeID, amount) {
     });
 };
 
+var ViewPrjFiles = function (prjID) {
+    vm.projectid = prjID;
+};
+
 $("#withdraw").bind("click", function () {
     var dialog = jDialog.iframe("withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现',

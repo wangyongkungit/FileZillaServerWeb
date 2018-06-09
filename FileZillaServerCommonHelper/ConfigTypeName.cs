@@ -21,6 +21,7 @@ namespace FileZillaServerCommonHelper
         省份 = 10,
         专业类别小类 = 11,
         文件分类 = 12,
-        奖励与处罚类型 = 13
+        奖励与处罚类型 = 13,
+        文件操作类型 = 14,
     }
 }

@@ -73,6 +73,9 @@ namespace Yiliangyijia.Comm
                 case 6006:
                     msg = "文件删除失败";
                     break;
+                case 6007:
+                    msg = "文件已存在";
+                    break;
                 case 6011:
                     msg = "文件上传异常";
                     break;

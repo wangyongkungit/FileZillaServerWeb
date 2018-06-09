@@ -8,14 +8,20 @@ namespace FileZillaServerModel.Interface
 {
     public class FilesForTab
     {
+        public string categoryId { get; set; }
+
+        public string fileHistoryId { get; set; }
+
         /// <summary>
         /// 文件名
         /// </summary>
         public string fileName { get; set; }
 
         /// <summary>
-        /// 文件路径
+        /// 文件扩展名
         /// </summary>
-        public string filePath { get; set; }
+        public string fileExt { get; set; }
+
+        public string description { get; set; }
     }
 }

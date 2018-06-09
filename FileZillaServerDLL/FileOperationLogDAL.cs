@@ -319,7 +319,29 @@ namespace FileZillaServerDAL
 
         #endregion  BasicMethod
         #region  ExtensionMethod
-
+        /// <summary>
+        /// 获取操作记录，join Employee 表
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="orderBy"></param>
+        /// <returns></returns>
+        public DataSet GetListJoinEmployee(string strWhere, string orderBy)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(@"select f.ID,f.PROJECTID,f.EMPLOYEEID,f.FILENAME,f.OPERATETYPE,f.OPERATEDATE,f.OPERATEUSER operateUserId, f.OPERATECONTENT, e.EMPLOYEENO operateUser
+                         FROM fileoperationlog f
+                         LEFT JOIN employee e
+                         ON f.EMPLOYEEID = e.ID ");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                strSql.Append(orderBy);
+            }
+            return DbHelperMySQL.Query(strSql.ToString());
+        }
         #endregion  ExtensionMethod
     }
 }

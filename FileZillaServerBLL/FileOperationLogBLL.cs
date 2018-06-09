@@ -109,25 +109,27 @@ namespace FileZillaServerBLL
         {
             return GetList("", "");
         }
-
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        //public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        //{
-        //return dal.GetList(PageSize,PageIndex,strWhere);
-        //}
-
         #endregion  BasicMethod
         #region  ExtensionMethod
-        public List<FileOperationLog> GetFileOperateLogs(HttpContext context, out int errCode)
+        /// <summary>
+        /// 获取操作记录，join Employee 表
+        /// </summary>
+        /// <param name="strWhere"></param>
+        /// <param name="orderBy"></param>
+        /// <returns></returns>
+        public DataSet GetListJoinEmployee(string strWhere, string orderBy)
+        {
+            return dal.GetListJoinEmployee(strWhere, orderBy);
+        }
+
+        public DataSet GetFileOperateLogs(HttpContext context, out int errCode)
         {
             errCode = 0;
             string parentId = context.Request["projectId"];
             string where = string.Format(" projectId = '{0}'", parentId);
             // 加入排序字段
             string orderBy = string.Format(" ORDER BY operateDate");
-            List<FileOperationLog> fileOperateLogs = this.GetModelList(where, orderBy);
+            DataSet fileOperateLogs = this.GetListJoinEmployee(where, orderBy);
             return fileOperateLogs;
         }
         #endregion  ExtensionMethod

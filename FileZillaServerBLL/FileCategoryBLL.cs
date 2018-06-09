@@ -82,7 +82,7 @@ namespace FileZillaServerBLL
         /// </summary>
         public List<FileCategory> GetModelList(string strWhere, string orderBy)
         {
-            DataSet ds = dal.GetList(strWhere,orderBy);
+            DataSet ds = dal.GetList(strWhere, orderBy);
             return DataTableToList(ds.Tables[0]);
         }
         /// <summary>
@@ -145,9 +145,19 @@ namespace FileZillaServerBLL
         /// <param name="projectId"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public int GetOrderSort(string projectId, string category)
+        public int GetOrderSort(string category)
         {
-            return dal.GetOrderSort(projectId, category);
+            return dal.GetOrderSort(category);
+        }
+
+        /// <summary>
+        /// 根据 parentId 获取序号
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <returns></returns>
+        public int GetOrderSortForChildTab(string parentId)
+        {
+            return dal.GetOrderSortForChildTab(parentId);
         }
 
         #region 获取回复tab列表
@@ -169,6 +179,7 @@ namespace FileZillaServerBLL
         public bool AddFileCategory(HttpContext context, out int errCode)
         {
             errCode = 0;
+            string returnFolderName = string.Empty;
             ConfigureBLL configBll = new ConfigureBLL();
             DataTable dtConfig = configBll.GetConfig("文件分类小类");
             string projectId = context.Request["projectId"];
@@ -182,7 +193,16 @@ namespace FileZillaServerBLL
             fileCategory.PROJECTID = projectId;
             fileCategory.CATEGORY = categoryId;
             fileCategory.DESCRIPTION = description;
-            fileCategory.ORDERSORT = GetOrderSort(projectId, categoryId);
+            // 新的修改或者疑问
+            if (parentId == "0")
+            {
+                fileCategory.ORDERSORT = GetOrderSort(categoryId);
+            }
+            // 修改完成或者疑问答复
+            else
+            {
+                fileCategory.ORDERSORT = GetOrderSortForChildTab(parentId);
+            }
             title += Convert.ToString(fileCategory.ORDERSORT);
             fileCategory.TITLE = title;
             fileCategory.FOLDERNAME = title;
@@ -194,7 +214,7 @@ namespace FileZillaServerBLL
             if (this.Add(fileCategory))
             {
                 // 创建任务目录
-                if (!GetFilePathByProjectId(projectId, title, out errCode))
+                if (!GetFilePathByProjectId(projectId, title, true, out returnFolderName, out errCode))
                 {
                     // 目录创建失败时，需要将已添加到数据库的记录删除
                     this.Delete(fileCategory.ID);
@@ -213,9 +233,10 @@ namespace FileZillaServerBLL
         /// <param name="folderName"></param>
         /// <param name="errCode">返回码</param>
         /// <returns></returns>
-        public bool GetFilePathByProjectId(string projectId, string folderName, out int errCode)
+        public bool GetFilePathByProjectId(string projectId, string folderName, bool isCreateFolder, out string returnFolderName, out int errCode)
         {
             errCode = 0;
+            returnFolderName = string.Empty;
             FileHistoryBLL fileHistoryBll = new FileHistoryBLL();
             string taskNo = string.Empty;
             string returnFileName = string.Empty;
@@ -239,6 +260,7 @@ namespace FileZillaServerBLL
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
                             returnFileName = Path.Combine(rootPath, empNo, taskNo, folderName);
+                            returnFolderName = returnFileName;
                         }
                     }
                     // 任务未分配
@@ -251,6 +273,7 @@ namespace FileZillaServerBLL
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
                             returnFileName = Path.Combine(rootPath, taskNo, folderName);
+                            returnFolderName = returnFileName;
                         }
                     }
                 }
@@ -258,7 +281,10 @@ namespace FileZillaServerBLL
                 {
                     try
                     {
-                        Directory.CreateDirectory(returnFileName);
+                        if (isCreateFolder)
+                        {
+                            Directory.CreateDirectory(returnFileName);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -299,7 +325,7 @@ namespace FileZillaServerBLL
             return ds;
         }
         #endregion
-        
+
         #region 获取 fileCategory tab 列表
         /// <summary>
         /// 获取 fileCategory tab 列表
