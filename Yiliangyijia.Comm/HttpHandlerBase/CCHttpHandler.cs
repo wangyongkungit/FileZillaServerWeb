@@ -52,14 +52,14 @@ public class CCHttpHandler : IHttpHandler, IRequiresSessionState
             else
             {
                 JsonResult<string> result = new JsonResult<string> { Code = 0, Message = "No Such Method", Rows = 0, Result = null };
-                GenerateJson();
+                GenerateJson(result);
                 return;
             }
         }
         catch (Exception ec)
         {
             JsonResult<string> result = new JsonResult<string> { Code = 0, Message = ec.Message, Rows = 0, Result = null };
-            GenerateJson();
+            GenerateJson(result);
             return;
         }
     }

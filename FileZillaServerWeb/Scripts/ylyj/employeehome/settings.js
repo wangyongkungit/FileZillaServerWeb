@@ -17,10 +17,23 @@ funcList["getFileTabs"] = {
 };
 
 funcList["getFiles"] = {
-    func: "getFiles",
-    interface: ""
+    func: getFiles,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=GetFilesByProject"
 };
 
+// Delete file
+funcList["deleteFile"] = {
+    func: deleteFile,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=DeleteFile"
+};
+
+// Download file
+funcList["downloadFile"] = {
+    func: downloadFile,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=DownloadFile"
+};
+
+//when project id changed
 funcList["refreshProject"] = {
     func: refreshProject,
     interface: ""

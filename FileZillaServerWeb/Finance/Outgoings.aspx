@@ -31,7 +31,7 @@
                         <label>金额：</label>
                     </div>
                     <div class="txt">
-                        <asp:TextBox ID="txtAmount" runat="server" placeholder="扣款需包含负号"></asp:TextBox>
+                        <asp:TextBox ID="txtAmount" runat="server" placeholder="扣款需包含负号" required="required"></asp:TextBox>
                         元
                     </div>
                 </div>
@@ -119,6 +119,7 @@
         </div>
     </div>
     </form>
-    <script src='<% ResolveUrl("~/Scripts/My97DatePicker/WdatePicker.js"); %>'></script>
+    <%--<script src='<% ResolveUrl("~/Scripts/My97DatePicker/WdatePicker.js"); %>'></script>--%>
+    <script src="../Scripts/My97DatePicker/WdatePicker.js"></script>
 </body>
 </html>

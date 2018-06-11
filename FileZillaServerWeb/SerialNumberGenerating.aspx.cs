@@ -85,6 +85,7 @@ namespace FileZillaServerWeb
                     Page.Title = "任务维护";
                     Session["projectID"] = null;
                     hidProjectID.Value = projectID;
+                    hidProjectID2.Value = projectID;
                     FormDataFill();
                 }
                 else
@@ -409,7 +410,7 @@ namespace FileZillaServerWeb
 
                         txtTaskName.Text = taskFolderName;
                         //如果选择了同步创建目录
-                        if (Request.Form["sync"] != null && Request.Form["sync"] == "rdbSync")
+                        if (true)//   (Request.Form["sync"] != null && Request.Form["sync"] == "rdbSync")
                         {
                             //新任务上传目录
                             string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"].ToString().TrimEnd('\\');
@@ -432,13 +433,14 @@ namespace FileZillaServerWeb
                         }
                         Session["projectID"] = project.ID;
                         lblGenerateSuccess.Visible = true;
-                        ExecuteScript("AlertDialog('生成成功！', null);");
+                        //hidProjectID2.Value = project.ID;
+                        ExecuteScript("AlertDialog('生成成功！', 'InvokeCreateFolder', '" + project.ID + "');");
                         //ExecuteScript("alert('生成成功！');window.location.href='SerialNumberGenerating.aspx?projectID=" + project.ID + "';");
                         return;
                     }
                     else
                     {
-                        ExecuteScript("AlertDialog('生成失败！', null);");
+                        ExecuteScript("AlertDialog('生成失败！', null, null);");
                         return;
                     }
                 }
@@ -447,7 +449,7 @@ namespace FileZillaServerWeb
             catch (Exception ex)
             {
                 LogHelper.WriteLine(ex.Message + ex.StackTrace);
-                ExecuteScript("AlertDialog('操作失败！', null);");
+                ExecuteScript("AlertDialog('操作失败！', null, null);");
             }
         }
         #endregion
@@ -678,9 +680,9 @@ namespace FileZillaServerWeb
                 //}
 
                 //任务资料的列表绑定
-                GridViewTaskDataBind(projectID, project.FINISHEDPERSON);
+                //GridViewTaskDataBind(projectID, project.FINISHEDPERSON);
                 //修改资料的列表绑定
-                GridViewModifyTaskDataBind(projectID);
+                //GridViewModifyTaskDataBind(projectID);
                 ////填充修改任务的表单
                 //FillModifyTaskForm();
 
@@ -724,114 +726,114 @@ namespace FileZillaServerWeb
         }
 
         #region GridViewDataBind
-        /// <summary>
-        /// 任务资料数据绑定
-        /// </summary>
-        /// <param name="projectID"></param>
-        /// <param name="finishedPerson">完成人</param>
-        private void GridViewTaskDataBind(string projectID, string finishedPerson)
-        {
-            try
-            {
-                projectID = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                //如果完成人不为空，说明任务已分配，不再绑定并展示任务资料的数据，同时隐藏上传任务资料按钮
-                if (string.IsNullOrEmpty(finishedPerson))
-                {
-                    //绑定已上传的任务资料
-                    List<Attachment> lstAtt = aBll.GetModelList(string.Format(" TASKTYPE = 0 AND TASKID = '{0}'", projectID));
-                    gvTaskData.DataSource = lstAtt;
-                    gvTaskData.DataBind();
-                }
-                else
-                {
-                    lblTaskDataUploadTip.Visible = false;
-                    //fupTaskData.Visible = false;
-                    InputFile1.Visible = false;
-                    btnUploadTaskData.Visible = false;
-                }
+        ///// <summary>
+        ///// 任务资料数据绑定
+        ///// </summary>
+        ///// <param name="projectID"></param>
+        ///// <param name="finishedPerson">完成人</param>
+        //private void GridViewTaskDataBind(string projectID, string finishedPerson)
+        //{
+        //    try
+        //    {
+        //        projectID = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //        //如果完成人不为空，说明任务已分配，不再绑定并展示任务资料的数据，同时隐藏上传任务资料按钮
+        //        if (string.IsNullOrEmpty(finishedPerson))
+        //        {
+        //            //绑定已上传的任务资料
+        //            List<Attachment> lstAtt = aBll.GetModelList(string.Format(" TASKTYPE = 0 AND TASKID = '{0}'", projectID));
+        //            gvTaskData.DataSource = lstAtt;
+        //            gvTaskData.DataBind();
+        //        }
+        //        else
+        //        {
+        //            lblTaskDataUploadTip.Visible = false;
+        //            //fupTaskData.Visible = false;
+        //            InputFile1.Visible = false;
+        //            btnUploadTaskData.Visible = false;
+        //        }
 
-                //绑定完成稿
-                DataTable dt = new ProjectBLL().GetFinalScript(projectID);
-                gvFinalData.DataSource = dt;
-                gvFinalData.DataBind();
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLine(ex.Message);
-            }
-        }
+        //        //绑定完成稿
+        //        DataTable dt = new ProjectBLL().GetFinalScript(projectID);
+        //        gvFinalData.DataSource = dt;
+        //        gvFinalData.DataBind();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.WriteLine(ex.Message);
+        //    }
+        //}
 
         /// <summary>
         /// 修改资料数据绑定
         /// </summary>
         /// <param name="projectID"></param>
-        private void GridViewModifyTaskDataBind(string projectID)
-        {
-            try
-            {
-                //绑定修改稿
-                DataTable dtModify = pBll.GetProjectModifyByPrjID(projectID);
-                gvModify.DataSource = dtModify;
-                gvModify.DataBind();
+        //private void GridViewModifyTaskDataBind(string projectID)
+        //{
+        //    try
+        //    {
+        //        //绑定修改稿
+        //        DataTable dtModify = pBll.GetProjectModifyByPrjID(projectID);
+        //        gvModify.DataSource = dtModify;
+        //        gvModify.DataBind();
 
-                //lstAtt = null;
-                //lstAtt = new List<Attachment>();
-                //lstAtt = aBll.GetModelList(string.Format(" TASKTYPE = 1 AND TASKID = '{0}'", projectID));
-                //gvModify.DataSource = lstAtt;
-                //gvModify.DataBind();
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLine(ex.Message);
-            }
-        }
+        //        //lstAtt = null;
+        //        //lstAtt = new List<Attachment>();
+        //        //lstAtt = aBll.GetModelList(string.Format(" TASKTYPE = 1 AND TASKID = '{0}'", projectID));
+        //        //gvModify.DataSource = lstAtt;
+        //        //gvModify.DataBind();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.WriteLine(ex.Message);
+        //    }
+        //}
         #endregion
 
         #region 填充修改任务表单    //discarded
         /// <summary>
         /// 填充修改任务表单（这里把它单独拉出来，是为了在删除任务后刷新修改任务的列表）
         /// </summary>
-        private void FillModifyTaskForm()
-        {
-            try
-            {
-                //售后修改任务的压缩及下载
-                DataTable dtModify = pBll.GetProjectModifyByPrjID(projectID);
-                if (dtModify != null && dtModify.Rows.Count > 0)
-                {
-                    StringBuilder sbInsertHtml = new StringBuilder();
-                    for (int i = 0; i < dtModify.Rows.Count; i++)
-                    {
-                        sbInsertHtml.Append("<div style=\"width:450px; height:36px; float:left;\">");
-                        sbInsertHtml.Append("<img src=\"Images/folder.png\" width=\"22\" height=\"22\" />");
-                        sbInsertHtml.AppendFormat("<lable>{0}</lable>", dtModify.Rows[i]["folderName"]);
-                        sbInsertHtml.Append("</div>");
+        //private void FillModifyTaskForm()
+        //{
+        //    try
+        //    {
+        //        //售后修改任务的压缩及下载
+        //        DataTable dtModify = pBll.GetProjectModifyByPrjID(projectID);
+        //        if (dtModify != null && dtModify.Rows.Count > 0)
+        //        {
+        //            StringBuilder sbInsertHtml = new StringBuilder();
+        //            for (int i = 0; i < dtModify.Rows.Count; i++)
+        //            {
+        //                sbInsertHtml.Append("<div style=\"width:450px; height:36px; float:left;\">");
+        //                sbInsertHtml.Append("<img src=\"Images/folder.png\" width=\"22\" height=\"22\" />");
+        //                sbInsertHtml.AppendFormat("<lable>{0}</lable>", dtModify.Rows[i]["folderName"]);
+        //                sbInsertHtml.Append("</div>");
 
-                        sbInsertHtml.AppendFormat("<div style=\"width:400px; height:36px; float:left;\">", dtModify.Rows[i]["ID"]);
-                        sbInsertHtml.AppendFormat("<input id=\"btnCmprs{0}\" name=\"btnCmprs{0}\" type=\"button\" value=\"压缩\" class=\"btnCompress\" onclick=\"Compress('1','{1}','{2}');\" />",
-                            i, dtModify.Rows[i]["ID"], i);
-                        sbInsertHtml.AppendFormat(
-                            "<input id=\"btnModifyDownload{0}\" name=\"btnModifyDownload{0}\" type=\"button\" value=\"下载\" class=\"btnDownload\" onclick=\"Download('1','{1}');\" title=\"请先压缩再下载\" disabled=\"true\" />",
-                            i, dtModify.Rows[i]["ID"]);
-                        if (dtModify.Rows[i]["isfinished"].ToString() == "0")
-                        {
-                            sbInsertHtml.AppendFormat(
-                                "<input id=\"btnDeleteModifyTask{0}\" name=\"btnDeleteModifyTask{0}\" type=\"button\" value=\"删除\" onclick=\"Delete('{1}')\"", i, dtModify.Rows[i]["ID"]);
-                        }
-                        sbInsertHtml.Append("</div>");
-                    }
-                    divModifyList.InnerHtml = sbInsertHtml.ToString();
-                }
-                else
-                {
-                    divModifyList.InnerHtml = "暂无修改记录";
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLine(ex.Message + ex.StackTrace);
-            }
-        }
+        //                sbInsertHtml.AppendFormat("<div style=\"width:400px; height:36px; float:left;\">", dtModify.Rows[i]["ID"]);
+        //                sbInsertHtml.AppendFormat("<input id=\"btnCmprs{0}\" name=\"btnCmprs{0}\" type=\"button\" value=\"压缩\" class=\"btnCompress\" onclick=\"Compress('1','{1}','{2}');\" />",
+        //                    i, dtModify.Rows[i]["ID"], i);
+        //                sbInsertHtml.AppendFormat(
+        //                    "<input id=\"btnModifyDownload{0}\" name=\"btnModifyDownload{0}\" type=\"button\" value=\"下载\" class=\"btnDownload\" onclick=\"Download('1','{1}');\" title=\"请先压缩再下载\" disabled=\"true\" />",
+        //                    i, dtModify.Rows[i]["ID"]);
+        //                if (dtModify.Rows[i]["isfinished"].ToString() == "0")
+        //                {
+        //                    sbInsertHtml.AppendFormat(
+        //                        "<input id=\"btnDeleteModifyTask{0}\" name=\"btnDeleteModifyTask{0}\" type=\"button\" value=\"删除\" onclick=\"Delete('{1}')\"", i, dtModify.Rows[i]["ID"]);
+        //                }
+        //                sbInsertHtml.Append("</div>");
+        //            }
+        //            divModifyList.InnerHtml = sbInsertHtml.ToString();
+        //        }
+        //        else
+        //        {
+        //            divModifyList.InnerHtml = "暂无修改记录";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.WriteLine(ex.Message + ex.StackTrace);
+        //    }
+        //}
         #endregion
         #endregion
 
@@ -1057,441 +1059,441 @@ namespace FileZillaServerWeb
         /// <param name="e"></param>
         protected void btnAddModifyTask_Click(object sender, EventArgs e)
         {
-            UploadModifyTask();
+            //UploadModifyTask();
         }
 
-        /// <summary>
-        /// 上传任务或售后
-        /// </summary>
-        private void UploadModifyTask()
-        {
-            if (fupd.HasFile)//如果用户选择了文件
-            {
-                #region Remarks
-                //LogHelper.WriteLine("进入开头");
-                //if (Path.GetExtension(fupd.FileName).ToLower() != ".zip")
-                //{
-                //    Alert("请上传“.zip”后缀的压缩文件！");
-                //    return;
-                //}
-                //string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
+        ///// <summary>
+        ///// 上传任务或售后
+        ///// </summary>
+        //private void UploadModifyTask()
+        //{
+        //    if (fupd.HasFile)//如果用户选择了文件
+        //    {
+        //        #region Remarks
+        //        //LogHelper.WriteLine("进入开头");
+        //        //if (Path.GetExtension(fupd.FileName).ToLower() != ".zip")
+        //        //{
+        //        //    Alert("请上传“.zip”后缀的压缩文件！");
+        //        //    return;
+        //        //}
+        //        //string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
 
-                ////string taskType = this.hidTaskType.Value;//任务类型：0，普通任务；1，售后。
-                //string projectOrModifyID = hidProjectOrModifyID.Value;//任务或者售后的ID
-                //try
-                //{
-                //    //获得修改稿的dt
-                //    DataTable dt = new ProjectBLL().GetProjectModifyByPrjID(projectID);
-                //    //LogHelper.WriteLine("获得修改稿的dtCount " + dt.Rows.Count);
-                //    LogHelper.WriteLine("dt is null:" + (dt == null));
-                //    if (dt != null && dt.Rows.Count > 0)
-                //    {
-                //        //任务目录（任务编号）
-                //        string taskNo = dt.Rows[0]["taskNo"].ToString();
-                //        //员工编号
-                //        string employeeNo = dt.Rows[0]["employeeno"].ToString();
-                //        //当前员工的文件存储目录
-                //        string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
-                //        foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                //        {
-                //            //找到当前修改记录对应的任务目录
-                //            if (taskFolder.Name.StartsWith(taskNo))
-                //            {
-                //                //存放修改记录的文件夹名
-                //                string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
-                //                LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
-                //                int modifyTaskAmount = 0;
-                //                foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
-                //                {
-                //                    //如果当前目录是修改记录的目录
-                //                    if (taskFolderChild.Name.Trim() == modifyRecordFolder)
-                //                    {
-                //                        //遍历修改目录的子目录
-                //                        foreach (DirectoryInfo modifyFolders in taskFolderChild.GetDirectories())
-                //                        {
-                //                            string modifyFolderName = modifyFolders.Name;
-                //                            //string dtModifyFolderName = dt.Rows[0]["foldername"].ToString();
-                //                            ////找到需要的目录名下载之
-                //                            //if (modifyFolderName.Contains("完成") && modifyFolderName.StartsWith(dtModifyFolderName))
-                //                            //{
-                //                            //    string destinationFileName = modifyFolders.FullName + ".zip";
-                //                            //    DownLoad(destinationFileName);
-                //                            //}
-                //                            //不包含“完成”二字的目录，作为修改记录的数量
-                //                            if (!modifyFolderName.Contains("完成"))
-                //                            {
-                //                                modifyTaskAmount++;
-                //                            }
-                //                        }
-                //                    }
-                //                }
-                //                //当前任务的修改目录全名
-                //                string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
-                //                //如果修改记录数量为0，那么就要判断当前任务有没有“修改记录”这个子目录了
-                //                if (modifyTaskAmount == 0)
-                //                {
-                //                    LogHelper.WriteLine("如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？");
-                //                    //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
-                //                    if (!Directory.Exists(modifyFolderFullName))
-                //                    {
-                //                        string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
-                //                        Directory.CreateDirectory(modifyFolderNameOne);
-                //                        fupd.SaveAs(modifyFolderNameOne + fupd.FileName);
-                //                        string zipedFileName = modifyFolderNameOne + fupd.FileName;
-                //                        string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
-                //                        ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
-                //                        File.Delete(zipedFileName);
-                //                        FillModifyTaskForm();
-                //                        Alert("上传修改任务成功！");
-                //                        return;
-                //                    }
-                //                }
-                //                //如果已经有过修改记录，就自增1作为新的目录名
-                //                else
-                //                {
-                //                    LogHelper.WriteLine("如果已经有过修改记录，就自增1作为新的目录名");
-                //                    //新的修改任务的目录序号
-                //                    int modifySequence = modifyTaskAmount + 1;
-                //                    //新的修改任务的目录名
-                //                    string addModifyFolderName = string.Format("{0}{1}", "修改", modifySequence);
-                //                    //待添加的任务目录的全名
-                //                    string addModifyFolderFullName = string.Format("{0}\\{1}", modifyFolderFullName, addModifyFolderName);
-                //                    //如果待添加的任务目录名不存在
-                //                    LogHelper.WriteLine("//如果待添加的任务目录名不存在");
-                //                    if (!Directory.Exists(addModifyFolderFullName))
-                //                    {
-                //                        Directory.CreateDirectory(addModifyFolderFullName);
-                //                    }
-                //                    //定义上载到服务器的文件路径
-                //                    string uploadPath = string.Format("{0}\\{1}", addModifyFolderFullName, fupd.FileName);
-                //                    LogHelper.WriteLine("//定义上载到服务器的文件路径");
-                //                    //进行上载
-                //                    fupd.SaveAs(uploadPath);
-                //                    string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
-                //                    string zipedFileName = modifyFolderNameOne + fupd.FileName;
-                //                    string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
-                //                    ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
-                //                    File.Delete(zipedFileName);
-                //                    FillModifyTaskForm();
-                //                    Alert("上传修改任务成功！");
-                //                    return;
-                //                }
-                //            }
-                //        }
-                //    }
-                //    //“修改记录”目录没有文件的话
-                //    else
-                //    {
-                //        DataTable dt0 = new ProjectBLL().GetEmployeeNoAndTaskNo(projectID);
-                //        LogHelper.WriteLine("dt0 is null:" + (dt0 == null));
-                //        if (dt0 != null && dt0.Rows.Count > 0)
-                //        {
-                //            //任务目录（任务编号）
-                //            string taskNo = dt0.Rows[0]["taskNo"].ToString();
-                //            //员工编号
-                //            string employeeNo = dt0.Rows[0]["employeeno"].ToString();
-                //            //当前员工的文件存储目录
-                //            string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
-                //            LogHelper.WriteLine("currentEmpPath:" + currentEmpPath);
-                //            foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                //            {
-                //                if (taskFolder.Name.StartsWith(taskNo))
-                //                {
-                //                    //存放修改记录的文件夹名
-                //                    string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
-                //                    LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
-                //                    //当前任务的修改目录全名
-                //                    string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
-                //                    if (!Directory.Exists(modifyFolderFullName))
-                //                    {
-                //                        Directory.CreateDirectory(modifyFolderFullName);
-                //                        //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
-                //                    }
-                //                    LogHelper.WriteLine("修改1目录:");
-                //                    //修改1目录
-                //                    string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
-                //                    LogHelper.WriteLine("modifyFolderNameOne:" + modifyFolderNameOne);
-                //                    if (!Directory.Exists(modifyFolderNameOne))
-                //                    {
-                //                        LogHelper.WriteLine("Directory.Exists(modifyFolderNameOne)");
-                //                        Directory.CreateDirectory(modifyFolderNameOne);
-                //                        fupd.SaveAs(modifyFolderNameOne +  fupd.FileName);
-                //                        string zipedFileName = modifyFolderNameOne +  fupd.FileName;
-                //                        string upZipDirectory = modifyFolderNameOne +  fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
-                //                        ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
-                //                        File.Delete(zipedFileName);
-                //                        FillModifyTaskForm();
-                //                        Alert("上传修改任务成功！");
-                //                        return; 
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    LogHelper.WriteLine(ex.Message);
-                //    string msg = ex.Message.Replace("'", "'") + "<br />" + ex.StackTrace;
-                //    Alert("程序出错！<br />" + msg);
-                //}
-                #endregion
-                LogHelper.WriteLine("进入开头");
-                //if (Path.GetExtension(fupd.FileName).ToLower() != ".zip")
-                //{
-                //    Alert("请上传扩展名为“.zip”的压缩文件！");
-                //    return;
-                //}
-                //所有员工的根目录
-                string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
+        //        ////string taskType = this.hidTaskType.Value;//任务类型：0，普通任务；1，售后。
+        //        //string projectOrModifyID = hidProjectOrModifyID.Value;//任务或者售后的ID
+        //        //try
+        //        //{
+        //        //    //获得修改稿的dt
+        //        //    DataTable dt = new ProjectBLL().GetProjectModifyByPrjID(projectID);
+        //        //    //LogHelper.WriteLine("获得修改稿的dtCount " + dt.Rows.Count);
+        //        //    LogHelper.WriteLine("dt is null:" + (dt == null));
+        //        //    if (dt != null && dt.Rows.Count > 0)
+        //        //    {
+        //        //        //任务目录（任务编号）
+        //        //        string taskNo = dt.Rows[0]["taskNo"].ToString();
+        //        //        //员工编号
+        //        //        string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //        //        //当前员工的文件存储目录
+        //        //        string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
+        //        //        foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //        //        {
+        //        //            //找到当前修改记录对应的任务目录
+        //        //            if (taskFolder.Name.StartsWith(taskNo))
+        //        //            {
+        //        //                //存放修改记录的文件夹名
+        //        //                string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
+        //        //                LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
+        //        //                int modifyTaskAmount = 0;
+        //        //                foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
+        //        //                {
+        //        //                    //如果当前目录是修改记录的目录
+        //        //                    if (taskFolderChild.Name.Trim() == modifyRecordFolder)
+        //        //                    {
+        //        //                        //遍历修改目录的子目录
+        //        //                        foreach (DirectoryInfo modifyFolders in taskFolderChild.GetDirectories())
+        //        //                        {
+        //        //                            string modifyFolderName = modifyFolders.Name;
+        //        //                            //string dtModifyFolderName = dt.Rows[0]["foldername"].ToString();
+        //        //                            ////找到需要的目录名下载之
+        //        //                            //if (modifyFolderName.Contains("完成") && modifyFolderName.StartsWith(dtModifyFolderName))
+        //        //                            //{
+        //        //                            //    string destinationFileName = modifyFolders.FullName + ".zip";
+        //        //                            //    DownLoad(destinationFileName);
+        //        //                            //}
+        //        //                            //不包含“完成”二字的目录，作为修改记录的数量
+        //        //                            if (!modifyFolderName.Contains("完成"))
+        //        //                            {
+        //        //                                modifyTaskAmount++;
+        //        //                            }
+        //        //                        }
+        //        //                    }
+        //        //                }
+        //        //                //当前任务的修改目录全名
+        //        //                string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
+        //        //                //如果修改记录数量为0，那么就要判断当前任务有没有“修改记录”这个子目录了
+        //        //                if (modifyTaskAmount == 0)
+        //        //                {
+        //        //                    LogHelper.WriteLine("如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？");
+        //        //                    //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
+        //        //                    if (!Directory.Exists(modifyFolderFullName))
+        //        //                    {
+        //        //                        string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
+        //        //                        Directory.CreateDirectory(modifyFolderNameOne);
+        //        //                        fupd.SaveAs(modifyFolderNameOne + fupd.FileName);
+        //        //                        string zipedFileName = modifyFolderNameOne + fupd.FileName;
+        //        //                        string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
+        //        //                        ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
+        //        //                        File.Delete(zipedFileName);
+        //        //                        FillModifyTaskForm();
+        //        //                        Alert("上传修改任务成功！");
+        //        //                        return;
+        //        //                    }
+        //        //                }
+        //        //                //如果已经有过修改记录，就自增1作为新的目录名
+        //        //                else
+        //        //                {
+        //        //                    LogHelper.WriteLine("如果已经有过修改记录，就自增1作为新的目录名");
+        //        //                    //新的修改任务的目录序号
+        //        //                    int modifySequence = modifyTaskAmount + 1;
+        //        //                    //新的修改任务的目录名
+        //        //                    string addModifyFolderName = string.Format("{0}{1}", "修改", modifySequence);
+        //        //                    //待添加的任务目录的全名
+        //        //                    string addModifyFolderFullName = string.Format("{0}\\{1}", modifyFolderFullName, addModifyFolderName);
+        //        //                    //如果待添加的任务目录名不存在
+        //        //                    LogHelper.WriteLine("//如果待添加的任务目录名不存在");
+        //        //                    if (!Directory.Exists(addModifyFolderFullName))
+        //        //                    {
+        //        //                        Directory.CreateDirectory(addModifyFolderFullName);
+        //        //                    }
+        //        //                    //定义上载到服务器的文件路径
+        //        //                    string uploadPath = string.Format("{0}\\{1}", addModifyFolderFullName, fupd.FileName);
+        //        //                    LogHelper.WriteLine("//定义上载到服务器的文件路径");
+        //        //                    //进行上载
+        //        //                    fupd.SaveAs(uploadPath);
+        //        //                    string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
+        //        //                    string zipedFileName = modifyFolderNameOne + fupd.FileName;
+        //        //                    string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
+        //        //                    ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
+        //        //                    File.Delete(zipedFileName);
+        //        //                    FillModifyTaskForm();
+        //        //                    Alert("上传修改任务成功！");
+        //        //                    return;
+        //        //                }
+        //        //            }
+        //        //        }
+        //        //    }
+        //        //    //“修改记录”目录没有文件的话
+        //        //    else
+        //        //    {
+        //        //        DataTable dt0 = new ProjectBLL().GetEmployeeNoAndTaskNo(projectID);
+        //        //        LogHelper.WriteLine("dt0 is null:" + (dt0 == null));
+        //        //        if (dt0 != null && dt0.Rows.Count > 0)
+        //        //        {
+        //        //            //任务目录（任务编号）
+        //        //            string taskNo = dt0.Rows[0]["taskNo"].ToString();
+        //        //            //员工编号
+        //        //            string employeeNo = dt0.Rows[0]["employeeno"].ToString();
+        //        //            //当前员工的文件存储目录
+        //        //            string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
+        //        //            LogHelper.WriteLine("currentEmpPath:" + currentEmpPath);
+        //        //            foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //        //            {
+        //        //                if (taskFolder.Name.StartsWith(taskNo))
+        //        //                {
+        //        //                    //存放修改记录的文件夹名
+        //        //                    string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
+        //        //                    LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
+        //        //                    //当前任务的修改目录全名
+        //        //                    string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
+        //        //                    if (!Directory.Exists(modifyFolderFullName))
+        //        //                    {
+        //        //                        Directory.CreateDirectory(modifyFolderFullName);
+        //        //                        //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
+        //        //                    }
+        //        //                    LogHelper.WriteLine("修改1目录:");
+        //        //                    //修改1目录
+        //        //                    string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
+        //        //                    LogHelper.WriteLine("modifyFolderNameOne:" + modifyFolderNameOne);
+        //        //                    if (!Directory.Exists(modifyFolderNameOne))
+        //        //                    {
+        //        //                        LogHelper.WriteLine("Directory.Exists(modifyFolderNameOne)");
+        //        //                        Directory.CreateDirectory(modifyFolderNameOne);
+        //        //                        fupd.SaveAs(modifyFolderNameOne +  fupd.FileName);
+        //        //                        string zipedFileName = modifyFolderNameOne +  fupd.FileName;
+        //        //                        string upZipDirectory = modifyFolderNameOne +  fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
+        //        //                        ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
+        //        //                        File.Delete(zipedFileName);
+        //        //                        FillModifyTaskForm();
+        //        //                        Alert("上传修改任务成功！");
+        //        //                        return; 
+        //        //                    }
+        //        //                }
+        //        //            }
+        //        //        }
+        //        //    }
+        //        //}
+        //        //catch (Exception ex)
+        //        //{
+        //        //    LogHelper.WriteLine(ex.Message);
+        //        //    string msg = ex.Message.Replace("'", "'") + "<br />" + ex.StackTrace;
+        //        //    Alert("程序出错！<br />" + msg);
+        //        //}
+        //        #endregion
+        //        LogHelper.WriteLine("进入开头");
+        //        //if (Path.GetExtension(fupd.FileName).ToLower() != ".zip")
+        //        //{
+        //        //    Alert("请上传扩展名为“.zip”的压缩文件！");
+        //        //    return;
+        //        //}
+        //        //所有员工的根目录
+        //        string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
 
-                //任务类型
-                string taskType = hidTaskType.Value;
-                //新任务
-                if (taskType == "0")
-                {
-                    /* 2017-03-09，修改该IF下的代码。需求变更，改为直接上传到FTP服务器的“未分配”目录下，并自动生成任务书。*/
+        //        //任务类型
+        //        string taskType = hidTaskType.Value;
+        //        //新任务
+        //        if (taskType == "0")
+        //        {
+        //            /* 2017-03-09，修改该IF下的代码。需求变更，改为直接上传到FTP服务器的“未分配”目录下，并自动生成任务书。*/
 
-                    //根据projectID获得任务实体
-                    Project project = pBll.GetModel(projectID);
-                    if (project != null)
-                    {
-                        LogHelper.WriteLine("project is null:" + (project == null));
-                        //任务目录（即任务编号）
-                        string taskNo = project.TASKNO;
+        //            //根据projectID获得任务实体
+        //            Project project = pBll.GetModel(projectID);
+        //            if (project != null)
+        //            {
+        //                LogHelper.WriteLine("project is null:" + (project == null));
+        //                //任务目录（即任务编号）
+        //                string taskNo = project.TASKNO;
 
-                        //新任务分配目录 
-                        string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
-                        //任务书内容
-                        string assignmentBookText = project.ASSIGNMENTBOOK;// dt.Rows[0]["assignmentbook"].ToString();
-                        //新任务的路径
-                        string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskNo);
-                        if (!Directory.Exists(newTaskPath))
-                        {
-                            Directory.CreateDirectory(newTaskPath);
-                        }
-                        //上传文件的保存路径
-                        string savePath = string.Format("{0}\\{1}", newTaskPath, fupd.FileName);
-                        try
-                        {
-                            //保存文件到服务器
-                            fupd.SaveAs(savePath);
-                            //this.InputFile1.MoveTo(savePath, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
-                            //创建任务书存放目录
-                            string assignmentBookDirectory = string.Format("{0}\\{1}", newTaskPath, "任务书");
-                            if (!Directory.Exists(assignmentBookDirectory))
-                            {
-                                Directory.CreateDirectory(assignmentBookDirectory);
-                            }
-                            //创建任务书文件存放路径
-                            string assignmentBookFilePath = string.Format("{0}\\{1}", assignmentBookDirectory, "任务书.txt");
-                            using (StreamWriter sw = new StreamWriter(assignmentBookFilePath, false))
-                            {
-                                sw.Write(assignmentBookText);
-                            }
-                            Alert("上传成功！");
-                        }
-                        catch (Exception ex)
-                        {
-                            LogHelper.WriteLine(ex.Message);
-                            Alert("上传失败！");
-                        }
-                    }
-                }
-                //售后修改任务
-                else if (taskType == "1")
-                {
+        //                //新任务分配目录 
+        //                string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
+        //                //任务书内容
+        //                string assignmentBookText = project.ASSIGNMENTBOOK;// dt.Rows[0]["assignmentbook"].ToString();
+        //                //新任务的路径
+        //                string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskNo);
+        //                if (!Directory.Exists(newTaskPath))
+        //                {
+        //                    Directory.CreateDirectory(newTaskPath);
+        //                }
+        //                //上传文件的保存路径
+        //                string savePath = string.Format("{0}\\{1}", newTaskPath, fupd.FileName);
+        //                try
+        //                {
+        //                    //保存文件到服务器
+        //                    fupd.SaveAs(savePath);
+        //                    //this.InputFile1.MoveTo(savePath, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
+        //                    //创建任务书存放目录
+        //                    string assignmentBookDirectory = string.Format("{0}\\{1}", newTaskPath, "任务书");
+        //                    if (!Directory.Exists(assignmentBookDirectory))
+        //                    {
+        //                        Directory.CreateDirectory(assignmentBookDirectory);
+        //                    }
+        //                    //创建任务书文件存放路径
+        //                    string assignmentBookFilePath = string.Format("{0}\\{1}", assignmentBookDirectory, "任务书.txt");
+        //                    using (StreamWriter sw = new StreamWriter(assignmentBookFilePath, false))
+        //                    {
+        //                        sw.Write(assignmentBookText);
+        //                    }
+        //                    Alert("上传成功！");
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    LogHelper.WriteLine(ex.Message);
+        //                    Alert("上传失败！");
+        //                }
+        //            }
+        //        }
+        //        //售后修改任务
+        //        else if (taskType == "1")
+        //        {
 
-                }
-                //string taskType = this.hidTaskType.Value;//任务类型：0，普通任务；1，售后。
-                string projectOrModifyID = hidProjectOrModifyID.Value;//任务或者售后的ID
-                try
-                {
-                    //获得修改稿的dt
-                    DataTable dt = new ProjectBLL().GetProjectModifyByPrjID(projectID);
-                    //LogHelper.WriteLine("获得修改稿的dtCount " + dt.Rows.Count);
-                    LogHelper.WriteLine("dt is null:" + (dt == null));
-                    if (dt != null && dt.Rows.Count > 0)
-                    {
-                        //任务目录（任务编号）
-                        string taskNo = dt.Rows[0]["taskNo"].ToString();
-                        //员工编号
-                        string employeeNo = dt.Rows[0]["employeeno"].ToString();
-                        if (taskType == "0")
-                        {
-                            //2017-03-09，修改该IF下的代码，需求变更，改为直接上传到FTP服务器的“未分配”目录下，并自动生成任务书
-                            //新任务上传目录
-                            string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"].TrimEnd('\\');
-                            //任务书内容
-                            string assignmentBookText = dt.Rows[0]["assignmentbook"].ToString();
-                            //新任务的路径
-                            string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskNo);
-                            if (!Directory.Exists(newTaskPath))
-                            {
-                                Directory.CreateDirectory(newTaskPath);
-                            }
-                            string savePath = string.Format("{0}\\{1}", newTaskPath, fupd.FileName);
-                            try
-                            {
-                                fupd.SaveAs(savePath);
-                                Alert("上传成功！");
-                            }
-                            catch (Exception ex)
-                            {
-                                LogHelper.WriteLine(ex.Message);
-                                Alert("上传失败！");
-                            }
-                        }
-                        else if (taskType == "1")
-                        {
-                            //当前员工的文件存储目录
-                            string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
-                            foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                            {
-                                //找到当前修改记录对应的任务目录
-                                if (taskFolder.Name.StartsWith(taskNo))
-                                {
-                                    //存放修改记录的文件夹名
-                                    string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
-                                    LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
-                                    int modifyTaskAmount = 0;
-                                    foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
-                                    {
-                                        //如果当前目录是修改记录的目录
-                                        if (taskFolderChild.Name.Trim() == modifyRecordFolder)
-                                        {
-                                            //遍历修改目录的子目录
-                                            foreach (DirectoryInfo modifyFolders in taskFolderChild.GetDirectories())
-                                            {
-                                                string modifyFolderName = modifyFolders.Name;
-                                                //string dtModifyFolderName = dt.Rows[0]["foldername"].ToString();
-                                                ////找到需要的目录名下载之
-                                                //if (modifyFolderName.Contains("完成") && modifyFolderName.StartsWith(dtModifyFolderName))
-                                                //{
-                                                //    string destinationFileName = modifyFolders.FullName + ".zip";
-                                                //    DownLoad(destinationFileName);
-                                                //}
-                                                //不包含“完成”二字的目录，作为修改记录的数量
-                                                if (!modifyFolderName.Contains("完成"))
-                                                {
-                                                    modifyTaskAmount++;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    //当前任务的修改目录全名
-                                    string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
-                                    //如果修改记录数量为0，那么就要判断当前任务有没有“修改记录”这个子目录了
-                                    if (modifyTaskAmount == 0)
-                                    {
-                                        LogHelper.WriteLine("如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？");
-                                        //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
-                                        if (!Directory.Exists(modifyFolderFullName))
-                                        {
-                                            string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
-                                            Directory.CreateDirectory(modifyFolderNameOne);
-                                            fupd.SaveAs(modifyFolderNameOne + fupd.FileName);
-                                            string zipedFileName = modifyFolderNameOne + fupd.FileName;
-                                            string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
-                                            ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
-                                            File.Delete(zipedFileName);
-                                            FillModifyTaskForm();
-                                            Alert("上传修改任务成功！");
-                                            return;
-                                        }
-                                    }
-                                    //如果已经有过修改记录，就自增1作为新的目录名
-                                    else
-                                    {
-                                        LogHelper.WriteLine("如果已经有过修改记录，就自增1作为新的目录名");
-                                        //新的修改任务的目录序号
-                                        int modifySequence = modifyTaskAmount + 1;
-                                        //新的修改任务的目录名
-                                        string addModifyFolderName = string.Format("{0}{1}", "修改", modifySequence);
-                                        //待添加的任务目录的全名
-                                        string addModifyFolderFullName = string.Format("{0}\\{1}", modifyFolderFullName, addModifyFolderName);
-                                        //如果待添加的任务目录名不存在
-                                        LogHelper.WriteLine("//如果待添加的任务目录名不存在");
-                                        if (!Directory.Exists(addModifyFolderFullName))
-                                        {
-                                            Directory.CreateDirectory(addModifyFolderFullName);
-                                        }
-                                        //定义上载到服务器的文件路径
-                                        string uploadPath = string.Format("{0}\\{1}", addModifyFolderFullName, fupd.FileName);
-                                        LogHelper.WriteLine("//定义上载到服务器的文件路径");
-                                        //进行上载
-                                        fupd.SaveAs(uploadPath);
-                                        string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
-                                        string zipedFileName = modifyFolderNameOne + fupd.FileName;
-                                        string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
-                                        ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
-                                        File.Delete(zipedFileName);
-                                        FillModifyTaskForm();
-                                        Alert("上传修改任务成功！");
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //“修改记录”目录没有文件的话
-                    else
-                    {
-                        DataTable dt0 = new ProjectBLL().GetEmployeeNoAndTaskNo(projectID);
-                        LogHelper.WriteLine("dt0 is null:" + (dt0 == null));
-                        if (dt0 != null && dt0.Rows.Count > 0)
-                        {
-                            //任务目录（任务编号）
-                            string taskNo = dt0.Rows[0]["taskNo"].ToString();
-                            //员工编号
-                            string employeeNo = dt0.Rows[0]["employeeno"].ToString();
-                            //当前员工的文件存储目录
-                            string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
-                            LogHelper.WriteLine("currentEmpPath:" + currentEmpPath);
-                            foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                            {
-                                if (taskFolder.Name.StartsWith(taskNo))
-                                {
-                                    //存放修改记录的文件夹名
-                                    string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
-                                    LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
-                                    //当前任务的修改目录全名
-                                    string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
-                                    if (!Directory.Exists(modifyFolderFullName))
-                                    {
-                                        Directory.CreateDirectory(modifyFolderFullName);
-                                        //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
-                                    }
-                                    LogHelper.WriteLine("修改1目录:");
-                                    //修改1目录
-                                    string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
-                                    LogHelper.WriteLine("modifyFolderNameOne:" + modifyFolderNameOne);
-                                    if (!Directory.Exists(modifyFolderNameOne))
-                                    {
-                                        LogHelper.WriteLine("Directory.Exists(modifyFolderNameOne)");
-                                        Directory.CreateDirectory(modifyFolderNameOne);
-                                        fupd.SaveAs(modifyFolderNameOne + fupd.FileName);
-                                        string zipedFileName = modifyFolderNameOne + fupd.FileName;
-                                        string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
-                                        ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
-                                        File.Delete(zipedFileName);
-                                        FillModifyTaskForm();
-                                        Alert("上传修改任务成功！");
-                                        return;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.WriteLine(ex.Message);
-                    string msg = ex.Message.Replace("'", "'") + "<br />" + ex.StackTrace;
-                    Alert("程序出错！" + msg);
-                }
-            }
-        }
+        //        }
+        //        //string taskType = this.hidTaskType.Value;//任务类型：0，普通任务；1，售后。
+        //        string projectOrModifyID = hidProjectOrModifyID.Value;//任务或者售后的ID
+        //        try
+        //        {
+        //            //获得修改稿的dt
+        //            DataTable dt = new ProjectBLL().GetProjectModifyByPrjID(projectID);
+        //            //LogHelper.WriteLine("获得修改稿的dtCount " + dt.Rows.Count);
+        //            LogHelper.WriteLine("dt is null:" + (dt == null));
+        //            if (dt != null && dt.Rows.Count > 0)
+        //            {
+        //                //任务目录（任务编号）
+        //                string taskNo = dt.Rows[0]["taskNo"].ToString();
+        //                //员工编号
+        //                string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //                if (taskType == "0")
+        //                {
+        //                    //2017-03-09，修改该IF下的代码，需求变更，改为直接上传到FTP服务器的“未分配”目录下，并自动生成任务书
+        //                    //新任务上传目录
+        //                    string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"].TrimEnd('\\');
+        //                    //任务书内容
+        //                    string assignmentBookText = dt.Rows[0]["assignmentbook"].ToString();
+        //                    //新任务的路径
+        //                    string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskNo);
+        //                    if (!Directory.Exists(newTaskPath))
+        //                    {
+        //                        Directory.CreateDirectory(newTaskPath);
+        //                    }
+        //                    string savePath = string.Format("{0}\\{1}", newTaskPath, fupd.FileName);
+        //                    try
+        //                    {
+        //                        fupd.SaveAs(savePath);
+        //                        Alert("上传成功！");
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        LogHelper.WriteLine(ex.Message);
+        //                        Alert("上传失败！");
+        //                    }
+        //                }
+        //                else if (taskType == "1")
+        //                {
+        //                    //当前员工的文件存储目录
+        //                    string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
+        //                    foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //                    {
+        //                        //找到当前修改记录对应的任务目录
+        //                        if (taskFolder.Name.StartsWith(taskNo))
+        //                        {
+        //                            //存放修改记录的文件夹名
+        //                            string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
+        //                            LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
+        //                            int modifyTaskAmount = 0;
+        //                            foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
+        //                            {
+        //                                //如果当前目录是修改记录的目录
+        //                                if (taskFolderChild.Name.Trim() == modifyRecordFolder)
+        //                                {
+        //                                    //遍历修改目录的子目录
+        //                                    foreach (DirectoryInfo modifyFolders in taskFolderChild.GetDirectories())
+        //                                    {
+        //                                        string modifyFolderName = modifyFolders.Name;
+        //                                        //string dtModifyFolderName = dt.Rows[0]["foldername"].ToString();
+        //                                        ////找到需要的目录名下载之
+        //                                        //if (modifyFolderName.Contains("完成") && modifyFolderName.StartsWith(dtModifyFolderName))
+        //                                        //{
+        //                                        //    string destinationFileName = modifyFolders.FullName + ".zip";
+        //                                        //    DownLoad(destinationFileName);
+        //                                        //}
+        //                                        //不包含“完成”二字的目录，作为修改记录的数量
+        //                                        if (!modifyFolderName.Contains("完成"))
+        //                                        {
+        //                                            modifyTaskAmount++;
+        //                                        }
+        //                                    }
+        //                                }
+        //                            }
+        //                            //当前任务的修改目录全名
+        //                            string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
+        //                            //如果修改记录数量为0，那么就要判断当前任务有没有“修改记录”这个子目录了
+        //                            if (modifyTaskAmount == 0)
+        //                            {
+        //                                LogHelper.WriteLine("如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？");
+        //                                //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
+        //                                if (!Directory.Exists(modifyFolderFullName))
+        //                                {
+        //                                    string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
+        //                                    Directory.CreateDirectory(modifyFolderNameOne);
+        //                                    fupd.SaveAs(modifyFolderNameOne + fupd.FileName);
+        //                                    string zipedFileName = modifyFolderNameOne + fupd.FileName;
+        //                                    string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
+        //                                    ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
+        //                                    File.Delete(zipedFileName);
+        //                                    FillModifyTaskForm();
+        //                                    Alert("上传修改任务成功！");
+        //                                    return;
+        //                                }
+        //                            }
+        //                            //如果已经有过修改记录，就自增1作为新的目录名
+        //                            else
+        //                            {
+        //                                LogHelper.WriteLine("如果已经有过修改记录，就自增1作为新的目录名");
+        //                                //新的修改任务的目录序号
+        //                                int modifySequence = modifyTaskAmount + 1;
+        //                                //新的修改任务的目录名
+        //                                string addModifyFolderName = string.Format("{0}{1}", "修改", modifySequence);
+        //                                //待添加的任务目录的全名
+        //                                string addModifyFolderFullName = string.Format("{0}\\{1}", modifyFolderFullName, addModifyFolderName);
+        //                                //如果待添加的任务目录名不存在
+        //                                LogHelper.WriteLine("//如果待添加的任务目录名不存在");
+        //                                if (!Directory.Exists(addModifyFolderFullName))
+        //                                {
+        //                                    Directory.CreateDirectory(addModifyFolderFullName);
+        //                                }
+        //                                //定义上载到服务器的文件路径
+        //                                string uploadPath = string.Format("{0}\\{1}", addModifyFolderFullName, fupd.FileName);
+        //                                LogHelper.WriteLine("//定义上载到服务器的文件路径");
+        //                                //进行上载
+        //                                fupd.SaveAs(uploadPath);
+        //                                string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
+        //                                string zipedFileName = modifyFolderNameOne + fupd.FileName;
+        //                                string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
+        //                                ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
+        //                                File.Delete(zipedFileName);
+        //                                FillModifyTaskForm();
+        //                                Alert("上传修改任务成功！");
+        //                                return;
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            //“修改记录”目录没有文件的话
+        //            else
+        //            {
+        //                DataTable dt0 = new ProjectBLL().GetEmployeeNoAndTaskNo(projectID);
+        //                LogHelper.WriteLine("dt0 is null:" + (dt0 == null));
+        //                if (dt0 != null && dt0.Rows.Count > 0)
+        //                {
+        //                    //任务目录（任务编号）
+        //                    string taskNo = dt0.Rows[0]["taskNo"].ToString();
+        //                    //员工编号
+        //                    string employeeNo = dt0.Rows[0]["employeeno"].ToString();
+        //                    //当前员工的文件存储目录
+        //                    string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
+        //                    LogHelper.WriteLine("currentEmpPath:" + currentEmpPath);
+        //                    foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //                    {
+        //                        if (taskFolder.Name.StartsWith(taskNo))
+        //                        {
+        //                            //存放修改记录的文件夹名
+        //                            string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
+        //                            LogHelper.WriteLine("modifyRecordFolder:" + modifyRecordFolder);
+        //                            //当前任务的修改目录全名
+        //                            string modifyFolderFullName = string.Format("{0}\\{1}\\{2}", currentEmpPath, taskFolder.Name, modifyRecordFolder);
+        //                            if (!Directory.Exists(modifyFolderFullName))
+        //                            {
+        //                                Directory.CreateDirectory(modifyFolderFullName);
+        //                                //如果当前任务还没有创建“修改记录”目录的话，就创建一个，顺便把“修改1”也创建了。PS：他爸都没有，怎么可能有儿子？
+        //                            }
+        //                            LogHelper.WriteLine("修改1目录:");
+        //                            //修改1目录
+        //                            string modifyFolderNameOne = modifyFolderFullName + "\\修改1\\";
+        //                            LogHelper.WriteLine("modifyFolderNameOne:" + modifyFolderNameOne);
+        //                            if (!Directory.Exists(modifyFolderNameOne))
+        //                            {
+        //                                LogHelper.WriteLine("Directory.Exists(modifyFolderNameOne)");
+        //                                Directory.CreateDirectory(modifyFolderNameOne);
+        //                                fupd.SaveAs(modifyFolderNameOne + fupd.FileName);
+        //                                string zipedFileName = modifyFolderNameOne + fupd.FileName;
+        //                                string upZipDirectory = modifyFolderNameOne + fupd.FileName.Replace(Path.GetExtension(fupd.FileName), string.Empty);
+        //                                ZipHelper.UnZipFiles(zipedFileName, upZipDirectory, string.Empty);
+        //                                File.Delete(zipedFileName);
+        //                                FillModifyTaskForm();
+        //                                Alert("上传修改任务成功！");
+        //                                return;
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            LogHelper.WriteLine(ex.Message);
+        //            string msg = ex.Message.Replace("'", "'") + "<br />" + ex.StackTrace;
+        //            Alert("程序出错！" + msg);
+        //        }
+        //    }
+        //}
         #endregion
 
         #region 删除售后任务   //discarded
@@ -1502,98 +1504,98 @@ namespace FileZillaServerWeb
         /// <param name="e"></param>
         protected void btnModifyDelete_Click(object sender, EventArgs e)
         {
-            ModifyTaskDetete();
+            //ModifyTaskDetete();
         }
 
-        /// <summary>
-        /// 删除修改任务
-        /// </summary>
-        private void ModifyTaskDetete()
-        {
-            string prjModifyID = hidDeleteID.Value;
-            string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
-            //获得修改稿的dt
-            DataTable dt = new ProjectBLL().GetProjectModifyByModifyID(prjModifyID);
-            //删除文件目录
-            bool bDelFolder = false;
-            if (dt != null && dt.Rows.Count > 0)
-            {
-                //任务目录（任务编号）
-                string taskNo = dt.Rows[0]["taskNo"].ToString();
-                //员工编号
-                string employeeNo = dt.Rows[0]["employeeno"].ToString();
-                //修改目录的子目录名，如“修改1”、“修改2”
-                string modifyTaskItem = dt.Rows[0]["folderName"].ToString();
-                //当前员工的文件存储目录
-                string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
-                foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                {
-                    //找到当前修改记录对应的任务目录
-                    if (taskFolder.Name.StartsWith(taskNo))
-                    {
-                        //存放修改记录的文件夹名
-                        string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
-                        //int modifyTaskAmount = 0;
-                        foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
-                        {
-                            //如果当前目录是修改记录的目录
-                            if (taskFolderChild.Name.Trim() == modifyRecordFolder)
-                            {
-                                //遍历修改目录的子目录
-                                foreach (DirectoryInfo modifyFolders in taskFolderChild.GetDirectories())
-                                {
-                                    string modifyFolderName = modifyFolders.Name;
-                                    //string dtModifyFolderName = dt.Rows[0]["foldername"].ToString();
-                                    ////找到需要的目录名下载之
-                                    //if (modifyFolderName.Contains("完成") && modifyFolderName.StartsWith(dtModifyFolderName))
-                                    //{
-                                    //    string destinationFileName = modifyFolders.FullName + ".zip";
-                                    //    DownLoad(destinationFileName);
-                                    //}
-                                    //不包含“完成”二字的目录，作为修改记录的数量
-                                    //if (!modifyFolderName.Contains("完成"))
-                                    //{
-                                    //    modifyTaskAmount++;
-                                    //}
-                                    if (modifyFolderName.StartsWith(modifyTaskItem))
-                                    {
-                                        if (Directory.Exists(modifyFolders.FullName))
-                                        {
-                                            Directory.Delete(modifyFolders.FullName, true);
-                                            bDelFolder = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            //删除数据库数据
-            bool bDelData = false;
-            //如果成功删除了修改记录的目录
-            if (bDelFolder)
-            {
-                bDelData = new ProjectBLL().DeleteProjectModifyTask(prjModifyID);
-            }
-            else
-            {
-                Alert("目录删除失败！");
-                return;
-            }
-            //成功删除了数据库数据
-            if (!bDelData)
-            {
-                Alert("数据库删除失败！");
-                return;
-            }
-            //如果目录和数据库均删除成功
-            if (bDelFolder && bDelData)
-            {
-                FillModifyTaskForm();
-                Alert("删除成功！");
-            }
-        }
+        ///// <summary>
+        ///// 删除修改任务
+        ///// </summary>
+        //private void ModifyTaskDetete()
+        //{
+        //    string prjModifyID = hidDeleteID.Value;
+        //    string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
+        //    //获得修改稿的dt
+        //    DataTable dt = new ProjectBLL().GetProjectModifyByModifyID(prjModifyID);
+        //    //删除文件目录
+        //    bool bDelFolder = false;
+        //    if (dt != null && dt.Rows.Count > 0)
+        //    {
+        //        //任务目录（任务编号）
+        //        string taskNo = dt.Rows[0]["taskNo"].ToString();
+        //        //员工编号
+        //        string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //        //修改目录的子目录名，如“修改1”、“修改2”
+        //        string modifyTaskItem = dt.Rows[0]["folderName"].ToString();
+        //        //当前员工的文件存储目录
+        //        string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
+        //        foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //        {
+        //            //找到当前修改记录对应的任务目录
+        //            if (taskFolder.Name.StartsWith(taskNo))
+        //            {
+        //                //存放修改记录的文件夹名
+        //                string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
+        //                //int modifyTaskAmount = 0;
+        //                foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
+        //                {
+        //                    //如果当前目录是修改记录的目录
+        //                    if (taskFolderChild.Name.Trim() == modifyRecordFolder)
+        //                    {
+        //                        //遍历修改目录的子目录
+        //                        foreach (DirectoryInfo modifyFolders in taskFolderChild.GetDirectories())
+        //                        {
+        //                            string modifyFolderName = modifyFolders.Name;
+        //                            //string dtModifyFolderName = dt.Rows[0]["foldername"].ToString();
+        //                            ////找到需要的目录名下载之
+        //                            //if (modifyFolderName.Contains("完成") && modifyFolderName.StartsWith(dtModifyFolderName))
+        //                            //{
+        //                            //    string destinationFileName = modifyFolders.FullName + ".zip";
+        //                            //    DownLoad(destinationFileName);
+        //                            //}
+        //                            //不包含“完成”二字的目录，作为修改记录的数量
+        //                            //if (!modifyFolderName.Contains("完成"))
+        //                            //{
+        //                            //    modifyTaskAmount++;
+        //                            //}
+        //                            if (modifyFolderName.StartsWith(modifyTaskItem))
+        //                            {
+        //                                if (Directory.Exists(modifyFolders.FullName))
+        //                                {
+        //                                    Directory.Delete(modifyFolders.FullName, true);
+        //                                    bDelFolder = true;
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    //删除数据库数据
+        //    bool bDelData = false;
+        //    //如果成功删除了修改记录的目录
+        //    if (bDelFolder)
+        //    {
+        //        bDelData = new ProjectBLL().DeleteProjectModifyTask(prjModifyID);
+        //    }
+        //    else
+        //    {
+        //        Alert("目录删除失败！");
+        //        return;
+        //    }
+        //    //成功删除了数据库数据
+        //    if (!bDelData)
+        //    {
+        //        Alert("数据库删除失败！");
+        //        return;
+        //    }
+        //    //如果目录和数据库均删除成功
+        //    if (bDelFolder && bDelData)
+        //    {
+        //        FillModifyTaskForm();
+        //        Alert("删除成功！");
+        //    }
+        //}
         #endregion
 
         #region 删除任务
@@ -1622,238 +1624,238 @@ namespace FileZillaServerWeb
         #endregion
 
         #region 上传资料
-        /// <summary>
-        /// 上传资料按钮点击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnUploadTaskData_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(projectID) && Session["projectID"] == null)
-            {
-                ExecuteScript("AlertDialog('请先生成任务！', null);");
-                return;
-            }
-            Button btnSender = sender as Button;
-            UploadTaskData(btnSender);
-        }
+        ///// <summary>
+        ///// 上传资料按钮点击事件
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void btnUploadTaskData_Click(object sender, EventArgs e)
+        //{
+        //    if (string.IsNullOrEmpty(projectID) && Session["projectID"] == null)
+        //    {
+        //        ExecuteScript("AlertDialog('请先生成任务！', null);");
+        //        return;
+        //    }
+        //    Button btnSender = sender as Button;
+        //    UploadTaskData(btnSender);
+        //}
 
-        /// <summary>
-        /// 上传任务资料
-        /// </summary>
-        /// <param name="button">事件发送者</param>
-        private void UploadTaskData(Button button)
-        {
-            //1.如果是任务资料上传按钮
-            if (button.ID == "btnUploadTaskData")
-            {
-                //if (fupTaskData.HasFile)//如果有文件
-                if (InputFile1.HasFile)
-                {
-                    /* 2017-03-09，修改该段代码。需求变更，改为直接上传到FTP服务器的“未分配”目录下。*/
+        ///// <summary>
+        ///// 上传任务资料
+        ///// </summary>
+        ///// <param name="button">事件发送者</param>
+        //private void UploadTaskData(Button button)
+        //{
+        //    //1.如果是任务资料上传按钮
+        //    if (button.ID == "btnUploadTaskData")
+        //    {
+        //        //if (fupTaskData.HasFile)//如果有文件
+        //        if (InputFile1.HasFile)
+        //        {
+        //            /* 2017-03-09，修改该段代码。需求变更，改为直接上传到FTP服务器的“未分配”目录下。*/
 
-                    //根据projectID获得任务实体
-                    string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                    Project project = pBll.GetModel(projectID0);
-                    if (project != null)
-                    {
-                        if (!string.IsNullOrEmpty(project.FINISHEDPERSON))
-                        {
-                            ExecuteScript("AlertDialog('当前任务已分配，不再支持上传！', null);");
-                            return;
-                        }
-                        LogHelper.WriteLine("project is null:" + (project == null));
-                        //任务目录（即任务编号）
-                        string taskNo = project.TASKNO;
+        //            //根据projectID获得任务实体
+        //            string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //            Project project = pBll.GetModel(projectID0);
+        //            if (project != null)
+        //            {
+        //                if (!string.IsNullOrEmpty(project.FINISHEDPERSON))
+        //                {
+        //                    ExecuteScript("AlertDialog('当前任务已分配，不再支持上传！', null);");
+        //                    return;
+        //                }
+        //                LogHelper.WriteLine("project is null:" + (project == null));
+        //                //任务目录（即任务编号）
+        //                string taskNo = project.TASKNO;
 
-                        //新任务分配目录
-                        string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
-                        //任务书内容
-                        string assignmentBookText = project.ASSIGNMENTBOOK;// dt.Rows[0]["assignmentbook"].ToString();
-                        //新任务的路径
-                        string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskNo);
-                        //任务资料是上传到“任务书”的文件目录里的
-                        string newAssignmentBookPath = string.Format("{0}\\{1}", newTaskPath, "任务书");
-                        //首次上传目录应该是不存在的，故先生成
-                        if (!Directory.Exists(newAssignmentBookPath))
-                        {
-                            Directory.CreateDirectory(newAssignmentBookPath);
-                        }
-                        //上传文件的保存路径
-                        string savePath = string.Format("{0}\\{1}", newAssignmentBookPath, /*fupTaskData.FileName*/ InputFile1.FileName);
-                        try
-                        {
-                            //保存文件到服务器
-                            //fupTaskData.SaveAs(savePath);
-                            this.InputFile1.MoveTo(savePath, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
+        //                //新任务分配目录
+        //                string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
+        //                //任务书内容
+        //                string assignmentBookText = project.ASSIGNMENTBOOK;// dt.Rows[0]["assignmentbook"].ToString();
+        //                //新任务的路径
+        //                string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskNo);
+        //                //任务资料是上传到“任务书”的文件目录里的
+        //                string newAssignmentBookPath = string.Format("{0}\\{1}", newTaskPath, "任务书");
+        //                //首次上传目录应该是不存在的，故先生成
+        //                if (!Directory.Exists(newAssignmentBookPath))
+        //                {
+        //                    Directory.CreateDirectory(newAssignmentBookPath);
+        //                }
+        //                //上传文件的保存路径
+        //                string savePath = string.Format("{0}\\{1}", newAssignmentBookPath, /*fupTaskData.FileName*/ InputFile1.FileName);
+        //                try
+        //                {
+        //                    //保存文件到服务器
+        //                    //fupTaskData.SaveAs(savePath);
+        //                    this.InputFile1.MoveTo(savePath, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
 
-                            //fupd.SaveAs(Server.MapPath("~\\Upload\\") + fupTaskData.FileName);    //！！！！！这个不用管
+        //                    //fupd.SaveAs(Server.MapPath("~\\Upload\\") + fupTaskData.FileName);    //！！！！！这个不用管
 
-                            //fupd.PostedFile.SaveAs(savePath);
-                            //fupd.SaveAs("f:\\D850E6D413BE_20161214083735.jpg");
-                            //相对路径
-                            string relativePath = string.Format("{0}\\{1}\\{2}", taskNo, "任务书", /*fupTaskData.FileName*/InputFile1.FileName);
-                            //文件名
-                            string fileName = /*fupTaskData.FileName*/ InputFile1.FileName;
-                            //扩展名
-                            string extension = Path.GetExtension(fileName);
-                            Attachment att = new Attachment();
-                            att.ID = Guid.NewGuid().ToString();
-                            att.TASKID = projectID0;
-                            att.TASKTYPE = 0;
-                            att.FILENAME = fileName;
-                            att.FILEFULLNAME = relativePath;
-                            att.EXTENSION = extension;
-                            bool isAdd = aBll.Add(att);
-                            if (isAdd)
-                            {
-                                GridViewTaskDataBind(projectID0, string.Empty);
-                                GridViewModifyTaskDataBind(projectID);
+        //                    //fupd.PostedFile.SaveAs(savePath);
+        //                    //fupd.SaveAs("f:\\D850E6D413BE_20161214083735.jpg");
+        //                    //相对路径
+        //                    string relativePath = string.Format("{0}\\{1}\\{2}", taskNo, "任务书", /*fupTaskData.FileName*/InputFile1.FileName);
+        //                    //文件名
+        //                    string fileName = /*fupTaskData.FileName*/ InputFile1.FileName;
+        //                    //扩展名
+        //                    string extension = Path.GetExtension(fileName);
+        //                    Attachment att = new Attachment();
+        //                    att.ID = Guid.NewGuid().ToString();
+        //                    att.TASKID = projectID0;
+        //                    att.TASKTYPE = 0;
+        //                    att.FILENAME = fileName;
+        //                    att.FILEFULLNAME = relativePath;
+        //                    att.EXTENSION = extension;
+        //                    bool isAdd = aBll.Add(att);
+        //                    if (isAdd)
+        //                    {
+        //                        GridViewTaskDataBind(projectID0, string.Empty);
+        //                        GridViewModifyTaskDataBind(projectID);
 
-                                string url = "UpLoad/" + relativePath; //文件保存的路径  
-                                float FileSize = (float)System.Math.Round((float)InputFile1.ContentLength / 1024000, 1); //获取文件大小并保留小数点后一位,单位是M
+        //                        string url = "UpLoad/" + relativePath; //文件保存的路径  
+        //                        float FileSize = (float)System.Math.Round((float)InputFile1.ContentLength / 1024000, 1); //获取文件大小并保留小数点后一位,单位是M
 
-                                Alert("上传成功！");
-                            }
-                            else
-                            {
-                                //数据添加失败，则删除文件
-                                if (File.Exists(savePath))
-                                {
-                                    File.Delete(savePath);
-                                }
-                                Alert("上传失败！");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            LogHelper.WriteLine(ex.Message);
-                            Alert("上传失败！");
-                        }
-                    }
-                }
-            }
-            //2.如果是修改记录上传按钮
-            else if (button.ID == "btnUploadModifyData")
-            {
-                string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                //任务尚未分配，不允许上传
-                DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
-                if (dt == null || dt.Rows.Count == 0)
-                {
-                    ExecuteScript("AlertDialog('当前任务暂未分配，不允许上传修改任务！', null);");
-                    return;
-                }
-                ////有待审核的修改任务，不允许上传
-                //bool isExist = pBll.IsExistModifyTaskWaitforReview(projectID0);
-                //if (isExist)
-                //{
-                //    ExecuteScript("AlertDialog('当前有待审核的修改任务，不允许上传新的修改任务！', null);");
-                //    return;
-                //}
-                if (fupModifyData.HasFile)
-                {
-                    //修改任务分配目录
-                    string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
-                    string employeeNo = dt.Rows[0]["employeeno"].ToString();
-                    string taskNo = dt.Rows[0]["taskno"].ToString();
-                    //修改任务存放目录，形如F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500
-                    string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);
-                    if (!Directory.Exists(newModifyPath))
-                    {
-                        Directory.CreateDirectory(newModifyPath);
-                    }
-                    StringBuilder modifyFolder = new StringBuilder();
-                    //修改任务的序号
-                    int times = pmBll.GetModifyTaskCount(projectID0) + 1;
-                    //为0的话，需要将父级目录“修改记录”文件夹一同创建
-                    if (times == 1)
-                    {
-                        string modifyRecordFolderName = ConfigurationManager.AppSettings["modifyRecordFolderName"].TrimEnd('\\');
-                        modifyFolder.AppendFormat("{0}\\修改1", modifyRecordFolderName);
-                    }
-                    //否则直接创建新序号修改目录
-                    else
-                    {
-                        modifyFolder.AppendFormat("修改{0}", times);
-                    }
-                    //完整的修改任务项目目录
-                    string modifyTaskItemPath = string.Format("{0}\\{1}", newModifyPath, modifyFolder);
-                    //不存在则创建
-                    if (!Directory.Exists(modifyTaskItemPath))
-                    {
-                        Directory.CreateDirectory(modifyTaskItemPath);
-                    }
-                    //保存路径
-                    //F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1\修改要求.zip
-                    string modifyFileSavePath = string.Format("{0}\\{1}", modifyTaskItemPath, fupModifyData.FileName);
-                    try
-                    {
-                        //上传
-                        fupModifyData.SaveAs(modifyFileSavePath);
+        //                        Alert("上传成功！");
+        //                    }
+        //                    else
+        //                    {
+        //                        //数据添加失败，则删除文件
+        //                        if (File.Exists(savePath))
+        //                        {
+        //                            File.Delete(savePath);
+        //                        }
+        //                        Alert("上传失败！");
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    LogHelper.WriteLine(ex.Message);
+        //                    Alert("上传失败！");
+        //                }
+        //            }
+        //        }
+        //    }
+        //    //2.如果是修改记录上传按钮
+        //    else if (button.ID == "btnUploadModifyData")
+        //    {
+        //        string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //        //任务尚未分配，不允许上传
+        //        DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
+        //        if (dt == null || dt.Rows.Count == 0)
+        //        {
+        //            ExecuteScript("AlertDialog('当前任务暂未分配，不允许上传修改任务！', null);");
+        //            return;
+        //        }
+        //        ////有待审核的修改任务，不允许上传
+        //        //bool isExist = pBll.IsExistModifyTaskWaitforReview(projectID0);
+        //        //if (isExist)
+        //        //{
+        //        //    ExecuteScript("AlertDialog('当前有待审核的修改任务，不允许上传新的修改任务！', null);");
+        //        //    return;
+        //        //}
+        //        if (fupModifyData.HasFile)
+        //        {
+        //            //修改任务分配目录
+        //            string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
+        //            string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //            string taskNo = dt.Rows[0]["taskno"].ToString();
+        //            //修改任务存放目录，形如F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500
+        //            string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);
+        //            if (!Directory.Exists(newModifyPath))
+        //            {
+        //                Directory.CreateDirectory(newModifyPath);
+        //            }
+        //            StringBuilder modifyFolder = new StringBuilder();
+        //            //修改任务的序号
+        //            int times = pmBll.GetModifyTaskCount(projectID0) + 1;
+        //            //为0的话，需要将父级目录“修改记录”文件夹一同创建
+        //            if (times == 1)
+        //            {
+        //                string modifyRecordFolderName = ConfigurationManager.AppSettings["modifyRecordFolderName"].TrimEnd('\\');
+        //                modifyFolder.AppendFormat("{0}\\修改1", modifyRecordFolderName);
+        //            }
+        //            //否则直接创建新序号修改目录
+        //            else
+        //            {
+        //                modifyFolder.AppendFormat("修改{0}", times);
+        //            }
+        //            //完整的修改任务项目目录
+        //            string modifyTaskItemPath = string.Format("{0}\\{1}", newModifyPath, modifyFolder);
+        //            //不存在则创建
+        //            if (!Directory.Exists(modifyTaskItemPath))
+        //            {
+        //                Directory.CreateDirectory(modifyTaskItemPath);
+        //            }
+        //            //保存路径
+        //            //F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1\修改要求.zip
+        //            string modifyFileSavePath = string.Format("{0}\\{1}", modifyTaskItemPath, fupModifyData.FileName);
+        //            try
+        //            {
+        //                //上传
+        //                fupModifyData.SaveAs(modifyFileSavePath);
 
-                        ProjectModify prjMdy = new ProjectModify();
-                        bool addPrjMdyFlag = true;
-                        //获取是否有未审核的修改任务
-                        DataSet dsPm = pmBll.GetList(string.Format(" PROJECTID='{0}' AND REVIEWSTATUS=0 ", projectID0));
-                        //存在待审核的，就不添加记录了
-                        if (dsPm != null && dsPm.Tables.Count > 0 && dsPm.Tables[0].Rows.Count > 0)
-                        {
+        //                ProjectModify prjMdy = new ProjectModify();
+        //                bool addPrjMdyFlag = true;
+        //                //获取是否有未审核的修改任务
+        //                DataSet dsPm = pmBll.GetList(string.Format(" PROJECTID='{0}' AND REVIEWSTATUS=0 ", projectID0));
+        //                //存在待审核的，就不添加记录了
+        //                if (dsPm != null && dsPm.Tables.Count > 0 && dsPm.Tables[0].Rows.Count > 0)
+        //                {
 
-                        }
-                        //否则，就添加一条修改任务记录
-                        else
-                        {
-                            prjMdy.ID = Guid.NewGuid().ToString();
-                            prjMdy.PROJECTID = projectID0;
-                            prjMdy.FOLDERNAME = modifyFolder.ToString();
-                            prjMdy.ISUPLOADATTACH = 0;
-                            prjMdy.ISFINISHED = 0;
-                            prjMdy.REVIEWSTATUS = 0;
-                            prjMdy.CREATEDATE = DateTime.Now;
-                            addPrjMdyFlag = pmBll.Add(prjMdy);
-                        }
-                        if (addPrjMdyFlag)
-                        {
-                            Attachment att = new Attachment();
-                            att.ID = Guid.NewGuid().ToString();
-                            att.TASKID = projectID0;
-                            att.TASKTYPE = 1;
-                            att.FILENAME = fupModifyData.FileName;
-                            att.FILEFULLNAME = string.Format("{0}-{1}\\{2}\\{3}", employeeNo, taskNo, modifyFolder.ToString(), fupModifyData.FileName);
-                            att.EXTENSION = Path.GetExtension(fupModifyData.FileName);
-                            att.CREATEDATE = DateTime.Now;
-                            bool addAttFlag = aBll.Add(att);
-                            //上传成功
-                            if (addAttFlag)
-                            {
-                                GridViewTaskDataBind(projectID0, string.Empty);
-                                GridViewModifyTaskDataBind(projectID);
-                                ExecuteScript("AlertDialog('上传成功！', null);");
-                                return;
-                            }
-                            //上传失败
-                            else
-                            {
-                                pmBll.Delete(prjMdy.ID);
-                                if (File.Exists(modifyFileSavePath))
-                                {
-                                    File.Delete(modifyFileSavePath);
-                                }
-                                ExecuteScript("AlertDialog('上传失败！', null);");
-                                return;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.WriteLine("上传修改任务失败\r\n" + ex.Message + ex.StackTrace);
-                        ExecuteScript("AlertDialog('上传失败！', null);");
-                        return;
-                    }
-                }
-            }
-        }
+        //                }
+        //                //否则，就添加一条修改任务记录
+        //                else
+        //                {
+        //                    prjMdy.ID = Guid.NewGuid().ToString();
+        //                    prjMdy.PROJECTID = projectID0;
+        //                    prjMdy.FOLDERNAME = modifyFolder.ToString();
+        //                    prjMdy.ISUPLOADATTACH = 0;
+        //                    prjMdy.ISFINISHED = 0;
+        //                    prjMdy.REVIEWSTATUS = 0;
+        //                    prjMdy.CREATEDATE = DateTime.Now;
+        //                    addPrjMdyFlag = pmBll.Add(prjMdy);
+        //                }
+        //                if (addPrjMdyFlag)
+        //                {
+        //                    Attachment att = new Attachment();
+        //                    att.ID = Guid.NewGuid().ToString();
+        //                    att.TASKID = projectID0;
+        //                    att.TASKTYPE = 1;
+        //                    att.FILENAME = fupModifyData.FileName;
+        //                    att.FILEFULLNAME = string.Format("{0}-{1}\\{2}\\{3}", employeeNo, taskNo, modifyFolder.ToString(), fupModifyData.FileName);
+        //                    att.EXTENSION = Path.GetExtension(fupModifyData.FileName);
+        //                    att.CREATEDATE = DateTime.Now;
+        //                    bool addAttFlag = aBll.Add(att);
+        //                    //上传成功
+        //                    if (addAttFlag)
+        //                    {
+        //                        GridViewTaskDataBind(projectID0, string.Empty);
+        //                        GridViewModifyTaskDataBind(projectID);
+        //                        ExecuteScript("AlertDialog('上传成功！', null);");
+        //                        return;
+        //                    }
+        //                    //上传失败
+        //                    else
+        //                    {
+        //                        pmBll.Delete(prjMdy.ID);
+        //                        if (File.Exists(modifyFileSavePath))
+        //                        {
+        //                            File.Delete(modifyFileSavePath);
+        //                        }
+        //                        ExecuteScript("AlertDialog('上传失败！', null);");
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                LogHelper.WriteLine("上传修改任务失败\r\n" + ex.Message + ex.StackTrace);
+        //                ExecuteScript("AlertDialog('上传失败！', null);");
+        //                return;
+        //            }
+        //        }
+        //    }
+        //}
         #endregion
 
         //protected void btnFinalDataDownload_Click(object sender, EventArgs e)
@@ -1862,598 +1864,598 @@ namespace FileZillaServerWeb
         //}
 
         #region 所有GridView的RowCommand
-        /// <summary>
-        /// 所有附件GridView的RowCommand
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void gvTaskData_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            GridView gv = sender as GridView;
-            //判断sender
-            #region 1.任务资料
-            //===================================== 1.任务资料 =====================================
-            if (gv.ID == "gvTaskData")
-            {
-                if (!string.IsNullOrEmpty(e.CommandName) && e.CommandName == "del")
-                {
-                    string attID = Convert.ToString(e.CommandArgument);
-                    Attachment att = aBll.GetModel(attID);
-                    if (att != null)
-                    {
-                        //新任务分配目录
-                        string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"].TrimEnd('\\');
-                        string attFullName = string.Format("{0}\\{1}", taskAllotmentPath, att.FILEFULLNAME);
-                        if (File.Exists(attFullName))
-                        {
-                            try
-                            {
-                                File.Delete(attFullName);
-                                bool delFlag = aBll.Delete(attID);
-                                if (delFlag)
-                                {
-                                    string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                                    GridViewTaskDataBind(projectID0, string.Empty);
-                                    ExecuteScript("AlertDialog('删除成功！',null);");
-                                }
-                                else
-                                {
-                                    ExecuteScript("AlertDialog('删除失败！',null);");
-                                    return;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                LogHelper.WriteLine("任务资料删除失败，" + ex.Message + ex.StackTrace);
-                                ExecuteScript("AlertDialog('删除失败！',null);");
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ExecuteScript("AlertDialog('对象不存在，删除失败！',null);");
-                        return;
-                    }
-                }
-            }
-            #endregion
-            #region 2.完成稿
-            //===================================== 2.完成稿 =====================================
-            else if (gv.ID == "gvFinalData")
-            {
-                if (e.CommandName == "download")
-                {
-                    try
-                    {
-                        string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
-                        string projectID = Convert.ToString(e.CommandArgument.ToString().Split('|')[0]);
-                        string finishedPerson = Convert.ToString(e.CommandArgument.ToString().Split('|')[1]);
-                        DataTable dt = null;
-                        if (string.IsNullOrEmpty(finishedPerson))
-                        {
-                            dt = new ProjectBLL().GetFinalScript(projectID);
-                        }
-                        else
-                        {
-                            dt = new ProjectBLL().GetFinalScript(projectID, finishedPerson);
-                        }
-                        if (dt != null && dt.Rows.Count > 0)
-                        {
-                            string taskNo = dt.Rows[0]["taskno"].ToString();
-                            string employeeNo = dt.Rows[0]["EMPLOYEENO"].ToString();
-                            string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
-                            foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                            {
-                                if (taskFolder.Name.StartsWith(taskNo))
-                                {
-                                    foreach (DirectoryInfo taskFolderChild in new DirectoryInfo(taskFolder.FullName).GetDirectories())
-                                    {
-                                        if (taskFolderChild.Name == "完成稿")
-                                        {
-                                            string fileName = taskFolderChild.FullName + ".zip";
-                                            if (File.Exists(fileName))
-                                            {
-                                                DownLoad(fileName);
-                                            }
-                                            else
-                                            {
-                                                ExecuteScript("AlertDialog('文件不存在或已被移动！',null);");
-                                                return;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            ExecuteScript("AlertDialog('未查询到相应的数据库记录！',null);");
-                            return;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.WriteLine(string.Format("{0}\r\n{1}", "下载出错", ex.Message));
-                        ExecuteScript("AlertDialog('下载出错！',null);");
-                        return;
-                    }
-                }
-            }
-            #endregion
-            #region 3.修改稿
-            //===================================== 3.修改稿 =====================================
-            else if (gv.ID == "gvModify")
-            {
-                //========================= (1)上传 =========================
-                if (e.CommandName == "upload")
-                {
-                    string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                    //任务尚未分配，不允许上传
-                    DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
-                    //修改任务分配目录
-                    string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
-                    string employeeNo = dt.Rows[0]["employeeno"].ToString();
-                    string taskNo = dt.Rows[0]["taskno"].ToString();
-                    string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);//F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500
-                    StringBuilder modifyFolder = new StringBuilder();
+        ///// <summary>
+        ///// 所有附件GridView的RowCommand
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void gvTaskData_RowCommand(object sender, GridViewCommandEventArgs e)
+        //{
+        //    GridView gv = sender as GridView;
+        //    //判断sender
+        //    #region 1.任务资料
+        //    //===================================== 1.任务资料 =====================================
+        //    if (gv.ID == "gvTaskData")
+        //    {
+        //        if (!string.IsNullOrEmpty(e.CommandName) && e.CommandName == "del")
+        //        {
+        //            string attID = Convert.ToString(e.CommandArgument);
+        //            Attachment att = aBll.GetModel(attID);
+        //            if (att != null)
+        //            {
+        //                //新任务分配目录
+        //                string taskAllotmentPath = ConfigurationManager.AppSettings["taskAllotmentPath"].TrimEnd('\\');
+        //                string attFullName = string.Format("{0}\\{1}", taskAllotmentPath, att.FILEFULLNAME);
+        //                if (File.Exists(attFullName))
+        //                {
+        //                    try
+        //                    {
+        //                        File.Delete(attFullName);
+        //                        bool delFlag = aBll.Delete(attID);
+        //                        if (delFlag)
+        //                        {
+        //                            string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //                            GridViewTaskDataBind(projectID0, string.Empty);
+        //                            ExecuteScript("AlertDialog('删除成功！',null);");
+        //                        }
+        //                        else
+        //                        {
+        //                            ExecuteScript("AlertDialog('删除失败！',null);");
+        //                            return;
+        //                        }
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        LogHelper.WriteLine("任务资料删除失败，" + ex.Message + ex.StackTrace);
+        //                        ExecuteScript("AlertDialog('删除失败！',null);");
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ExecuteScript("AlertDialog('对象不存在，删除失败！',null);");
+        //                return;
+        //            }
+        //        }
+        //    }
+        //    #endregion
+        //    #region 2.完成稿
+        //    //===================================== 2.完成稿 =====================================
+        //    else if (gv.ID == "gvFinalData")
+        //    {
+        //        if (e.CommandName == "download")
+        //        {
+        //            try
+        //            {
+        //                string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
+        //                string projectID = Convert.ToString(e.CommandArgument.ToString().Split('|')[0]);
+        //                string finishedPerson = Convert.ToString(e.CommandArgument.ToString().Split('|')[1]);
+        //                DataTable dt = null;
+        //                if (string.IsNullOrEmpty(finishedPerson))
+        //                {
+        //                    dt = new ProjectBLL().GetFinalScript(projectID);
+        //                }
+        //                else
+        //                {
+        //                    dt = new ProjectBLL().GetFinalScript(projectID, finishedPerson);
+        //                }
+        //                if (dt != null && dt.Rows.Count > 0)
+        //                {
+        //                    string taskNo = dt.Rows[0]["taskno"].ToString();
+        //                    string employeeNo = dt.Rows[0]["EMPLOYEENO"].ToString();
+        //                    string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);
+        //                    foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //                    {
+        //                        if (taskFolder.Name.StartsWith(taskNo))
+        //                        {
+        //                            foreach (DirectoryInfo taskFolderChild in new DirectoryInfo(taskFolder.FullName).GetDirectories())
+        //                            {
+        //                                if (taskFolderChild.Name == "完成稿")
+        //                                {
+        //                                    string fileName = taskFolderChild.FullName + ".zip";
+        //                                    if (File.Exists(fileName))
+        //                                    {
+        //                                        DownLoad(fileName);
+        //                                    }
+        //                                    else
+        //                                    {
+        //                                        ExecuteScript("AlertDialog('文件不存在或已被移动！',null);");
+        //                                        return;
+        //                                    }
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    ExecuteScript("AlertDialog('未查询到相应的数据库记录！',null);");
+        //                    return;
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                LogHelper.WriteLine(string.Format("{0}\r\n{1}", "下载出错", ex.Message));
+        //                ExecuteScript("AlertDialog('下载出错！',null);");
+        //                return;
+        //            }
+        //        }
+        //    }
+        //    #endregion
+        //    #region 3.修改稿
+        //    //===================================== 3.修改稿 =====================================
+        //    else if (gv.ID == "gvModify")
+        //    {
+        //        //========================= (1)上传 =========================
+        //        if (e.CommandName == "upload")
+        //        {
+        //            string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //            //任务尚未分配，不允许上传
+        //            DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
+        //            //修改任务分配目录
+        //            string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
+        //            string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //            string taskNo = dt.Rows[0]["taskno"].ToString();
+        //            string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);//F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500
+        //            StringBuilder modifyFolder = new StringBuilder();
 
-                    ProjectModify pmModel = new ProjectModify();
-                    pmModel = pmBll.GetModel("");
-                    string modifyFoderName = pmModel.FOLDERNAME;
-                    string modifyFullName = string.Format("{0}\\{1}", newModifyPath, modifyFoderName);
+        //            ProjectModify pmModel = new ProjectModify();
+        //            pmModel = pmBll.GetModel("");
+        //            string modifyFoderName = pmModel.FOLDERNAME;
+        //            string modifyFullName = string.Format("{0}\\{1}", newModifyPath, modifyFoderName);
 
-                    if (Directory.Exists(modifyFullName))
-                    {
-                        DirectoryInfo dirInfo = new DirectoryInfo(modifyFullName);
-                        foreach (System.IO.FileSystemInfo fsi in dirInfo.GetFileSystemInfos())
-                        {
-                            //如果是文件夹
-                            if (fsi.Attributes == FileAttributes.Directory)
-                            {
-                                if (Directory.Exists(fsi.FullName))
-                                {
-                                    Directory.Delete(fsi.FullName);
-                                }
-                            }
-                            //文件
-                            else
-                            {
-                                if (File.Exists(fsi.FullName))
-                                {
-                                    File.Delete(fsi.FullName);
-                                }
-                            }
-                        }
-                    }
+        //            if (Directory.Exists(modifyFullName))
+        //            {
+        //                DirectoryInfo dirInfo = new DirectoryInfo(modifyFullName);
+        //                foreach (System.IO.FileSystemInfo fsi in dirInfo.GetFileSystemInfos())
+        //                {
+        //                    //如果是文件夹
+        //                    if (fsi.Attributes == FileAttributes.Directory)
+        //                    {
+        //                        if (Directory.Exists(fsi.FullName))
+        //                        {
+        //                            Directory.Delete(fsi.FullName);
+        //                        }
+        //                    }
+        //                    //文件
+        //                    else
+        //                    {
+        //                        if (File.Exists(fsi.FullName))
+        //                        {
+        //                            File.Delete(fsi.FullName);
+        //                        }
+        //                    }
+        //                }
+        //            }
 
-                    //修改任务的序号
-                    int times = pmBll.GetModifyTaskCount(projectID0) + 1;
-                    //为0的话，需要将父级目录“修改记录”文件夹一同创建
-                    if (times == 1)
-                    {
-                        string modifyRecordFolderName = ConfigurationManager.AppSettings["modifyRecordFolderName"].TrimEnd('\\');
-                        modifyFolder.AppendFormat("{0}\\修改1", modifyRecordFolderName);
-                    }
-                    //否则直接创建新序号修改目录
-                    else
-                    {
-                        modifyFolder.AppendFormat("修改{0}", times);
-                    }
-                    //完整的修改任务项目目录
-                    string modifyTaskItemPath = string.Format("{0}\\{1}", newModifyPath, modifyFolder);
-                    //不存在则创建
-                    if (!Directory.Exists(modifyTaskItemPath))
-                    {
-                        Directory.CreateDirectory(modifyTaskItemPath);
-                    }
-                    //保存路径
-                    //F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1\修改要求.zip
-                    string modifyFileSavePath = string.Format("{0}\\{1}", modifyTaskItemPath, fupModifyData.FileName);
-                    try
-                    {
-                        //上传
-                        fupModifyData.SaveAs(modifyFileSavePath);
+        //            //修改任务的序号
+        //            int times = pmBll.GetModifyTaskCount(projectID0) + 1;
+        //            //为0的话，需要将父级目录“修改记录”文件夹一同创建
+        //            if (times == 1)
+        //            {
+        //                string modifyRecordFolderName = ConfigurationManager.AppSettings["modifyRecordFolderName"].TrimEnd('\\');
+        //                modifyFolder.AppendFormat("{0}\\修改1", modifyRecordFolderName);
+        //            }
+        //            //否则直接创建新序号修改目录
+        //            else
+        //            {
+        //                modifyFolder.AppendFormat("修改{0}", times);
+        //            }
+        //            //完整的修改任务项目目录
+        //            string modifyTaskItemPath = string.Format("{0}\\{1}", newModifyPath, modifyFolder);
+        //            //不存在则创建
+        //            if (!Directory.Exists(modifyTaskItemPath))
+        //            {
+        //                Directory.CreateDirectory(modifyTaskItemPath);
+        //            }
+        //            //保存路径
+        //            //F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1\修改要求.zip
+        //            string modifyFileSavePath = string.Format("{0}\\{1}", modifyTaskItemPath, fupModifyData.FileName);
+        //            try
+        //            {
+        //                //上传
+        //                fupModifyData.SaveAs(modifyFileSavePath);
 
-                        ProjectModify prjMdy = new ProjectModify();
-                        bool addPrjMdyFlag = true;
-                        //获取是否有未审核的修改任务
-                        DataSet dsPm = pmBll.GetList(string.Format(" PROJECTID='{0}' AND REVIEWSTATUS=0 ", projectID0));
-                        //存在待审核的，就不添加记录了
-                        if (dsPm != null && dsPm.Tables.Count > 0 && dsPm.Tables[0].Rows.Count > 0)
-                        {
+        //                ProjectModify prjMdy = new ProjectModify();
+        //                bool addPrjMdyFlag = true;
+        //                //获取是否有未审核的修改任务
+        //                DataSet dsPm = pmBll.GetList(string.Format(" PROJECTID='{0}' AND REVIEWSTATUS=0 ", projectID0));
+        //                //存在待审核的，就不添加记录了
+        //                if (dsPm != null && dsPm.Tables.Count > 0 && dsPm.Tables[0].Rows.Count > 0)
+        //                {
 
-                        }
-                        //否则，就添加一条修改任务记录
-                        else
-                        {
-                            prjMdy.ID = Guid.NewGuid().ToString();
-                            prjMdy.PROJECTID = projectID0;
-                            prjMdy.FOLDERNAME = modifyFolder.ToString();
-                            prjMdy.ISFINISHED = 0;
-                            prjMdy.REVIEWSTATUS = 0;
-                            prjMdy.CREATEDATE = DateTime.Now;
-                            addPrjMdyFlag = pmBll.Add(prjMdy);
-                        }
-                        if (addPrjMdyFlag)
-                        {
-                            Attachment att = new Attachment();
-                            att.ID = Guid.NewGuid().ToString();
-                            att.TASKID = projectID0;
-                            att.TASKTYPE = 1;
-                            att.FILENAME = fupModifyData.FileName;
-                            att.FILEFULLNAME = string.Format("{0}-{1}\\{2}\\{3}", employeeNo, taskNo, modifyFolder.ToString(), fupModifyData.FileName);
-                            att.EXTENSION = Path.GetExtension(fupModifyData.FileName);
-                            att.CREATEDATE = DateTime.Now;
-                            bool addAttFlag = aBll.Add(att);
-                            //上传成功
-                            if (addAttFlag)
-                            {
-                                GridViewModifyTaskDataBind(projectID0);
-                                ExecuteScript("AlertDialog('上传成功！', null);");
-                                return;
-                            }
-                            //上传失败
-                            else
-                            {
-                                pmBll.Delete(prjMdy.ID);
-                                if (File.Exists(modifyFileSavePath))
-                                {
-                                    File.Delete(modifyFileSavePath);
-                                }
-                                ExecuteScript("AlertDialog('上传失败！', null);");
-                                return;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.WriteLine("上传修改任务失败\r\n" + ex.Message + ex.StackTrace);
-                        ExecuteScript("AlertDialog('上传失败！', null);");
-                        return;
-                    }
-                }
-                // ========================= (2)删除 =========================
-                else if (e.CommandName == "del")
-                {
-                    Attachment att = aBll.GetModel(e.CommandArgument.ToString());
-                    if (att != null)
-                    {
-                        //修改任务分配目录
-                        string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
-                        string attFullName = string.Format("{0}\\{1}", modifyTaskAllotmentPath, att.FILEFULLNAME);
-                        if (File.Exists(attFullName))
-                        {
-                            try
-                            {
-                                File.Delete(attFullName);
-                                bool delFlag = aBll.Delete(e.CommandArgument.ToString());
-                                if (delFlag)
-                                {
-                                    string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                                    GridViewModifyTaskDataBind(projectID0);
-                                    ExecuteScript("AlertDialog('删除成功！',null);");
-                                }
-                                else
-                                {
-                                    ExecuteScript("AlertDialog('删除失败！',null);");
-                                    return;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                LogHelper.WriteLine("任务资料删除失败，" + ex.Message + ex.StackTrace);
-                                ExecuteScript("AlertDialog('删除失败！',null);");
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ExecuteScript("AlertDialog('数据已被删除！',null);");
-                        return;
-                    }
-                }
-                //========================= (3)下载 =========================
-                else if (e.CommandName == "download")
-                {
-                    ////修改任务分配目录
-                    //string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
-                    //string prjMdyID = e.CommandArgument.ToString();
-                    //DataSet ds = aBll.GetList(string.Format(" taskid='{0}'", prjMdyID));
-                    //DataTable dt = new DataTable();
-                    //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                    //{
-                    //    dt = ds.Tables[0];
-                    //    string fileFullName = dt.Rows[0]["FILEFULLNAME"].ToString();
-                    //    fileFullName = string.Format("{0}\\{1}", modifyTaskAllotmentPath, fileFullName);
-                    //    if (File.Exists(fileFullName))
-                    //    {
-                    //        DownLoad(fileFullName);
-                    //    }
-                    //    else
-                    //    {
-                    //        ExecuteScript("AlertDialog('文件已被移动或删除，无法下载！',null);");
-                    //        return;
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    ExecuteScript("AlertDialog('文件已被移动或删除，无法下载！',null);");
-                    //    return;
-                    //}
+        //                }
+        //                //否则，就添加一条修改任务记录
+        //                else
+        //                {
+        //                    prjMdy.ID = Guid.NewGuid().ToString();
+        //                    prjMdy.PROJECTID = projectID0;
+        //                    prjMdy.FOLDERNAME = modifyFolder.ToString();
+        //                    prjMdy.ISFINISHED = 0;
+        //                    prjMdy.REVIEWSTATUS = 0;
+        //                    prjMdy.CREATEDATE = DateTime.Now;
+        //                    addPrjMdyFlag = pmBll.Add(prjMdy);
+        //                }
+        //                if (addPrjMdyFlag)
+        //                {
+        //                    Attachment att = new Attachment();
+        //                    att.ID = Guid.NewGuid().ToString();
+        //                    att.TASKID = projectID0;
+        //                    att.TASKTYPE = 1;
+        //                    att.FILENAME = fupModifyData.FileName;
+        //                    att.FILEFULLNAME = string.Format("{0}-{1}\\{2}\\{3}", employeeNo, taskNo, modifyFolder.ToString(), fupModifyData.FileName);
+        //                    att.EXTENSION = Path.GetExtension(fupModifyData.FileName);
+        //                    att.CREATEDATE = DateTime.Now;
+        //                    bool addAttFlag = aBll.Add(att);
+        //                    //上传成功
+        //                    if (addAttFlag)
+        //                    {
+        //                        GridViewModifyTaskDataBind(projectID0);
+        //                        ExecuteScript("AlertDialog('上传成功！', null);");
+        //                        return;
+        //                    }
+        //                    //上传失败
+        //                    else
+        //                    {
+        //                        pmBll.Delete(prjMdy.ID);
+        //                        if (File.Exists(modifyFileSavePath))
+        //                        {
+        //                            File.Delete(modifyFileSavePath);
+        //                        }
+        //                        ExecuteScript("AlertDialog('上传失败！', null);");
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                LogHelper.WriteLine("上传修改任务失败\r\n" + ex.Message + ex.StackTrace);
+        //                ExecuteScript("AlertDialog('上传失败！', null);");
+        //                return;
+        //            }
+        //        }
+        //        // ========================= (2)删除 =========================
+        //        else if (e.CommandName == "del")
+        //        {
+        //            Attachment att = aBll.GetModel(e.CommandArgument.ToString());
+        //            if (att != null)
+        //            {
+        //                //修改任务分配目录
+        //                string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
+        //                string attFullName = string.Format("{0}\\{1}", modifyTaskAllotmentPath, att.FILEFULLNAME);
+        //                if (File.Exists(attFullName))
+        //                {
+        //                    try
+        //                    {
+        //                        File.Delete(attFullName);
+        //                        bool delFlag = aBll.Delete(e.CommandArgument.ToString());
+        //                        if (delFlag)
+        //                        {
+        //                            string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //                            GridViewModifyTaskDataBind(projectID0);
+        //                            ExecuteScript("AlertDialog('删除成功！',null);");
+        //                        }
+        //                        else
+        //                        {
+        //                            ExecuteScript("AlertDialog('删除失败！',null);");
+        //                            return;
+        //                        }
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        LogHelper.WriteLine("任务资料删除失败，" + ex.Message + ex.StackTrace);
+        //                        ExecuteScript("AlertDialog('删除失败！',null);");
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ExecuteScript("AlertDialog('数据已被删除！',null);");
+        //                return;
+        //            }
+        //        }
+        //        //========================= (3)下载 =========================
+        //        else if (e.CommandName == "download")
+        //        {
+        //            ////修改任务分配目录
+        //            //string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
+        //            //string prjMdyID = e.CommandArgument.ToString();
+        //            //DataSet ds = aBll.GetList(string.Format(" taskid='{0}'", prjMdyID));
+        //            //DataTable dt = new DataTable();
+        //            //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+        //            //{
+        //            //    dt = ds.Tables[0];
+        //            //    string fileFullName = dt.Rows[0]["FILEFULLNAME"].ToString();
+        //            //    fileFullName = string.Format("{0}\\{1}", modifyTaskAllotmentPath, fileFullName);
+        //            //    if (File.Exists(fileFullName))
+        //            //    {
+        //            //        DownLoad(fileFullName);
+        //            //    }
+        //            //    else
+        //            //    {
+        //            //        ExecuteScript("AlertDialog('文件已被移动或删除，无法下载！',null);");
+        //            //        return;
+        //            //    }
+        //            //}
+        //            //else
+        //            //{
+        //            //    ExecuteScript("AlertDialog('文件已被移动或删除，无法下载！',null);");
+        //            //    return;
+        //            //}
 
-                    string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
+        //            string employeeRootPath = ConfigurationManager.AppSettings["employeePath"];
 
-                    //string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                    DataTable dt = new ProjectBLL().GetProjectModifyByModifyID(e.CommandArgument.ToString());
-                    string employeeNo = dt.Rows[0]["employeeNo"].ToString();//员工编号
-                    string taskNo = dt.Rows[0]["taskNo"].ToString();//任务目录
-                    string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);//员工目录
-                    //遍历员工目录，即找出各个任务的目录
-                    foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
-                    {
-                        //如果目录名是以任务名打头的，说明就是它了，因为员工会在原文件夹名后面加上乱七八糟的东西。如果前面他也敢动，那我也没办法了。
-                        if (taskFolder.Name.StartsWith(taskNo))
-                        {
-                            //修改记录目录
-                            string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
-                            //遍历单个任务目录下的文件夹
-                            foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
-                            {
-                                //如果目录名是“修改记录”
-                                if (taskFolderChild.Name == modifyRecordFolder)
-                                {
-                                    //进一步遍历每次修改记录目录
-                                    foreach (DirectoryInfo modifyFolder in taskFolderChild.GetDirectories())
-                                    {
-                                        //每次修改记录产生的文件夹
-                                        string modifyFolderName = modifyFolder.Name;
-                                        //数据库中存储的修改记录文件夹，是最初的名称，不带“完成”
-                                        string dtFolderName = dt.Rows[0]["folderName"].ToString();
-                                        //如果目录名包含“完成”并且是当前售后任务打头的，那么就是它了
-                                        if (modifyFolderName == dtFolderName)
-                                        {
-                                            if (Directory.Exists(modifyFolder.FullName))
-                                            {
-                                                string destinationFileName = modifyFolder.FullName + ".zip";
-                                                //ZipHelper.CreateZipFile(modifyFolder.FullName, destinationFileName);
-                                                if (File.Exists(destinationFileName))
-                                                {
-                                                    DownLoad(destinationFileName);
-                                                    break;
-                                                }
-                                                else
-                                                {
-                                                    ExecuteScript("AlertDialog('下载失败，文件已被删除或移动！',null);");
-                                                    return;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    //break;
-                                }
-                            }
-                        }
-                        //break;
-                    }
-                }
-            }
-            #endregion
-        }
+        //            //string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //            DataTable dt = new ProjectBLL().GetProjectModifyByModifyID(e.CommandArgument.ToString());
+        //            string employeeNo = dt.Rows[0]["employeeNo"].ToString();//员工编号
+        //            string taskNo = dt.Rows[0]["taskNo"].ToString();//任务目录
+        //            string currentEmpPath = string.Format("{0}{1}", employeeRootPath, employeeNo);//员工目录
+        //            //遍历员工目录，即找出各个任务的目录
+        //            foreach (DirectoryInfo taskFolder in new DirectoryInfo(currentEmpPath).GetDirectories())
+        //            {
+        //                //如果目录名是以任务名打头的，说明就是它了，因为员工会在原文件夹名后面加上乱七八糟的东西。如果前面他也敢动，那我也没办法了。
+        //                if (taskFolder.Name.StartsWith(taskNo))
+        //                {
+        //                    //修改记录目录
+        //                    string modifyRecordFolder = ConfigurationManager.AppSettings["modifyRecordFolderName"].ToString();
+        //                    //遍历单个任务目录下的文件夹
+        //                    foreach (DirectoryInfo taskFolderChild in taskFolder.GetDirectories())
+        //                    {
+        //                        //如果目录名是“修改记录”
+        //                        if (taskFolderChild.Name == modifyRecordFolder)
+        //                        {
+        //                            //进一步遍历每次修改记录目录
+        //                            foreach (DirectoryInfo modifyFolder in taskFolderChild.GetDirectories())
+        //                            {
+        //                                //每次修改记录产生的文件夹
+        //                                string modifyFolderName = modifyFolder.Name;
+        //                                //数据库中存储的修改记录文件夹，是最初的名称，不带“完成”
+        //                                string dtFolderName = dt.Rows[0]["folderName"].ToString();
+        //                                //如果目录名包含“完成”并且是当前售后任务打头的，那么就是它了
+        //                                if (modifyFolderName == dtFolderName)
+        //                                {
+        //                                    if (Directory.Exists(modifyFolder.FullName))
+        //                                    {
+        //                                        string destinationFileName = modifyFolder.FullName + ".zip";
+        //                                        //ZipHelper.CreateZipFile(modifyFolder.FullName, destinationFileName);
+        //                                        if (File.Exists(destinationFileName))
+        //                                        {
+        //                                            DownLoad(destinationFileName);
+        //                                            break;
+        //                                        }
+        //                                        else
+        //                                        {
+        //                                            ExecuteScript("AlertDialog('下载失败，文件已被删除或移动！',null);");
+        //                                            return;
+        //                                        }
+        //                                    }
+        //                                }
+        //                            }
+        //                            //break;
+        //                        }
+        //                    }
+        //                }
+        //                //break;
+        //            }
+        //        }
+        //    }
+        //    #endregion
+        //}
         #endregion
 
         #region 文件上传或替换
-        /// <summary>
-        /// 文件上传或替换
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnFileReplace_Click(object sender, EventArgs e)
-        {
-            if (Request.Files.Count > 0)
-            {
-                string prjMdyID = hidFileReplaceId.Value;
-                string fileName = Path.GetFileName(hidFileReplaceName.Value);
-                string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-                for (int i = 0; i < Request.Files.Count; i++)
-                {
-                    string requestFileName = Path.GetFileName(Request.Files[i].FileName);
-                    if (requestFileName == fileName)
-                    {
-                        HttpPostedFile hpFile = Request.Files[i];
-                        //任务尚未分配，不允许上传
-                        DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
-                        //修改任务分配目录
-                        string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
-                        string employeeNo = dt.Rows[0]["employeeno"].ToString();
-                        string taskNo = dt.Rows[0]["taskno"].ToString();
-                        //形如“F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500”
-                        string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);
-                        StringBuilder modifyFolder = new StringBuilder();
+        ///// <summary>
+        ///// 文件上传或替换
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void btnFileReplace_Click(object sender, EventArgs e)
+        //{
+        //    if (Request.Files.Count > 0)
+        //    {
+        //        string prjMdyID = hidFileReplaceId.Value;
+        //        string fileName = Path.GetFileName(hidFileReplaceName.Value);
+        //        string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //        for (int i = 0; i < Request.Files.Count; i++)
+        //        {
+        //            string requestFileName = Path.GetFileName(Request.Files[i].FileName);
+        //            if (requestFileName == fileName)
+        //            {
+        //                HttpPostedFile hpFile = Request.Files[i];
+        //                //任务尚未分配，不允许上传
+        //                DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
+        //                //修改任务分配目录
+        //                string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
+        //                string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //                string taskNo = dt.Rows[0]["taskno"].ToString();
+        //                //形如“F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500”
+        //                string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);
+        //                StringBuilder modifyFolder = new StringBuilder();
 
-                        ProjectModify pmModel = new ProjectModify();
-                        pmModel = pmBll.GetModel(prjMdyID);
-                        string modifyFoderName = pmModel.FOLDERNAME;
-                        string modifyFullName = string.Format("{0}\\{1}", newModifyPath, modifyFoderName);
+        //                ProjectModify pmModel = new ProjectModify();
+        //                pmModel = pmBll.GetModel(prjMdyID);
+        //                string modifyFoderName = pmModel.FOLDERNAME;
+        //                string modifyFullName = string.Format("{0}\\{1}", newModifyPath, modifyFoderName);
 
-                        //如果存在目录
-                        if (Directory.Exists(modifyFullName))
-                        {
-                            //定义目录信息并遍历目录下的所有文件及文件夹
-                            DirectoryInfo dirInfo = new DirectoryInfo(modifyFullName);
-                            foreach (System.IO.FileSystemInfo fsi in dirInfo.GetFileSystemInfos())
-                            {
-                                //删除文件夹
-                                if (fsi.Attributes == FileAttributes.Directory)
-                                {
-                                    if (Directory.Exists(fsi.FullName))
-                                    {
-                                        Directory.Delete(fsi.FullName);
-                                    }
-                                }
-                                //删除文件
-                                else
-                                {
-                                    if (File.Exists(fsi.FullName))
-                                    {
-                                        File.Delete(fsi.FullName);
-                                    }
-                                }
-                            }
-                        }
-                        try
-                        {
-                            string fileSavePath = string.Format("{0}\\{1}", modifyFullName, requestFileName);
-                            hpFile.SaveAs(fileSavePath);
-                            pmModel.ISUPLOADATTACH = 1;
-                            bool updateFlag = pmBll.Update(pmModel);
-                            if (!updateFlag)
-                            {
-                                LogHelper.WriteLine(string.Format("更新ID为[{0}]的修改任务的附件上传状态失败", prjMdyID));
-                            }
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            LogHelper.WriteLine(ex.Message + ex.StackTrace);
-                        }
-                    }
-                }
-                GridViewModifyTaskDataBind(projectID0);
-                ExecuteScript("AlertDialog('文件上传成功！', null);");
-                return;
-            }
-        }
+        //                //如果存在目录
+        //                if (Directory.Exists(modifyFullName))
+        //                {
+        //                    //定义目录信息并遍历目录下的所有文件及文件夹
+        //                    DirectoryInfo dirInfo = new DirectoryInfo(modifyFullName);
+        //                    foreach (System.IO.FileSystemInfo fsi in dirInfo.GetFileSystemInfos())
+        //                    {
+        //                        //删除文件夹
+        //                        if (fsi.Attributes == FileAttributes.Directory)
+        //                        {
+        //                            if (Directory.Exists(fsi.FullName))
+        //                            {
+        //                                Directory.Delete(fsi.FullName);
+        //                            }
+        //                        }
+        //                        //删除文件
+        //                        else
+        //                        {
+        //                            if (File.Exists(fsi.FullName))
+        //                            {
+        //                                File.Delete(fsi.FullName);
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //                try
+        //                {
+        //                    string fileSavePath = string.Format("{0}\\{1}", modifyFullName, requestFileName);
+        //                    hpFile.SaveAs(fileSavePath);
+        //                    pmModel.ISUPLOADATTACH = 1;
+        //                    bool updateFlag = pmBll.Update(pmModel);
+        //                    if (!updateFlag)
+        //                    {
+        //                        LogHelper.WriteLine(string.Format("更新ID为[{0}]的修改任务的附件上传状态失败", prjMdyID));
+        //                    }
+        //                    break;
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    LogHelper.WriteLine(ex.Message + ex.StackTrace);
+        //                }
+        //            }
+        //        }
+        //        GridViewModifyTaskDataBind(projectID0);
+        //        ExecuteScript("AlertDialog('文件上传成功！', null);");
+        //        return;
+        //    }
+        //}
         #endregion
 
         #region 修改任务创建
-        /// <summary>
-        /// 创建修改任务按钮单击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnCreateModifyTask_Click(object sender, EventArgs e)
-        {
-            CreateModifyTask();
-        }
+        ///// <summary>
+        ///// 创建修改任务按钮单击事件
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //protected void btnCreateModifyTask_Click(object sender, EventArgs e)
+        //{
+        //    CreateModifyTask();
+        //}
 
-        /// <summary>
-        /// 创建新的修改任务
-        /// </summary>
-        private void CreateModifyTask()
-        {
-            string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
-            //如果projectID和Session["projectID"]均没有值，则可判断任务尚未生成，不允许创建修改任务
-            if (string.IsNullOrEmpty(projectID0))
-            {
-                ExecuteScript("AlertDialog('请先生成任务！', null);");
-                return;
-            }
-            //任务尚未分配，不允许上传
-            DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
-            if (dt == null || dt.Rows.Count == 0)
-            {
-                ExecuteScript("AlertDialog('当前任务暂未分配，不允许上传修改任务！', null);");
-                return;
-            }
-            //修改任务分配目录
-            string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
-            string employeeNo = dt.Rows[0]["employeeno"].ToString();
-            string taskNo = dt.Rows[0]["taskno"].ToString();
-            string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);//F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500
-            if (!Directory.Exists(newModifyPath))
-            {
-                Directory.CreateDirectory(newModifyPath);
-            }
-            StringBuilder modifyFolder = new StringBuilder();
-            StringBuilder modifyFolderFullName = new StringBuilder();
-            //修改任务的序号
-            int times = pmBll.GetModifyTaskCount(projectID0) + 1;
-            //为0的话，需要将父级目录“修改记录”文件夹一同创建
-            if (times == 1)
-            {
-                string modifyRecordFolderName = ConfigurationManager.AppSettings["modifyRecordFolderName"].TrimEnd('\\');
-                modifyFolder.Append("修改1");
-                modifyFolderFullName.AppendFormat("{0}\\修改1", modifyRecordFolderName);
-            }
-            //否则直接创建新序号修改目录
-            else
-            {
-                modifyFolder.AppendFormat("修改{0}", times);
-                modifyFolderFullName.AppendFormat("修改{0}", times);
-            }
-            //完整的修改任务项目目录
-            string modifyTaskItemPath = string.Format("{0}\\{1}", newModifyPath, modifyFolderFullName);
-            //不存在则创建
-            //形如 F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1
-            if (!Directory.Exists(modifyTaskItemPath))
-            {
-                Directory.CreateDirectory(modifyTaskItemPath);
-            }
-            ////保存路径
-            ////F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1\修改要求.zip
-            //string modifyFileSavePath = string.Format("{0}\\{1}", modifyTaskItemPath, fupModifyData.FileName);
-            //try
-            //{
-            ////上传
-            //fupModifyData.SaveAs(modifyFileSavePath);
+        ///// <summary>
+        ///// 创建新的修改任务
+        ///// </summary>
+        //private void CreateModifyTask()
+        //{
+        //    string projectID0 = projectID == null ? Convert.ToString(Session["projectID"]) : projectID;
+        //    //如果projectID和Session["projectID"]均没有值，则可判断任务尚未生成，不允许创建修改任务
+        //    if (string.IsNullOrEmpty(projectID0))
+        //    {
+        //        ExecuteScript("AlertDialog('请先生成任务！', null);");
+        //        return;
+        //    }
+        //    //任务尚未分配，不允许上传
+        //    DataTable dt = pBll.GetEmployeeNoAndTaskNo(projectID0);
+        //    if (dt == null || dt.Rows.Count == 0)
+        //    {
+        //        ExecuteScript("AlertDialog('当前任务暂未分配，不允许上传修改任务！', null);");
+        //        return;
+        //    }
+        //    //修改任务分配目录
+        //    string modifyTaskAllotmentPath = ConfigurationManager.AppSettings["modifyTaskAllotmentPath"].TrimEnd('\\');
+        //    string employeeNo = dt.Rows[0]["employeeno"].ToString();
+        //    string taskNo = dt.Rows[0]["taskno"].ToString();
+        //    string newModifyPath = string.Format("{0}\\{1}-{2}", modifyTaskAllotmentPath, employeeNo, taskNo);//F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500
+        //    if (!Directory.Exists(newModifyPath))
+        //    {
+        //        Directory.CreateDirectory(newModifyPath);
+        //    }
+        //    StringBuilder modifyFolder = new StringBuilder();
+        //    StringBuilder modifyFolderFullName = new StringBuilder();
+        //    //修改任务的序号
+        //    int times = pmBll.GetModifyTaskCount(projectID0) + 1;
+        //    //为0的话，需要将父级目录“修改记录”文件夹一同创建
+        //    if (times == 1)
+        //    {
+        //        string modifyRecordFolderName = ConfigurationManager.AppSettings["modifyRecordFolderName"].TrimEnd('\\');
+        //        modifyFolder.Append("修改1");
+        //        modifyFolderFullName.AppendFormat("{0}\\修改1", modifyRecordFolderName);
+        //    }
+        //    //否则直接创建新序号修改目录
+        //    else
+        //    {
+        //        modifyFolder.AppendFormat("修改{0}", times);
+        //        modifyFolderFullName.AppendFormat("修改{0}", times);
+        //    }
+        //    //完整的修改任务项目目录
+        //    string modifyTaskItemPath = string.Format("{0}\\{1}", newModifyPath, modifyFolderFullName);
+        //    //不存在则创建
+        //    //形如 F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1
+        //    if (!Directory.Exists(modifyTaskItemPath))
+        //    {
+        //        Directory.CreateDirectory(modifyTaskItemPath);
+        //    }
+        //    ////保存路径
+        //    ////F:\Temporary\Cache\Dictionary\客服\修改未分配\004-2017031411-31703111500\修改记录\修改1\修改要求.zip
+        //    //string modifyFileSavePath = string.Format("{0}\\{1}", modifyTaskItemPath, fupModifyData.FileName);
+        //    //try
+        //    //{
+        //    ////上传
+        //    //fupModifyData.SaveAs(modifyFileSavePath);
 
-            ProjectModify prjMdy = new ProjectModify();
-            bool addPrjMdyFlag = true;
-            ////获取是否有未审核的修改任务
-            //DataSet dsPm = pmBll.GetList(string.Format(" PROJECTID='{0}' AND REVIEWSTATUS=0 ", projectID0));
-            ////存在待审核的，就不添加记录了
-            //if (dsPm != null && dsPm.Tables.Count > 0 && dsPm.Tables[0].Rows.Count > 0)
-            //{
+        //    ProjectModify prjMdy = new ProjectModify();
+        //    bool addPrjMdyFlag = true;
+        //    ////获取是否有未审核的修改任务
+        //    //DataSet dsPm = pmBll.GetList(string.Format(" PROJECTID='{0}' AND REVIEWSTATUS=0 ", projectID0));
+        //    ////存在待审核的，就不添加记录了
+        //    //if (dsPm != null && dsPm.Tables.Count > 0 && dsPm.Tables[0].Rows.Count > 0)
+        //    //{
 
-            //}
-            ////否则，就添加一条修改任务记录
-            //else
-            //{
-            prjMdy.ID = Guid.NewGuid().ToString();
-            prjMdy.PROJECTID = projectID0;
-            prjMdy.FOLDERNAME = modifyFolder.ToString();
-            prjMdy.FOLDERFULLNAME = modifyFolderFullName.ToString();
-            prjMdy.ISFINISHED = 0;
-            prjMdy.REVIEWSTATUS = 0;
-            prjMdy.CREATEDATE = DateTime.Now;
-            addPrjMdyFlag = pmBll.Add(prjMdy);
-            //}
-            //if (addPrjMdyFlag)
-            //{
-            //Attachment att = new Attachment();
-            //att.ID = Guid.NewGuid().ToString();
-            //att.TASKID = projectID0;
-            //att.TASKTYPE = 1;
-            //att.FILENAME = fupModifyData.FileName;
-            //att.FILEFULLNAME = string.Format("{0}-{1}\\{2}\\{3}", employeeNo, taskNo, modifyFolder.ToString(), fupModifyData.FileName);
-            //att.EXTENSION = Path.GetExtension(fupModifyData.FileName);
-            //att.CREATEDATE = DateTime.Now;
-            //bool addAttFlag = aBll.Add(att);
-            ////上传成功
-            //if (addAttFlag)
-            //{
-            GridViewModifyTaskDataBind(projectID0);
-            ExecuteScript("AlertDialog('创建成功！', null);");
-            return;
-            //}
-            ////上传失败
-            //else
-            //{
-            //    pmBll.Delete(prjMdy.ID);
-            //    if (File.Exists(modifyFileSavePath))
-            //    {
-            //        File.Delete(modifyFileSavePath);
-            //    }
-            //    ExecuteScript("AlertDialog('上传失败！', null);");
-            //    return;
-            //}
-            //}
-            //}
-            //catch
-            //{ } 
-        }
+        //    //}
+        //    ////否则，就添加一条修改任务记录
+        //    //else
+        //    //{
+        //    prjMdy.ID = Guid.NewGuid().ToString();
+        //    prjMdy.PROJECTID = projectID0;
+        //    prjMdy.FOLDERNAME = modifyFolder.ToString();
+        //    prjMdy.FOLDERFULLNAME = modifyFolderFullName.ToString();
+        //    prjMdy.ISFINISHED = 0;
+        //    prjMdy.REVIEWSTATUS = 0;
+        //    prjMdy.CREATEDATE = DateTime.Now;
+        //    addPrjMdyFlag = pmBll.Add(prjMdy);
+        //    //}
+        //    //if (addPrjMdyFlag)
+        //    //{
+        //    //Attachment att = new Attachment();
+        //    //att.ID = Guid.NewGuid().ToString();
+        //    //att.TASKID = projectID0;
+        //    //att.TASKTYPE = 1;
+        //    //att.FILENAME = fupModifyData.FileName;
+        //    //att.FILEFULLNAME = string.Format("{0}-{1}\\{2}\\{3}", employeeNo, taskNo, modifyFolder.ToString(), fupModifyData.FileName);
+        //    //att.EXTENSION = Path.GetExtension(fupModifyData.FileName);
+        //    //att.CREATEDATE = DateTime.Now;
+        //    //bool addAttFlag = aBll.Add(att);
+        //    ////上传成功
+        //    //if (addAttFlag)
+        //    //{
+        //    GridViewModifyTaskDataBind(projectID0);
+        //    ExecuteScript("AlertDialog('创建成功！', null);");
+        //    return;
+        //    //}
+        //    ////上传失败
+        //    //else
+        //    //{
+        //    //    pmBll.Delete(prjMdy.ID);
+        //    //    if (File.Exists(modifyFileSavePath))
+        //    //    {
+        //    //        File.Delete(modifyFileSavePath);
+        //    //    }
+        //    //    ExecuteScript("AlertDialog('上传失败！', null);");
+        //    //    return;
+        //    //}
+        //    //}
+        //    //}
+        //    //catch
+        //    //{ } 
+        //}
         #endregion
 
         //[DllImport("Iphlpapi.dll")]

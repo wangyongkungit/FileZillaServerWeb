@@ -246,6 +246,7 @@
     <Content Include="Content\themes\base\ylyj\taskproportion.css" />
     <Content Include="Content\themes\base\ylyj\tasksharinglist.css" />
     <Content Include="Content\themes\base\ylyj\tasktransfer.css" />
+    <Content Include="Content\themes\base\ylyj\transactionRecords.css" />
     <Content Include="Content\themes\base\ylyj\withdraw.css" />
     <Content Include="Content\themes\base\ylyj\withdrawapprove.css" />
     <Content Include="DingtalkTest.aspx" />
@@ -257,6 +258,7 @@
     <Content Include="Error\404.html" />
     <Content Include="FileZillaLogs.aspx" />
     <Content Include="Finance\Outgoings.aspx" />
+    <Content Include="Finance\TransactionRecords.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\beach.jpg" />
@@ -309,6 +311,7 @@
     <Content Include="Scripts\bootstrap4\js\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap4\js\bootstrap.min1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jQuery-UI\jquery-ui.min.js" />
     <Content Include="Scripts\NeatUpload\cancel.png" />
     <Content Include="Scripts\NeatUpload\default.css" />
     <Content Include="Scripts\NeatUpload\Error413.aspx" />
@@ -393,6 +396,7 @@
     <Content Include="Scripts\ylyj\employeehome\func.js" />
     <Content Include="Scripts\ylyj\employeehome\jquery.js" />
     <Content Include="Scripts\ylyj\employeehome\settings.js" />
+    <Content Include="Scripts\ylyj\employeehome\uploadfile.js" />
     <Content Include="Scripts\ylyj\employeehome\vuepage.js" />
     <Content Include="Scripts\ylyj\serialnumbergenerating.js" />
     <Content Include="Scripts\ylyj\site.js" />
@@ -633,6 +637,13 @@
     </Compile>
     <Compile Include="Finance\Outgoings.aspx.designer.cs">
       <DependentUpon>Outgoings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Finance\TransactionRecords.aspx.cs">
+      <DependentUpon>TransactionRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Finance\TransactionRecords.aspx.designer.cs">
+      <DependentUpon>TransactionRecords.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

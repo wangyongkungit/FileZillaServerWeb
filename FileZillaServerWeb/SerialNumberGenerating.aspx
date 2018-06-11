@@ -2,15 +2,16 @@
 <%@ Register assembly="Brettle.Web.NeatUpload" namespace="Brettle.Web.NeatUpload" tagprefix="Upload" %>
 
 <asp:Content ID="head1" ContentPlaceHolderID="head" runat="server">
-    <%--<link href="<%= ResolveUrl("~/Content/themes/base/ylyj/serialnumber.css?v=18426") %>" rel="stylesheet" />--%>
+        
     <link href="Content/themes/base/ylyj/serialnumber.css?v=18426" rel="stylesheet" />
-    <script src="Scripts/clipboard.min.js?v=18426"></script>
-    <script src="Scripts/ylyj/serialnumbergenerating.js?v=18426"></script>
-    <script src="http://cdn.bootcss.com/jqueryui/1.11.0/jquery-ui.min.js"></script>
-    <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
-    <%--<link href="http://cdn.bootcss.com/jqueryui/1.11.0/jquery-ui.min.css" rel="stylesheet">--%>
+
     <link href="Scripts/jQuery-UI/jquery-ui.css" rel="stylesheet" />
     <link href="Scripts/jQuery-UI/jquery.multiselect.css" rel="stylesheet" />
+
+    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+    <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />
+
+
     <script type="text/javascript">
 
         $(function(){
@@ -93,6 +94,7 @@
                 <asp:HiddenField ID="hidTaskType" runat="server" ClientIDMode="Static" />
                 <!--任务类型-->
                 <asp:HiddenField ID="hidProjectID" runat="server" ClientIDMode="Static" />
+                <asp:HiddenField ID="hidProjectID2" runat="server" ClientIDMode="Static" />
                 <!--存储任务ID-->
                 <asp:HiddenField ID="hidProjectOrModifyID" runat="server" ClientIDMode="Static" />
                 <asp:HiddenField ID="hidDeleteID" runat="server" ClientIDMode="Static" />
@@ -105,7 +107,7 @@
                 <!--任务删除-->
                 <%--<asp:Button ID="btnModifyDelete" runat="server" OnClick="btnModifyDelete_Click"/>--%>
                 <%--<asp:Button ID="btnDownload" runat="server" Text="下载" OnClick="btnDownload_Click" />--%>
-                <asp:Button ID="btnFileReplace" runat="server" OnClick="btnFileReplace_Click" ClientIDMode="Static" />
+                <%--<asp:Button ID="btnFileReplace" runat="server" OnClick="btnFileReplace_Click" ClientIDMode="Static" />--%>
             </div>
             <h1>任务<asp:Label ID="lblOperateType" runat="server" Text="生成"></asp:Label></h1>
             <hr />
@@ -347,198 +349,194 @@
                 <input id="btnCopy" name="btnCopy" type="button" value="复制到剪贴板" data-clipboard-action="copy" data-clipboard-target="#txtTaskName" class="button" style="display:none;" />
             </div>
             <hr />
-            <div id="middle">
-                <!--============================== 任务资料 ==============================-->
-                <div class="attach_bottom">
-                    <div class="attach_title">
-                        任务资料
-                    </div>
-                </div>
-                <div class="rwzlList">
-                    <asp:Label ID="lblTaskDataUploadTip" runat="server" Text="任务资料上传：" />
-                    <%--<asp:FileUpload ID="fupTaskData" runat="server" ToolTip="上传任务资料" />--%>
 
-                    <Upload:InputFile ID="InputFile1" runat="server" ClientIDMode="Static" />
-
-                    <asp:Button ID="btnUploadTaskData" runat="server" Text="上传" OnClientClick="return ValidateUpload('InputFile1');" OnClick="btnUploadTaskData_Click" ToolTip="上传任务资料" ClientIDMode="Static" />
-                    <br />
-                    
-                    <div id="progressbar">
-                        <Upload:ProgressBar ID="ProgressBar1" runat="server" Inline="true" Width="580px" Height="30px" />
-                    </div>
-                    <asp:Image ID="imgTaskData" runat="server" ImageUrl="~/Images/folder.png" Visible="false" />
-                    <asp:Label ID="lblTaskData" runat="server" Visible="false" />
-                    <asp:Button ID="btnDeleteTaskData" runat="server" Text="删除" Visible="false" />
-                    <div class="divGridView">
-                        <asp:GridView ID="gvTaskData" runat="server" OnRowCommand="gvTaskData_RowCommand" AutoGenerateColumns="false" ShowHeader="false" GridLines="None" RowStyle-Height="30">
-                            <Columns>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Image ID="img" runat="server" ImageUrl="~/Images/folder.png" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblFileName" runat="server" Text='<%# Eval("FILENAME") %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnDelete" runat="server" CommandName="del" CommandArgument='<%# Eval("ID") %>' Text="删除" ForeColor="Red" OnClientClick="return confirm('确定要删除吗？');" />
-                                        <%--<input id="btnDeleteTaskData" runat="server" CommandName="del" CommandArgument='<%# Eval("ID") %>' value="删除" onclick="return confirm('确定要删除吗？');" />--%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>
-                </div>
-                <div>
-                </div>
-                <!--============================== 完成稿 ==============================-->
-                <div class="attach_bottom">
-                    <div class="attach_title">
-                        完成稿
-                    </div>
-                    <div id="loadingProject">
-                        <img src="Images/loading.gif" />
-                        压缩中，请稍等...
-                    </div>
-                </div>
-                <div class="rwzlList">
-                    <%--<asp:Image ID="imgFinalData" runat="server" ImageUrl="~/Images/folder.png" Visible="false" />
-                    <asp:Label ID="lblFinalData" runat="server" Text="暂无" Visible="false" />
-                    <input type="button" runat="server" id="btnFinalDataCompress" name="btnCompress" value="压缩" onclick="Compress(0, null, null);" class="btnCompress" visible="false" />
-                    <asp:Button ID="btnFinalDataDownload" runat="server" Text="下载" OnClick="btnFinalDataDownload_Click" CssClass="btnDownload" Enabled="false" ToolTip="请压缩后再下载" Visible="false" />--%>
-                    <div class="divGridView">
-                        <asp:GridView ID="gvFinalData" runat="server" OnRowCommand="gvTaskData_RowCommand" AutoGenerateColumns="false" ShowHeader="false" GridLines="None" RowStyle-Height="30">
-                            <Columns>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Image ID="img" runat="server" ImageUrl="~/Images/folder.png" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblFileName" runat="server" Text='<%# Eval("TASKNO") %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblEmployeeNo" runat="server" Text='<%# "　（" + Eval("EMPLOYEENO") + "） " %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <input type="button" id="btnCompress" name="btnCompress" value="压缩" onclick="Compress(0, '<%# Eval("ID") %>    ', null, '<%# Eval("FINISHEDPERSON")%>' );" />
-                                        <asp:Button ID="btnDownload" runat="server" Text="下载" CommandName="download" CommandArgument='<%# Eval("ID") + "|" + Eval("FINISHEDPERSON") %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                            <EmptyDataTemplate>
-                                <label>暂无</label>
-                            </EmptyDataTemplate>
-                        </asp:GridView>
-                    </div>
-                </div>
-                <div style="width: 50%; height: 40px; display: none;">
-                    <%--<label id="progress"></label>--%>
-                    <%--<div id="progressbar"></div>--%>
-                    <div class="divFinalScriptLabel">
-                        <asp:Image ID="imgFinalFolder" ImageUrl="~/Images/folder.png" runat="server" Visible="true" />
-                        <asp:Label ID="lblFinalScript" runat="server" Text="任务暂未完成" />
-                        <%--<label>请先压缩再下载。</label>--%>
-                        <%--<asp:Button ID="btnCompress" runat="server" Text="压缩" OnClick="btnCompress_Click" />--%>
-                        <div id="divProject" runat="server">&nbsp;</div>
-                    </div>
-                    <%--<input type="button" id="btnProjectCompress" name="btnProjectCompress" value="压缩" onclick="Compress();" />
-                    <input type="button" id="btnProjectDownload" name="btnProjectDownload" value="下载" />--%>
-                    <%--后台生成“压缩”和“下载”按钮--%>
-                    <%--<div style="clear:both;"></div>--%>
-                </div>
-
-                <!--============================== 修改稿 ==============================-->
-                <div class="attach_bottom">
-                    <div class="attach_title" style="clear: left;">
-                        修改稿
-                    </div>
-                </div>
-                <div class="rwzlList">
-                    <div>
-                        <asp:Button ID="btnCreateModifyTask" runat="server" Text="创建修改任务" OnClick="btnCreateModifyTask_Click" />
-                    </div>
-                    <!--用GridView绑定修改稿列表-->
-                    <asp:GridView ID="gvModify" runat="server" OnRowCommand="gvTaskData_RowCommand" AutoGenerateColumns="false" ShowHeader="false" GridLines="None">
-                        <Columns>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Image ID="img" runat="server" ImageUrl="~/Images/folder.png" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField ItemStyle-Width="80">
-                                <ItemTemplate>
-                                    <asp:Label ID="lbl" runat="server" Text='<%# Eval("FOLDERNAME").ToString() %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblIsUploadAttach" runat="server" Text='<%# Eval("ISUPLOADATTACH").ToString() == "1" ? "（附件已上传）" : "（附件未上传）" %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Label ID="lblReviewStatus" runat="server" Text='<%# Eval("REVIEWSTATUS").ToString() == "1" ? "审核通过" : "待审核" %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField ItemStyle-Width="240">
-                                <ItemTemplate>
-                                    <span class="file" style="vertical-align: middle; margin-bottom: 3px; display: <%# Eval("REVIEWSTATUS").ToString() == "1" ? "none" : "inline-block" %>">上传/替换
-                                            <input type="file" name="fileReplace" onchange="FileReplace('<%# Eval("id") %>',this.value)" />
-                                    </span>
-                                    <%--<asp:Button ID="btnUpload" runat="server" Text="上传" CommandName="upload" CommandArgument='<%# Eval("ID") %>' />--%>
-                                    <%--<asp:Button ID="btnDelete" runat="server" Text="删除" CommandName="del" CommandArgument='<%# Eval("ID") %>' />--%>
-                                    <input type="button" id="btnCompress" name="btnCompress" value="压缩" onclick="Compress(1, '<%# Eval("ID") %>    ', null);" />
-                                    <asp:Button ID="gvBtnDownload" runat="server" Text="下载" CommandName="download" CommandArgument='<%# Eval("ID") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                        <EmptyDataTemplate>
-                            <label>暂无</label>
-                        </EmptyDataTemplate>
-                    </asp:GridView>
-                    <%--                    <asp:GridView ID="gvModifyAttach" runat="server" OnRowCommand="gvTaskData_RowCommand" AutoGenerateColumns="false">
-                        <Columns>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Image ID="img" runat="server" ImageUrl="~/Images/folder.png" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Label ID="lbl" runat="server" Text='<%# Eval("FILENAME") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Button ID="btnDelete" runat="server" Text="删除" CommandName="del" CommandArgument='<%# Eval("ID") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>--%>
-                    <div style="display: none;">
-                        <label>修改任务上传：</label>
-                        <asp:FileUpload ID="fupModifyData" runat="server" ToolTip="上传修改资料" />
-                        <asp:Button ID="btnUploadModifyData" runat="server" Text="上传" OnClientClick="return ValidateUpload('fupModifyData');" OnClick="btnUploadTaskData_Click" ToolTip="上传修改资料" />
-                    </div>
-                </div>
-                <div id="divModifyList" runat="server" style="clear: left;"></div>
-                <div class="modifyTaskAdd" style="display: none;">
-                    <s>修改任务添加：
-                <asp:FileUpload ID="fupd" runat="server" />
-                        <asp:Button ID="btnAddModifyTask" runat="server" Text="添加" OnClientClick="return ValidateUpload(this);" OnClick="btnAddModifyTask_Click" /></s>
-                </div>
-            </div>
             <div id="bottom">&copy;<label id="lblCurrentYear" style="font-size: 12px;"></label>
                 Soochow YiLiangYiJia Enterprise Consulting Management Co.,Ltd. All rights reserved.&nbsp;Please use a browser except IE.</div>
         </div>
   </form>
+
+
+    <div id="project" class="container" style="clear:both;">
+     <p>{{taskno}}</p>
+        <div id="meun">
+            <div class="row">
+                <div class="col -12" style="text-align: left;">
+                    <div class="btn-group btn-group-lg">
+                        <button type="button" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">文件列表</button>
+                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
+                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projectfile" v-show="showfile">
+            标签列表
+            <!-- Tab List -->
+            <div class="row">
+                <div class="col -12">
+                    <div class="btn-group btn-group-sm">
+                        <!-- change file list -->
+                        <button :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary " v-for="item in projectfile.filetabs"
+                            @click="changeFilesTab(item.Id)">
+                            {{item.title}}</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File List -->
+            <div class="row">
+                <div class="col -12">
+                    <div id="showfiles" style="text-align: left">
+                        <table class="table table-bordered table-hover  table-striped">
+                            <tbody>
+                                <tr v-for=" file in projectfile.files" v-show="projectfile.parentId == file.categoryId">
+                                    <td>
+                                        {{file.operateContent}}
+                                        <!-- 图标: -->
+                                        <!-- <span :title="file.filedesc">{{file.fileName}}</span>
+                                        <span :title="">{{file.filePath}}</span>
+                                        <a href="dotPeek.rar">rar</a>
+                                        <a href="uploadfile.html">html</a> -->
+                                    </td>
+                                    <td :title="file.description">
+                                        {{file.fileName}}
+                                    </td>
+                                    <td>
+                                        {{file.operateUser}}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button type="button" class="btn btn-default btn-danger" @click="deleteFile(file.fileHistoryId)">删除</button>
+                                            <%--<button type="button" class="btn btn-default btn-success">下载</button>--%>
+                                            <a :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Upload File -->
+            <div class="row">
+                <div class="col-3">
+                    <span>描述:</span>
+                    <input type="text" name="desc" id="filedesc" v-model="projectfile.filedesc">
+                </div>
+                <div class="col-9">
+                    <div style="margin: 0 0 0 50px;">
+                        <div id="file1" style="float: left;">请选择</div>
+                        <span id="pfile1"></span>
+                        <div id="file1progress" class="progress" style="width: 500px; float: left; margin: 10px 0 0 20px;">
+                            <div id="file1progressbar" class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%;"></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projecthistory" v-show="showhistory">
+            操作历史
+            <div class="row">
+                <div class="col-12">
+                    <h4>Project ID:{{projectid}}</h4>
+                    <div>
+                        <table class="table table-bordered table-hover  table-striped">
+                            <!-- 表头 -->
+                            <thead>
+                                <td>
+                                    时间
+                                </td>
+                                <td>
+                                    操作人
+                                </td>
+                                <td>
+                                    内容
+                                </td>
+                            </thead>
+
+                            <!-- 内容 -->
+                            <tbody>
+                                <tr v-for=" item in projecthistory.data " :key="item.id ">
+                                    <td>
+                                        {{item.operateDate|convTime}}
+                                    </td>
+                                    <td>
+                                        {{item.operateUser}}
+                                    </td>
+                                    <td>
+                                        {{item.operateContent}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addtab" v-show="showaddtab">
+            添加一个新目录
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label for="category">选择列表 : </label>
+                            <select class="form-control" name="category" id="category" v-model="newtab.categoryselected" @change="categoryChange()">
+                                <option v-for="item in newtab.category" :value="item.key">{{item.value}}</option>
+                            </select>
+                            <span> {{newtab.categoryselected}}</span>
+                        </div>
+
+                        <div class="form-group" v-show="showreply">
+                            <label for="replyto">回复 : </label>
+                            <select class="form-control" name="replyto" id="replyto" v-model="newtab.replytoselected">
+                                <option v-for="item in newtab.replyto" :value="item.Id">
+                                    {{item.Title}}
+                                </option>
+                            </select>
+                            <span> {{newtab.replytoselected}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">描述 : </label>
+                            <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc">
+                        </div>
+
+                        <div class="form-group" v-show="newtab.categoryselected == 3">
+                            <label for="category">交稿时间：</label>
+                            <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                        </div>
+                        <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
+                    </form>
+                    <div class="form-group">
+                        <p>{{this.newtab.returnmessage}}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<%--    <script src="Scripts/clipboard.min.js?v=18426"></script>--%>
+    <%--<script src="http://cdn.bootcss.com/jqueryui/1.11.0/jquery-ui.min.js"></script>--%>
+    <script src="Scripts/jQuery-UI/jquery-ui.min.js"></script>
+    <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
+
+    <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
+
+    <script src="Scripts/vue/vue.js"></script>
+    <script src="Scripts/ylyj/employeehome/func.js"></script>
+    <script src="Scripts/ylyj/employeehome/settings.js"></script>
+    <script src="Scripts/ylyj/employeehome/vuepage.js"></script>
+
+    
+    <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
+
+    <script src="Scripts/webuploader/webuploader.js"></script>
+    <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>
 </asp:Content>

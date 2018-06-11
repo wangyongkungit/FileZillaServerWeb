@@ -153,19 +153,29 @@ namespace FileZillaServerBLL
         {
             errCode = 0;
             string projectId = context.Request["projectId"];
-            string where = string.Format(" PARENTID IN ( SELECT ID FROM filecategory WHERE projectId = '{0}') ", projectId);
+            string where = string.Format(" AND PARENTID IN ( SELECT ID FROM filecategory WHERE projectId = '{0}') ", projectId);
             // 加入排序字段
             string orderBy = string.Format(" ORDER BY operateDate");
             List<FileHistory> fileHistories = this.GetModelList(where, orderBy);
             return fileHistories;
         }
 
-        public bool AddFileHistory(string parentId, string fileName, string description, string userId)
+        /// <summary>
+        /// 添加一条文件记录
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <param name="fileName">文件名</param>
+        /// <param name="fileNameRelativeToTaskRoot">相对于任务目录的文件名（从任务编号的目录之后开始取）</param>
+        /// <param name="description"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public bool AddFileHistory(string parentId, string fileName, string fileNameRelativeToTaskRoot, string description, string userId)
         {
             FileHistory fileHistory = new FileHistory();
             fileHistory.ID = Guid.NewGuid().ToString();
             fileHistory.PARENTID = parentId;
             fileHistory.FILENAME = fileName;
+            fileHistory.FILEFULLNAME = fileNameRelativeToTaskRoot;
             fileHistory.FILEEXTENSION = Path.GetExtension(fileName);
             fileHistory.DESCRIPTION = description;
             fileHistory.OPERATEDATE = DateTime.Now;

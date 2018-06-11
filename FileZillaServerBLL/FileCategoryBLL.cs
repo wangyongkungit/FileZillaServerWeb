@@ -129,25 +129,26 @@ namespace FileZillaServerBLL
         {
             return dal.GetListByPage(strWhere, orderby, startIndex, endIndex);
         }
-        /// <summary>
-        /// 分页获取数据列表
-        /// </summary>
-        //public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-        //{
-        //return dal.GetList(PageSize,PageIndex,strWhere);
-        //}
 
         #endregion  BasicMethod
         #region  ExtensionMethod
+        /// <summary>
+        /// 根据 fileHistoryId 获取 projectId
+        /// </summary>
+        public string GetProjectIdByFileHistoryId(string fileHistoryId)
+        {
+            return dal.GetProjectIdByFileHistoryId(fileHistoryId);
+        }
+
         /// <summary>
         /// 根据proejctId和category获取orderSort
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public int GetOrderSort(string category)
+        public int GetOrderSort(string projectId, string category)
         {
-            return dal.GetOrderSort(category);
+            return dal.GetOrderSort(projectId, category);
         }
 
         /// <summary>
@@ -180,12 +181,14 @@ namespace FileZillaServerBLL
         {
             errCode = 0;
             string returnFolderName = string.Empty;
+            string taskRootFolder = string.Empty;
             ConfigureBLL configBll = new ConfigureBLL();
             DataTable dtConfig = configBll.GetConfig("文件分类小类");
             string projectId = context.Request["projectId"];
             string categoryId = context.Request["categoryId"];
             string parentId = context.Request["parentId"];
             string description = context.Request["description"];
+            string expireDate = context.Request["expiredate"];
             string title = dtConfig.AsEnumerable().Where(item => Convert.ToString(item["configKey"]) == categoryId).Select(item => item.Field<string>("configValue")).FirstOrDefault();
             string rootPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
             FileCategory fileCategory = new FileCategory();
@@ -196,25 +199,31 @@ namespace FileZillaServerBLL
             // 新的修改或者疑问
             if (parentId == "0")
             {
-                fileCategory.ORDERSORT = GetOrderSort(categoryId);
+                fileCategory.ORDERSORT = GetOrderSort(projectId, categoryId);
             }
             // 修改完成或者疑问答复
             else
             {
                 fileCategory.ORDERSORT = GetOrderSortForChildTab(parentId);
             }
-            title += Convert.ToString(fileCategory.ORDERSORT);
+            if (categoryId != "1" && categoryId != "2")
+            {
+                title += Convert.ToString(fileCategory.ORDERSORT);
+            }
             fileCategory.TITLE = title;
             fileCategory.FOLDERNAME = title;
             fileCategory.CREATEDATE = DateTime.Now;
+            DateTime dtExpire = IsDate(expireDate) ? Convert.ToDateTime(expireDate) : DateTime.MinValue;
+            fileCategory.EXPIREDATE = dtExpire;
             fileCategory.PARENTID = parentId;
             fileCategory.CLASSSORT = GlobalConfig.dicMap[categoryId];
             fileCategory.DIVISIONSORT = Convert.ToInt32(categoryId);
+            //FileCategory fileCategoryExist = this.GetModelList("", "").FirstOrDefault();
             // 添加数据库记录
             if (this.Add(fileCategory))
             {
                 // 创建任务目录
-                if (!GetFilePathByProjectId(projectId, title, true, out returnFolderName, out errCode))
+                if (!GetFilePathByProjectId(projectId, title, true, out returnFolderName, out taskRootFolder, out errCode))
                 {
                     // 目录创建失败时，需要将已添加到数据库的记录删除
                     this.Delete(fileCategory.ID);
@@ -233,10 +242,12 @@ namespace FileZillaServerBLL
         /// <param name="folderName"></param>
         /// <param name="errCode">返回码</param>
         /// <returns></returns>
-        public bool GetFilePathByProjectId(string projectId, string folderName, bool isCreateFolder, out string returnFolderName, out int errCode)
+        public bool GetFilePathByProjectId(string projectId, string folderName, bool isCreateFolder, out string returnFolderName, out string taskRootFolder, out int errCode)
         {
             errCode = 0;
             returnFolderName = string.Empty;
+            // 任务的根目录（通常就是任务编号命名的目录）
+            taskRootFolder = string.Empty;
             FileHistoryBLL fileHistoryBll = new FileHistoryBLL();
             string taskNo = string.Empty;
             string returnFileName = string.Empty;
@@ -256,9 +267,10 @@ namespace FileZillaServerBLL
                         string empNoFullPath = Path.Combine(rootPath, empNo);
 
                         taskNo = dtTaskNoAndEmpNo.AsEnumerable().Select(item => Convert.ToString(item["taskNo"])).FirstOrDefault();
-                        string taskNoFinalFolder = Directory.GetDirectories(empNoFullPath, taskNo, SearchOption.AllDirectories).FirstOrDefault();
+                        string taskNoFinalFolder = Directory.GetDirectories(empNoFullPath, taskNo + "*", SearchOption.AllDirectories).FirstOrDefault();
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
+                            taskRootFolder = taskNoFinalFolder;
                             returnFileName = Path.Combine(rootPath, empNo, taskNo, folderName);
                             returnFolderName = returnFileName;
                         }
@@ -269,9 +281,10 @@ namespace FileZillaServerBLL
                         Project prj = new ProjectBLL().GetModel(projectId);
                         taskNo = prj.TASKNO;
                         string rootPath = Convert.ToString(ConfigurationManager.AppSettings["taskAllotmentPath"]);
-                        string taskNoFinalFolder = Directory.GetDirectories(rootPath, taskNo, SearchOption.TopDirectoryOnly).FirstOrDefault();
+                        string taskNoFinalFolder = Directory.GetDirectories(rootPath, taskNo + "*", SearchOption.TopDirectoryOnly).FirstOrDefault();
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
+                            taskRootFolder = taskNoFinalFolder;
                             returnFileName = Path.Combine(rootPath, taskNo, folderName);
                             returnFolderName = returnFileName;
                         }
@@ -344,6 +357,19 @@ namespace FileZillaServerBLL
             return categories;
         }
         #endregion
+
+        public static bool IsDate(string strDate)
+        {
+            try
+            {
+                DateTime.Parse(strDate);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         #endregion  ExtensionMethod
     }
 }

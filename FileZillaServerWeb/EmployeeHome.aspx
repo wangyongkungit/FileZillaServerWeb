@@ -4,9 +4,13 @@
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />    --%>
-    <link href="Content/themes/base/ylyj/employeeHome.css" rel="stylesheet" />
     <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
-    <link href="Scripts/webuploader/webuploader.css" rel="stylesheet" />
+
+    <link href="Content/themes/base/ylyj/employeeHome.css?v=180610" rel="stylesheet" />
+
+    <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />
+    
+    <link href="<%= ResolveUrl("~/Scripts/dialog/jDialog/jDialog.css") %>" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <script src="Scripts/echarts/echarts.common.min.js"></script>
@@ -78,6 +82,7 @@
                             <asp:Label ID="lblCanWithdrawAmount" runat="server"></asp:Label>
                             <a id="withdraw" href="javascript:void(0);">提现</a>
                             <a id="withdrawRecords" href="javascript:void(0);">提现记录</a>
+                            <a id="transactionRecords" href="javascript:void(0);">交易记录</a>
                         </div>
                     </div>
                 </div>
@@ -153,8 +158,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="操作">
                                 <ItemTemplate>
+                                    <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
                                     <input type="button" id="btnTransfer" value="&#8658;" title="任务转移" class="taskmovebutton" onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
-                                    <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" onclick='ViewPrjFiles("<%# Eval("prjID") %>");' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -178,29 +183,29 @@
         </div>
     </form>
 
-        <div id="project" class="container" style="clear:both;">
-
+ <div id="project" class="container" style="clear:both;">
+     <p>{{taskno}}</p>
         <div id="meun">
             <div class="row">
                 <div class="col -12" style="text-align: left;">
                     <div class="btn-group btn-group-lg">
-                        <button type="button" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">File</button>
-                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">History</button>
-                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">Add A New Tab</button>
+                        <button type="button" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">文件列表</button>
+                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
+                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <div id="projectfile" v-show="showfile">
-            File Tab
+            文件列表
             <!-- Tab List -->
             <div class="row">
                 <div class="col -12">
                     <div class="btn-group btn-group-sm">
                         <!-- change file list -->
-                        <button :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary " v-for="item in projectfile.filetabs">
+                        <button :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary " v-for="item in projectfile.filetabs"
+                            @click="changeFilesTab(item.Id)">
                             {{item.title}}</button>
                     </div>
                 </div>
@@ -212,21 +217,25 @@
                     <div id="showfiles" style="text-align: left">
                         <table class="table table-bordered table-hover  table-striped">
                             <tbody>
-                                <tr v-for=" file in projectfile.files">
+                                <tr v-for=" file in projectfile.files" v-show="projectfile.parentId==file.categoryId">
                                     <td>
-                                        图标:
+                                        {{file.operateContent}}
+                                        <!-- 图标: -->
                                         <!-- <span :title="file.filedesc">{{file.fileName}}</span>
                                         <span :title="">{{file.filePath}}</span>
                                         <a href="dotPeek.rar">rar</a>
                                         <a href="uploadfile.html">html</a> -->
                                     </td>
+                                    <td :title="file.description">
+                                        {{file.fileName}}
+                                    </td>
                                     <td>
-                                        上传时间
+                                        {{file.operateUser}}
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
-                                            <button type="button" class="btn btn-default btn-primary">delete</button>
-                                            <button type="button" class="btn btn-default btn-success">download</button>
+                                            <button type="button" class="btn btn-default btn-danger" @click="deleteFile(file.fileHistoryId)">删除</button>
+                                            <button type="button" class="btn btn-default btn-success" @click="downloadFile(file.fileHistoryId)">下载</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -238,28 +247,41 @@
 
 
             <!-- Upload File -->
-
-
+            <div class="row">
+                <div class="col-3">
+                    <span>描述:</span>
+                    <input type="text" name="desc" id="filedesc" v-model="projectfile.filedesc">
+                </div>
+                <div class="col-9">
+                    <div style="margin: 0 0 0 50px;">
+                        <div id="file1" style="float: left;">请选择</div>
+                        <span id="pfile1"></span>
+                        <div id="file1progress" class="progress" style="width: 500px; float: left; margin: 10px 0 0 20px;">
+                            <div id="file1progressbar" class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%;"></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-
         <div id="projecthistory" v-show="showhistory">
-            history
+            操作历史
             <div class="row">
                 <div class="col-12">
-                    <h4>Project ID:{{projectid}}</h4>
+                    <%--<h4>Project ID:{{projectid}}</h4>--%>
                     <div>
                         <table class="table table-bordered table-hover  table-striped">
                             <!-- 表头 -->
                             <thead>
                                 <td>
-                                    OperateDate
+                                    时间
                                 </td>
                                 <td>
-                                    OperateUser
+                                    操作人
                                 </td>
                                 <td>
-                                    operateContent
+                                    内容
                                 </td>
                             </thead>
 
@@ -279,14 +301,12 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
 
-
         <div id="addtab" v-show="showaddtab">
-            add new tab
+            添加新标签
             <div class="row">
                 <div class="col-12">
                     <form class="form-inline" role="form">
@@ -312,6 +332,12 @@
                             <label for="category">描述 : </label>
                             <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc">
                         </div>
+
+                        <div class="form-group">
+                            <label for="category">交稿时间：</label>
+                            <input type="text" name="tabexpiredate" id="tabexpiredate" v-model="newtab.expiredate">
+                        </div>
+
                         <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
                     </form>
                     <div class="form-group">
@@ -323,14 +349,19 @@
         </div>
     </div>
     
-                <script src="<%= ResolveUrl("~/Scripts/jquery-3.3.1.min.js") %>"></script>
-    <script src="Scripts/ylyj/employeeHome.js"></script>
+<%--    <script src="<%= ResolveUrl("~/Scripts/jquery-3.3.1.min.js") %>"></script>--%>
 
     <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
-    <script src="Scripts/webuploader/webuploader.js"></script>
 
     <script src="Scripts/vue/vue.js"></script>
     <script src="Scripts/ylyj/employeehome/func.js"></script>
     <script src="Scripts/ylyj/employeehome/settings.js"></script>
     <script src="Scripts/ylyj/employeehome/vuepage.js"></script>
+
+    
+    <script src="Scripts/ylyj/employeeHome.js"></script>
+
+    <script src="Scripts/webuploader/webuploader.js"></script>
+    <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>
+
 </asp:Content>

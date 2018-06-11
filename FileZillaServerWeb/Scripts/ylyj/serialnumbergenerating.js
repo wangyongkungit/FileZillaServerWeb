@@ -101,7 +101,7 @@ function ClearAllTextBox() {
             if (elem.type == "text") {
                 elem.value = "";
             }
-                //select的type是select-one，而非select
+            //select的type是select-one，而非select
             else if (elem.type == "select-one") {
                 elem.options[0].selected = true;
             }
@@ -176,7 +176,34 @@ function FileReplace(id, fileName) {
     $("#hidFileReplaceName").val(fileName);
     document.getElementById("btnFileReplace").click();
 }
-function AlertDialog(msg, result) {
+function AlertDialog(msg, result, projectId) {
+    if (result == 'InvokeCreateFolder') {
+        $.ajax({
+            url: "/HttpHandler/FileHandler.ashx",
+            type: "POST",
+            data: { "RequestType": "AjaxRequest", "FuncName": "AddFileCategory", "projectId": projectId, "categoryId": "1", "description": "任务书" },
+            success: function (data) {
+                vm.projectid = projectId;
+                console.log("rws:" + data.Code);
+            },
+            complete: function (data) {
+
+            }
+        });
+        // 2018-06-11 19-36-02 修改，默认不建完成稿
+        //$.ajax({
+        //    url: "/HttpHandler/FileHandler.ashx",
+        //    type: "POST",
+        //    data: { "RequestType": "AjaxRequest", "FuncName": "AddFileCategory", "projectId": projectId, "categoryId": "2", "description": "完成稿" },
+        //    success: function (data) {
+        //        vm.projectid = projectId;
+        //        console.log("wcg:" + data.Code);
+        //    },
+        //    complete: function (data) {
+
+        //    }
+        //})
+    }
     var dialog = jDialog.alert(msg, {
         handler: function (button, dialog) {
             dialog.close();
@@ -186,24 +213,24 @@ function AlertDialog(msg, result) {
             }
         }
     }, {
-        showShadow: true,// 对话框阴影
-        wobbleEnable: true,
-        events: {
-            show: function (evt) {
-                var dlg = evt.data.dialog;
-            },
-            close: function (evt) {
-                var dlg = evt.data.dialog;
-            },
-            enterKey: function (evt) {
-                alert('enter key pressed!');
-            },
-            escKey: function (evt) {
-                alert('esc key pressed!');
-                evt.data.dialog.close();
+            showShadow: true,// 对话框阴影
+            wobbleEnable: true,
+            events: {
+                show: function (evt) {
+                    var dlg = evt.data.dialog;
+                },
+                close: function (evt) {
+                    var dlg = evt.data.dialog;
+                },
+                enterKey: function (evt) {
+                    alert('enter key pressed!');
+                },
+                escKey: function (evt) {
+                    alert('esc key pressed!');
+                    evt.data.dialog.close();
+                }
             }
-        }
-    });
+        });
 }
 //订单时间错误设置获取焦点
 function AlertDialogOrderErr(msg) {
@@ -213,24 +240,24 @@ function AlertDialogOrderErr(msg) {
             $("#ContentPlaceHolder1_txtOrderDate").focus();
         }
     }, {
-        showShadow: true,// 对话框阴影
-        wobbleEnable: true,
-        events: {
-            show: function (evt) {
-                var dlg = evt.data.dialog;
-            },
-            close: function (evt) {
-                var dlg = evt.data.dialog;
-            },
-            enterKey: function (evt) {
-                alert('enter key pressed!');
-            },
-            escKey: function (evt) {
-                alert('esc key pressed!');
-                evt.data.dialog.close();
+            showShadow: true,// 对话框阴影
+            wobbleEnable: true,
+            events: {
+                show: function (evt) {
+                    var dlg = evt.data.dialog;
+                },
+                close: function (evt) {
+                    var dlg = evt.data.dialog;
+                },
+                enterKey: function (evt) {
+                    alert('enter key pressed!');
+                },
+                escKey: function (evt) {
+                    alert('esc key pressed!');
+                    evt.data.dialog.close();
+                }
             }
-        }
-    });
+        });
 }
 //删除任务时专用Confirm
 function AlertConfirm() {
@@ -240,11 +267,11 @@ function AlertConfirm() {
             $("#btnDelete").click();//调用服务器删除任务的button的click事件将任务删除
         }
     },
-    {
-        handler: function (button, dialog) {
-            dialog.close();
-        }
-    })
+        {
+            handler: function (button, dialog) {
+                dialog.close();
+            }
+        })
 }
 
 function AlertConfirm2() {
@@ -254,12 +281,12 @@ function AlertConfirm2() {
             return true;
         }
     },
-    {
-        handler: function (button, dialog) {
-            dialog.close();
-            return false;
-        }
-    })
+        {
+            handler: function (button, dialog) {
+                dialog.close();
+                return false;
+            }
+        })
 }
 
 function Confirm() {
@@ -281,6 +308,8 @@ $(document).ready(function () {
         $("#rdbSync").removeAttr("required");
         $("#rdbNoSync").removeAttr("required");
         $("#divSync").css("visibility", "hidden");
+
+        vm.projectid = $("#hidProjectID").val();
     };
 
     var btnDelete = document.getElementById("btnDeleteClient");
@@ -314,8 +343,8 @@ $(document).ready(function () {
             target: $('#ContentPlaceHolder1_txtTimeNeeded'),
             position: 'bottom'
         }, {
-            autoClose: 10000
-        });
+                autoClose: 10000
+            });
     });
 
     $("#ContentPlaceHolder1_txtTaskName").bind("focus", function () {
@@ -334,7 +363,7 @@ $(document).ready(function () {
             img.attr("title", "展开");
         }
     });
-    
+
     //
     //$("#ContentPlaceHolder1_txtOrderDate").click(function () {
     //    var dialog = jDialog.tip('如需选择日期，请点击右侧的日历图标', {

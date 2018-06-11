@@ -22,5 +22,7 @@ namespace FileZillaServerModel.Interface
         /// tab 的描述
         /// </summary>
         public string description { get; set; }
+
+        public int expiredate { get; set; }
     }
 }

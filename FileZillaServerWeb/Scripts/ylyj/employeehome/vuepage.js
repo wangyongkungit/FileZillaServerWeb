@@ -3,6 +3,7 @@ var vm = new Vue({
 
     data: {
         projectid: "",
+        taskno: "",
         roleid: 0,
         showhistory: false,
         showfile: false,
@@ -14,7 +15,8 @@ var vm = new Vue({
             ],
             files: [
             ],
-            filedesc: ""
+            filedesc: "",
+            parentId: ""
         },
 
         projecthistory: {
@@ -27,6 +29,7 @@ var vm = new Vue({
             replyto: [],
             replytoselected: "",
             desc: "",
+            expiredate: "",
             returnmessage: ""
         },
     },
@@ -58,6 +61,7 @@ var vm = new Vue({
                     "projectid": this.projectid,
                     "categoryid": this.newtab.categoryselected,
                     "description": this.newtab.desc,
+                    "expiredate": $("#tabexpiredate").val(),
                     "parentid": 0
                 };
                 funcList["addNewTab"]["func"].call(this, p1);
@@ -72,10 +76,10 @@ var vm = new Vue({
                     "projectid": this.projectid,
                     "categoryid": this.newtab.categoryselected,
                     "description": this.newtab.desc,
+                    "expiredate": $("#tabexpiredate").val(),
                     "parentid": this.newtab.replytoselected
                 };
                 funcList["addReplytoTab"]["func"].call(this, p1);
-                // addReplytoTab(p1);
             }
         },
         //change Tab
@@ -85,19 +89,26 @@ var vm = new Vue({
             this.showaddtab = showaddtab;
         },
         //chang file list
-        changeFiles: function (filetype) {
-
+        changeFilesTab: function (filetype) {
+            this.projectfile.parentId = filetype;
         },
-
-    }
-    ,
+        //delete file
+        deleteFile: function (fileHistoryId) {
+            let p1 = {
+                "filehistoryid": fileHistoryId
+            };
+            funcList["deleteFile"]["func"].call(this, p1);
+        },
+        // download file
+        downloadFile: function (fileHistoryId) {
+            let p1 = {
+                "filehistoryid": fileHistoryId
+            };
+            funcList["downloadFile"]["func"].call(this, p1);
+        }
+    },
     mounted: function () {
         init.call(this);
-        //funcList["init"]["func"].call(this);
-        // this.projectid = "0007a46a-6914-4d4e-a6d5-f465f683204f";
-        // this.roleid = 1;
-
-
     }
 });
 
@@ -109,8 +120,10 @@ Vue.filter('convTime', function (value) {
 });
 
 vm.$watch("projectid", function (newVal, oldVal) {
-
-    funcList["refreshProject"]["func"].call(this, newVal);
+    let p1 = {
+        projectid: newVal
+    };
+    funcList["refreshProject"]["func"].call(this, p1);
 });
 
 

@@ -22,6 +22,7 @@ namespace FileZillaServerModel
         private string _description;
         private string _foldername;
         private DateTime? _createdate;
+        private DateTime? _expiredate;
         private string _parentid;
         private int? _classsort;
         private int? _divisionsort;
@@ -114,6 +115,8 @@ namespace FileZillaServerModel
             set { _ordersort = value; }
             get { return _ordersort; }
         }
+
+        public DateTime? EXPIREDATE { get => _expiredate; set => _expiredate = value; }
         #endregion Model
 
     }

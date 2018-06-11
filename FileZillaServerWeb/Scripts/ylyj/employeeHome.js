@@ -22,8 +22,9 @@ function TransferTask(prjID, employeeID, amount) {
     });
 };
 
-var ViewPrjFiles = function (prjID) {
+var ViewPrjFiles = function (prjID, taskNo) {
     vm.projectid = prjID;
+    vm.taskno = taskNo;
 };
 
 $("#withdraw").bind("click", function () {

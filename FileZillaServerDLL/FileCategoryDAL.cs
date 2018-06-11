@@ -39,9 +39,9 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into filecategory(");
-            strSql.Append("ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT)");
+            strSql.Append("ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,exPIREDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT)");
             strSql.Append(" values (");
-            strSql.Append("@ID,@PROJECTID,@CATEGORY,@TITLE,@DESCRIPTION,@FOLDERNAME,@CREATEDATE,@PARENTID,@CLASSSORT,@DIVISIONSORT,@ORDERSORT)");
+            strSql.Append("@ID,@PROJECTID,@CATEGORY,@TITLE,@DESCRIPTION,@FOLDERNAME,@CREATEDATE,@exPIREDATE,@PARENTID,@CLASSSORT,@DIVISIONSORT,@ORDERSORT)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ID", MySqlDbType.VarChar,36),
                     new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
@@ -50,6 +50,7 @@ namespace FileZillaServerDAL
                     new MySqlParameter("@DESCRIPTION", MySqlDbType.VarChar,255),
                     new MySqlParameter("@FOLDERNAME", MySqlDbType.VarChar,255),
                     new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@EXPIREDATE",MySqlDbType.Date),
                     new MySqlParameter("@PARENTID", MySqlDbType.VarChar,36),
                     new MySqlParameter("@CLASSSORT", MySqlDbType.Int32,1),
                     new MySqlParameter("@DIVISIONSORT", MySqlDbType.Int32,1),
@@ -61,10 +62,11 @@ namespace FileZillaServerDAL
             parameters[4].Value = model.DESCRIPTION;
             parameters[5].Value = model.FOLDERNAME;
             parameters[6].Value = model.CREATEDATE;
-            parameters[7].Value = model.PARENTID;
-            parameters[8].Value = model.CLASSSORT;
-            parameters[9].Value = model.DIVISIONSORT;
-            parameters[10].Value = model.ORDERSORT;
+            parameters[7].Value = model.EXPIREDATE;
+            parameters[8].Value = model.PARENTID;
+            parameters[9].Value = model.CLASSSORT;
+            parameters[10].Value = model.DIVISIONSORT;
+            parameters[11].Value = model.ORDERSORT;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -89,6 +91,7 @@ namespace FileZillaServerDAL
             strSql.Append("DESCRIPTION=@DESCRIPTION,");
             strSql.Append("FOLDERNAME=@FOLDERNAME,");
             strSql.Append("CREATEDATE=@CREATEDATE,");
+            strSql.Append("expiredate=@EXPIREDATE,");
             strSql.Append("PARENTID=@PARENTID,");
             strSql.Append("CLASSSORT=@CLASSSORT,");
             strSql.Append("DIVISIONSORT=@DIVISIONSORT,");
@@ -101,22 +104,24 @@ namespace FileZillaServerDAL
                     new MySqlParameter("@DESCRIPTION", MySqlDbType.VarChar,255),
                     new MySqlParameter("@FOLDERNAME", MySqlDbType.VarChar,255),
                     new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@EXPIREDATE", MySqlDbType.DateTime),
                     new MySqlParameter("@PARENTID", MySqlDbType.VarChar,36),
                     new MySqlParameter("@CLASSSORT", MySqlDbType.Int32,1),
                     new MySqlParameter("@DIVISIONSORT", MySqlDbType.Int32,1),
                     new MySqlParameter("@ORDERSORT", MySqlDbType.Int32,1),
                     new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
-            parameters[0].Value = model.PROJECTID;
-            parameters[1].Value = model.CATEGORY;
-            parameters[2].Value = model.TITLE;
-            parameters[3].Value = model.DESCRIPTION;
-            parameters[4].Value = model.FOLDERNAME;
-            parameters[5].Value = model.CREATEDATE;
-            parameters[6].Value = model.PARENTID;
-            parameters[7].Value = model.CLASSSORT;
-            parameters[8].Value = model.DIVISIONSORT;
-            parameters[9].Value = model.ORDERSORT;
-            parameters[10].Value = model.ID;
+            parameters[0].Value = model.ID;
+            parameters[1].Value = model.PROJECTID;
+            parameters[2].Value = model.CATEGORY;
+            parameters[3].Value = model.TITLE;
+            parameters[4].Value = model.DESCRIPTION;
+            parameters[5].Value = model.FOLDERNAME;
+            parameters[6].Value = model.CREATEDATE;
+            parameters[7].Value = model.EXPIREDATE;
+            parameters[8].Value = model.PARENTID;
+            parameters[9].Value = model.CLASSSORT;
+            parameters[10].Value = model.DIVISIONSORT;
+            parameters[11].Value = model.ORDERSORT;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -179,7 +184,7 @@ namespace FileZillaServerDAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT from filecategory ");
+            strSql.Append("select ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,exPIREDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT from filecategory ");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ID", MySqlDbType.VarChar,36)           };
@@ -234,6 +239,10 @@ namespace FileZillaServerDAL
                 {
                     model.CREATEDATE = DateTime.Parse(row["CREATEDATE"].ToString());
                 }
+                if (row["exPIREDATE"] != null && row["exPIREDATE"].ToString() != "")
+                {
+                    model.EXPIREDATE = DateTime.Parse(row["exPIREDATE"].ToString());
+                }
                 if (row["PARENTID"] != null)
                 {
                     model.PARENTID = row["PARENTID"].ToString();
@@ -260,7 +269,7 @@ namespace FileZillaServerDAL
         public DataSet GetList(string strWhere, string orderBy)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT ");
+            strSql.Append("select ID,PROJECTID,CATEGORY,TITLE,DESCRIPTION,FOLDERNAME,CREATEDATE,EXPIREDATE,PARENTID,CLASSSORT,DIVISIONSORT,ORDERSORT ");
             strSql.Append(" FROM filecategory ");
             if (strWhere.Trim() != "")
             {
@@ -320,46 +329,37 @@ namespace FileZillaServerDAL
             return DbHelperMySQL.Query(strSql.ToString());
         }
 
-        /*
-		/// <summary>
-		/// 分页获取数据列表
-		/// </summary>
-		public DataSet GetList(int PageSize,int PageIndex,string strWhere)
-		{
-			MySqlParameter[] parameters = {
-					new MySqlParameter("@tblName", MySqlDbType.VarChar, 255),
-					new MySqlParameter("@fldName", MySqlDbType.VarChar, 255),
-					new MySqlParameter("@PageSize", MySqlDbType.Int32),
-					new MySqlParameter("@PageIndex", MySqlDbType.Int32),
-					new MySqlParameter("@IsReCount", MySqlDbType.Bit),
-					new MySqlParameter("@OrderType", MySqlDbType.Bit),
-					new MySqlParameter("@strWhere", MySqlDbType.VarChar,1000),
-					};
-			parameters[0].Value = "filecategory";
-			parameters[1].Value = "ID";
-			parameters[2].Value = PageSize;
-			parameters[3].Value = PageIndex;
-			parameters[4].Value = 0;
-			parameters[5].Value = 0;
-			parameters[6].Value = strWhere;	
-			return DbHelperMySQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
-		}*/
-
         #endregion  BasicMethod
         #region  ExtensionMethod
+        /// <summary>
+        /// 根据 fileHistoryId 获取 projectId
+        /// </summary>
+        public string GetProjectIdByFileHistoryId(string fileHistoryId)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(@"SELECT PROJECTID FROM filecategory 
+                            WHERE ID IN
+                            (
+                             SELECT PARENTID FROM filehistory WHERE ID = '" + fileHistoryId + "'  )");
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString());
+            return Convert.ToString(obj);
+        }
+
         /// <summary>
         /// 根据proejctId和category获取orderSort
         /// </summary>
         /// <param name="projectId"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        public int GetOrderSort(string category)
+        public int GetOrderSort(string projectId, string category)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT IFNULL(max(ORDERSORT), 0) + 1 as ORDERSORT FROM filecategory WHERE CATEGORY = @category ");
+            strSql.Append("SELECT IFNULL(max(ORDERSORT), 0) + 1 as ORDERSORT FROM filecategory WHERE projectId = @projectId AND CATEGORY = @category ");
             MySqlParameter[] parameters = {
+                    new MySqlParameter("@projectId", MySqlDbType.String, 3),
                     new MySqlParameter("@category", MySqlDbType.VarChar, 3) };
-            parameters[0].Value = category;
+            parameters[0].Value = projectId;
+            parameters[1].Value = category;
             object obj = DbHelperMySQL.GetSingle(strSql.ToString(), parameters);
             return Convert.ToInt32(obj);
         }
@@ -391,7 +391,7 @@ namespace FileZillaServerDAL
             // 需要对 parentCategory 进行转换，
             string parentCategory = GlobalConfig.dicMapForSubTab[category].ToString();
             string strSql = @"
-                            SELECT f.Id, f.CATEGORY CATEGORYId, f.TITLE FROM filecategory f
+                            SELECT f.Id, f.CATEGORY CATEGORYId, f.TITLE, f.expireDate FROM filecategory f
                             WHERE PROJECTID = @projectId AND CATEGORY = @parentCategory  
                             AND f.ID NOT IN (  
 	                          SELECT PARENTID FROM filecategory

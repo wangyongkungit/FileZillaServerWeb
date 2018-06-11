@@ -21,6 +21,7 @@ namespace FileZillaServerWeb.Finance
         {
             if (!IsPostBack)
             {
+                txtTransacDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 LoadEmployee();
                 LoadTransaction();
                 DropDownListDataBind(ddlTransacType, ConfigTypeName.奖励与处罚类型, "-请选择-");
@@ -46,8 +47,9 @@ namespace FileZillaServerWeb.Finance
         {
             int totalRowsCount = 0;
             string employeeID = ddlEmployeeName.SelectedValue;
-            string where = string.Format(" AND employeeID = '{0}'", employeeID);
-            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(where, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+            Dictionary<string, string> dicCondition = new Dictionary<string, string>();
+            dicCondition.Add("employeeId", employeeID);
+            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
             gvTransaction.DataSource = dtTransac;
             gvTransaction.DataBind();
         }
@@ -92,7 +94,7 @@ namespace FileZillaServerWeb.Finance
             transac.TRANSACTIONDESCRIPTION = txtDescription.Text.Trim();
             transac.PROJECTID = new ProjectBLL().GetPrjIDByTaskNo(txtTaskNo.Text.Trim());
             transac.EMPLOYEEID = employeeID;
-            transac.TRANSACTIONDATE = Convert.ToDateTime(txtTransacDate);
+            transac.TRANSACTIONDATE = Convert.ToDateTime(txtTransacDate.Text.Trim());
             transac.CREATEDATE = DateTime.Now;
             if (tdBll.Add(transac))
             {

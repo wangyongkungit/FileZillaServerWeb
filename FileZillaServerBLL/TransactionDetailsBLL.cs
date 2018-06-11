@@ -136,9 +136,9 @@ namespace FileZillaServerBLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetListJoinEmpAndPrj(string strWhere, int pageIndex, int pageSize, out int totalAmount)
+        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dicConditon, int pageIndex, int pageSize, out int totalAmount)
         {
-            return dal.GetListJoinEmpAndPrj(strWhere, pageIndex, pageSize, out totalAmount);
+            return dal.GetListJoinEmpAndPrj(dicConditon, pageIndex, pageSize, out totalAmount);
         }
 		#endregion  ExtensionMethod
 	}

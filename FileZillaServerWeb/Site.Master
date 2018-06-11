@@ -14,7 +14,8 @@
 
 <%--    <%: System.Web.Optimization.Styles.Render("~/bundles/Site") %>--%>
 
-    <script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/Scripts/jquery-3.3.1.min.js") %>"></script>
+    <%--<script src="<%= ResolveUrl("~/Scripts/jquery.min.js") %>"></script>--%>
     <%--<script src="<%= ResolveUrl("~/Scripts/jquery-1.7.1.min.js") %>"></script>--%>
 
 

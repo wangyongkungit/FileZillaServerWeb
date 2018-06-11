@@ -337,7 +337,7 @@ namespace FileZillaServerDAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetListJoinEmpAndPrj(string strWhere, int pageIndex, int pageSize, out int totalAmount)
+        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dic, int pageIndex, int pageSize, out int totalAmount)
         {
             totalAmount = 0;
             StringBuilder strSql = new StringBuilder();
@@ -349,13 +349,49 @@ namespace FileZillaServerDAL
                          LEFT JOIN project p
                          ON td.PROJECTID = p.ID
                          WHERE 1 = 1 ");
-            if (strWhere.Trim() != "")
+            StringBuilder sbWhere = new StringBuilder();
+            if (dic.ContainsKey("employeeId"))
             {
-                strSql.Append(strWhere);
+                sbWhere.AppendFormat(" and employeeId = '{0}'", dic["employeeId"]);
+            }
+            if (dic.ContainsKey("transacType"))
+            {
+                sbWhere.AppendFormat(" and transactionType = '{0}'", dic["transacType"]);
+            }
+            if (dic.ContainsKey("amountFrom"))
+            {
+                sbWhere.AppendFormat(" and TRANSACTIONAMOUNT >= {0}", dic["amountFrom"]);
+            }
+            if (dic.ContainsKey("amountTo"))
+            {
+                sbWhere.AppendFormat(" and TRANSACTIONAMOUNT <= {0}", dic["amountTo"]);
+            }
+            if (dic.ContainsKey("dateFrom"))
+            {
+                sbWhere.AppendFormat(" and transactiondate >= '{0}'", dic["dateFrom"]);
+            }
+            if (dic.ContainsKey("dateTo"))
+            {
+                sbWhere.AppendFormat(" and transactiondate <= '{0}'", dic["dateTo"]);
             }
             strSql.AppendFormat(" ORDER BY orderDate DESC LIMIT {0}, {1}", (pageIndex - 1) * pageSize, pageSize);
             return DbHelperMySQL.Query(strSql.ToString());
         }
+
+        ///// <summary>
+        ///// 获得数据列表
+        ///// </summary>
+        //public DataSet GetList(string strWhere)
+        //{
+        //    StringBuilder strSql = new StringBuilder();
+        //    strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED ");
+        //    strSql.Append(" FROM transactiondetails ");
+        //    if (strWhere.Trim() != "")
+        //    {
+        //        strSql.Append(" where " + strWhere);
+        //    }
+        //    return DbHelperMySQL.Query(strSql.ToString());
+        //}
         #endregion  ExtensionMethod
     }
 }

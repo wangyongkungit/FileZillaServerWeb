@@ -26,3 +26,7 @@
 	pointer-events:none;
 }
 
+#filePicker div:nth-child(2) {
+    width: 100% !important;
+    height: 100% !important;
+}

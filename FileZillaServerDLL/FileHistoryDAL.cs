@@ -249,10 +249,10 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,PARENTID,FILENAME,FILEEXTENSION,FILEFULLNAME,DESCRIPTION,OPERATEDATE,OPERATEUSER,ISDELETED ");
-            strSql.Append(" FROM filehistory ");
+            strSql.Append(" FROM filehistory  where IsDeleted = 0 ");
             if (strWhere.Trim() != "")
             {
-                strSql.Append(" where " + strWhere);
+                strSql.Append(strWhere);
             }
             if (!String.IsNullOrEmpty(orderBy))
             {
