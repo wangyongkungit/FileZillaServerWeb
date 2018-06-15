@@ -16,6 +16,8 @@ namespace FileZillaServerWeb
             // 在应用程序启动时运行的代码
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterOpenAuth();
+            //routeCollection.MapPageRoute("RouteForCustomer", "Customer/{Id}", "~/Customer.aspx")
+            RouteTable.Routes.MapPageRoute("empHome", "home.html/{*employeeId}", "~/employeeHome.aspx");
         }
 
         void Application_End(object sender, EventArgs e)

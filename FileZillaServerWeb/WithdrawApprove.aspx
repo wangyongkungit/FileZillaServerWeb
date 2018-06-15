@@ -5,7 +5,7 @@
         <div style="width: 900px; margin: 0 auto; text-align: center;">
             <h1 id="hTitle" runat="server">提现申请审批</h1>
             <div style="width: 1000px; margin: 0 auto;">
-                <asp:GridView ID="gvWithdrawApprove" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" CssClass="tbl" OnRowCommand="gvWithdrawApprove_RowCommand">
+                <asp:GridView ID="gvWithdrawApprove" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" CssClass="tbl" OnRowDataBound="gvWithdrawApprove_RowDataBound" OnRowCommand="gvWithdrawApprove_RowCommand">
                     <Columns>
                         <asp:TemplateField HeaderText="编号">
                             <ItemTemplate>

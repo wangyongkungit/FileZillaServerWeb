@@ -407,6 +407,19 @@ namespace FileZillaServerDAL
             DataSet ds = DbHelperMySQL.Query(strSql, parameters);
             return ds;
         }
+
+        public DataSet GetExpireDateByProjectId(string projectId)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            sbSql.AppendFormat(@"SELECT fc.FOLDERNAME, fc.expireDate FROM filecategory fc
+                                 WHERE projectid = '" + projectId + @"'
+                                 AND parentId NOT IN(
+                                    SELECT ID FROM filecategory WHERE projectId = '" + projectId + @"'
+                                )
+                                 ORDER BY CREATEDATE DESC LIMIT 0, 1");
+            DataSet ds = DbHelperMySQL.Query(sbSql.ToString());
+            return ds;
+        }
         #endregion  ExtensionMethod
     }
 }

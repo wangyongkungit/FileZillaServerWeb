@@ -62,10 +62,12 @@ namespace FileZillaServerWeb
             StringBuilder sbJsonResult = new StringBuilder();
             string employeeID = context.Request.Params["employeeID"];
             EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
+            TransactionDetailsBLL transactionDetailsBll = new TransactionDetailsBLL();
+            
             decimal amount = 0m;
             decimal surplus = 0m;
             decimal paid = 0m;
-            decimal rewardAndAmercement = 0m;
+            decimal rewardAndAmercement = transactionDetailsBll.GetRewardAndAmercementAmount(employeeID);
             decimal others = 0m;
             if (empAcct != null)
             {

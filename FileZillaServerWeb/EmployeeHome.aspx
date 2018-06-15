@@ -1,97 +1,104 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EmployeeHome.aspx.cs" Inherits="FileZillaServerWeb.EmployeeHome" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="employeeHome.aspx.cs" Inherits="FileZillaServerWeb.employeeHome" %>
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
+<!DOCTYPE html>
 
-<%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <%--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />    --%>
-    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+        <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
 
     <link href="Content/themes/base/ylyj/employeeHome.css?v=180610" rel="stylesheet" />
 
     <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />
     
     <link href="<%= ResolveUrl("~/Scripts/dialog/jDialog/jDialog.css") %>" rel="stylesheet" />
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="Scripts/echarts/echarts.common.min.js"></script>
+    <link href="layui-master/src/css/layui.css" rel="stylesheet" />
+</head>
+<body>
     <form id="form1" runat="server">
-        <div style="display:none;">
-            <%--<asp:HiddenField ID="hidEmployeeID" runat="server" Value='<%# EmployeeID %>' />--%>
-            <input type="hidden" id="hidEmployeeID" value="<%= EmployeeID %>" />
-        </div>
-        <div class="total">
-            <div class="navbar">
-                <div class="pullLeft">
-                    <%= EmployeeNo %>
-                </div>
-                <div class="pullRight">
-                    欢迎你，<%= UserName %>
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <div class="layui-logo">Ylyj OA</div>
+                <!-- 头部区域（可配合layui已有的水平导航） -->
+                <ul class="layui-nav layui-layout-left layui-bg-green">
+                    <li class="layui-nav-item"><a href="">前台</a></li>
+                    <!--<li class="layui-nav-item">
+                    <a href="javascript:;">其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">邮件管理</a></dd>
+                        <dd><a href="">消息管理</a></dd>
+                        <dd><a href="">授权管理</a></dd>
+                    </dl>
+                </li>-->
+                </ul>
+                <%= EmployeeNo %>
+                <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                            <%= UserName %>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">基本资料</a></dd>
+                            <dd><a href="">安全设置</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">退了</a></li>
+                </ul>
+            </div>
+
+            <div class="layui-side layui-bg-black">
+                <div class="layui-side-scroll">
+                    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                        <%--<li class="layui-nav-item layui-nav-itemed">--%>
+                            <%--<a class="" href="javascript:;">我自己</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">C004</a></dd>
+                                <dd><a href="javascript:;">C005</a></dd>
+                                <dd><a href="javascript:;">C006</a></dd>
+                                <dd><a href="javascript:;">C011</a></dd>
+                            </dl>--%>
+                            <asp:TreeView ID="tvEmployees" runat="server" OnSelectedNodeChanged="tvEmployees_SelectedNodeChanged" CssClass="treeview" ForeColor="White"></asp:TreeView>
+                        <%--</li>--%>
+                        <!--<li class="layui-nav-item">
+                        <a href="javascript:;">解决方案</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">列表一</a></dd>
+                            <dd><a href="javascript:;">列表二</a></dd>
+                            <dd><a href="">超链接</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">云市场</a></li>
+                    <li class="layui-nav-item"><a href="">发布商品</a></li>-->
+                    </ul>
                 </div>
             </div>
-            <div class="sideNav">
-                <asp:TreeView ID="tvEmployees" runat="server" OnSelectedNodeChanged="tvEmployees_SelectedNodeChanged" CssClass="treeview"></asp:TreeView>
 
-            </div>
-            <div class="content">
-                <div class="content-left">
-                    <div class="content-left one">
-                        <div class="content-left one title" onclick='SetQualityScore("<%= EmployeeID %>", "<%= EmployeeNo %>", "1");' style="cursor:pointer;">我的技能</div>
-                        <%--<asp:Label ID="lblMySkills" runat="server" CssClass="skill"></asp:Label>--%>
-                        <div id="divMySkills" runat="server" css="skill"></div>
-                    </div>
-                    <div class="content-left one">
-                        <div class="content-left one title" onclick='SetMyCertificate("<%= EmployeeID %>");' style="cursor:pointer;">我的证件</div>
-                        <%--<asp:Image ID="imgCerficate" runat="server" CssClass="cerficate" />--%>
-                        <img id="imgCerficate" runat="server" style="width:100%;height:96px;" />
-                    </div>
-                    <div class="content-left one">
-                        <div class="content-left one title">我的职位</div>
-                    </div>
-                    <div class="content-left one">
-                        <div class="content-left one title"></div>
-                    </div>
-                </div>
-                <div class="content-middle">
-                        <div class="moneyTitle">
-                            我的账本
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <div style="padding: 15px;">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md5" style="height: inherit;">
+                            <div style="border: 1px; background-color: #dddddd; height: inherit;">
+                                <div style="height: 260px; padding: 10px;">
+                                    5
+                                </div>
+                            </div>
                         </div>
-                    <div class="moneyLeft">
-                        <div id="chart1" style="width:260px; height:260px;">
-                            <%--<asp:Chart ID="ChartMoney" runat="server" Width="240px" Height="240px">
-                                <Series>
-                                    <asp:Series Name="Series1" ChartType="Pie" IsXValueIndexed="True" Legend="Legend1"></asp:Series>chart
-                                </Series>
-                                <ChartAreas>
-                                    <asp:ChartArea Name="ChartArea1"></asp:ChartArea>
-                                </ChartAreas>
-                                <Legends>
-                                    <asp:Legend Enabled="False" Name="Legend1">
-                                    </asp:Legend>
-                                </Legends>
-                                <BorderSkin BackColor="142, 102, 102" PageColor="142, 102, 102" />
-                            </asp:Chart>--%>
-
+                        <div class="layui-col-md3" style="height: inherit;">
+                            <div style="background: #f7cece; height: 100%;">
+                                <div style="height: 260px; padding: 10px;">
+                                    <div id="chart1" style="width:260px; height:260px;">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="moneyRight">
-                        <div class="moneyRight container">
-                            <label class="lblfinished">已完成项目</label>
-                            <asp:Label ID="lblFinishedTaskCount" runat="server"></asp:Label>
-                            <br />
-                            <label class="lblfinished">余额</label>
-                            <asp:Label ID="lblCanWithdrawAmount" runat="server"></asp:Label>
-                            <a id="withdraw" href="javascript:void(0);">提现</a>
-                            <a id="withdrawRecords" href="javascript:void(0);">提现记录</a>
-                            <a id="transactionRecords" href="javascript:void(0);">交易记录</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="trendTitle">
-                            任务动态
-                        </div>
-                    <div>
-                        <asp:GridView ID="gvTaskTrend" runat="server" AutoGenerateColumns="false" CssClass="tasktrendtable">
+                        <div class="layui-col-md4" style="height: inherit;">
+                            <div style="background: #e2e2e2; height: inherit;">
+                                <div style="height: 260px; padding: 10px;">
+                                    <asp:GridView ID="gvTaskTrend" runat="server" AutoGenerateColumns="false" CssClass="table">
                             <Columns>
                                 <asp:TemplateField HeaderText="时间">
                                     <ItemTemplate>
@@ -108,17 +115,30 @@
                                 <span>暂无动态</span>
                             </EmptyDataTemplate>
                         </asp:GridView>
-                    </div>
-                </div>
-                <div class="content-center">
-                    <div class="title">
-                        项目概览
-                        <div class="search">
-                            <asp:TextBox ID="txtAnyCondition" runat="server" placeholder="全文检索，可输入项目编号等进行检索" CssClass="text"></asp:TextBox>
-                            <asp:Button ID="btnSearch" runat="server" Text="搜索" OnClick="btnSearch_Click" CssClass="button"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" Width="100%" CssClass="projectList">
+
+                    <div class="layui-row" style="border:1px solid #eeeeee;">
+                        <div class="layui-col-md12">
+                            <div style="height:230px; padding: 1px 0px;">
+                                <div class="layui-col-md9">
+                                    <h3 style="height:34px; line-height:34px; padding:0px 0px 0px 10px; background-color:#eeeeee;">任务动态</h3>
+                                </div>
+                                <div class="layui-col-md3 layui-layout-right">
+                                    <div class="layui-col-md9">
+                                        <asp:TextBox ID="txtAnyCondition" runat="server" placeholder="可全文检索" CssClass="layui-input" style="height:34px;line-height:34px;" ></asp:TextBox>
+                                    </div>
+                                    <div class="layui-col-md3">
+                                        <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"  CssClass="layui-btn" style="width:100%; height:34px;line-height:34px;"/>
+                                    </div>
+                                </div>
+<%--                                <asp:GridView ID="gvList" runat="server" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px;">
+                                    <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
+                                </asp:GridView>--%>
+                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" Width="100%" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px;">
+                                    <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
                         <Columns>
                             <asp:TemplateField HeaderText="项目编号">
                                 <ItemTemplate>
@@ -153,7 +173,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="修改剩余时间">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text=''></asp:Label>
+                                    <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text="暂无任务"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="操作">
@@ -178,12 +198,13 @@
                         <asp:Label ID="lbl_error" runat="server" ForeColor="Red" EnableViewState="false"></asp:Label>
                             </div>--%>
                     </div>
-                </div>
-            </div>
-        </div>
-    </form>
+                            </div>
+                        </div>
+                    </div>
 
- <div id="project" class="container" style="clear:both;">
+                    <div class="layui-row" style="border: 1px solid #ffd800;">
+                            <!-- 文件列表部分 -->
+     <div id="project" class="container" style="clear:both;">
      <p>{{taskno}}</p>
         <div id="meun">
             <div class="row">
@@ -335,7 +356,7 @@
 
                         <div class="form-group">
                             <label for="category">交稿时间：</label>
-                            <input type="text" name="tabexpiredate" id="tabexpiredate" v-model="newtab.expiredate">
+                            <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:00:00'})">
                         </div>
 
                         <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
@@ -348,10 +369,25 @@
             </div>
         </div>
     </div>
-    
-<%--    <script src="<%= ResolveUrl("~/Scripts/jquery-3.3.1.min.js") %>"></script>--%>
+                    </div>
+                </div>
+            </div>
 
-    <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
+            <div class="layui-footer">
+                <!-- 底部固定区域 -->
+                &copy; bimpan.iok.la - Yiliangyijia Consultation Co. Ltd.
+            </div>
+        </div>
+        <div style="display:none;">
+            <%--<asp:HiddenField ID="hidEmployeeID" runat="server" Value='<%# EmployeeID %>' />--%>
+            <input type="hidden" id="hidEmployeeID" value="<%= EmployeeID %>" />
+        </div>
+    </form>
+
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/jquery-ui-1.8.20.js"></script>
+    <script src="Scripts/dialog/jDialog.js"></script>
+        <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
 
     <script src="Scripts/vue/vue.js"></script>
     <script src="Scripts/ylyj/employeehome/func.js"></script>
@@ -359,9 +395,21 @@
     <script src="Scripts/ylyj/employeehome/vuepage.js"></script>
 
     
-    <script src="Scripts/ylyj/employeeHome.js"></script>
+
 
     <script src="Scripts/webuploader/webuploader.js"></script>
     <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>
+    <script src="Scripts/My97DatePicker/WdatePicker.js"></script>
 
-</asp:Content>
+    <script src="layui-master/src/layui.js"></script>
+    
+    <script type="text/javascript">
+        layui.use("element", function () {
+            var element = layui.element;
+        })
+    </script>
+    
+    <script src="Scripts/echarts/echarts.common.min.js"></script>
+    <script src="Scripts/ylyj/employeeHome.js"></script>
+</body>
+</html>

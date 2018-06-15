@@ -54,7 +54,7 @@
     </form>
     <link href="Content/themes/base/ylyj/withdraw.css" rel="stylesheet" />
     <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css" />
-    <script src="Scripts/jquery-1.7.1.min.js"></script>
+    <%--<script src="Scripts/jquery-1.7.1.min.js"></script>--%>
     <script src="Scripts/jquery-ui-1.8.20.min.js"></script>
     <script src="Scripts/ylyj/withdraw.js"></script>
 </body>

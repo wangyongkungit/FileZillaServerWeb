@@ -509,7 +509,7 @@
 
                         <div class="form-group" v-show="newtab.categoryselected == 3">
                             <label for="category">交稿时间：</label>
-                            <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+                            <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:00:00'})">
                         </div>
                         <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
                     </form>

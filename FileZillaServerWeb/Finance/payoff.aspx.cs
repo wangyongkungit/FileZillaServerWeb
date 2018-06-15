@@ -1,6 +1,7 @@
 ﻿using FileZillaServerBLL;
 using FileZillaServerCommonHelper;
 using FileZillaServerModel;
+using FileZillaServerProfile;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace FileZillaServerWeb.Finance
 {
-    public partial class Outgoings : System.Web.UI.Page
+    public partial class payoff : System.Web.UI.Page
     {
         EmployeeBLL eBll = new EmployeeBLL();
         TransactionDetailsBLL tdBll = new TransactionDetailsBLL();
@@ -21,11 +22,13 @@ namespace FileZillaServerWeb.Finance
         {
             if (!IsPostBack)
             {
-                txtTransacDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                Page.Title = "工资发放";
                 LoadEmployee();
-                LoadTransaction();
                 DropDownListDataBind(ddlTransacType, ConfigTypeName.奖励与处罚类型, "-请选择-");
+                ddlTransacType.Enabled = false;
+                ddlTransacType.SelectedValue = "3";
             }
+            txtTransacDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         /// <summary>
@@ -33,98 +36,56 @@ namespace FileZillaServerWeb.Finance
         /// </summary>
         protected void LoadEmployee()
         {
-            DataTable dtEmp = eBll.GetListUnionNoAndNameForDemonation(string.Empty, "EMPLOYEENO").Tables[0];
-            ddlEmployeeName.DataSource = dtEmp;
-            ddlEmployeeName.DataTextField = "NOANDNAME";
-            ddlEmployeeName.DataValueField = "ID";
-            ddlEmployeeName.DataBind();
+            try
+            {
+                DataTable dtEmp = eBll.GetListUnionNoAndNameForDemonation(string.Empty, "EMPLOYEENO").Tables[0];
+                ddlEmployeeName.DataSource = dtEmp;
+                ddlEmployeeName.DataTextField = "NOANDNAME";
+                ddlEmployeeName.DataValueField = "ID";
+                ddlEmployeeName.DataBind();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine(ex.Message);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('程序异常！');", true);
+            }
         }
 
-        /// <summary>
-        /// 加载交易信息
-        /// </summary>
         private void LoadTransaction()
         {
-            int totalRowsCount = 0;
-            string employeeID = ddlEmployeeName.SelectedValue;
-            Dictionary<string, string> dicCondition = new Dictionary<string, string>();
-            dicCondition.Add("employeeId", employeeID);
-            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
-            gvTransaction.DataSource = dtTransac;
-            gvTransaction.DataBind();
+            try
+            {
+                int totalRowsCount = 0;
+                string employeeId = UserProfile.GetInstance()?.ID;
+                string transacType = ddlTransacType.SelectedValue;
+                Dictionary<string, string> dicCondition = new Dictionary<string, string>();
+                if (!string.IsNullOrEmpty(transacType))
+                {
+                    dicCondition.Add("transacType", transacType);
+                }
+                //dicCondition.Add("employeeId", employeeId);
+                DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+                gvTransaction.DataSource = dt;
+                gvTransaction.DataBind();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine(ex.Message);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('程序异常！');", true);
+            }
         }
 
-        /// <summary>
-        /// 查询按钮单击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ddlEmployeeName.SelectedValue))
+            try
             {
-                LoadTransaction();
+                EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + ddlEmployeeName.SelectedValue + "'").FirstOrDefault();
+                txtCanPayoff.Text = empAcct?.AMOUNT.ToString();
             }
-        }
-
-        /// <summary>
-        /// 添加按钮单击事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtAmount.Text.Trim()))
+            catch (Exception ex)
             {
-                AddTransaction();
-                LoadTransaction();
-            }
-        }
-
-        /// <summary>
-        /// 添加一条交易记录
-        /// </summary>
-        private void AddTransaction()
-        {
-            string employeeID = ddlEmployeeName.SelectedValue;
-
-            // 首先添加交易记录
-            TransactionDetails transac = new TransactionDetails();
-            transac.ID = Guid.NewGuid().ToString();
-            transac.TRANSACTIONAMOUNT = Convert.ToDecimal( txtAmount.Text.Trim());
-            transac.TRANSACTIONTYPE = Convert.ToInt32(ddlTransacType.SelectedValue);
-            transac.TRANSACTIONDESCRIPTION = txtDescription.Text.Trim();
-            transac.PROJECTID = new ProjectBLL().GetPrjIDByTaskNo(txtTaskNo.Text.Trim());
-            transac.EMPLOYEEID = employeeID;
-            DateTime dtTransacDate = DateTime.Now;
-            string strTransacDate = txtTransacDate.Text.Trim();
-            if(!string.IsNullOrEmpty(strTransacDate))
-            {
-                dtTransacDate = Convert.ToDateTime(strTransacDate);
-            }
-            transac.TRANSACTIONDATE = dtTransacDate;
-            transac.CREATEDATE = DateTime.Now;
-            if (tdBll.Add(transac))
-            {
-                // 操作相应的员工账户
-                EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
-                if (empAcct != null)
-                {
-                    // 账户余额加上
-                    empAcct.AMOUNT += transac.TRANSACTIONAMOUNT;
-                    if (empAcctBll.Update(empAcct))
-                    {
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('添加成功！');", true);
-                    }
-                }
-                else
-                {
-                    ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('添加失败！');", true);
-                }
-            }
-            else
-            {
-
+                LogHelper.WriteLine(ex.Message);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('程序异常！');", true);
             }
         }
 
@@ -164,11 +125,40 @@ namespace FileZillaServerWeb.Finance
         }
         #endregion
 
-        /// <summary>
-        /// GridView Row Command 事件，删除一行记录，并更改员工账户余额中的记录
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        protected void btnPayoff_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                decimal payOffAmount = Convert.ToDecimal(txtAmount.Text.Trim());
+                // 员工账户表修改
+                EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + ddlEmployeeName.SelectedValue + "'").FirstOrDefault();
+                empAcct.AMOUNT -= payOffAmount;
+                empAcct.PAIDAMOUNT += payOffAmount;
+                if (!empAcctBll.Update(empAcct))
+                {
+                    LogHelper.WriteLine(ddlEmployeeName.SelectedItem.Text + "账户修改失败");
+                }
+
+                // 交易记录表对应记录也需要修改
+                TransactionDetails transac = new TransactionDetails();
+                transac.ID = Guid.NewGuid().ToString();
+                transac.TRANSACTIONAMOUNT = payOffAmount;
+                transac.TRANSACTIONDATE = Convert.ToDateTime(txtTransacDate.Text);
+                transac.TRANSACTIONTYPE = Convert.ToInt32(ddlTransacType.SelectedValue);
+                transac.EMPLOYEEID = ddlEmployeeName.SelectedValue;
+                transac.CREATEDATE = DateTime.Now;
+                if (!tdBll.Add(transac))
+                {
+                    LogHelper.WriteLine(ddlEmployeeName.SelectedItem.Text + "交易记录添加失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine(ex.Message);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('程序异常！" + ex.Message + "');", true);
+            }
+        }
+
         protected void gvTransaction_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "del")

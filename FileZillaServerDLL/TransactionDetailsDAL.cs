@@ -392,6 +392,25 @@ namespace FileZillaServerDAL
         //    }
         //    return DbHelperMySQL.Query(strSql.ToString());
         //}
+
+        /// <summary>
+        /// 获取奖罚
+        /// </summary>
+        public decimal GetRewardAndAmercementAmount(string employeeId)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(@"SELECT IFNULL(SUM(IFNULL(TRANSACTIONAMOUNT,0)),0) JF FROM transactiondetails 
+                            WHERE EMPLOYEEID = '"+employeeId + @"' AND TRANSACTIONTYPE = 1 OR TRANSACTIONTYPE = 2 ");
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString());
+            if (obj == null)
+            {
+                return 0.0m;
+            }
+            else
+            {
+                return Convert.ToDecimal(obj);
+            }
+        }
         #endregion  ExtensionMethod
     }
 }

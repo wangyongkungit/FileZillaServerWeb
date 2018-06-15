@@ -23,7 +23,9 @@ namespace FileZillaServerWeb
                 EmployeeAccount empAcct = eaBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
                 if (empAcct != null)
                 {
+                    // 员工已经申请但尚未通过审核的金额
                     decimal withdrawAmount = wdBll.GetModelList(" employeeID = '" + employeeID + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
+                    // 可提现金额，为员工账户剩余金额 减去 上面获取到的金额
                     lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdrawAmount).ToString();
                 }
                 else

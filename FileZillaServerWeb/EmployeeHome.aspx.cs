@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 
 namespace FileZillaServerWeb
 {
-    public partial class EmployeeHome : System.Web.UI.Page
+    public partial class employeeHome : System.Web.UI.Page
     {
         FileZillaServerBLL.EmployeeDominationBLL eDal = new FileZillaServerBLL.EmployeeDominationBLL();
         TaskAssignConfigDetailsBLL tacdBll = new TaskAssignConfigDetailsBLL();
@@ -129,7 +129,7 @@ namespace FileZillaServerWeb
             }
             //lblMySkills.Text = sbSkill.ToString().TrimEnd('，');
             //lblMySkills.ToolTip = sbSkill.ToString().TrimEnd('，');
-            divMySkills.InnerHtml = sbSkill.ToString();
+            //divMySkills.InnerHtml = sbSkill.ToString();
         }
 
         protected void LoadCerficate()
@@ -137,7 +137,7 @@ namespace FileZillaServerWeb
             Cerficate cerficate = cBll.GetModelList(" employeeID = '" + EmployeeID + "' AND isMain = 1 ").FirstOrDefault();
             if (cerficate != null)
             {
-                imgCerficate.Src = Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
+                //imgCerficate.Src = Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
             }
         }
 
@@ -170,7 +170,7 @@ namespace FileZillaServerWeb
             AspNetPager1.PageSize = 10;// Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
             StringBuilder sbWhere = new StringBuilder();
             string anyCondition = txtAnyCondition.Text.Trim();
-            if(!string.IsNullOrEmpty(anyCondition))
+            if (!string.IsNullOrEmpty(anyCondition))
             {
                 sbWhere.Append(anyCondition);
             }
@@ -178,7 +178,7 @@ namespace FileZillaServerWeb
 
             if (string.IsNullOrEmpty(sbWhere.ToString()))
             {
-                lblFinishedTaskCount.Text = string.Format("{0}", totalRowsCount);
+                //lblFinishedTaskCount.Text = string.Format("{0}", totalRowsCount);
             }
             AspNetPager1.RecordCount = totalRowsCount;
             gvProject.DataSource = dtProject;
@@ -189,7 +189,7 @@ namespace FileZillaServerWeb
         {
             EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + EmployeeID + "'").FirstOrDefault();
             decimal withdraw = wdBll.GetModelList(" employeeID = '" + EmployeeID + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
-            lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
+            //lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
         }
 
         #region 页码事件
@@ -275,6 +275,58 @@ namespace FileZillaServerWeb
                         //e.Row.Cells[2].Text += "（已逾期" + Math.Floor( ts.TotalHours) + "小时）";
                         lblTimeRemain.Text += string.Format("逾期{0}", Common.TransformTimeSpan(ts));
                         lblTimeRemain.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
+                #endregion
+
+                #region 修改剩余时间
+                string projectId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
+                Label lblModifyTaskTimeRemain = e.Row.FindControl("lblModifyTaskTimeRemain") as Label;
+                DataTable dt = new FileCategoryBLL().GetExpireDateByProjectId(projectId).Tables[0];
+                if (dt.Rows.Count > 0)
+                {
+                    string folderName = Convert.ToString(dt.Rows[0]["folderName"]);
+                    string strExpireDate = Convert.ToString(dt.Rows[0]["expireDate"]);
+
+                    DateTime dtExpire = Convert.ToDateTime(strExpireDate);
+                    if (DateTime.Now < dtExpire)
+                    {
+                        TimeSpan ts = dtExpire - DateTime.Now;
+                        //设置提醒label文本
+                        lblModifyTaskTimeRemain.Text = string.Format("{0}剩余{1}小时", folderName, Math.Floor(ts.TotalHours));
+                        if (ts.TotalHours <= 3)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF0000");//不足3小时，红色
+                            lblModifyTaskTimeRemain.Font.Bold = true;
+                        }
+                        else if (ts.TotalHours <= 6)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF8800");//不足6小时，橙色
+                            lblModifyTaskTimeRemain.Font.Bold = true;
+                        }
+                        else if (ts.TotalHours <= 12)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#EEEE00");//不足12小时，黄色
+                            lblModifyTaskTimeRemain.Font.Bold = true;
+                        }
+                        else if (ts.TotalHours <= 24)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF77FF");//不足24小时，洋红色
+                        }
+                        else if (ts.TotalHours <= 48)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#57C600");//48小时以上，酸橙色(浅绿)
+                        }
+                        else
+                        {
+                            lblModifyTaskTimeRemain.Text = string.Format("{0}剩余&gt;2天", folderName);
+                        }
+                    }
+                    else if (dtExpire < DateTime.Now)
+                    {
+                        TimeSpan ts = DateTime.Now - dtExpire;
+                        lblModifyTaskTimeRemain.Text = string.Format("{0}逾期{1}", folderName, Common.TransformTimeSpan(ts));
+                        lblModifyTaskTimeRemain.ForeColor = System.Drawing.Color.Red;
                     }
                 }
                 #endregion

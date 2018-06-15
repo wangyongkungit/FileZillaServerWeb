@@ -80,5 +80,17 @@ namespace FileZillaServerWeb
                 }
             }
         }
+
+        protected void gvWithdrawApprove_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {                
+                LinkButton lbtn = e.Row.FindControl("lbtnEdit") as LinkButton;
+                if (UserProfile.GetInstance().Role.Any(item => !item.RoleName.Contains("管理员")))
+                {
+                    lbtn.Visible = false;
+                }
+            }
+        }
     }
 }

@@ -140,6 +140,14 @@ namespace FileZillaServerBLL
         {
             return dal.GetListJoinEmpAndPrj(dicConditon, pageIndex, pageSize, out totalAmount);
         }
-		#endregion  ExtensionMethod
-	}
+
+        /// <summary>
+        /// 获取奖罚
+        /// </summary>
+        public decimal GetRewardAndAmercementAmount(string employeeId)
+        {
+            return dal.GetRewardAndAmercementAmount(employeeId);
+        }
+        #endregion  ExtensionMethod
+    }
 }

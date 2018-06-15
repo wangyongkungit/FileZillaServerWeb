@@ -356,6 +356,11 @@ namespace FileZillaServerBLL
             List<FileCategory> categories = this.GetModelList(where, orderBy);
             return categories;
         }
+
+        public DataSet GetExpireDateByProjectId(string projectId)
+        {
+            return dal.GetExpireDateByProjectId(projectId);
+        }
         #endregion
 
         public static bool IsDate(string strDate)
