@@ -236,6 +236,7 @@
     <Content Include="Content\themes\base\ylyj\loglist.css" />
     <Content Include="Content\themes\base\ylyj\materialConfig.css" />
     <Content Include="Content\themes\base\ylyj\outgoings.css" />
+    <Content Include="Content\themes\base\ylyj\payofflist.css" />
     <Content Include="Content\themes\base\ylyj\salaryconfigmanage.css" />
     <Content Include="Content\themes\base\ylyj\salarydetails.css" />
     <Content Include="Content\themes\base\ylyj\serialnumber.css" />
@@ -260,6 +261,7 @@
     <Content Include="FileZillaLogs.aspx" />
     <Content Include="Finance\Outgoings.aspx" />
     <Content Include="Finance\payoff.aspx" />
+    <Content Include="Finance\payoffList.aspx" />
     <Content Include="Finance\TransactionRecords.aspx" />
     <Content Include="HtmlPage1.html" />
     <Content Include="Images\accent.png" />
@@ -657,6 +659,8 @@
     <Content Include="TaskSharingList.aspx" />
     <Content Include="TaskTransfer.aspx" />
     <Content Include="Tip.html" />
+    <Content Include="UploadFiles\20180512141426354_2017-07-08 23-09-26工资基本参数配置.png" />
+    <Content Include="UploadFiles\20180610204517992_2017-07-08 23-09-54工资详细.png" />
     <Content Include="WebForm1.aspx" />
     <Content Include="WebPageRedirect.aspx" />
     <Content Include="Content\Fonts\fontomas-webfont.ttf" />
@@ -915,6 +919,13 @@
     <Compile Include="Finance\payoff.aspx.designer.cs">
       <DependentUpon>payoff.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Finance\payoffList.aspx.cs">
+      <DependentUpon>payoffList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Finance\payoffList.aspx.designer.cs">
+      <DependentUpon>payoffList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Finance\TransactionRecords.aspx.cs">
       <DependentUpon>TransactionRecords.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1087,7 +1098,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\base\dialog\" />
     <Folder Include="Log\" />
-    <Folder Include="UploadFiles\" />
     <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>

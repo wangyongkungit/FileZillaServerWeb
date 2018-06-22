@@ -21,6 +21,27 @@ namespace FileZillaServerWeb.Finance
         {
             if (!IsPostBack)
             {
+                string type = Request.QueryString["type"];
+                if (!string.IsNullOrEmpty(type))
+                {
+                    ddlTransacType.Visible = false;
+                    if (type == "yf")
+                    {
+                        title.InnerText = lblTransactionType.Text = "工资发放记录";
+                    }
+                    else if (type == "jf")
+                    {
+                        title.InnerText = lblTransactionType.Text = "我的奖罚记录";
+                    }
+                    else if (type == "qt")
+                    {
+                        title.InnerText = lblTransactionType.Text = "其他记录";
+                    }
+                }
+                else
+                {
+                    lblTransactionType.Visible = false;
+                }
                 LoadTransaction();
                 DropDownListDataBind(ddlTransacType, ConfigTypeName.奖励与处罚类型, "-请选择-");
             }
@@ -36,8 +57,25 @@ namespace FileZillaServerWeb.Finance
             string dateFrom = txtDateFrom.Text.Trim();
             string dateTo = txtDateTo.Text.Trim();
             string taskNo = txtTaskNo.Text.Trim();
+            string type = Request.QueryString["type"];
+            string inCondition = string.Empty;
+            if (!string.IsNullOrEmpty(type))
+            {
+                if (type == "yf")
+                {
+                    inCondition = "'3'";
+                }
+                else if (type == "jf")
+                {
+                    inCondition = "'1', '2'";
+                }
+                else if (type == "qt")
+                {
+                    inCondition = "'4', '5'";
+                }
+            }
             Dictionary<string, string> dicCondition = new Dictionary<string, string>();
-            if (!string.IsNullOrEmpty(transacType))
+            if (string.IsNullOrEmpty(Request.QueryString["type"]) && !string.IsNullOrEmpty(transacType))
             {
                 dicCondition.Add("transacType", transacType);
             }
@@ -57,8 +95,12 @@ namespace FileZillaServerWeb.Finance
             {
                 dicCondition.Add("dateTo", dateTo);
             }
+            if (!string.IsNullOrEmpty(taskNo))
+            {
+                dicCondition.Add("taskNo", taskNo);
+            }
             dicCondition.Add("employeeId", employeeId);
-            DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+            DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, inCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
             gvTransaction.DataSource = dt;
             gvTransaction.DataBind();
         }
@@ -131,7 +173,7 @@ namespace FileZillaServerWeb.Finance
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-
+            LoadTransaction();
         }
 
         protected void gvTransaction_RowCommand(object sender, GridViewCommandEventArgs e)

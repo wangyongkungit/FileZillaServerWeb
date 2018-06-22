@@ -49,7 +49,7 @@ namespace FileZillaServerWeb.Finance
             string employeeID = ddlEmployeeName.SelectedValue;
             Dictionary<string, string> dicCondition = new Dictionary<string, string>();
             dicCondition.Add("employeeId", employeeID);
-            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
             gvTransaction.DataSource = dtTransac;
             gvTransaction.DataBind();
         }
@@ -112,6 +112,11 @@ namespace FileZillaServerWeb.Finance
                 {
                     // 账户余额加上
                     empAcct.AMOUNT += transac.TRANSACTIONAMOUNT;
+                    // 如果是3（即工资发放），则需要在已发项目上加上金额
+                    if (ddlTransacType.SelectedValue == "3")
+                    {
+                        empAcct.PAIDAMOUNT += transac.TRANSACTIONAMOUNT;
+                    }
                     if (empAcctBll.Update(empAcct))
                     {
                         ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('添加成功！');", true);

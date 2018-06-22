@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
         <div style="width: 900px; margin: 0 auto; text-align: center;">
-            <h1>我的交易记录</h1>
+            <h1 id="title" runat="server">我的交易记录</h1>
             <div style="width: 1000px; margin: 0 auto;">
 <%--                <label>员工：</label>
                 <asp:DropDownList ID="ddlEmployeeName" runat="server" />--%>
@@ -22,6 +22,7 @@
                         </div>
                         <div class="txt">
                             <asp:DropDownList ID="ddlTransacType" runat="server"></asp:DropDownList>
+                            <asp:Label ID="lblTransactionType" runat="server"></asp:Label>
                         </div>
                     </div>
                     <div class="left">

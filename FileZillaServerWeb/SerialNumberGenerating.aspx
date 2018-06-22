@@ -10,7 +10,8 @@
 
     <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
     <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />
-
+    
+    <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
 
     <script type="text/javascript">
 
@@ -532,10 +533,7 @@
     <script src="Scripts/vue/vue.js"></script>
     <script src="Scripts/ylyj/employeehome/func.js"></script>
     <script src="Scripts/ylyj/employeehome/settings.js"></script>
-    <script src="Scripts/ylyj/employeehome/vuepage.js"></script>
-
-    
-    <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
+    <script src="Scripts/ylyj/employeehome/vuepage.js"></script>    
 
     <script src="Scripts/webuploader/webuploader.js"></script>
     <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>

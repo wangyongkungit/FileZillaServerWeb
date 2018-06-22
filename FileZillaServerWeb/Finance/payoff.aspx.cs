@@ -64,7 +64,7 @@ namespace FileZillaServerWeb.Finance
                     dicCondition.Add("transacType", transacType);
                 }
                 //dicCondition.Add("employeeId", employeeId);
-                DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+                DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
                 gvTransaction.DataSource = dt;
                 gvTransaction.DataBind();
             }

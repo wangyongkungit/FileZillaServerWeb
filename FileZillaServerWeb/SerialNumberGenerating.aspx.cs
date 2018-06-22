@@ -434,7 +434,8 @@ namespace FileZillaServerWeb
                         Session["projectID"] = project.ID;
                         lblGenerateSuccess.Visible = true;
                         //hidProjectID2.Value = project.ID;
-                        ExecuteScript("AlertDialog('生成成功！', 'InvokeCreateFolder', '" + project.ID + "');");
+                        //ExecuteScript("AlertDialog('生成成功！', 'InvokeCreateFolder', '" + project.ID + "');");
+                        ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "AlertDialog('生成成功！', 'InvokeCreateFolder', '" + project.ID + "');", true);
                         //ExecuteScript("alert('生成成功！');window.location.href='SerialNumberGenerating.aspx?projectID=" + project.ID + "';");
                         return;
                     }

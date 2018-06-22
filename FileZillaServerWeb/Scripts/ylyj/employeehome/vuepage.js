@@ -56,7 +56,7 @@ var vm = new Vue({
                 return;
             }
             //add new tab
-            if (this.newtab.categoryselected === 3 || this.newtab.categoryselected === 5) {
+            if (this.newtab.categoryselected === 3 || this.newtab.categoryselected === 5 || this.newtab.categoryselected === 2) {
                 let p1 = {
                     "projectid": this.projectid,
                     "categoryid": this.newtab.categoryselected,

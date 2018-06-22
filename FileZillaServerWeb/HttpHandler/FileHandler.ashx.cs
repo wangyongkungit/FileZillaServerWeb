@@ -285,6 +285,7 @@ namespace FileZillaServerWeb.HttpHandler
             string returnMsg = string.Empty;
             int errorCode = 0;
             string projectId = string.Empty;
+            string category = string.Empty;
             string folder = string.Empty;
             string userId = string.Empty;
             string physicalFileName = string.Empty;
@@ -305,7 +306,8 @@ namespace FileZillaServerWeb.HttpHandler
             {
                 projectId = fileCategory.PROJECTID;
                 folder = fileCategory.FOLDERNAME;
-                bool flag = MergeSplitFile(taskid, projectId, folder, filename, out physicalFileName, out errorCode);
+                category = fileCategory.CATEGORY;
+                bool flag = MergeSplitFile(taskid, projectId, category, folder, filename, out physicalFileName, out errorCode);
                 if (flag)
                 {
                     userId = UserProfile.GetInstance()?.ID;
@@ -360,12 +362,12 @@ namespace FileZillaServerWeb.HttpHandler
         /// <param name="filename">文件名</param>
         /// <param name="errorCode">错误码</param>
         /// <returns>是否成功</returns>
-        private bool MergeSplitFile(string taskid, string projectId, string title, string filename, out string physicalFileName, out int errorCode)
+        private bool MergeSplitFile(string taskid, string projectId, string category, string title, string filename, out string physicalFileName, out int errorCode)
         {
             string actPath = string.Empty;
             physicalFileName = string.Empty;
             string taskRootFolder = string.Empty;
-            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, title, false, out actPath, out taskRootFolder, out errorCode);
+            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, title, false, out actPath, out taskRootFolder, out errorCode);
             if (Directory.Exists(actPath))
             {
                 string actFileName = Path.Combine(actPath, filename);
@@ -422,8 +424,10 @@ namespace FileZillaServerWeb.HttpHandler
                     string actPath = string.Empty;
                     string taskRootFolder = string.Empty;
                     string deletedFolder = ConfigurationManager.AppSettings["fileDeletedFolder"].ToString();
-                    string projectId = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId);
-                    bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, string.Empty, false, out actPath, out taskRootFolder, out errorCode);
+                    DataTable dtPrjIdAndCategory = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId).Tables[0];
+                    string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
+                    string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
+                    bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, string.Empty, false, out actPath, out taskRootFolder, out errorCode);
                     string physicalFileName = Path.Combine(taskRootFolder, fileHistory.FILEFULLNAME);
                     string timeStr = DateTime.Now.ToString("yyyyMMddHHmmss");
                     string destFileName = Path.Combine(deletedFolder, timeStr + fileHistory.FILENAME);
@@ -505,11 +509,27 @@ namespace FileZillaServerWeb.HttpHandler
             string fileHistoryId = context.Request["fileHistoryId"];
             // 根据 ID 获取到 fileHistory 对象
             FileHistory fileHistory = new FileHistoryBLL().GetModel(fileHistoryId);
-            string projectId = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId);
-            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, string.Empty, false, out actPath, out taskRootFolder, out errorCode);
+            DataTable dtPrjIdAndCategory = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId).Tables[0];
+            string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
+            string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
+            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, string.Empty, false, out actPath, out taskRootFolder, out errorCode);
             string physicalFileName = Path.Combine(taskRootFolder, fileHistory.FILEFULLNAME);
             if (File.Exists(physicalFileName))
             {
+                string userId = UserProfile.GetInstance()?.ID;
+                string operateTypeName = "下载";
+                int operateTypeKey = new ConfigureBLL().GetConfig(ConfigTypeName.文件操作类型.ToString()).AsEnumerable().Where(item => item["configValue"].ToString() == operateTypeName).Select(item => Convert.ToInt32(item["configKey"])).FirstOrDefault();
+                FileOperationLog fileOperationLog = new FileOperationLog();
+                fileOperationLog.ID = Guid.NewGuid().ToString();
+                fileOperationLog.PROJECTID = projectId;
+                fileOperationLog.EMPLOYEEID = userId;
+                fileOperationLog.FILENAME = fileHistory.FILENAME;
+                fileOperationLog.OPERATETYPE = operateTypeKey;
+                fileOperationLog.OPERATEDATE = DateTime.Now;
+                fileOperationLog.OPERATECONTENT = operateTypeName + fileHistory.FILENAME;
+                fileOperationLog.OPERATEUSER = userId;
+                new FileOperationLogBLL().Add(fileOperationLog);
+
                 System.IO.Stream iStream = null;
                 // Buffer to read 10K bytes in chunk:
                 byte[] buffer = new Byte[10000];
@@ -580,7 +600,7 @@ namespace FileZillaServerWeb.HttpHandler
             JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
             GenerateJson(result);
             return;
-        } 
+        }
         #endregion
 
         public bool IsReusable

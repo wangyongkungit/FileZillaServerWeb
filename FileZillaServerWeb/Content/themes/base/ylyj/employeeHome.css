@@ -290,28 +290,29 @@ body {
     background-color:#138083;
 }
 .aspNetPager {
-    height:40px;
-    line-height:40px;
+    height:30px;
+    line-height:30px;
     float:right;
 }
 .aspNetPager span {
     display:inline;
 }
 .aspNetPager label {
-    margin:5px;
+    margin:2px;
 }
 .aspNetPager input[type="text"] {
-    width:35px;
+    width:28px;
 }
 .aspNetPager input[type="submit"] {
     cursor:pointer;
 }
 .aspNetPager label {
-    width:36px;
+    width:28px;
 }
 #AspNetPager {
     width:auto;
     float:left;
+    margin-top:-8px;
     margin-right:10px;
 }
 .pagination {
@@ -320,6 +321,10 @@ body {
 }
 .pagination a[disabled]{  color: #777;cursor: not-allowed;border-color: #ddd; float:left;}
 .pagination span.active{color: #fff;cursor: default;background-color: #337ab7;border-color: #337ab7;}
+    .pagination ul {
+        height:30px;
+        line-height:30px
+    }
 .pagination ul li.active{color: #fff;cursor: default;background-color: #337ab7;border-color: #337ab7;}
 .pagination ul li {
     list-style:none;

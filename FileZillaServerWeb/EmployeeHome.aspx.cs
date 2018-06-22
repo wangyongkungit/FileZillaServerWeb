@@ -129,7 +129,7 @@ namespace FileZillaServerWeb
             }
             //lblMySkills.Text = sbSkill.ToString().TrimEnd('，');
             //lblMySkills.ToolTip = sbSkill.ToString().TrimEnd('，');
-            //divMySkills.InnerHtml = sbSkill.ToString();
+            divMySkills.InnerHtml = sbSkill.ToString();
         }
 
         protected void LoadCerficate()
@@ -137,7 +137,7 @@ namespace FileZillaServerWeb
             Cerficate cerficate = cBll.GetModelList(" employeeID = '" + EmployeeID + "' AND isMain = 1 ").FirstOrDefault();
             if (cerficate != null)
             {
-                //imgCerficate.Src = Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
+                imgCerficate.Src = Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
             }
         }
 
@@ -178,7 +178,7 @@ namespace FileZillaServerWeb
 
             if (string.IsNullOrEmpty(sbWhere.ToString()))
             {
-                //lblFinishedTaskCount.Text = string.Format("{0}", totalRowsCount);
+                lblFinishedTaskCount.Text = string.Format("{0}", totalRowsCount);
             }
             AspNetPager1.RecordCount = totalRowsCount;
             gvProject.DataSource = dtProject;
@@ -286,47 +286,50 @@ namespace FileZillaServerWeb
                 if (dt.Rows.Count > 0)
                 {
                     string folderName = Convert.ToString(dt.Rows[0]["folderName"]);
-                    string strExpireDate = Convert.ToString(dt.Rows[0]["expireDate"]);
+                    if (folderName.Contains("修改"))
+                    {
+                        string strExpireDate = Convert.ToString(dt.Rows[0]["expireDate"]);
 
-                    DateTime dtExpire = Convert.ToDateTime(strExpireDate);
-                    if (DateTime.Now < dtExpire)
-                    {
-                        TimeSpan ts = dtExpire - DateTime.Now;
-                        //设置提醒label文本
-                        lblModifyTaskTimeRemain.Text = string.Format("{0}剩余{1}小时", folderName, Math.Floor(ts.TotalHours));
-                        if (ts.TotalHours <= 3)
+                        DateTime dtExpire = Convert.ToDateTime(strExpireDate);
+                        if (DateTime.Now < dtExpire)
                         {
-                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF0000");//不足3小时，红色
-                            lblModifyTaskTimeRemain.Font.Bold = true;
+                            TimeSpan ts = dtExpire - DateTime.Now;
+                            //设置提醒label文本
+                            lblModifyTaskTimeRemain.Text = string.Format("{0}剩余{1}小时", folderName, Math.Floor(ts.TotalHours));
+                            if (ts.TotalHours <= 3)
+                            {
+                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF0000");//不足3小时，红色
+                                lblModifyTaskTimeRemain.Font.Bold = true;
+                            }
+                            else if (ts.TotalHours <= 6)
+                            {
+                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF8800");//不足6小时，橙色
+                                lblModifyTaskTimeRemain.Font.Bold = true;
+                            }
+                            else if (ts.TotalHours <= 12)
+                            {
+                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#EEEE00");//不足12小时，黄色
+                                lblModifyTaskTimeRemain.Font.Bold = true;
+                            }
+                            else if (ts.TotalHours <= 24)
+                            {
+                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF77FF");//不足24小时，洋红色
+                            }
+                            else if (ts.TotalHours <= 48)
+                            {
+                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#57C600");//48小时以上，酸橙色(浅绿)
+                            }
+                            else
+                            {
+                                lblModifyTaskTimeRemain.Text = string.Format("{0}剩余&gt;2天", folderName);
+                            }
                         }
-                        else if (ts.TotalHours <= 6)
+                        else if (dtExpire < DateTime.Now)
                         {
-                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF8800");//不足6小时，橙色
-                            lblModifyTaskTimeRemain.Font.Bold = true;
+                            TimeSpan ts = DateTime.Now - dtExpire;
+                            lblModifyTaskTimeRemain.Text = string.Format("{0}逾期{1}", folderName, Common.TransformTimeSpan(ts));
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.Color.Red;
                         }
-                        else if (ts.TotalHours <= 12)
-                        {
-                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#EEEE00");//不足12小时，黄色
-                            lblModifyTaskTimeRemain.Font.Bold = true;
-                        }
-                        else if (ts.TotalHours <= 24)
-                        {
-                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF77FF");//不足24小时，洋红色
-                        }
-                        else if (ts.TotalHours <= 48)
-                        {
-                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#57C600");//48小时以上，酸橙色(浅绿)
-                        }
-                        else
-                        {
-                            lblModifyTaskTimeRemain.Text = string.Format("{0}剩余&gt;2天", folderName);
-                        }
-                    }
-                    else if (dtExpire < DateTime.Now)
-                    {
-                        TimeSpan ts = DateTime.Now - dtExpire;
-                        lblModifyTaskTimeRemain.Text = string.Format("{0}逾期{1}", folderName, Common.TransformTimeSpan(ts));
-                        lblModifyTaskTimeRemain.ForeColor = System.Drawing.Color.Red;
                     }
                 }
                 #endregion

@@ -181,7 +181,7 @@ function AlertDialog(msg, result, projectId) {
         $.ajax({
             url: "/HttpHandler/FileHandler.ashx",
             type: "POST",
-            data: { "RequestType": "AjaxRequest", "FuncName": "AddFileCategory", "projectId": projectId, "categoryId": "1", "description": "任务书" },
+            data: { "RequestType": "AjaxRequest", "FuncName": "AddFileCategory", "projectId": projectId, "categoryId": "1", "description": "任务书", "expiredate":"" },
             success: function (data) {
                 vm.projectid = projectId;
                 console.log("rws:" + data.Code);

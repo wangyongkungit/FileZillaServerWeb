@@ -54,7 +54,7 @@
                 <li>
                     <a href="WebPageRedirect.aspx" target="_blank">返回主菜单</a>
                 </li>
-                <% 
+                <%--<% 
                     if (lstMenu != null && lstMenu.Count > 0)
                     {
                         foreach (var menu in lstMenu)
@@ -64,7 +64,7 @@
                       </li>   
                     <%}
                     }
-                     %>
+                     %>--%>
             </ul>
         </div>
         <!--底部-->

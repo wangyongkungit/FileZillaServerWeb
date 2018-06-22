@@ -41,6 +41,20 @@ $("#withdrawRecords").bind("click", function () {
         height: 610
     })
 });
+$("#transactionRecords").bind("click", function () {
+    var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+        title: '交易记录',
+        width: 1200,
+        height: 780
+    })
+});
+
+window.onresize = adjust;
+function adjust() {
+    //console.log(2);
+    //console.log(document.body.clientWidth);
+    //LoadEcharts();
+}
 
 var checkIE = function () {
     var DEFAULT_VERSION = 8.0;
@@ -111,35 +125,32 @@ var LoadEcharts = function () {
             },
             selectedMode: "single",
             data: jsonResult
-            //    [
-            //    { value: 573, name: "剩余" },
-            //    { value: 402, name: "已发" },
-            //    { value: 87, name: "奖罚" },
-            //    { value: 24, name: "其他" }
-            //]
         }
-
-        //title: {
-        //    text: '我的账本'
-        //},
-        //tooltip: {},
-        //legend: {
-        //    data: ['销量']
-        //},
-        //xAxis: {
-        //    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        //},
-        //yAxis: {},
-        //series: [{
-        //    name: '销量',
-        //    type: 'bar',
-        //    data: [5, 20, 36, 10, 10, 20]
-        //}]
     };
     myChart.setOption(option);
     myChart.on('click', function (param) {
         var index = param.dataIndex;
-        alert(index);
+        if (index === 1) {
+            var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
+                title: '已发记录',
+                width: 1200,
+                height: 780
+            })
+        }
+        else if (index === 2) {
+            var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
+                title: '奖罚记录',
+                width: 1200,
+                height: 780
+            })
+        }
+        else if (index === 3) {
+            var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
+                title: '其他',
+                width: 1200,
+                height: 780
+            })
+        }
     });
 }
 
