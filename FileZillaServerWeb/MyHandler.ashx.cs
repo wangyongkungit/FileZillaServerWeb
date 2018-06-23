@@ -71,6 +71,7 @@ namespace FileZillaServerWeb
             decimal others = 0m;
             if (empAcct != null)
             {
+                amount = empAcct.AMOUNT ?? 0m;
                 surplus = empAcct.SURPLUSAMOUNT ?? 0m;
                 paid = empAcct.PAIDAMOUNT ?? 0m;
                 rewardAndAmercement = empAcct.REWARDANDAMERCEMENTAMOUNT ?? 0m;
@@ -78,7 +79,7 @@ namespace FileZillaServerWeb
             }
             StringBuilder sbEmpAcct = new StringBuilder();
             sbEmpAcct.Append("[");
-            sbEmpAcct.Append("{\"value\":" + surplus + ",\"name\":\"剩余\"},");
+            sbEmpAcct.Append("{\"value\":" + amount + ",\"name\":\"剩余\"},");
             sbEmpAcct.Append("{\"value\":" + paid + ",\"name\":\"已发\"},");
             sbEmpAcct.Append("{\"value\":" + rewardAndAmercement + ",\"name\":\"奖罚\"},");
             sbEmpAcct.Append("{\"value\":" + others + ",\"name\":\"其他\"}");

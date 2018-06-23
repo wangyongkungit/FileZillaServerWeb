@@ -25,6 +25,7 @@ function TransferTask(prjID, employeeID, amount) {
 var ViewPrjFiles = function (prjID, taskNo) {
     vm.projectid = prjID;
     vm.taskno = taskNo;
+    changeActive();
 };
 
 $("#withdraw").bind("click", function () {
@@ -157,3 +158,58 @@ var LoadEcharts = function () {
 $().ready(function () {
     LoadEcharts();
 });
+
+//需要定义另个全局变量，index：行索引，oldColor：行本来的颜色
+var oldColor;
+var index;
+//思路：在点击某一行时保存这一行本来的背景颜色，和索引，点击另一行时再得到保存的颜色和索引对上次点击行进行背景颜色赋值，再将本次点击行的行索引和背景颜色进行保存，重复此步骤-->
+function changeIndex(obj) {
+    //第一次点击的时候index为null，需要判断-->
+    if (index != null) {
+        //设置上次点击的行的原来的背景颜色-->
+        document.getElementById("gvProject").rows[index].style.backgroundColor = oldColor;
+    }
+    //保存本次点击行的行索引和背景颜色-->
+    index = obj.rowIndex;
+    oldColor = obj.style.backgroundColor;
+    //设置点击行的颜色-->
+    obj.style.backgroundColor = "#eeee55";
+}
+
+$('#gvProject tr').on('click', function () {
+    var obj = this;
+    //第一次点击的时候index为null，需要判断-->
+    if (index != null) {
+        //设置上次点击的行的原来的背景颜色-->
+        document.getElementById("gvProject").rows[index].style.backgroundColor = oldColor;
+    }
+    //保存本次点击行的行索引和背景颜色-->
+    index = obj.rowIndex;
+    oldColor = obj.style.backgroundColor;
+    //设置点击行的颜色-->
+    obj.style.backgroundColor = "#ffffc6";
+}); 
+
+//var oldColor2;
+//var index2;
+
+//$("#divFileTabs button").each(function (i) {
+//    console.log(i);
+//    $("#divFileTabs button")[i].bind("click", function () {
+//        $(this).css("color", "red");
+//    });
+//});
+
+//给ul下的li元素绑定同一个事件
+var changeActive = function () {
+    var list = document.getElementById('divFileTabs');
+    var listChild = list.childNodes;
+    for (var i = 0; i < listChild.length; i++) {
+        listChild[i].addEventListener('click', function () {
+            for (var j = 0; j < listChild.length; j++) {
+                listChild[j].style.backgroundColor = '#007bff'; //给所有li颜色变为#ccd
+            }
+            this.style.backgroundColor = '#FF3333';             //给选中的li颜色变为red
+        }, false)
+    }
+}

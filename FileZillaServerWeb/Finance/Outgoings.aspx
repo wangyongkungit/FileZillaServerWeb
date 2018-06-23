@@ -31,7 +31,7 @@
                         <label>金额：</label>
                     </div>
                     <div class="txt">
-                        <asp:TextBox ID="txtAmount" runat="server" placeholder="扣款需包含负号" required="required"></asp:TextBox>
+                        <asp:TextBox ID="txtAmount" runat="server" placeholder="扣款需包含负号"></asp:TextBox>
                         元
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <asp:Button ID="btnAdd" runat="server" Text="添加" OnClick="btnAdd_Click" CssClass="mya" Width="180" />
+                    <asp:Button ID="btnAdd" runat="server" Text="添加" OnClick="btnAdd_Click" OnClientClick="return confirmSubmit();" CssClass="mya" Width="180" />
                 </div>
             </div>
             <asp:GridView ID="gvTransaction" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCommand="gvTransaction_RowCommand" CssClass="tbl">
@@ -90,6 +90,16 @@
                        <asp:TemplateField HeaderText="交易金额">
                            <ItemTemplate>
                                <asp:Label ID="lblTransactionAmount" runat="server" Text='<%# Eval("TransactionAmount") %>'></asp:Label>
+                           </ItemTemplate>
+                       </asp:TemplateField>
+                       <asp:TemplateField HeaderText="交易类型">
+                           <ItemTemplate>
+                               <asp:Label ID="lblTransactionType" runat="server" Text='<%# Eval("TransactionType") %>'></asp:Label>
+                           </ItemTemplate>
+                       </asp:TemplateField>
+                       <asp:TemplateField HeaderText="说明">
+                           <ItemTemplate>
+                               <asp:Label ID="lblTransactionDescription" runat="server" Text='<%# Eval("TransactionDescription") %>'></asp:Label>
                            </ItemTemplate>
                        </asp:TemplateField>
                        <asp:TemplateField HeaderText="操作">
@@ -120,6 +130,16 @@
     </div>
     </form>
     <%--<script src='<% ResolveUrl("~/Scripts/My97DatePicker/WdatePicker.js"); %>'></script>--%>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
     <script src="../Scripts/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript">
+        var confirmSubmit = function () {
+            if (!document.getElementById("txtAmount").value || !document.getElementById("txtTransacDate").value) {
+                alert("请补全金额和时间！");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

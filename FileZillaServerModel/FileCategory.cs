@@ -22,6 +22,7 @@ namespace FileZillaServerModel
         private string _description;
         private string _foldername;
         private DateTime? _createdate;
+        private string _createuser;
         private DateTime? _expiredate;
         private string _parentid;
         private int? _classsort;
@@ -86,6 +87,22 @@ namespace FileZillaServerModel
         /// <summary>
         /// 
         /// </summary>
+        public string CREATEUSER
+        {
+            set { _createuser = value; }
+            get { return _createuser; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? EXPIREDATE
+        {
+            set { _expiredate = value; }
+            get { return _expiredate; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         public string PARENTID
         {
             set { _parentid = value; }
@@ -115,8 +132,6 @@ namespace FileZillaServerModel
             set { _ordersort = value; }
             get { return _ordersort; }
         }
-
-        public DateTime? EXPIREDATE { get => _expiredate; set => _expiredate = value; }
         #endregion Model
 
     }

@@ -2,6 +2,7 @@
 using FileZillaServerModel;
 using FileZillaServerModel.Config;
 using FileZillaServerModel.Interface;
+using FileZillaServerProfile;
 using Jil;
 using System;
 using System.Collections.Generic;
@@ -135,7 +136,7 @@ namespace FileZillaServerBLL
         /// <summary>
         /// 根据 fileHistoryId 获取 projectId
         /// </summary>
-        public string GetProjectIdByFileHistoryId(string fileHistoryId)
+        public DataSet GetProjectIdByFileHistoryId(string fileHistoryId)
         {
             return dal.GetProjectIdByFileHistoryId(fileHistoryId);
         }
@@ -213,6 +214,7 @@ namespace FileZillaServerBLL
             fileCategory.TITLE = title;
             fileCategory.FOLDERNAME = title;
             fileCategory.CREATEDATE = DateTime.Now;
+            fileCategory.CREATEUSER = UserProfile.GetInstance().ID;
             DateTime dtExpire = IsDate(expireDate) ? Convert.ToDateTime(expireDate) : DateTime.MinValue;
             fileCategory.EXPIREDATE = dtExpire;
             fileCategory.PARENTID = parentId;
@@ -222,8 +224,12 @@ namespace FileZillaServerBLL
             // 添加数据库记录
             if (this.Add(fileCategory))
             {
+                if (fileCategory.CATEGORY == "2")
+                {
+
+                }
                 // 创建任务目录
-                if (!GetFilePathByProjectId(projectId, title, true, out returnFolderName, out taskRootFolder, out errCode))
+                if (!GetFilePathByProjectId(projectId, fileCategory.CATEGORY, fileCategory.FOLDERNAME, true, out returnFolderName, out taskRootFolder, out errCode))
                 {
                     // 目录创建失败时，需要将已添加到数据库的记录删除
                     this.Delete(fileCategory.ID);
@@ -242,7 +248,7 @@ namespace FileZillaServerBLL
         /// <param name="folderName"></param>
         /// <param name="errCode">返回码</param>
         /// <returns></returns>
-        public bool GetFilePathByProjectId(string projectId, string folderName, bool isCreateFolder, out string returnFolderName, out string taskRootFolder, out int errCode)
+        public bool GetFilePathByProjectId(string projectId, string fileCategory, string folderName, bool isCreateFolder, out string returnFolderName, out string taskRootFolder, out int errCode)
         {
             errCode = 0;
             returnFolderName = string.Empty;
@@ -258,6 +264,10 @@ namespace FileZillaServerBLL
                 // 任务已分配
                 if (dtTaskNoAndEmpNo != null && dtTaskNoAndEmpNo.Rows.Count > 0)
                 {
+                    // 修改记录文件夹
+                    string modifyRecordFolderName = Convert.ToString(ConfigurationManager.AppSettings["modifyRecordFolderName"]);
+                    // 疑问记录文件夹
+                    string questionFolderName = Convert.ToString(ConfigurationManager.AppSettings["questionFolderName"]);
                     string finishedPerson = Convert.ToString((dtTaskNoAndEmpNo.Rows[0]["FINISHEDPERSON"]));
                     if (!string.IsNullOrEmpty(finishedPerson))
                     {
@@ -271,7 +281,21 @@ namespace FileZillaServerBLL
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
                             taskRootFolder = taskNoFinalFolder;
-                            returnFileName = Path.Combine(rootPath, empNo, taskNo, folderName);
+                            // 任务书和完成稿
+                            if (fileCategory == "1" || fileCategory == "2")
+                            {
+                                returnFileName = Path.Combine(taskNoFinalFolder, folderName);
+                            }
+                            // 修改和修改完成
+                            else if (fileCategory == "3" || fileCategory == "4")
+                            {
+                                returnFileName = Path.Combine(taskNoFinalFolder, modifyRecordFolderName, folderName);
+                            }
+                            // 疑问和疑问答复
+                            else if (fileCategory == "5" || fileCategory == "6")
+                            {
+                                returnFileName = Path.Combine(taskNoFinalFolder, questionFolderName, folderName);
+                            }
                             returnFolderName = returnFileName;
                         }
                     }
@@ -285,7 +309,18 @@ namespace FileZillaServerBLL
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
                             taskRootFolder = taskNoFinalFolder;
-                            returnFileName = Path.Combine(rootPath, taskNo, folderName);
+                            if (fileCategory == "1" || fileCategory == "2")
+                            {
+                                returnFileName = Path.Combine(taskNoFinalFolder, folderName);
+                            }
+                            else if (fileCategory == "3" || fileCategory == "4")
+                            {
+                                returnFileName = Path.Combine(taskNoFinalFolder, modifyRecordFolderName, folderName);
+                            }
+                            else if (fileCategory == "5" || fileCategory == "6")
+                            {
+                                returnFileName = Path.Combine(taskNoFinalFolder, questionFolderName, folderName);
+                            }
                             returnFolderName = returnFileName;
                         }
                     }

@@ -227,6 +227,11 @@ namespace FileZillaServerWeb
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
+                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
+                Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
+                lblProportionAmount.Text = tcje.ToString();
+
                 #region 计算剩余时间
                 bool isFinished = Convert.ToInt32(gvProject.DataKeys[e.Row.RowIndex].Values[1]) == 1;
                 Label lblTimeRemain = e.Row.FindControl("lblTimeRemain") as Label;
@@ -340,6 +345,19 @@ namespace FileZillaServerWeb
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             LoadProject();
+        }
+
+        protected void gvProject_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "setFinished")
+            {
+                string prjId = e.CommandArgument.ToString();
+                Project prj = new ProjectBLL().GetModel(prjId);
+                prj.ISFINISHED = 1;
+                new ProjectBLL().Update(prj);
+                LoadProject();
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('设置成功！');", true);
+            }
         }
     }
 }

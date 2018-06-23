@@ -18,7 +18,7 @@ function myfunction(file, progressbar, progress) {
         chunkSize: 20 * 1024 * 1024,
         chunkRetry: 3,
         threads: 3,
-        fileNumLimit: 3,
+        fileNumLimit: 40,
         duplicate: true,
         formData: { // 上传分片的http请求中一同携带的数据
             taskid: taskid,

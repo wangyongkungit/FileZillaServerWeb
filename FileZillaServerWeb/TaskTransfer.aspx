@@ -45,7 +45,7 @@
             background-color:#cf5555;
         }
     </style>
-    <script src="Scripts/jquery-1.7.1.min.js"></script>
+    <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         var checkInput = function () {
             if ($("#txtProportion").val() > 100) {

@@ -55,6 +55,7 @@ namespace FileZillaServerCommonHelper
         public static void WriteLine(string text)
         {
             text += "\r\n";
+            logFile = string.Format("{0}/{1}/{2}.txt", System.AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["logPath"], System.DateTime.Now.ToString("yyyy-MM-dd"));
             using (StreamWriter sw = new StreamWriter(logFile, true, Encoding.UTF8))
             {
                 sw.Write(DateTime.Now.ToString("[yyyy-MM-dd HH:mm:ss] ") + text);

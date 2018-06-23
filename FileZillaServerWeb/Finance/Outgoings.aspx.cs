@@ -115,10 +115,11 @@ namespace FileZillaServerWeb.Finance
                     // 如果是3（即工资发放），则需要在已发项目上加上金额
                     if (ddlTransacType.SelectedValue == "3")
                     {
-                        empAcct.PAIDAMOUNT += transac.TRANSACTIONAMOUNT;
+                        empAcct.PAIDAMOUNT -= transac.TRANSACTIONAMOUNT; // 因为会录入负数，因此在这里采用减法
                     }
                     if (empAcctBll.Update(empAcct))
                     {
+                        txtAmount.Text = txtTransacDate.Text = string.Empty;
                         ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('添加成功！');", true);
                     }
                 }
@@ -179,19 +180,21 @@ namespace FileZillaServerWeb.Finance
             if (e.CommandName == "del")
             {
                 string ID = e.CommandArgument.ToString();
+                TransactionDetails transactionDetails = tdBll.GetModel(ID);
+                transactionDetails.ISDELETED = true;
                 // 删除交易记录
-                if (tdBll.Delete(ID))
+                if (tdBll.Update(transactionDetails))
                 {
                     // 员工账户对应记录也需要修改
-                    TransactionDetails transac = new TransactionDetails();
-                    transac = tdBll.GetModel(ID);
-                    string employeeID = transac.EMPLOYEEID;
-                    decimal amount = transac.TRANSACTIONAMOUNT ?? 0m;
+                    //TransactionDetails transac = new TransactionDetails();
+                    //transac = tdBll.GetModel(ID);
+                    string employeeID = transactionDetails.EMPLOYEEID;
+                    decimal amount = transactionDetails.TRANSACTIONAMOUNT ?? 0m;
                     EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
                     if (empAcct != null)
                     {
                         // 账户余额再减去刚刚删除的交易记录的金额
-                        empAcct.AMOUNT -= transac.TRANSACTIONAMOUNT;
+                        empAcct.AMOUNT -= transactionDetails.TRANSACTIONAMOUNT;
                         if (empAcctBll.Update(empAcct))
                         {
                             ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('操作成功！');", true);

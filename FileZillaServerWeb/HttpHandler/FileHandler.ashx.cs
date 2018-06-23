@@ -371,11 +371,16 @@ namespace FileZillaServerWeb.HttpHandler
             if (Directory.Exists(actPath))
             {
                 string actFileName = Path.Combine(actPath, filename);
+                // 2018-06-23，需求，如果上传同名文件，则将之前的文件删除
                 if (File.Exists(actFileName))
                 {
-                    errorCode = 6007;
-                    return false;
+                    File.Delete(actFileName);
                 }
+                //if (File.Exists(actFileName))
+                //{
+                //    errorCode = 6007;
+                //    return false;
+                //}
                 physicalFileName = actFileName;
                 DirectoryInfo savePathInfo = new DirectoryInfo(fileUploadTempFolder);
                 var allSplitFiles = savePathInfo.EnumerateFiles().Where(file => file.Name.StartsWith(filename) && file.Name.Contains(taskid));
@@ -427,8 +432,9 @@ namespace FileZillaServerWeb.HttpHandler
                     DataTable dtPrjIdAndCategory = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId).Tables[0];
                     string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
                     string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
-                    bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, string.Empty, false, out actPath, out taskRootFolder, out errorCode);
-                    string physicalFileName = Path.Combine(taskRootFolder, fileHistory.FILEFULLNAME);
+                    string folderName = Convert.ToString(dtPrjIdAndCategory.Rows[0]["folderName"]);
+                    bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out errorCode);
+                    string physicalFileName = Path.Combine(actPath, fileHistory.FILENAME);
                     string timeStr = DateTime.Now.ToString("yyyyMMddHHmmss");
                     string destFileName = Path.Combine(deletedFolder, timeStr + fileHistory.FILENAME);
                     if (File.Exists(physicalFileName))
@@ -512,8 +518,9 @@ namespace FileZillaServerWeb.HttpHandler
             DataTable dtPrjIdAndCategory = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId).Tables[0];
             string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
             string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
-            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, string.Empty, false, out actPath, out taskRootFolder, out errorCode);
-            string physicalFileName = Path.Combine(taskRootFolder, fileHistory.FILEFULLNAME);
+            string folderName = Convert.ToString(dtPrjIdAndCategory.Rows[0]["folderName"]);
+            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out errorCode);
+            string physicalFileName = Path.Combine(actPath, fileHistory.FILENAME);
             if (File.Exists(physicalFileName))
             {
                 string userId = UserProfile.GetInstance()?.ID;

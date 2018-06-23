@@ -172,7 +172,7 @@ namespace FileZillaServerDAL
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED from transactiondetails ");
-            strSql.Append(" where ID=@ID ");
+            strSql.Append(" where ISDELETED = 0 AND ID=@ID ");
             MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,36)			};
             parameters[0].Value = ID;
@@ -252,10 +252,10 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED ");
-            strSql.Append(" FROM transactiondetails ");
+            strSql.Append(" FROM transactiondetails WHERE ISDELETED = 0 ");
             if (strWhere.Trim() != "")
             {
-                strSql.Append(" where " + strWhere);
+                strSql.Append(strWhere);
             }
             return DbHelperMySQL.Query(strSql.ToString());
         }
@@ -337,26 +337,42 @@ namespace FileZillaServerDAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dic, int pageIndex, int pageSize, out int totalAmount)
+        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dic, string transactionType, int pageIndex, int pageSize, out int totalAmount)
         {
             totalAmount = 0;
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(@"select td.ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,td.EMPLOYEEID,td.PROJECTID,td.CREATEDATE,td.ISDELETED,
+            strSql.Append(@"select td.ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,
+                            CASE TRANSACTIONTYPE
+                            WHEN 0 THEN '社保公积金'
+                            WHEN 1 THEN '项目处罚'
+                            WHEN 2 THEN '项目奖励'
+                            WHEN 3 THEN '工资发放'
+                            WHEN 4 THEN '其他收入'
+                            WHEN 5 THEN '其他支出'
+                            WHEN 6 THEN '项目转移'
+                            END TRANSACTIONTYPE,td.EMPLOYEEID,td.PROJECTID,td.CREATEDATE,td.ISDELETED,
                          e.EMPLOYEENO, e.`NAME`, p.TASKNO
                          FROM transactiondetails td
                          LEFT JOIN employee e
                          ON td.EMPLOYEEID = e.ID
                          LEFT JOIN project p
                          ON td.PROJECTID = p.ID
-                         WHERE 1 = 1 ");
+                         WHERE TD.ISDELETED = 0 ");
             StringBuilder sbWhere = new StringBuilder();
             if (dic.ContainsKey("employeeId"))
             {
                 sbWhere.AppendFormat(" and employeeId = '{0}'", dic["employeeId"]);
             }
-            if (dic.ContainsKey("transacType"))
+            if (string.IsNullOrEmpty(transactionType))
             {
-                sbWhere.AppendFormat(" and transactionType = '{0}'", dic["transacType"]);
+                if (dic.ContainsKey("transacType"))
+                {
+                    sbWhere.AppendFormat(" and transactionType = '{0}'", dic["transacType"]);
+                }
+            }
+            else
+            {
+                sbWhere.Append(" AND transactionType IN (" + transactionType + ")");
             }
             if (dic.ContainsKey("amountFrom"))
             {
@@ -374,6 +390,11 @@ namespace FileZillaServerDAL
             {
                 sbWhere.AppendFormat(" and transactiondate <= '{0}'", dic["dateTo"]);
             }
+            if (dic.ContainsKey("taskNo"))
+            {
+                sbWhere.AppendFormat(" AND taskNo like '%" + dic["taskNo"] + "%'");
+            }
+            strSql.Append(sbWhere);
             strSql.AppendFormat(" ORDER BY orderDate DESC LIMIT {0}, {1}", (pageIndex - 1) * pageSize, pageSize);
             return DbHelperMySQL.Query(strSql.ToString());
         }
@@ -400,7 +421,7 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT IFNULL(SUM(IFNULL(TRANSACTIONAMOUNT,0)),0) JF FROM transactiondetails 
-                            WHERE EMPLOYEEID = '"+employeeId + @"' AND TRANSACTIONTYPE = 1 OR TRANSACTIONTYPE = 2 ");
+                            WHERE ISDELETED = 0 AND EMPLOYEEID = '"+employeeId + @"' AND TRANSACTIONTYPE = 1 OR TRANSACTIONTYPE = 2 ");
             object obj = DbHelperMySQL.GetSingle(strSql.ToString());
             if (obj == null)
             {

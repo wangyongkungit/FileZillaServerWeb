@@ -92,6 +92,10 @@
       <Project>{c2d735c0-93e4-4c59-b300-52f4c3bbe772}</Project>
       <Name>FileZillaServerModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FileZillaServerProfile\FileZillaServerProfile.csproj">
+      <Project>{a5b2628b-b5f8-4112-a46e-fdd9be961b46}</Project>
+      <Name>FileZillaServerProfile</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -167,7 +167,7 @@
 <%--                                <asp:GridView ID="gvList" runat="server" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px;">
                                     <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
                                 </asp:GridView>--%>
-                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" Width="100%" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px; text-align:center;">
+                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" OnRowCommand="gvProject_RowCommand" Width="100%" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px; text-align:center;">
                                     <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
                         <Columns>
                             <asp:TemplateField HeaderText="项目编号">
@@ -189,11 +189,12 @@
                             <asp:TemplateField HeaderText="是否完成">
                                 <ItemTemplate>
                                     <asp:Label ID="lblIsFinished" runat="server" Text='<%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "&#10004" : "&#10007" %>'></asp:Label>
+                                    <asp:Button ID="btnSetFinished" runat="server" Text="我已完成" Visible='<%# Convert.ToInt32(Eval("ISFINISHED")) == 0 %>' CommandName="setFinished" CommandArgument='<%# Eval("prjId") %>' CssClass="taskmovebutton" OnClientClick="return confirm('确定置为完成？');" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="剩余时间">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblTimeRemain" runat="server"></asp:Label>
+                                    <asp:Label ID="lblTimeRemain" runat="server" Text="--"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="提成金额">
@@ -203,7 +204,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="修改剩余时间">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text="暂无任务"></asp:Label>
+                                    <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text="--"></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="操作">
@@ -235,7 +236,7 @@
                     <div class="layui-row" style="border: 0px solid #ffd800;">
                      <!-- 文件列表部分 -->
                      <div id="project" class="container" style="clear:both; float:left;">
-                     <p>{{taskno}}</p>
+                     <%--<p>{{taskno}}</p>--%>
                         <div id="meun">
                             <div class="row">
                                 <div class="col -12" style="text-align: left;">
@@ -249,13 +250,12 @@
                         </div>
 
                         <div id="projectfile" v-show="showfile">
-                            文件列表
                             <!-- Tab List -->
                             <div class="row">
                                 <div class="col -12">
-                                    <div class="btn-group btn-group-sm">
+                                    <div id="divFileTabs" class="btn-group btn-group-sm">
                                         <!-- change file list -->
-                                        <button type="button" :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary " v-for="item in projectfile.filetabs"
+                                        <button type="button" :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary" v-for="item in projectfile.filetabs"
                                             @click="changeFilesTab(item.Id)">
                                             {{item.title}}</button>
                                     </div>
@@ -286,7 +286,8 @@
                                                     <td>
                                                         <div class="btn-group btn-group-sm">
                                                             <button type="button" class="btn btn-default btn-danger" @click="deleteFile(file.fileHistoryId)">删除</button>
-                                                            <button type="button" class="btn btn-default btn-success" @click="downloadFile(file.fileHistoryId)">下载</button>
+                                                            <%--<button type="button" class="btn btn-default btn-success" @click="downloadFile(file.fileHistoryId)">下载</button>--%>
+                                                            <a :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -316,7 +317,6 @@
                         </div>
 
                         <div id="projecthistory" v-show="showhistory">
-                            操作历史
                             <div class="row">
                                 <div class="col-12">
                                     <%--<h4>Project ID:{{projectid}}</h4>--%>
@@ -439,6 +439,6 @@
     </script>--%>
     
    <script src="Scripts/echarts/echarts.common.min.js"></script>
-    <script src="Scripts/ylyj/employeeHome.js"></script>
+    <script src="Scripts/ylyj/employeeHome.js?v=18062301"></script>
 </body>
 </html>

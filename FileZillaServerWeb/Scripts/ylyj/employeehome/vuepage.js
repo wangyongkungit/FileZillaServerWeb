@@ -91,6 +91,7 @@ var vm = new Vue({
         //chang file list
         changeFilesTab: function (filetype) {
             this.projectfile.parentId = filetype;
+            changeActive();
         },
         //delete file
         deleteFile: function (fileHistoryId) {

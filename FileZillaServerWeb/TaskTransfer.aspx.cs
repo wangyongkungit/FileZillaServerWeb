@@ -57,13 +57,24 @@ namespace FileZillaServerWeb
             empAcctParent.LASTUPDATEDATE = DateTime.Now;
             eaBll.Update(empAcctParent);
 
+            // 添加一条交易记录
+            TransactionDetails transactionDetails = new TransactionDetails();
+            transactionDetails.ID = Guid.NewGuid().ToString();
+            transactionDetails.TRANSACTIONAMOUNT = amountToLeader * proportion.PROPORTION;
+            transactionDetails.TRANSACTIONDESCRIPTION = "分部领导提成";
+            transactionDetails.TRANSACTIONTYPE = 7;
+            transactionDetails.TRANSACTIONDATE = DateTime.Now;
+            transactionDetails.PROJECTID = prjID;
+            transactionDetails.ISDELETED = false;
+            new TransactionDetailsBLL().Add(transactionDetails);
+
             // 更新任务完成人
             ProjectSharing ps = new ProjectSharing();
             ps = new ProjectSharingBLL().GetModelList(" projectId = '" + prjID + "' AND FInishedperson = '" + parentEmployeeID + "'").FirstOrDefault();
             ps.FINISHEDPERSON = employeeID;
             new ProjectSharingBLL().Update(ps);
 
-            //// 转移到的员工，需要待任务完成后，再计入账户
+            //// 转移到的员工 后续调整：需要待任务完成后，再计入账户
             //EmployeeAccount empAcctTransferTo = new EmployeeAccount();
             //empAcctTransferTo = eaBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
             //empAcctTransferTo.AMOUNT += Convert.ToDecimal(txtAmount.Text.Trim());
