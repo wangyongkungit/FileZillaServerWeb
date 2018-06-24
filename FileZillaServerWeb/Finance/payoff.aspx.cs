@@ -26,7 +26,7 @@ namespace FileZillaServerWeb.Finance
                 LoadEmployee();
                 DropDownListDataBind(ddlTransacType, ConfigTypeName.奖励与处罚类型, "-请选择-");
                 ddlTransacType.Enabled = false;
-                ddlTransacType.SelectedValue = "3";
+                ddlTransacType.SelectedValue = "3"; // 工资发放
             }
             txtTransacDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
@@ -132,8 +132,8 @@ namespace FileZillaServerWeb.Finance
                 decimal payOffAmount = Convert.ToDecimal(txtAmount.Text.Trim());
                 // 员工账户表修改
                 EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + ddlEmployeeName.SelectedValue + "'").FirstOrDefault();
-                empAcct.AMOUNT -= payOffAmount;
-                empAcct.PAIDAMOUNT += payOffAmount;
+                empAcct.AMOUNT += payOffAmount; // 账户金额（即余额），因为实际操作中，用户会输入负号，因此这里是加上
+                empAcct.PAIDAMOUNT += Math.Abs(payOffAmount); // 已发金额，这里取绝对值后累加就可以了
                 if (!empAcctBll.Update(empAcct))
                 {
                     LogHelper.WriteLine(ddlEmployeeName.SelectedItem.Text + "账户修改失败");

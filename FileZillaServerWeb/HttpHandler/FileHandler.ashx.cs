@@ -367,7 +367,8 @@ namespace FileZillaServerWeb.HttpHandler
             string actPath = string.Empty;
             physicalFileName = string.Empty;
             string taskRootFolder = string.Empty;
-            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, title, false, out actPath, out taskRootFolder, out errorCode);
+            string taskFolderWithoutEmpNo = string.Empty;
+            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, title, false, out actPath, out taskRootFolder, out taskFolderWithoutEmpNo, out errorCode);
             if (Directory.Exists(actPath))
             {
                 string actFileName = Path.Combine(actPath, filename);
@@ -429,11 +430,12 @@ namespace FileZillaServerWeb.HttpHandler
                     string actPath = string.Empty;
                     string taskRootFolder = string.Empty;
                     string deletedFolder = ConfigurationManager.AppSettings["fileDeletedFolder"].ToString();
+                    string taskFolderWithoutEmpNo = string.Empty;
                     DataTable dtPrjIdAndCategory = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId).Tables[0];
                     string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
                     string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
                     string folderName = Convert.ToString(dtPrjIdAndCategory.Rows[0]["folderName"]);
-                    bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out errorCode);
+                    bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out taskFolderWithoutEmpNo, out errorCode);
                     string physicalFileName = Path.Combine(actPath, fileHistory.FILENAME);
                     string timeStr = DateTime.Now.ToString("yyyyMMddHHmmss");
                     string destFileName = Path.Combine(deletedFolder, timeStr + fileHistory.FILENAME);
@@ -512,6 +514,7 @@ namespace FileZillaServerWeb.HttpHandler
 
             string actPath = string.Empty;
             string taskRootFolder = string.Empty;
+            string taskFolderWithoutEmpNo = string.Empty;
             string fileHistoryId = context.Request["fileHistoryId"];
             // 根据 ID 获取到 fileHistory 对象
             FileHistory fileHistory = new FileHistoryBLL().GetModel(fileHistoryId);
@@ -519,7 +522,7 @@ namespace FileZillaServerWeb.HttpHandler
             string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
             string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
             string folderName = Convert.ToString(dtPrjIdAndCategory.Rows[0]["folderName"]);
-            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out errorCode);
+            bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out taskFolderWithoutEmpNo, out errorCode);
             string physicalFileName = Path.Combine(actPath, fileHistory.FILENAME);
             if (File.Exists(physicalFileName))
             {

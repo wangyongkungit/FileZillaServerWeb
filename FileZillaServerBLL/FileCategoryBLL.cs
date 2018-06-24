@@ -183,6 +183,7 @@ namespace FileZillaServerBLL
             errCode = 0;
             string returnFolderName = string.Empty;
             string taskRootFolder = string.Empty;
+            string taskFolderWithoutEmpNo = string.Empty;
             ConfigureBLL configBll = new ConfigureBLL();
             DataTable dtConfig = configBll.GetConfig("文件分类小类");
             string projectId = context.Request["projectId"];
@@ -229,7 +230,7 @@ namespace FileZillaServerBLL
 
                 }
                 // 创建任务目录
-                if (!GetFilePathByProjectId(projectId, fileCategory.CATEGORY, fileCategory.FOLDERNAME, true, out returnFolderName, out taskRootFolder, out errCode))
+                if (!GetFilePathByProjectId(projectId, fileCategory.CATEGORY, fileCategory.FOLDERNAME, true, out returnFolderName, out taskRootFolder, out taskFolderWithoutEmpNo, out errCode))
                 {
                     // 目录创建失败时，需要将已添加到数据库的记录删除
                     this.Delete(fileCategory.ID);
@@ -248,12 +249,14 @@ namespace FileZillaServerBLL
         /// <param name="folderName"></param>
         /// <param name="errCode">返回码</param>
         /// <returns></returns>
-        public bool GetFilePathByProjectId(string projectId, string fileCategory, string folderName, bool isCreateFolder, out string returnFolderName, out string taskRootFolder, out int errCode)
+        public bool GetFilePathByProjectId(string projectId, string fileCategory, string folderName, bool isCreateFolder, out string returnFolderName, out string taskRootFolder, out string taskFolderWithoutEmpNo, out int errCode)
         {
             errCode = 0;
             returnFolderName = string.Empty;
             // 任务的根目录（通常就是任务编号命名的目录）
             taskRootFolder = string.Empty;
+            // 不带员工编号的任务目录名，此处主要为任务转移模块服务
+            taskFolderWithoutEmpNo = string.Empty;
             FileHistoryBLL fileHistoryBll = new FileHistoryBLL();
             string taskNo = string.Empty;
             string returnFileName = string.Empty;
@@ -278,6 +281,10 @@ namespace FileZillaServerBLL
 
                         taskNo = dtTaskNoAndEmpNo.AsEnumerable().Select(item => Convert.ToString(item["taskNo"])).FirstOrDefault();
                         string taskNoFinalFolder = Directory.GetDirectories(empNoFullPath, taskNo + "*", SearchOption.AllDirectories).FirstOrDefault();
+                        string lastFolder = string.Empty;
+                        string[] folders = taskNoFinalFolder.Split('\\');
+                        lastFolder = folders[folders.Length - 1];
+                        taskFolderWithoutEmpNo = string.Format("{0}{1}\\{2}", rootPath, "{0}", lastFolder);
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
                             taskRootFolder = taskNoFinalFolder;

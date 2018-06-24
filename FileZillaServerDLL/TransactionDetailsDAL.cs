@@ -350,6 +350,7 @@ namespace FileZillaServerDAL
                             WHEN 4 THEN '其他收入'
                             WHEN 5 THEN '其他支出'
                             WHEN 6 THEN '项目转移'
+                            WHEN 7 THEN '项目提成'
                             END TRANSACTIONTYPE,td.EMPLOYEEID,td.PROJECTID,td.CREATEDATE,td.ISDELETED,
                          e.EMPLOYEENO, e.`NAME`, p.TASKNO
                          FROM transactiondetails td

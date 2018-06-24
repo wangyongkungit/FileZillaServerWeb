@@ -27,6 +27,7 @@ namespace FileZillaServerWeb
         protected static string EmployeeID { get; set; }
         protected static string UserName { get; set; }
         protected static string EmployeeNo { get; set; }
+        protected static bool IsBranchLeader { get; set; }
         protected static List<Cerficate> lstCerficate { get; set; }
         protected static List<string> xData = new List<string>();
         protected static List<int> yData = new List<int>();
@@ -60,6 +61,7 @@ namespace FileZillaServerWeb
             EmployeeID = user.ID;
             UserName = user.Name;
             EmployeeNo = user.EmployeeNO;
+            IsBranchLeader = user.isBranchLeader;
             //if (string.IsNullOrEmpty(employeeID))
             //{
             //    bool isAdmin = user.Role.Any(item => item.RoleName == "超级管理员");
@@ -228,7 +230,7 @@ namespace FileZillaServerWeb
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
-                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
+                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + EmployeeID + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
                 Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
                 lblProportionAmount.Text = tcje.ToString();
 

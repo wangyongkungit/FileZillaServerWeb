@@ -3,16 +3,14 @@
 
 <asp:Content ID="head1" ContentPlaceHolderID="head" runat="server">
         
-    <link href="Content/themes/base/ylyj/serialnumber.css?v=18426" rel="stylesheet" />
 
     <link href="Scripts/jQuery-UI/jquery-ui.css" rel="stylesheet" />
     <link href="Scripts/jQuery-UI/jquery.multiselect.css" rel="stylesheet" />
-
-    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
     <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />
     
     <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
-
+    
+    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />    
     <script type="text/javascript">
 
         $(function(){
@@ -37,8 +35,9 @@
                 noneSelectedText:"请选择",
                 selectedText:"#项已选",
                 selectedList: 2,
-                height:540
+                height: 540
             });
+            $(".ui-corner-all").css("top", "140px");
 
             $("#ContentPlaceHolder1_txtProjectName").blur(function(){ autoCompleteFillTaskBook();});
             $("#ContentPlaceHolder1_ddlValuateMode").change(function(){ autoCompleteFillTaskBook();});
@@ -372,11 +371,10 @@
         </div>
 
         <div id="projectfile" v-show="showfile">
-            标签列表
             <!-- Tab List -->
             <div class="row">
                 <div class="col -12">
-                    <div class="btn-group btn-group-sm">
+                    <div id="divFileTabs" class="btn-group btn-group-sm">
                         <!-- change file list -->
                         <button :key="item.Id" :title="item.description" :filetype="item.Id" class="btn btn-default btn-primary " v-for="item in projectfile.filetabs"
                             @click="changeFilesTab(item.Id)">
@@ -529,6 +527,8 @@
     <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
 
     <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
+
+    <link href="Content/themes/base/ylyj/serialnumber.css?v=18426" rel="stylesheet" />
 
     <script src="Scripts/vue/vue.js"></script>
     <script src="Scripts/ylyj/employeehome/func.js"></script>

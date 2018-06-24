@@ -50,7 +50,7 @@ namespace FileZillaServerWeb.Finance
         private void LoadTransaction()
         {
             int totalRowsCount = 0;
-            string employeeId = UserProfile.GetInstance()?.ID;
+            string employeeId = Request.QueryString["employeeID"];// UserProfile.GetInstance()?.ID;
             string transacType = ddlTransacType.SelectedValue;
             string amountFrom = txtAmountFrom.Text.Trim();
             string amountTo = txtAmountTo.Text.Trim();
@@ -129,7 +129,7 @@ namespace FileZillaServerWeb.Finance
                 dropDownList.DataValueField = "configkey";
                 dropDownList.DataBind();
                 dtNew = null;
-                if (configTypeName != ConfigTypeName.奖励与处罚类型)
+                if (configTypeName == ConfigTypeName.奖励与处罚类型)
                 {
                     dropDownList.Items.Insert(0, new ListItem(tipString, string.Empty));
                 }

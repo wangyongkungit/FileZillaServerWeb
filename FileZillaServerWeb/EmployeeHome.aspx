@@ -209,8 +209,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="操作">
                                 <ItemTemplate>
-                                    <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
-                                    <input type="button" id="btnTransfer" value="&#8658;" title="任务转移" class="taskmovebutton" onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
+                                    <input type="button" id="btnViewPrjFiles" value="看资料" title="查看资料" class="taskmovebutton" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
+                                    <input type="button" id="btnTransfer" value="转任务" title="任务转移" class="taskmovebutton" style='display:<%= IsBranchLeader ? "block" : "none" %>;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

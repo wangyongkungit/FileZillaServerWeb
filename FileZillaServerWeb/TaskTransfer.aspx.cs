@@ -1,8 +1,10 @@
 ﻿using FileZillaServerBLL;
+using FileZillaServerCommonHelper;
 using FileZillaServerModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,6 +15,9 @@ namespace FileZillaServerWeb
     public partial class TaskTransfer : System.Web.UI.Page
     {
         EmployeeProportionBLL epBll = new EmployeeProportionBLL();
+        TransactionDetailsBLL tdBll = new TransactionDetailsBLL();
+        ProjectSharingBLL psBll = new ProjectSharingBLL();
+        EmployeeBLL empBll = new EmployeeBLL();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,6 +44,10 @@ namespace FileZillaServerWeb
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(ddlCanTransferEmp.SelectedValue))
+            {
+                return;
+            }
             // 声明变量
             EmployeeAccountBLL eaBll = new EmployeeAccountBLL();
             // 任务ID
@@ -47,6 +56,33 @@ namespace FileZillaServerWeb
             string parentEmployeeID = Convert.ToString(Request.QueryString["parentEmployeeID"]);
             // 需要转移对象的 empId
             string employeeID = ddlCanTransferEmp.SelectedValue;
+
+            // 移动目录
+            Employee empParent = empBll.GetModel(parentEmployeeID);
+            string parentEmpNo = empParent.EMPLOYEENO;
+            Employee empToTransfer = empBll.GetModel(employeeID);
+            string transferToEmpNo = empToTransfer.EMPLOYEENO;
+
+            FileCategoryBLL fcBll = new FileCategoryBLL();
+            int errCode = 0;
+            string returnFolderName = string.Empty;
+            string taskRootFolder = string.Empty;
+            string taskFolderWithoutEmpNo = string.Empty;
+            fcBll.GetFilePathByProjectId(prjID, string.Empty, string.Empty, false, out returnFolderName, out taskRootFolder, out taskFolderWithoutEmpNo, out errCode);
+            string sourceDirectory = string.Format(taskFolderWithoutEmpNo, parentEmpNo);
+            string destinctDirectory = string.Format(taskFolderWithoutEmpNo, transferToEmpNo);
+
+            try
+            {
+                Directory.Move(sourceDirectory, destinctDirectory);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine("|"+ sourceDirectory + "|" + destinctDirectory);
+                LogHelper.WriteLine(ex.Message + ex.StackTrace);
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('目录移动失败！');", true);
+                return;
+            }
 
             // 更新部门领导账户，按照配置比例计算出金额后累加到分部领导账户
             EmployeeProportion proportion = new EmployeeProportionBLL().GetModelList(" employeeId = '" + parentEmployeeID + "'").FirstOrDefault();
@@ -62,24 +98,43 @@ namespace FileZillaServerWeb
             transactionDetails.ID = Guid.NewGuid().ToString();
             transactionDetails.TRANSACTIONAMOUNT = amountToLeader * proportion.PROPORTION;
             transactionDetails.TRANSACTIONDESCRIPTION = "分部领导提成";
-            transactionDetails.TRANSACTIONTYPE = 7;
+            transactionDetails.TRANSACTIONTYPE = 6;
             transactionDetails.TRANSACTIONDATE = DateTime.Now;
+            transactionDetails.EMPLOYEEID = parentEmployeeID;
             transactionDetails.PROJECTID = prjID;
             transactionDetails.ISDELETED = false;
-            new TransactionDetailsBLL().Add(transactionDetails);
-
-            // 更新任务完成人
-            ProjectSharing ps = new ProjectSharing();
-            ps = new ProjectSharingBLL().GetModelList(" projectId = '" + prjID + "' AND FInishedperson = '" + parentEmployeeID + "'").FirstOrDefault();
-            ps.FINISHEDPERSON = employeeID;
-            new ProjectSharingBLL().Update(ps);
+            tdBll.Add(transactionDetails);
 
             //// 转移到的员工 后续调整：需要待任务完成后，再计入账户
+            transactionDetails = new TransactionDetails();
+            transactionDetails.ID = Guid.NewGuid().ToString();
+            transactionDetails.TRANSACTIONAMOUNT = Convert.ToDecimal(txtAmount.Text.Trim());
+            transactionDetails.TRANSACTIONDESCRIPTION = "项目提成（暂存）";
+            transactionDetails.TRANSACTIONTYPE = 7;
+            transactionDetails.TRANSACTIONDATE = DateTime.Now;
+            transactionDetails.EMPLOYEEID = employeeID;
+            transactionDetails.PROJECTID = prjID;
+            transactionDetails.ISDELETED = true;
+            tdBll.Add(transactionDetails);
+
             //EmployeeAccount empAcctTransferTo = new EmployeeAccount();
             //empAcctTransferTo = eaBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
             //empAcctTransferTo.AMOUNT += Convert.ToDecimal(txtAmount.Text.Trim());
             //empAcctTransferTo.LASTUPDATEDATE = DateTime.Now;
             //eaBll.Update(empAcctTransferTo);
+
+            // 更新任务完成人
+            ProjectSharing ps = new ProjectSharing();
+            ps = psBll.GetModelList(" projectId = '" + prjID + "' AND FInishedperson = '" + parentEmployeeID + "'").FirstOrDefault();
+            ps.FINISHEDPERSON = employeeID;
+            if (psBll.Update(ps))
+            {                
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('转移成功！');window.top.location.href='employeeHome.aspx';", true);
+                return;
+            }
+
+            ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('更新完成人失败！');window.top.location.href='employeeHome.aspx';", true);
+            return;
         }
     }
 }

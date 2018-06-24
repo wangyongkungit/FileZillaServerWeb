@@ -403,6 +403,25 @@ function ToggleVisibility(id, type) {
     }
 }
 
+//给tab绑定单击改变背景色事件
+var changeActive = function () {
+    var list = document.getElementById('divFileTabs');
+    if (list) {
+        var listChild = list.childNodes;
+        if (listChild) {
+            for (var i = 0; i < listChild.length; i++) {
+                listChild[i].addEventListener('click', function () {
+                    for (var j = 0; j < listChild.length; j++) {
+                        listChild[j].style.backgroundColor = '#007bff'; //所有tab颜色
+                    }
+                    this.style.backgroundColor = '#FF3333';             //选中的tab颜色
+                }, false)
+            }
+        }
+    }
+}
+setTimeout('changeActive()', 1200);
+
 //document.onkeydown = function () {
 //    var isFocus = $("#ContentPlaceHolder1_txtOrderDate").is(":focus");
 //    if (true == isFocus) {

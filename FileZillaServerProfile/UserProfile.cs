@@ -22,6 +22,11 @@ namespace FileZillaServerProfile
 
         public string MenuName { get; set; }
 
+        /// <summary>
+        /// 是否是分部领导
+        /// </summary>
+        public bool isBranchLeader { get; set; }
+
         public List<Menu> Menu { get; set; }
 
         public List<Role> Role { get; set; }
@@ -83,6 +88,7 @@ namespace FileZillaServerProfile
             user.ID = dtUser.Rows[0]["ID"].ToString();
             user.Name = dtUser.Rows[0]["name"].ToString();
             user.EmployeeNO = dtUser.Rows[0]["employeeno"].ToString();
+            user.isBranchLeader = dtUser.Rows[0]["isBranchLeader"].ToString() == "1";
             List<Menu> lstMenu = new List<Menu>();
             Menu menu = new Menu();
             int dtUserRowsCount = dtUser.Rows.Count;

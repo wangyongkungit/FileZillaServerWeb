@@ -220,7 +220,7 @@ namespace FileZillaServerDAL
             {
                 strSql.Append(" where " + strWhere);
             }
-            strSql.Append(" ORDER BY CREATEDATE DESC LIMIT 0, 10");
+            strSql.Append(" ORDER BY CREATEDATE DESC LIMIT 0, 5");
             return DbHelperMySQL.Query(strSql.ToString());
         }
 

@@ -44,7 +44,7 @@ namespace FileZillaServerProfile
         /// <returns></returns>
         public static DataTable GetUesrProfileByUserID(string employeeNO)
         {
-            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,
+            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.isBranchLeader,
                                  r.ID roleID,r.ROLENAME,
                                  m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
                                  from employee emp

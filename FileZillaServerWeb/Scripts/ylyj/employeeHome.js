@@ -25,7 +25,7 @@ function TransferTask(prjID, employeeID, amount) {
 var ViewPrjFiles = function (prjID, taskNo) {
     vm.projectid = prjID;
     vm.taskno = taskNo;
-    changeActive();
+    setTimeout('changeActive()', 1800);
 };
 
 $("#withdraw").bind("click", function () {
@@ -50,12 +50,12 @@ $("#transactionRecords").bind("click", function () {
     })
 });
 
-window.onresize = adjust;
-function adjust() {
-    //console.log(2);
-    //console.log(document.body.clientWidth);
-    //LoadEcharts();
-}
+//window.onresize = adjust;
+//function adjust() {
+//    //console.log(2);
+//    //console.log(document.body.clientWidth);
+//    //LoadEcharts();
+//}
 
 var checkIE = function () {
     var DEFAULT_VERSION = 8.0;
@@ -200,16 +200,16 @@ $('#gvProject tr').on('click', function () {
 //    });
 //});
 
-//给ul下的li元素绑定同一个事件
+//给tab绑定单击改变背景色事件
 var changeActive = function () {
     var list = document.getElementById('divFileTabs');
     var listChild = list.childNodes;
     for (var i = 0; i < listChild.length; i++) {
         listChild[i].addEventListener('click', function () {
             for (var j = 0; j < listChild.length; j++) {
-                listChild[j].style.backgroundColor = '#007bff'; //给所有li颜色变为#ccd
+                listChild[j].style.backgroundColor = '#007bff'; //所有tab颜色
             }
-            this.style.backgroundColor = '#FF3333';             //给选中的li颜色变为red
+            this.style.backgroundColor = '#FF3333';             //选中的tab颜色
         }, false)
     }
 }
