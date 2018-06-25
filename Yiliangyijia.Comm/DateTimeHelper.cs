@@ -45,5 +45,42 @@ namespace Yiliangyijia.Comm
                 return false;
             }
         }
+
+        public static string ChangeTime(DateTime dt)
+        {
+            TimeSpan ts = DateTime.Now - dt;
+            if (ts.TotalDays > 365)
+            {
+                return Math.Floor(ts.TotalDays / 365) + "年前";
+            }
+            else if (ts.TotalDays > 30)
+            {
+                return Math.Floor(ts.TotalDays / 30) + "个月前";
+            }
+            else if (ts.TotalDays > 7)
+            {
+                return Math.Floor(ts.TotalDays / 7) + "周前";
+            }
+            else if (ts.TotalDays > 1)
+            {
+                return Math.Floor(ts.TotalDays) + "天前";
+            }
+            else if (ts.TotalHours > 1)
+            {
+                return Math.Floor(ts.TotalHours) + "小时前";
+            }
+            else if (ts.TotalMinutes > 1)
+            {
+                return Math.Floor(ts.TotalMinutes) + "分钟前";
+            }
+            //else if (ts.TotalSeconds > 10)
+            //{
+            //    return Math.Floor(ts.TotalSeconds) + "秒前";
+            //}
+            else
+            {
+                return "刚刚";
+            }
+        }
     }
 }

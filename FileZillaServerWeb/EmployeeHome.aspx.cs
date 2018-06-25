@@ -42,7 +42,7 @@ namespace FileZillaServerWeb
                 LoadSpecialties();
                 LoadCerficate();
                 LoadBalance();
-                LoadTaskTrend();
+                //LoadTaskTrend();
                 LoadDataNeedReload();
             }
         }

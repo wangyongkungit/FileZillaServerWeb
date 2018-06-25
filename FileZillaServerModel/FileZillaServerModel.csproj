@@ -55,6 +55,7 @@
     <Compile Include="Interface\JsonResult.cs" />
     <Compile Include="Interface\SubFileOperateLog.cs" />
     <Compile Include="Interface\SubTabs.cs" />
+    <Compile Include="Interface\TaskTrendInterface.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectModify.cs" />
     <Compile Include="ProjectSharing.cs" />

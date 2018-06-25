@@ -1,6 +1,8 @@
 ﻿using FileZillaServerBLL;
 using FileZillaServerModel;
+using FileZillaServerModel.Interface;
 using Jil;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb
 {
@@ -39,6 +42,10 @@ namespace FileZillaServerWeb
                 // 获取文件完整路径
                 case "GetFilepath":
                     jsonResult = GetFilepath(context);
+                    break;
+                // 获取任务动态
+                case "GetTrends":
+                    jsonResult = GetTrends(context);
                     break;
                 default:
                     break;
@@ -169,6 +176,26 @@ namespace FileZillaServerWeb
             }
             return sbJsonResult.ToString();
         }
+        #endregion
+
+        #region 根据员工ID获取任务动态
+        private string GetTrends(HttpContext context)
+        {
+            StringBuilder sbJsonResult = new StringBuilder();
+            string employeeID = context.Request.Params["employeeID"];
+            List<TaskTrend> lstTrend = new TaskTrendBLL().GetTop10ModelList(" employeeID = '" + employeeID + "'");
+            List<TaskTrendInterface> lstResult = new List<TaskTrendInterface>();
+            foreach (var item in lstTrend)
+            {
+                TaskTrendInterface taskTrendInterface = new TaskTrendInterface();
+                taskTrendInterface.CreateDate = item.CREATEDATE ?? DateTime.Now;
+                taskTrendInterface.FriendlyDate = DateTimeHelper.ChangeTime(item.CREATEDATE ?? DateTime.MinValue);
+                taskTrendInterface.TrendContent = item.DESCRIPTION;
+                lstResult.Add(taskTrendInterface);
+            }
+            sbJsonResult.Append(JsonConvert.SerializeObject(lstResult));
+            return sbJsonResult.ToString();
+        } 
         #endregion
     }
 }

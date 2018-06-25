@@ -213,3 +213,38 @@ var changeActive = function () {
         }, false)
     }
 }
+
+var GetTrends = function () {
+    var jsonTrend;
+    $.ajax({
+        url: "MyHandler.ashx",
+        async: false,
+        type: "get",
+        data: { method: "GetTrends", employeeID: $("#hidEmployeeID").val() },
+        success: function (data) {
+            jsonTrend = data;
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+    return jsonTrend;
+};
+
+var appForTrends = new Vue({
+    el: "#taskTrendApp",
+    data: {
+        trends: GetTrends()
+    },
+    mounted: function () {
+        var _this = this;
+        this.timer = setInterval(function () {
+            _this.trends = GetTrends();
+        }, 40000);
+    },
+    beforeDestroy: function () {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+});

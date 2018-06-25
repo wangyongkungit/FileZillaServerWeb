@@ -60,7 +60,7 @@ namespace FileZillaServerWeb
                 //修改成功
                 if (updateResult)
                 {
-                    alertMsg = "密码修改成功，请使用新密码重新登录！";
+                    alertMsg = "密码修改成功，下次请使用新密码重新登录！";
                 }
                 //修改失败
                 else

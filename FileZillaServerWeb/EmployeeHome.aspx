@@ -36,13 +36,12 @@
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                            <img src="UploadFiles/beach.jpg" class="layui-nav-img">
                             <%= UserName %>
                         </a>
-<%--                        <dl class="layui-nav-child">
-                            <dd><a href="">基本资料</a></dd>
-                            <dd><a href="">安全设置</a></dd>
-                        </dl>--%>
+                        <dl class="layui-nav-child">
+                            <dd><a href="PasswordModify.aspx" target="_blank">密码修改</a></dd>
+                        </dl>
                     </li>
                     <%--<li class="layui-nav-item"><a href="">退了</a></li>--%>
                 </ul>
@@ -127,7 +126,7 @@
                             <div style="background: #e2e2e2; height: inherit;">
                                 <div style="height: 260px; padding: 10px;">
                                     <h6 style="background-color:#007bff; height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-radius:5px;padding:2px 0px 2px 10px;"
-                                            ><a>任务动态</a></h6>
+                                            ><a>工作动态</a></h6>
                                     <asp:GridView ID="gvTaskTrend" runat="server" AutoGenerateColumns="false" CssClass="layui-table" lay-even ShowHeader="false" >
                             <Columns>
                                 <asp:TemplateField>
@@ -145,6 +144,13 @@
                                 <span>暂无动态</span>
                             </EmptyDataTemplate>
                         </asp:GridView>
+                                    <div id="taskTrendApp">
+                                        <ul>
+                                            <li v-for="item in trends" style="list-style:circle; display:inline-block; height:28px; margin:5px 12px; padding:2px 4px; border-bottom:1px solid #c3e4b1;">
+                                                {{item.FriendlyDate}}, {{item.TrendContent}}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,8 +215,8 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="操作">
                                 <ItemTemplate>
-                                    <input type="button" id="btnViewPrjFiles" value="看资料" title="查看资料" class="taskmovebutton" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
-                                    <input type="button" id="btnTransfer" value="转任务" title="任务转移" class="taskmovebutton" style='display:<%= IsBranchLeader ? "block" : "none" %>;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
+                                    <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" style="float:left; margin-right:10px;" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
+                                    <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style='display:<%= IsBranchLeader ? "block" : "none" %>;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -431,12 +437,12 @@
     <script src="Scripts/My97DatePicker/WdatePicker.js"></script>
 
     <%--layui--%>
- <%--   <script src="layui-master/src/layui.js"></script>
+    <script src="layui-master/src/layui.js"></script>
     <script type="text/javascript">
         layui.use("element", function () {
             var element = layui.element;
         })
-    </script>--%>
+    </script>
     
    <script src="Scripts/echarts/echarts.common.min.js"></script>
     <script src="Scripts/ylyj/employeeHome.js?v=18062301"></script>
