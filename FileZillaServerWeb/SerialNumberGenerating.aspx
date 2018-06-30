@@ -6,8 +6,11 @@
 
     <link href="Scripts/jQuery-UI/jquery-ui.css" rel="stylesheet" />
     <link href="Scripts/jQuery-UI/jquery.multiselect.css" rel="stylesheet" />
-    <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />
+    <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />   
     
+    <script src="Scripts/jQuery-UI/jquery-ui.min.js"></script>
+    <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
+
     <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
     
     <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />    
@@ -346,7 +349,14 @@
                 <label>任务编号：</label>
                 <asp:TextBox ID="txtTaskName" runat="server" Text="生成的任务编号将在这里显示，请选中并复制。" ReadOnly="true" />
                 <asp:Label ID="lblGenerateSuccess" runat="server" Visible="false" Text="&#10004" Font-Bold="true" Font-Size="X-Large" ForeColor="#00C600" />
-                <input id="btnCopy" name="btnCopy" type="button" value="复制到剪贴板" data-clipboard-action="copy" data-clipboard-target="#txtTaskName" class="button" style="display:none;" />
+                <input id="btnCopy" name="btnCopy" type="button" value="复制到剪贴板" data-clipboard-action="copy" data-clipboard-target="#txtTaskName" class="button" style="display:none;" />                
+            </div>
+            <div class="result" id="divAssign" runat="server" visible="false">
+                <div>
+                    <label>分配给：</label>
+                    <asp:DropDownList ID="ddlAssignTo" runat="server"></asp:DropDownList>
+                    <asp:Button ID="btnAssign" runat="server" Text="分配" OnClick="btnAssign_Click" CssClass="button"/>
+                </div>
             </div>
             <hr />
 
@@ -442,7 +452,7 @@
             操作历史
             <div class="row">
                 <div class="col-12">
-                    <h4>Project ID:{{projectid}}</h4>
+                    <%--<h4>Project ID:{{projectid}}</h4>--%>
                     <div>
                         <table class="table table-bordered table-hover  table-striped">
                             <!-- 表头 -->
@@ -523,8 +533,6 @@
     
 <%--    <script src="Scripts/clipboard.min.js?v=18426"></script>--%>
     <%--<script src="http://cdn.bootcss.com/jqueryui/1.11.0/jquery-ui.min.js"></script>--%>
-    <script src="Scripts/jQuery-UI/jquery-ui.min.js"></script>
-    <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
 
     <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
 

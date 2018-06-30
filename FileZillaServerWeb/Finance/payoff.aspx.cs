@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb.Finance
 {
@@ -144,6 +145,7 @@ namespace FileZillaServerWeb.Finance
                 transac.ID = Guid.NewGuid().ToString();
                 transac.TRANSACTIONAMOUNT = payOffAmount;
                 transac.TRANSACTIONDATE = Convert.ToDateTime(txtTransacDate.Text);
+                transac.PLANDATE = DateTimeHelper.GetFirstDateOfCurrentMonth();
                 transac.TRANSACTIONTYPE = Convert.ToInt32(ddlTransacType.SelectedValue);
                 transac.EMPLOYEEID = ddlEmployeeName.SelectedValue;
                 transac.CREATEDATE = DateTime.Now;
@@ -164,19 +166,19 @@ namespace FileZillaServerWeb.Finance
             if (e.CommandName == "del")
             {
                 string ID = e.CommandArgument.ToString();
+                TransactionDetails tdToDel = tdBll.GetModel(ID);
+                tdToDel.ISDELETED = true;
                 // 删除交易记录
-                if (tdBll.Delete(ID))
+                if (tdBll.Update(tdToDel))
                 {
                     // 员工账户对应记录也需要修改
-                    TransactionDetails transac = new TransactionDetails();
-                    transac = tdBll.GetModel(ID);
-                    string employeeID = transac.EMPLOYEEID;
-                    decimal amount = transac.TRANSACTIONAMOUNT ?? 0m;
+                    string employeeID = tdToDel.EMPLOYEEID;
+                    decimal amount = tdToDel.TRANSACTIONAMOUNT ?? 0m;
                     EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
                     if (empAcct != null)
                     {
                         // 账户余额再减去刚刚删除的交易记录的金额
-                        empAcct.AMOUNT -= transac.TRANSACTIONAMOUNT;
+                        empAcct.AMOUNT -= tdToDel.TRANSACTIONAMOUNT;
                         if (empAcctBll.Update(empAcct))
                         {
                             ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('操作成功！');", true);

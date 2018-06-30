@@ -80,3 +80,6 @@ select option {
     color:#fff;
     background-color:#cf5555;
 }
+#bottom {
+    display:none;
+}

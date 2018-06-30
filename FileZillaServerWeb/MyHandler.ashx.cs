@@ -71,25 +71,30 @@ namespace FileZillaServerWeb
             EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
             TransactionDetailsBLL transactionDetailsBll = new TransactionDetailsBLL();
             
+            //账户余额
             decimal amount = 0m;
-            decimal surplus = 0m;
+            //decimal surplus = 0m;
+            // 已发
             decimal paid = 0m;
+            // 奖罚，获取交易记录中奖励和处罚之和
             decimal rewardAndAmercement = transactionDetailsBll.GetRewardAndAmercementAmount(employeeID);
-            decimal others = 0m;
+            decimal others = transactionDetailsBll.GetOtherAmount(employeeID);
             if (empAcct != null)
             {
                 amount = empAcct.AMOUNT ?? 0m;
-                surplus = empAcct.SURPLUSAMOUNT ?? 0m;
+                //surplus = empAcct.SURPLUSAMOUNT ?? 0m;
+                // 已发，取员工账户表中已发的值
                 paid = empAcct.PAIDAMOUNT ?? 0m;
-                rewardAndAmercement = empAcct.REWARDANDAMERCEMENTAMOUNT ?? 0m;
-                others = empAcct.OTHERSAMOUNT ?? 0m;
+                //rewardAndAmercement = empAcct.REWARDANDAMERCEMENTAMOUNT ?? 0m;
+                // 其他
+                //others = empAcct.OTHERSAMOUNT ?? 0m;
             }
             StringBuilder sbEmpAcct = new StringBuilder();
             sbEmpAcct.Append("[");
             sbEmpAcct.Append("{\"value\":" + amount + ",\"name\":\"剩余\"},");
             sbEmpAcct.Append("{\"value\":" + paid + ",\"name\":\"已发\"},");
-            sbEmpAcct.Append("{\"value\":" + rewardAndAmercement + ",\"name\":\"奖罚\"},");
-            sbEmpAcct.Append("{\"value\":" + others + ",\"name\":\"其他\"}");
+            sbEmpAcct.Append("{\"value\":" + Math.Abs(rewardAndAmercement) + ",\"name\":\"奖罚\"},");
+            sbEmpAcct.Append("{\"value\":" + Math.Abs(others) + ",\"name\":\"其他\"}");
             sbEmpAcct.Append("]");
             sbJsonResult.Append(sbEmpAcct);
             return sbJsonResult.ToString();

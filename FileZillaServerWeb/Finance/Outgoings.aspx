@@ -62,10 +62,33 @@
                     </div>
                 </div>
                 <div class="right">
-                    <asp:Button ID="btnAdd" runat="server" Text="添加" OnClick="btnAdd_Click" OnClientClick="return confirmSubmit();" CssClass="mya" Width="180" />
+                    <div class="lbl">
+                        <label>计划时间：</label>
+                    </div>
+                    <div class="txt">
+                        <asp:TextBox ID="txtPlanDate" runat="server" CssClass="Wdate" onFocus="WdatePicker({dateFmt:'yyyy-MM'})" Width="160"></asp:TextBox>
+                    </div>
                 </div>
+                <div class="left">
+                    <div class="lbl">
+                        &nbsp;
+                    </div>
+                    <div class="txt">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="left">
+                    <div class="lbl">
+                        &nbsp;
+                    </div>
+                    <div class="txt">
+                        &nbsp;
+                    </div>
+                </div>
+                <asp:Button ID="btnAdd" runat="server" Text="添加" OnClick="btnAdd_Click" OnClientClick="return confirmSubmit();" CssClass="mya" Width="180" />
             </div>
-            <asp:GridView ID="gvTransaction" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCommand="gvTransaction_RowCommand" CssClass="tbl">
+            <asp:GridView ID="gvTransaction" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCommand="gvTransaction_RowCommand" OnRowEditing="gvTransaction_RowEditing"
+                 OnRowUpdating="gvTransaction_RowUpdating" OnRowCancelingEdit="gvTransaction_RowCancelingEdit" CssClass="tbl">
                 <Columns>
                        <asp:TemplateField HeaderText="员工编号">
                            <ItemTemplate>
@@ -86,6 +109,14 @@
                            <ItemTemplate>
                                <asp:Label ID="lblTransactionDate" runat="server" Text='<%# Eval("TransactionDate") %>'></asp:Label>
                            </ItemTemplate>
+                       </asp:TemplateField>                    
+                       <asp:TemplateField HeaderText="计划时间">
+                           <ItemTemplate>
+                               <asp:Label ID="lblPlanDate" runat="server" Text='<%# Convert.ToDateTime(Eval("PlanDate")).ToString("yyyy-MM") %>'></asp:Label>
+                           </ItemTemplate>
+                           <EditItemTemplate>
+                               <asp:TextBox ID="txtPlanDate" runat="server" Text='<%# Convert.ToDateTime(Eval("PlanDate")).ToString("yyyy-MM") %>' CssClass="Wdate" onFocus="WdatePicker({dateFmt:'yyyy-MM'})"></asp:TextBox>
+                           </EditItemTemplate>
                        </asp:TemplateField>
                        <asp:TemplateField HeaderText="交易金额">
                            <ItemTemplate>
@@ -104,8 +135,13 @@
                        </asp:TemplateField>
                        <asp:TemplateField HeaderText="操作">
                            <ItemTemplate>
+                               <asp:LinkButton ID="lbtnEdit" runat="server" CommandName="Edit" CausesValidation="true" Text="编辑" CssClass="mya"></asp:LinkButton>
                                <asp:Button ID="btnDelete" runat="server" CommandName="del" CommandArgument='<%# Eval("ID") %>' Text="删除" CssClass="mya" OnClientClick="return confirm('确定要删除吗？');" />
                            </ItemTemplate>
+                           <EditItemTemplate>
+                               <asp:LinkButton ID="lbtnUpt" runat="server" CausesValidation="true" CommandName="Update" Text="更新" CssClass="mya"></asp:LinkButton>
+                               <asp:LinkButton ID="lbtnCancel" runat="server" CausesValidation="false" CommandName="Cancel" Text="取消" CssClass="mya"></asp:LinkButton>
+                           </EditItemTemplate>
                        </asp:TemplateField>
                    </Columns>
                 <EmptyDataTemplate>

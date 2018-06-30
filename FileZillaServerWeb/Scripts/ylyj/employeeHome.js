@@ -14,9 +14,9 @@ function SetMyCertificate(employeeID) {
     });
 };
 
-function TransferTask(prjID, employeeID, amount) {
+function TransferTask(prjID, employeeID, amount, taskno) {
     var dialog = jDialog.iframe("TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
-        title: '任务转移',
+        title: '任务转移 ' + taskno,
         width: 800,
         height: 410
     });
@@ -46,7 +46,8 @@ $("#transactionRecords").bind("click", function () {
     var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '交易记录',
         width: 1200,
-        height: 780
+        height: 780,
+        left: 280
     })
 });
 
@@ -176,7 +177,7 @@ function changeIndex(obj) {
     obj.style.backgroundColor = "#eeee55";
 }
 
-$('#gvProject tr').on('click', function () {
+$('#gvProject tr td input[id="btnViewPrjFiles"]').on('click', function () {
     var obj = this;
     //第一次点击的时候index为null，需要判断-->
     if (index != null) {
@@ -184,11 +185,11 @@ $('#gvProject tr').on('click', function () {
         document.getElementById("gvProject").rows[index].style.backgroundColor = oldColor;
     }
     //保存本次点击行的行索引和背景颜色-->
-    index = obj.rowIndex;
-    oldColor = obj.style.backgroundColor;
+    index = obj.parentNode.parentNode.rowIndex;
+    oldColor = obj.parentNode.parentNode.style.backgroundColor;
     //设置点击行的颜色-->
-    obj.style.backgroundColor = "#ffffc6";
-}); 
+    obj.parentNode.parentNode.style.backgroundColor = "#ffffc6";
+});
 
 //var oldColor2;
 //var index2;

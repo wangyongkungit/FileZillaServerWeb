@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb.Finance
 {
@@ -22,6 +23,7 @@ namespace FileZillaServerWeb.Finance
             if (!IsPostBack)
             {
                 txtTransacDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                txtPlanDate.Text = DateTimeHelper.GetFirstDateOfCurrentMonth().ToString("yyyy-MM");
                 LoadEmployee();
                 LoadTransaction();
                 DropDownListDataBind(ddlTransacType, ConfigTypeName.奖励与处罚类型, "-请选择-");
@@ -48,8 +50,15 @@ namespace FileZillaServerWeb.Finance
             int totalRowsCount = 0;
             string employeeID = ddlEmployeeName.SelectedValue;
             Dictionary<string, string> dicCondition = new Dictionary<string, string>();
+            string transacType = ddlTransacType.SelectedValue;
+            if (!string.IsNullOrEmpty(transacType))
+            {
+                dicCondition.Add("transacType", transacType);
+            }
             dicCondition.Add("employeeId", employeeID);
+            AspNetPager1.PageSize = 10;
             DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+            AspNetPager1.RecordCount = totalRowsCount; Page.Title += totalRowsCount;
             gvTransaction.DataSource = dtTransac;
             gvTransaction.DataBind();
         }
@@ -91,18 +100,19 @@ namespace FileZillaServerWeb.Finance
             // 首先添加交易记录
             TransactionDetails transac = new TransactionDetails();
             transac.ID = Guid.NewGuid().ToString();
-            transac.TRANSACTIONAMOUNT = Convert.ToDecimal( txtAmount.Text.Trim());
+            transac.TRANSACTIONAMOUNT = Convert.ToDecimal(txtAmount.Text.Trim());
             transac.TRANSACTIONTYPE = Convert.ToInt32(ddlTransacType.SelectedValue);
             transac.TRANSACTIONDESCRIPTION = txtDescription.Text.Trim();
             transac.PROJECTID = new ProjectBLL().GetPrjIDByTaskNo(txtTaskNo.Text.Trim());
             transac.EMPLOYEEID = employeeID;
             DateTime dtTransacDate = DateTime.Now;
             string strTransacDate = txtTransacDate.Text.Trim();
-            if(!string.IsNullOrEmpty(strTransacDate))
+            if (!string.IsNullOrEmpty(strTransacDate))
             {
                 dtTransacDate = Convert.ToDateTime(strTransacDate);
             }
             transac.TRANSACTIONDATE = dtTransacDate;
+            transac.PLANDATE = Convert.ToDateTime(string.Format("{0}-01 00:00:00", txtPlanDate.Text.Trim()));
             transac.CREATEDATE = DateTime.Now;
             if (tdBll.Add(transac))
             {
@@ -115,7 +125,7 @@ namespace FileZillaServerWeb.Finance
                     // 如果是3（即工资发放），则需要在已发项目上加上金额
                     if (ddlTransacType.SelectedValue == "3")
                     {
-                        empAcct.PAIDAMOUNT -= transac.TRANSACTIONAMOUNT; // 因为会录入负数，因此在这里采用减法
+                        empAcct.PAIDAMOUNT += Math.Abs(transac.TRANSACTIONAMOUNT ?? 0m); // 员工账户中的已发金额加上此次发放的金额
                     }
                     if (empAcctBll.Update(empAcct))
                     {
@@ -158,7 +168,7 @@ namespace FileZillaServerWeb.Finance
                 dropDownList.DataValueField = "configkey";
                 dropDownList.DataBind();
                 dtNew = null;
-                if (configTypeName != ConfigTypeName.奖励与处罚类型)
+                if (configTypeName == ConfigTypeName.奖励与处罚类型)
                 {
                     dropDownList.Items.Insert(0, new ListItem(tipString, string.Empty));
                 }
@@ -238,5 +248,39 @@ namespace FileZillaServerWeb.Finance
             }
         }
         #endregion
+
+        protected void gvTransaction_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            string tdID = gvTransaction.DataKeys[e.RowIndex].Value.ToString();
+            TextBox txtPlanDate = gvTransaction.Rows[e.RowIndex].FindControl("txtPlanDate") as TextBox;
+            string strPlanDate = string.Format("{0}-01 00:00:00", txtPlanDate.Text.Trim());
+            DateTime dtPlanDate = Convert.ToDateTime(strPlanDate);
+            TransactionDetails transac = tdBll.GetModel(tdID);
+            transac.PLANDATE = dtPlanDate;
+            if (tdBll.Update(transac))
+            {
+                gvTransaction.EditIndex = -1;
+                LoadTransaction();
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('更新计划时间成功！');", true);
+                return;
+            }
+            else
+            {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('更新计划时间失败！');", true);
+                return;
+            }
+        }
+
+        protected void gvTransaction_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            gvTransaction.EditIndex = e.NewEditIndex;
+            LoadTransaction();
+        }
+
+        protected void gvTransaction_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            gvTransaction.EditIndex = -1;
+            LoadTransaction();
+        }
     }
 }

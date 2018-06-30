@@ -100,7 +100,9 @@ namespace FileZillaServerWeb.Finance
                 dicCondition.Add("taskNo", taskNo);
             }
             dicCondition.Add("employeeId", employeeId);
+            AspNetPager1.PageSize = 10;
             DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, inCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+            AspNetPager1.RecordCount = totalRowsCount;
             gvTransaction.DataSource = dt;
             gvTransaction.DataBind();
         }

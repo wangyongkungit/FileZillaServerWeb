@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb
 {
@@ -38,7 +39,7 @@ namespace FileZillaServerWeb
             DataTable dtCanTransferEmp = epBll.GetEmployeeCanTransfer(parentEmployeeID).Tables[0];
             ddlCanTransferEmp.DataSource = dtCanTransferEmp;
             ddlCanTransferEmp.DataValueField = "eID";
-            ddlCanTransferEmp.DataTextField = "name";
+            ddlCanTransferEmp.DataTextField = "empNoAndName";
             ddlCanTransferEmp.DataBind();
         }
 
@@ -100,18 +101,20 @@ namespace FileZillaServerWeb
             transactionDetails.TRANSACTIONDESCRIPTION = "分部领导提成";
             transactionDetails.TRANSACTIONTYPE = 6;
             transactionDetails.TRANSACTIONDATE = DateTime.Now;
+            transactionDetails.PLANDATE = DateTimeHelper.GetFirstDateOfCurrentMonth();
             transactionDetails.EMPLOYEEID = parentEmployeeID;
             transactionDetails.PROJECTID = prjID;
             transactionDetails.ISDELETED = false;
             tdBll.Add(transactionDetails);
 
-            //// 转移到的员工 后续调整：需要待任务完成后，再计入账户
+            //// 转移到的员工  先计入一条状态为已删除的数据，后续待任务完成时再调整：需要待任务完成后，再计入账户
             transactionDetails = new TransactionDetails();
             transactionDetails.ID = Guid.NewGuid().ToString();
             transactionDetails.TRANSACTIONAMOUNT = Convert.ToDecimal(txtAmount.Text.Trim());
             transactionDetails.TRANSACTIONDESCRIPTION = "项目提成（暂存）";
             transactionDetails.TRANSACTIONTYPE = 7;
             transactionDetails.TRANSACTIONDATE = DateTime.Now;
+            transactionDetails.PLANDATE = DateTimeHelper.GetFirstDateOfCurrentMonth();
             transactionDetails.EMPLOYEEID = employeeID;
             transactionDetails.PROJECTID = prjID;
             transactionDetails.ISDELETED = true;

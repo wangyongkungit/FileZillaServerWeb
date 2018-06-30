@@ -216,7 +216,7 @@
                             <asp:TemplateField HeaderText="操作">
                                 <ItemTemplate>
                                     <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" style="float:left; margin-right:10px;" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
-                                    <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style='display:<%= IsBranchLeader ? "block" : "none" %>;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500);' />
+                                    <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style='display:<%= IsBranchLeader ? "block" : "none" %>;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500, "<%# Eval("taskno")%>");' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -445,6 +445,6 @@
     </script>
     
    <script src="Scripts/echarts/echarts.common.min.js"></script>
-    <script src="Scripts/ylyj/employeeHome.js?v=18062301"></script>
+    <script src="Scripts/ylyj/employeeHome.js?v=18063001"></script>
 </body>
 </html>

@@ -45,6 +45,7 @@ namespace FileZillaServerWeb
         private ProjectBLL pBll = new ProjectBLL();
         private AttachmentBLL aBll = new AttachmentBLL();
         private ProjectModifyBLL pmBll = new ProjectModifyBLL();
+        EmployeeBLL eBll = new EmployeeBLL();
         #endregion
 
         //protected override void Render(HtmlTextWriter writer)
@@ -80,6 +81,7 @@ namespace FileZillaServerWeb
                 //}
 
                 DropDownListDataBind();
+                LoadEmployee();
                 if (!string.IsNullOrEmpty(projectID))
                 {
                     Page.Title = "任务维护";
@@ -548,6 +550,18 @@ namespace FileZillaServerWeb
                 LogHelper.WriteLine(ex.Message + ex.StackTrace);
             }
         }
+
+        /// <summary>
+        /// dropdownlist加载员工编号和姓名信息
+        /// </summary>
+        protected void LoadEmployee()
+        {
+            DataTable dtEmp = eBll.GetListUnionNoAndNameForDemonation(string.Empty, "EMPLOYEENO").Tables[0];
+            ddlAssignTo.DataSource = dtEmp;
+            ddlAssignTo.DataTextField = "NOANDNAME";
+            ddlAssignTo.DataValueField = "ID";
+            ddlAssignTo.DataBind();
+        }
         #endregion
 
         #region FillForm
@@ -612,11 +626,18 @@ namespace FileZillaServerWeb
                 StringBuilder finishedPerson = new StringBuilder();
                 ProjectSharingBLL psBll = new ProjectSharingBLL();
                 DataTable dtFinishedPerson = psBll.GetListInnerJoinEmployee(string.Format(" PROJECTID = '{0}'", projectID)).Tables[0];
-                for (int i = 0; i < dtFinishedPerson.Rows.Count; i++)
+                if (dtFinishedPerson != null && dtFinishedPerson.Rows.Count > 0)
                 {
-                    finishedPerson.Append(string.Format("{0}│", dtFinishedPerson.Rows[i]["employeeNo"]));
+                    for (int i = 0; i < dtFinishedPerson.Rows.Count; i++)
+                    {
+                        finishedPerson.Append(string.Format("{0}│", dtFinishedPerson.Rows[i]["employeeNo"]));
+                    }
+                    txtFinishedPerson.Text = finishedPerson.ToString().TrimEnd('│');
                 }
-                txtFinishedPerson.Text = finishedPerson.ToString().TrimEnd('│');
+                else
+                {
+                    divAssign.Visible = true;
+                }
 
                 ProjectSpecialtyBLL pspBll = new ProjectSpecialtyBLL();
                 DataTable dtSpecialtyList = pspBll.GetSpecialtyInnerJoinProject(projectID, string.Empty).Tables[0];
@@ -2514,6 +2535,67 @@ namespace FileZillaServerWeb
             {
                 ExecuteScript("AlertDialog('设置失败！', null);");
                 LogHelper.WriteLine("任务置为完成状态失败");
+            }
+        }
+
+        /// <summary>
+        /// 分配任务
+        /// 修改记录：2018-06-30，添加方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnAssign_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ddlAssignTo.SelectedValue))
+            {
+                return;
+            }
+            try
+            {
+                // 需要转移对象的 empId
+                string employeeID = ddlAssignTo.SelectedValue;
+                string transferToEmpNo = eBll.GetModel(employeeID).EMPLOYEENO;
+                int errorCode = 0;
+                string actPath = string.Empty;
+                string taskRootFolder = string.Empty;
+                string taskFolderWithoutEmpNo = string.Empty;
+                bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectID, string.Empty, string.Empty, false, out actPath, out taskRootFolder, out taskFolderWithoutEmpNo, out errorCode);
+                string sourceDirectory = taskRootFolder;
+                string destinctDirectory = string.Format(taskFolderWithoutEmpNo, transferToEmpNo);
+
+                try
+                {
+                    Directory.Move(sourceDirectory, destinctDirectory);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.WriteLine("|" + sourceDirectory + "|" + destinctDirectory);
+                    LogHelper.WriteLine(ex.Message + ex.StackTrace);
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('目录移动失败！');", true);
+                    return;
+                }
+
+                // 更新任务完成人
+                ProjectSharing ps = new ProjectSharing();
+                ProjectSharingBLL psBll = new ProjectSharingBLL();
+                ps.ID = Guid.NewGuid().ToString();
+                ps.PROJECTID = projectID;
+                ps.FINISHEDPERSON = employeeID;
+                ps.CREATEDATE = DateTime.Now;
+                if (psBll.Add(ps))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('分配成功！');window.location.href='SerialNumberGenerating.aspx?projectID=" + projectID + "';", true);
+                    return;
+                }
+
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('新增完成人失败！');window.location.href='SerialNumberGenerating.aspx?projectID=" + projectID + "';", true);
+                return;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine(ex.Message);
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('分配异常！');", true);
+                return;
             }
         }
     }
