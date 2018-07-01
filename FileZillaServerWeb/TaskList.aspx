@@ -3,7 +3,7 @@
 
 <asp:Content ID="head1" ContentPlaceHolderID="head" runat="server">
     <script src="Scripts/ylyj/tasklist.js?v=18426"></script>
-    <link href="Content/themes/base/ylyj/tasklist.css?v=18426" rel="stylesheet" />
+    <link href="Content/themes/base/ylyj/tasklist.css?v=18070101" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -180,6 +180,7 @@
                                 <span class="xmbh" onclick="GetSort('taskNo');" title="点击可排序">项目编号&#8645</span>
                                 <span class="wcqx" onclick="GetSort('expireDate');" title="点击可排序">完成期限&#8645</span>
                                 <span class="wcr">完成人</span>
+                                <span class="lrr">录入人</span>
                                 <span class="sfwc">是否完成</span>
                                 <span class="sysj">剩余时间</span>
                                 <span class="dp" onclick="GetSort('shop');" title="点击可排序">店铺</span>
@@ -200,6 +201,9 @@
                                 <asp:Label ID="lblExpireDate" runat="server" Text='<%# string.Format("{0:MM-dd HH:mm}", Eval("expireDate")) %>' ToolTip='<%# string.Format("{0:yyyy-MM-dd HH:mm}", Eval("expireDate")) %>' /></span>
                             <span class="wcr">
                                 <asp:Label ID="lblFinishedPerson" runat="server" Text='<%# Eval("finishedPerson").ToString() == string.Empty ? "--" : Eval("finishedPerson") %>' ToolTip="任务暂未分配" /></span>
+                            <span class="lrr">
+                                <asp:Label ID="lblEnteringPerson" runat="server" Text='<%# Eval("enteringPerson") %>' />
+                            </span>
                             <span class="sfwc">
                                 <asp:Label ID="lblFinish" runat="server" Text='<%# Eval("isfinished").ToString() == "1" ? "&#10004" : "&#10007" %>' Font-Size="Medium"
                                     ForeColor='<%# Eval("isfinished").ToString() == "1" ? System.Drawing.ColorTranslator.FromHtml("#00C600") : System.Drawing.ColorTranslator.FromHtml("#FA6356") %>'

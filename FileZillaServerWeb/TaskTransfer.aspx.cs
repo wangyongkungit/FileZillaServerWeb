@@ -13,7 +13,7 @@ using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb
 {
-    public partial class TaskTransfer : System.Web.UI.Page
+    public partial class TaskTransfer : WebPageHelper
     {
         EmployeeProportionBLL epBll = new EmployeeProportionBLL();
         TransactionDetailsBLL tdBll = new TransactionDetailsBLL();
@@ -24,8 +24,23 @@ namespace FileZillaServerWeb
         {
             if (!IsPostBack)
             {
-                hidAmount.Value = Request.QueryString["amount"].ToString();
-                lblAmount.Text = Request.QueryString["amount"].ToString();
+                string prjID = Request.QueryString["prjID"].ToString();
+                decimal amount = Convert.ToDecimal(Request.QueryString["amount"]);
+                string parentEmployeeID = Convert.ToString(Request.QueryString["parentEmployeeID"]);
+                string where = " AND employeeId = '" + parentEmployeeID + "'";
+
+                decimal proportion = 0m;
+                ProjectProportion projectProportion = new ProjectProportionBLL().GetModelList(" projectId = '" + prjID + "'").FirstOrDefault();
+                if (projectProportion != null)
+                {
+                    proportion = projectProportion.PROPORTION ?? 0m;
+                }
+                else
+                {
+                    EmployeeProportion empPro = epBll.GetModelList(where).FirstOrDefault();
+                    proportion = empPro?.PROPORTION ?? 0m;
+                }
+                hidAmount.Value = lblAmount.Text = (amount * proportion).ToString();
                 LoadCanTransferEmp();
             }
         }
@@ -41,12 +56,32 @@ namespace FileZillaServerWeb
             ddlCanTransferEmp.DataValueField = "eID";
             ddlCanTransferEmp.DataTextField = "empNoAndName";
             ddlCanTransferEmp.DataBind();
+            ddlCanTransferEmp.Items.Insert(0, new ListItem("-请选择-", string.Empty));
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(ddlCanTransferEmp.SelectedValue))
             {
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('请选择需要转移到的员工！');", true);
+                return;
+            }
+            try
+            {
+                if (Convert.ToDecimal(txtProportion.Text.Trim()) > 100)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('比例不能超过100%！');", true);
+                    return;
+                }
+                if (Convert.ToDecimal(txtAmount.Text.Trim()) > Convert.ToDecimal(hidAmount.Value))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('不能超过原始金额！');", true);
+                    return;
+                }
+            }
+            catch (Exception ex0)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('数值不正确！');", true);
                 return;
             }
             // 声明变量
@@ -79,25 +114,35 @@ namespace FileZillaServerWeb
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLine("|"+ sourceDirectory + "|" + destinctDirectory);
+                LogHelper.WriteLine("|" + sourceDirectory + "|" + destinctDirectory);
                 LogHelper.WriteLine(ex.Message + ex.StackTrace);
                 ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('目录移动失败！');", true);
                 return;
             }
 
             // 更新部门领导账户，按照配置比例计算出金额后累加到分部领导账户
-            EmployeeProportion proportion = new EmployeeProportionBLL().GetModelList(" employeeId = '" + parentEmployeeID + "'").FirstOrDefault();
+            decimal proportion = 0;
+            ProjectProportion projectProportion = new ProjectProportionBLL().GetModelList(" projectId = '" + prjID + "'").FirstOrDefault();
+            if (projectProportion != null)
+            {
+                proportion = projectProportion.PROPORTION ?? 0m;
+            }
+            else
+            {
+                EmployeeProportion empProportion = new EmployeeProportionBLL().GetModelList(" AND employeeId = '" + parentEmployeeID + "'").FirstOrDefault();
+                proportion = empProportion.PROPORTION ?? 0m;
+            }
             decimal amountToLeader = Convert.ToDecimal(Request.QueryString["amount"]);
             EmployeeAccount empAcctParent = new EmployeeAccount();
             empAcctParent = eaBll.GetModelList(" employeeId = '" + parentEmployeeID + "'").FirstOrDefault();
-            empAcctParent.AMOUNT += amountToLeader * proportion.PROPORTION;
+            empAcctParent.AMOUNT += (amountToLeader * proportion);
             empAcctParent.LASTUPDATEDATE = DateTime.Now;
             eaBll.Update(empAcctParent);
 
             // 添加一条交易记录
             TransactionDetails transactionDetails = new TransactionDetails();
             transactionDetails.ID = Guid.NewGuid().ToString();
-            transactionDetails.TRANSACTIONAMOUNT = amountToLeader * proportion.PROPORTION;
+            transactionDetails.TRANSACTIONAMOUNT = amountToLeader * proportion;
             transactionDetails.TRANSACTIONDESCRIPTION = "分部领导提成";
             transactionDetails.TRANSACTIONTYPE = 6;
             transactionDetails.TRANSACTIONDATE = DateTime.Now;
@@ -131,7 +176,7 @@ namespace FileZillaServerWeb
             ps = psBll.GetModelList(" projectId = '" + prjID + "' AND FInishedperson = '" + parentEmployeeID + "'").FirstOrDefault();
             ps.FINISHEDPERSON = employeeID;
             if (psBll.Update(ps))
-            {                
+            {
                 ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('转移成功！');window.top.location.href='employeeHome.aspx';", true);
                 return;
             }

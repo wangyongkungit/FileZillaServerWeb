@@ -27,7 +27,7 @@ namespace FileZillaServerDAL
             strSql.Append("select count(1) from transactiondetails");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36)           };
             parameters[0].Value = ID;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
@@ -41,28 +41,30 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into transactiondetails(");
-            strSql.Append("ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED)");
+            strSql.Append("ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED)");
             strSql.Append(" values (");
-            strSql.Append("@ID,@TRANSACTIONAMOUNT,@TRANSACTIONDESCRIPTION,@TRANSACTIONDATE,@TRANSACTIONTYPE,@EMPLOYEEID,@PROJECTID,@CREATEDATE,@ISDELETED)");
+            strSql.Append("@ID,@TRANSACTIONAMOUNT,@TRANSACTIONDESCRIPTION,@TRANSACTIONDATE,@PLANDATE,@TRANSACTIONTYPE,@EMPLOYEEID,@PROJECTID,@CREATEDATE,@ISDELETED)");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@TRANSACTIONAMOUNT", MySqlDbType.Decimal,12),
-					new MySqlParameter("@TRANSACTIONDESCRIPTION", MySqlDbType.VarChar,255),
-					new MySqlParameter("@TRANSACTIONDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@TRANSACTIONTYPE", MySqlDbType.Int32,1),
-					new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@ISDELETED", MySqlDbType.Bit)};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@TRANSACTIONAMOUNT", MySqlDbType.Decimal,12),
+                    new MySqlParameter("@TRANSACTIONDESCRIPTION", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@TRANSACTIONDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@PLANDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@TRANSACTIONTYPE", MySqlDbType.Int32,2),
+                    new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@ISDELETED", MySqlDbType.Bit)};
             parameters[0].Value = model.ID;
             parameters[1].Value = model.TRANSACTIONAMOUNT;
             parameters[2].Value = model.TRANSACTIONDESCRIPTION;
             parameters[3].Value = model.TRANSACTIONDATE;
-            parameters[4].Value = model.TRANSACTIONTYPE;
-            parameters[5].Value = model.EMPLOYEEID;
-            parameters[6].Value = model.PROJECTID;
-            parameters[7].Value = model.CREATEDATE;
-            parameters[8].Value = model.ISDELETED;
+            parameters[4].Value = model.PLANDATE;
+            parameters[5].Value = model.TRANSACTIONTYPE;
+            parameters[6].Value = model.EMPLOYEEID;
+            parameters[7].Value = model.PROJECTID;
+            parameters[8].Value = model.CREATEDATE;
+            parameters[9].Value = model.ISDELETED;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -84,6 +86,7 @@ namespace FileZillaServerDAL
             strSql.Append("TRANSACTIONAMOUNT=@TRANSACTIONAMOUNT,");
             strSql.Append("TRANSACTIONDESCRIPTION=@TRANSACTIONDESCRIPTION,");
             strSql.Append("TRANSACTIONDATE=@TRANSACTIONDATE,");
+            strSql.Append("PLANDATE=@PLANDATE,");
             strSql.Append("TRANSACTIONTYPE=@TRANSACTIONTYPE,");
             strSql.Append("EMPLOYEEID=@EMPLOYEEID,");
             strSql.Append("PROJECTID=@PROJECTID,");
@@ -91,24 +94,26 @@ namespace FileZillaServerDAL
             strSql.Append("ISDELETED=@ISDELETED");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@TRANSACTIONAMOUNT", MySqlDbType.Decimal,12),
-					new MySqlParameter("@TRANSACTIONDESCRIPTION", MySqlDbType.VarChar,255),
-					new MySqlParameter("@TRANSACTIONDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@TRANSACTIONTYPE", MySqlDbType.Int32,1),
-					new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@ISDELETED", MySqlDbType.Bit),
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
+                    new MySqlParameter("@TRANSACTIONAMOUNT", MySqlDbType.Decimal,12),
+                    new MySqlParameter("@TRANSACTIONDESCRIPTION", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@TRANSACTIONDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@PLANDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@TRANSACTIONTYPE", MySqlDbType.Int32,2),
+                    new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@ISDELETED", MySqlDbType.Bit),
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
             parameters[0].Value = model.TRANSACTIONAMOUNT;
             parameters[1].Value = model.TRANSACTIONDESCRIPTION;
             parameters[2].Value = model.TRANSACTIONDATE;
-            parameters[3].Value = model.TRANSACTIONTYPE;
-            parameters[4].Value = model.EMPLOYEEID;
-            parameters[5].Value = model.PROJECTID;
-            parameters[6].Value = model.CREATEDATE;
-            parameters[7].Value = model.ISDELETED;
-            parameters[8].Value = model.ID;
+            parameters[3].Value = model.PLANDATE;
+            parameters[4].Value = model.TRANSACTIONTYPE;
+            parameters[5].Value = model.EMPLOYEEID;
+            parameters[6].Value = model.PROJECTID;
+            parameters[7].Value = model.CREATEDATE;
+            parameters[8].Value = model.ISDELETED;
+            parameters[9].Value = model.ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -131,7 +136,7 @@ namespace FileZillaServerDAL
             strSql.Append("delete from transactiondetails ");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36)           };
             parameters[0].Value = ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
@@ -171,10 +176,10 @@ namespace FileZillaServerDAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED from transactiondetails ");
+            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED from transactiondetails ");
             strSql.Append(" where ISDELETED = 0 AND ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36)           };
             parameters[0].Value = ID;
 
             TransactionDetails model = new TransactionDetails();
@@ -214,6 +219,10 @@ namespace FileZillaServerDAL
                 {
                     model.TRANSACTIONDATE = DateTime.Parse(row["TRANSACTIONDATE"].ToString());
                 }
+                if (row["PLANDATE"] != null && row["PLANDATE"].ToString() != "")
+                {
+                    model.PLANDATE = DateTime.Parse(row["PLANDATE"].ToString());
+                }
                 if (row["TRANSACTIONTYPE"] != null && row["TRANSACTIONTYPE"].ToString() != "")
                 {
                     model.TRANSACTIONTYPE = int.Parse(row["TRANSACTIONTYPE"].ToString());
@@ -251,7 +260,7 @@ namespace FileZillaServerDAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED ");
+            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED ");
             strSql.Append(" FROM transactiondetails WHERE ISDELETED = 0 ");
             if (strWhere.Trim() != "")
             {
@@ -337,67 +346,94 @@ namespace FileZillaServerDAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dic, string transactionType, int pageIndex, int pageSize, out int totalAmount)
+        public DataSet GetListJoinEmpAndPrj(Dictionary<string, string> dic, Dictionary<string, bool> dicSelectFlag, string transactionType, int pageIndex, int pageSize, out int totalRecordCount, out int sumAmount, out DataTable exportDataTable)
         {
-            totalAmount = 0;
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append(@"select td.ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,
-                            CASE TRANSACTIONTYPE
-                            WHEN 0 THEN '社保公积金'
-                            WHEN 1 THEN '项目处罚'
-                            WHEN 2 THEN '项目奖励'
-                            WHEN 3 THEN '工资发放'
-                            WHEN 4 THEN '其他收入'
-                            WHEN 5 THEN '其他支出'
-                            WHEN 6 THEN '项目转移'
-                            WHEN 7 THEN '项目提成'
-                            END TRANSACTIONTYPE,td.EMPLOYEEID,td.PROJECTID,td.CREATEDATE,td.ISDELETED,
-                         e.EMPLOYEENO, e.`NAME`, p.TASKNO
-                         FROM transactiondetails td
-                         LEFT JOIN employee e
-                         ON td.EMPLOYEEID = e.ID
-                         LEFT JOIN project p
-                         ON td.PROJECTID = p.ID
-                         WHERE TD.ISDELETED = 0 ");
-            StringBuilder sbWhere = new StringBuilder();
+            totalRecordCount = 0;
+            sumAmount = 0;
+            exportDataTable = new DataTable();
+            StringBuilder sbSelectColumn = new StringBuilder();
+            StringBuilder sbSelectCount = new StringBuilder();
+            StringBuilder sbSumAmount = new StringBuilder();
+            StringBuilder sbExport = new StringBuilder();
+            sbSelectColumn.Append(@"SELECT td.ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,td.PLANDATE,
+                           cf.configValue TRANSACTIONTYPE,td.EMPLOYEEID,td.PROJECTID,td.CREATEDATE,td.ISDELETED,
+                        e.EMPLOYEENO, e.`NAME`, p.TASKNO ");
+            sbSelectCount.Append("SELECT COUNT(*) ");
+            sbSumAmount.Append("SELECT SUM(TRANSACTIONAMOUNT) ");
+            sbExport.Append(@"SELECT e.EMPLOYEENO 员工编号, e.`NAME` 员工姓名, p.TASKNO 任务编号, TRANSACTIONAMOUNT 交易金额,TRANSACTIONDESCRIPTION 描述信息,TRANSACTIONDATE 交易时间,td.PLANDATE 计划时间,
+                           cf.configValue 交易类型, td.CREATEDATE 创建时间 ");
+
+            StringBuilder sbFromAndWhere = new StringBuilder();
+            sbFromAndWhere.Append(@"FROM transactiondetails td
+                        LEFT JOIN employee e
+                        ON td.EMPLOYEEID = e.ID
+                        LEFT JOIN project p
+                        ON td.PROJECTID = p.ID
+                        LEFT JOIN
+                         (
+                             select configkey, configvalue from configvalue cv
+                             left join configtype ct
+                             on cv.configtypeid = ct.configtypeid
+                             WHERE ct.CONFIGTYPENAME = '奖励与处罚类型'
+                           ) cf
+                         ON td.TRANSACTIONTYPE = cf.configkey
+                        WHERE TD.ISDELETED = 0 ");
             if (dic.ContainsKey("employeeId"))
             {
-                sbWhere.AppendFormat(" and employeeId = '{0}'", dic["employeeId"]);
+                sbFromAndWhere.AppendFormat(" AND employeeId = '{0}'", dic["employeeId"]);
             }
             if (string.IsNullOrEmpty(transactionType))
             {
                 if (dic.ContainsKey("transacType"))
                 {
-                    sbWhere.AppendFormat(" and transactionType = '{0}'", dic["transacType"]);
+                    sbFromAndWhere.AppendFormat(" AND transactionType = '{0}'", dic["transacType"]);
                 }
             }
             else
             {
-                sbWhere.Append(" AND transactionType IN (" + transactionType + ")");
+                sbFromAndWhere.Append(" AND transactionType IN (" + transactionType + ")");
             }
             if (dic.ContainsKey("amountFrom"))
             {
-                sbWhere.AppendFormat(" and TRANSACTIONAMOUNT >= {0}", dic["amountFrom"]);
+                sbFromAndWhere.AppendFormat(" AND TRANSACTIONAMOUNT >= {0}", dic["amountFrom"]);
             }
             if (dic.ContainsKey("amountTo"))
             {
-                sbWhere.AppendFormat(" and TRANSACTIONAMOUNT <= {0}", dic["amountTo"]);
+                sbFromAndWhere.AppendFormat(" AND TRANSACTIONAMOUNT <= {0}", dic["amountTo"]);
             }
             if (dic.ContainsKey("dateFrom"))
             {
-                sbWhere.AppendFormat(" and transactiondate >= '{0}'", dic["dateFrom"]);
+                sbFromAndWhere.AppendFormat(" AND transactiondate >= '{0}'", dic["dateFrom"]);
             }
             if (dic.ContainsKey("dateTo"))
             {
-                sbWhere.AppendFormat(" and transactiondate <= '{0}'", dic["dateTo"]);
+                sbFromAndWhere.AppendFormat(" AND transactiondate <= '{0}'", dic["dateTo"]);
             }
             if (dic.ContainsKey("taskNo"))
             {
-                sbWhere.AppendFormat(" AND taskNo like '%" + dic["taskNo"] + "%'");
+                sbFromAndWhere.AppendFormat(" AND taskNo like '%" + dic["taskNo"] + "%'");
             }
-            strSql.Append(sbWhere);
-            strSql.AppendFormat(" ORDER BY orderDate DESC LIMIT {0}, {1}", (pageIndex - 1) * pageSize, pageSize);
-            return DbHelperMySQL.Query(strSql.ToString());
+            // 查询结果集
+            var sqlDataSet = sbSelectColumn.Append(sbFromAndWhere).AppendFormat(" ORDER BY orderDate DESC LIMIT {0}, {1} ", (pageIndex - 1) * pageSize, pageSize);
+
+            // 查询记录总数
+            var sqlCount = sbSelectCount.Append(sbFromAndWhere);
+            totalRecordCount = Convert.ToInt32(DbHelperMySQL.GetSingle(sqlCount.ToString()));
+
+            if (dicSelectFlag.ContainsKey("selectSumAmount") && dicSelectFlag["selectSumAmount"])
+            {
+                var sqlSumAmount = sbSumAmount.Append(sbFromAndWhere);
+                sumAmount = Convert.ToInt32(DbHelperMySQL.GetSingle(sqlSumAmount.ToString()));
+            }
+
+            if (dicSelectFlag.ContainsKey("needExport") && dicSelectFlag["needExport"])
+            {
+                var sqlExport = sbExport.Append(sbFromAndWhere).AppendFormat(" ORDER BY orderDate DESC ");
+                exportDataTable = DbHelperMySQL.Query(sqlExport.ToString()).Tables[0];
+            }
+
+            DataSet ds = DbHelperMySQL.Query(sqlDataSet.ToString());
+            return ds;
         }
 
         ///// <summary>
@@ -422,7 +458,28 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT IFNULL(SUM(IFNULL(TRANSACTIONAMOUNT,0)),0) JF FROM transactiondetails 
-                            WHERE ISDELETED = 0 AND EMPLOYEEID = '"+employeeId + @"' AND TRANSACTIONTYPE = 1 OR TRANSACTIONTYPE = 2 ");
+                            WHERE ISDELETED = 0 AND EMPLOYEEID = '" + employeeId + @"' AND (TRANSACTIONTYPE = 1 OR TRANSACTIONTYPE = 2) ");
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString());
+            if (obj == null)
+            {
+                return 0.0m;
+            }
+            else
+            {
+                return Convert.ToDecimal(obj);
+            }
+        }
+
+        /// <summary>
+        /// 获取其他
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        public decimal GetOtherAmount(string employeeId)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(@"SELECT IFNULL(SUM(IFNULL(TRANSACTIONAMOUNT,0)),0) QT FROM transactiondetails 
+                            WHERE ISDELETED = 0 AND EMPLOYEEID = '" + employeeId + @"' AND (TRANSACTIONTYPE = 4 OR TRANSACTIONTYPE = 5) ");
             object obj = DbHelperMySQL.GetSingle(strSql.ToString());
             if (obj == null)
             {

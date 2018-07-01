@@ -49,7 +49,15 @@ namespace FileZillaServerWeb.Finance
 
         private void LoadTransaction()
         {
+            LoadTransaction(false);
+        }
+
+        private void LoadTransaction(bool isExport)
+        {
+            int sumAmount = 0;
             int totalRowsCount = 0;
+            DataTable dtExport;
+            Dictionary<string, bool> dicSelectFlag = new Dictionary<string, bool>();
             string employeeId = Request.QueryString["employeeID"];// UserProfile.GetInstance()?.ID;
             string transacType = ddlTransacType.SelectedValue;
             string amountFrom = txtAmountFrom.Text.Trim();
@@ -101,10 +109,22 @@ namespace FileZillaServerWeb.Finance
             }
             dicCondition.Add("employeeId", employeeId);
             AspNetPager1.PageSize = 10;
-            DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, inCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+
+            dicSelectFlag.Add("selectSumAmount", true);
+            dicSelectFlag.Add("needExport", isExport);
+            DataTable dt = tdBll.GetListJoinEmpAndPrj(dicCondition, dicSelectFlag, inCondition, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount, out sumAmount, out dtExport).Tables[0];
+            lblSumAmount.Text = sumAmount.ToString();
+            lblRecordCount.Text = totalRowsCount.ToString();
             AspNetPager1.RecordCount = totalRowsCount;
-            gvTransaction.DataSource = dt;
-            gvTransaction.DataBind();
+            if (!isExport)
+            {
+                gvTransaction.DataSource = dt;
+                gvTransaction.DataBind();
+            }
+            else
+            {
+                ExcelHelper.ExportByWeb(dtExport, "交易记录", "交易记录.xls");
+            }
         }
 
         #region Dropdownlist Databind
@@ -181,6 +201,11 @@ namespace FileZillaServerWeb.Finance
         protected void gvTransaction_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
+        }
+
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            LoadTransaction(true);
         }
     }
 }

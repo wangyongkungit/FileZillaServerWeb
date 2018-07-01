@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.SessionState;
 
 namespace FileZillaServerProfile
 {
     [Serializable]
-    public class UserProfile
+    public class UserProfile : IRequiresSessionState
     {
         /// <summary>
         /// 用户ID（唯一标识）

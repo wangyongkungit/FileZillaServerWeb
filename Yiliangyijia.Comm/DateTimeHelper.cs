@@ -82,5 +82,15 @@ namespace Yiliangyijia.Comm
                 return "刚刚";
             }
         }
+
+        /// <summary>
+        /// 获取当月第一天
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime GetFirstDateOfCurrentMonth()
+        {
+            DateTime dtFirstDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            return dtFirstDate;
+        }
     }
 }

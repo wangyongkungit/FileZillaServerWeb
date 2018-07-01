@@ -59,7 +59,7 @@ namespace FileZillaServerWeb
             decimal dProportion = !string.IsNullOrEmpty(strProportion) ? Convert.ToDecimal(strProportion) : 0m;
             DropDownList ddlManager = gvEmployeeProportion.Rows[e.RowIndex].FindControl("ddlManager") as DropDownList;
             string parentEmployeeID = ddlManager.SelectedValue;
-            DataTable dtEmpProportion = epBll.GetList(" employeeID = '" + employeeID + "'").Tables[0];
+            DataTable dtEmpProportion = epBll.GetList(" AND employeeID = '" + employeeID + "'").Tables[0];
             if (dtEmpProportion != null && dtEmpProportion.Rows.Count > 0)
             {
                 EmployeeProportion empProportion = new EmployeeProportion();

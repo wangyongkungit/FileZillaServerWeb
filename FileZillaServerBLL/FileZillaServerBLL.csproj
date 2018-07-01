@@ -63,6 +63,7 @@
     <Compile Include="FileZillaBLL.cs" />
     <Compile Include="ProjectBLL.cs" />
     <Compile Include="ProjectModifyBLL.cs" />
+    <Compile Include="ProjectProportionBLL.cs" />
     <Compile Include="ProjectSharingBLL.cs" />
     <Compile Include="ProjectSpecialtyBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -48,18 +48,18 @@
     <script src="Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         var checkInput = function () {
-            if ($("#txtProportion").val() > 100) {
-                alert("比例不能超过100%");
-                return false;
-            }
-            else if ($("#txtAmount").val() > $("#lblAmount").text()) {
-                alert("金额不能超过原始金额！");
-                return false;
-            }
-            if (!$("#txtProportion").val() || !$("#txtAmount").val()) {
-                alert("请先点击转换按钮计算后再保存！");
-                return false;
-            }
+            //if ($("#txtProportion").val() > 100) {
+            //    alert("比例不能超过100%");
+            //    return false;
+            //}
+            //else if ($("#txtAmount").val() > $("#lblAmount").text()) {
+            //    alert("金额不能超过原始金额！");
+            //    return false;
+            //}
+            //if (!$("#txtProportion").val() || !$("#txtAmount").val()) {
+            //    alert("请先点击转换按钮计算后再保存！");
+            //    return false;
+            //}
             return true;
         }
         $().ready(function () {
@@ -84,7 +84,7 @@
     <div style="width:90%; text-align:center;">
         <asp:HiddenField ID="hidAmount" runat="server" />
         <div style="width:100%; height:38px; margin:0 auto;">
-            <label style="margin-right:10px;">您的金额</label>
+            <label style="margin-right:10px;">您现有的提成金额</label>
             <asp:Label ID="lblAmount" runat="server"></asp:Label>
             <label style="margin-right:10px;">，转移给</label>
             <asp:DropDownList ID="ddlCanTransferEmp" runat="server"></asp:DropDownList>

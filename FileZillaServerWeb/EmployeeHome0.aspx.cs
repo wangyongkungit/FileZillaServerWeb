@@ -15,7 +15,7 @@ using System.Web.UI.WebControls;
 
 namespace FileZillaServerWeb
 {
-    public partial class employeeHome : WebPageHelper
+    public partial class EmployeeHome0 : System.Web.UI.Page
     {
         FileZillaServerBLL.EmployeeDominationBLL eDal = new FileZillaServerBLL.EmployeeDominationBLL();
         TaskAssignConfigDetailsBLL tacdBll = new TaskAssignConfigDetailsBLL();
@@ -24,11 +24,9 @@ namespace FileZillaServerWeb
         ProjectDAL prjDal = new ProjectDAL();
         TaskTrendBLL ttBll = new TaskTrendBLL();
         WithdrawDetailsBLL wdBll = new WithdrawDetailsBLL();
-        EmployeeProportionBLL epBll = new EmployeeProportionBLL();
         protected static string EmployeeID { get; set; }
         protected static string UserName { get; set; }
         protected static string EmployeeNo { get; set; }
-        protected static bool IsBranchLeader { get; set; }
         protected static List<Cerficate> lstCerficate { get; set; }
         protected static List<string> xData = new List<string>();
         protected static List<int> yData = new List<int>();
@@ -43,7 +41,7 @@ namespace FileZillaServerWeb
                 LoadSpecialties();
                 LoadCerficate();
                 LoadBalance();
-                //LoadTaskTrend();
+                LoadTaskTrend();
                 LoadDataNeedReload();
             }
         }
@@ -62,7 +60,6 @@ namespace FileZillaServerWeb
             EmployeeID = user.ID;
             UserName = user.Name;
             EmployeeNo = user.EmployeeNO;
-            IsBranchLeader = user.isBranchLeader;
             //if (string.IsNullOrEmpty(employeeID))
             //{
             //    bool isAdmin = user.Role.Any(item => item.RoleName == "超级管理员");
@@ -192,7 +189,7 @@ namespace FileZillaServerWeb
         {
             EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + EmployeeID + "'").FirstOrDefault();
             decimal withdraw = wdBll.GetModelList(" employeeID = '" + EmployeeID + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
-            //lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
+            lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
         }
 
         #region 页码事件
@@ -230,31 +227,6 @@ namespace FileZillaServerWeb
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                #region 计算提成金额
-                string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
-                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + EmployeeID + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
-                Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
-                lblProportionAmount.Text = tcje.ToString();
-
-                decimal proportion = 0m;
-                // 先看此项目是否单独设置了提成
-                ProjectProportion projectProportion = new ProjectProportionBLL().GetModelList(" projectId = '" + prjId + "'").FirstOrDefault();
-                // 如果设置了单独提成，则采用单独设置的比例
-                if (projectProportion != null)
-                {
-                    proportion = projectProportion.PROPORTION ?? 0m;
-                }
-                // 如果未设置，则采用默认提成
-                else
-                {
-                    EmployeeProportion empPro = epBll.GetModelList(" AND EMPLOYEEID = '" + EmployeeID + "'").FirstOrDefault();
-                    proportion = empPro?.PROPORTION ?? 0m;
-                }
-                Label lblExpectAmount = e.Row.FindControl("lblExpectAmount") as Label;
-                Project prj = new ProjectBLL().GetModel(prjId);
-                lblExpectAmount.Text = (prj.ORDERAMOUNT * Convert.ToDouble(proportion)).ToString(); 
-                #endregion
-
                 #region 计算剩余时间
                 bool isFinished = Convert.ToInt32(gvProject.DataKeys[e.Row.RowIndex].Values[1]) == 1;
                 Label lblTimeRemain = e.Row.FindControl("lblTimeRemain") as Label;
@@ -300,7 +272,8 @@ namespace FileZillaServerWeb
                     else if (dtExpire < DateTime.Now)
                     {
                         TimeSpan ts = DateTime.Now - dtExpire;
-                        lblTimeRemain.Text = string.Format("逾期{0}", Common.TransformTimeSpan(ts));
+                        //e.Row.Cells[2].Text += "（已逾期" + Math.Floor( ts.TotalHours) + "小时）";
+                        lblTimeRemain.Text += string.Format("逾期{0}", Common.TransformTimeSpan(ts));
                         lblTimeRemain.ForeColor = System.Drawing.Color.Red;
                     }
                 }
@@ -313,50 +286,47 @@ namespace FileZillaServerWeb
                 if (dt.Rows.Count > 0)
                 {
                     string folderName = Convert.ToString(dt.Rows[0]["folderName"]);
-                    if (folderName.Contains("修改"))
-                    {
-                        string strExpireDate = Convert.ToString(dt.Rows[0]["expireDate"]);
+                    string strExpireDate = Convert.ToString(dt.Rows[0]["expireDate"]);
 
-                        DateTime dtExpire = Convert.ToDateTime(strExpireDate);
-                        if (DateTime.Now < dtExpire)
+                    DateTime dtExpire = Convert.ToDateTime(strExpireDate);
+                    if (DateTime.Now < dtExpire)
+                    {
+                        TimeSpan ts = dtExpire - DateTime.Now;
+                        //设置提醒label文本
+                        lblModifyTaskTimeRemain.Text = string.Format("{0}剩余{1}小时", folderName, Math.Floor(ts.TotalHours));
+                        if (ts.TotalHours <= 3)
                         {
-                            TimeSpan ts = dtExpire - DateTime.Now;
-                            //设置提醒label文本
-                            lblModifyTaskTimeRemain.Text = string.Format("{0}剩余{1}小时", folderName, Math.Floor(ts.TotalHours));
-                            if (ts.TotalHours <= 3)
-                            {
-                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF0000");//不足3小时，红色
-                                lblModifyTaskTimeRemain.Font.Bold = true;
-                            }
-                            else if (ts.TotalHours <= 6)
-                            {
-                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF8800");//不足6小时，橙色
-                                lblModifyTaskTimeRemain.Font.Bold = true;
-                            }
-                            else if (ts.TotalHours <= 12)
-                            {
-                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#EEEE00");//不足12小时，黄色
-                                lblModifyTaskTimeRemain.Font.Bold = true;
-                            }
-                            else if (ts.TotalHours <= 24)
-                            {
-                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF77FF");//不足24小时，洋红色
-                            }
-                            else if (ts.TotalHours <= 48)
-                            {
-                                lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#57C600");//48小时以上，酸橙色(浅绿)
-                            }
-                            else
-                            {
-                                lblModifyTaskTimeRemain.Text = string.Format("{0}剩余&gt;2天", folderName);
-                            }
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF0000");//不足3小时，红色
+                            lblModifyTaskTimeRemain.Font.Bold = true;
                         }
-                        else if (dtExpire < DateTime.Now)
+                        else if (ts.TotalHours <= 6)
                         {
-                            TimeSpan ts = DateTime.Now - dtExpire;
-                            lblModifyTaskTimeRemain.Text = string.Format("{0}逾期{1}", folderName, Common.TransformTimeSpan(ts));
-                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.Color.Red;
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF8800");//不足6小时，橙色
+                            lblModifyTaskTimeRemain.Font.Bold = true;
                         }
+                        else if (ts.TotalHours <= 12)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#EEEE00");//不足12小时，黄色
+                            lblModifyTaskTimeRemain.Font.Bold = true;
+                        }
+                        else if (ts.TotalHours <= 24)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF77FF");//不足24小时，洋红色
+                        }
+                        else if (ts.TotalHours <= 48)
+                        {
+                            lblModifyTaskTimeRemain.ForeColor = System.Drawing.ColorTranslator.FromHtml("#57C600");//48小时以上，酸橙色(浅绿)
+                        }
+                        else
+                        {
+                            lblModifyTaskTimeRemain.Text = string.Format("{0}剩余&gt;2天", folderName);
+                        }
+                    }
+                    else if (dtExpire < DateTime.Now)
+                    {
+                        TimeSpan ts = DateTime.Now - dtExpire;
+                        lblModifyTaskTimeRemain.Text = string.Format("{0}逾期{1}", folderName, Common.TransformTimeSpan(ts));
+                        lblModifyTaskTimeRemain.ForeColor = System.Drawing.Color.Red;
                     }
                 }
                 #endregion
@@ -367,20 +337,6 @@ namespace FileZillaServerWeb
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             LoadProject();
-        }
-
-        protected void gvProject_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            // 置为完成
-            if (e.CommandName == "setFinished")
-            {
-                string prjId = e.CommandArgument.ToString();
-                Project prj = new ProjectBLL().GetModel(prjId);
-                prj.ISFINISHED = 1;
-                new ProjectBLL().Update(prj);
-                LoadProject();
-                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('设置成功！');", true);
-            }
         }
     }
 }

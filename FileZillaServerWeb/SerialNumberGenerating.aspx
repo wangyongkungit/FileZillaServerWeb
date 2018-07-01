@@ -351,10 +351,12 @@
                 <asp:Label ID="lblGenerateSuccess" runat="server" Visible="false" Text="&#10004" Font-Bold="true" Font-Size="X-Large" ForeColor="#00C600" />
                 <input id="btnCopy" name="btnCopy" type="button" value="复制到剪贴板" data-clipboard-action="copy" data-clipboard-target="#txtTaskName" class="button" style="display:none;" />                
             </div>
-            <div class="result" id="divAssign" runat="server" visible="false">
+            <div class="result" style="width:auto; margin: 0 auto; text-align:center;" id="divAssign" runat="server" visible="false">
                 <div>
                     <label>分配给：</label>
-                    <asp:DropDownList ID="ddlAssignTo" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlAssignTo" runat="server" OnSelectedIndexChanged="ddlAssignTo_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                    <asp:TextBox ID="txtDefaultProportion" runat="server" Width="80" Enabled="false"></asp:TextBox>
+                    <asp:TextBox ID="txtNewProportion" runat="server" Width="80"></asp:TextBox>
                     <asp:Button ID="btnAssign" runat="server" Text="分配" OnClick="btnAssign_Click" CssClass="button"/>
                 </div>
             </div>
@@ -367,7 +369,7 @@
 
 
     <div id="project" class="container" style="clear:both;">
-     <p>{{taskno}}</p>
+     <%--<p>{{taskno}}</p>--%>
         <div id="meun">
             <div class="row">
                 <div class="col -12" style="text-align: left;">

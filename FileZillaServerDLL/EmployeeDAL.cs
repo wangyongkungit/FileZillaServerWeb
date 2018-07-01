@@ -280,11 +280,7 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,AVAILABLE,DINGTALKUSERID ");
-            strSql.Append(" FROM employee ");
-            if (strWhere.Trim() != "")
-            {
-                strSql.Append(" where AVAILABLE = 1 ");
-            }
+            strSql.Append(" FROM employee where AVAILABLE = 1 ");
             if (!string.IsNullOrEmpty(strWhere))
             {
                 strSql.Append(strWhere);
@@ -306,11 +302,7 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,EMPLOYEENO,CONCAT_WS(' - ',EMPLOYEENO,NAME) NOANDNAME");
-            strSql.Append(" FROM employee ");
-            if (strWhere.Trim() != "")
-            {
-                strSql.Append(" where AIVILABLE = 1 ");
-            }
+            strSql.Append(" FROM employee  where AVAILABLE = 1 ");
             if (!string.IsNullOrEmpty(strWhere))
             {
                 strSql.Append(strWhere);

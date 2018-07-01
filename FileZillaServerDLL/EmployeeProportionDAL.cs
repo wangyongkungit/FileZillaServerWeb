@@ -215,10 +215,10 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select ID,EMPLOYEEID,PROPORTION,PARENTEMPLOYEEID,ISBRANCHLEADER ");
-            strSql.Append(" FROM employeeproportion ");
+            strSql.Append(" FROM employeeproportion where 1 = 1 ");
             if (strWhere.Trim() != "")
             {
-                strSql.Append(" where " + strWhere);
+                strSql.Append(strWhere);
             }
             return DbHelperMySQL.Query(strSql.ToString());
         }
@@ -298,7 +298,7 @@ namespace FileZillaServerDAL
         public DataSet GetEmployeeCanTransfer(string parentEmployeeID)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append(@"SELECT e.ID eID, e.EMPLOYEENO, e.`NAME`, ep.proportion, ep.parentEmployeeID, ep.isBranchLeader FROM employee e
+            strSql.Append(@"SELECT e.ID eID, e.EMPLOYEENO, e.`NAME`,CONCAT(e.EMPLOYEENO,' - ',e.`NAME`) empNoAndName, ep.proportion, ep.parentEmployeeID, ep.isBranchLeader FROM employee e
                              LEFT JOIN employeeProportion ep
                              ON e.ID = ep.employeeID 
                              WHERE e.AVAILABLE = 1 AND parentEmployeeID = @parentEmployeeID");

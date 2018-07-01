@@ -561,6 +561,7 @@ namespace FileZillaServerWeb
             ddlAssignTo.DataTextField = "NOANDNAME";
             ddlAssignTo.DataValueField = "ID";
             ddlAssignTo.DataBind();
+            ddlAssignTo.Items.Insert(0, new ListItem("-请选择-", string.Empty));
         }
         #endregion
 
@@ -2552,6 +2553,12 @@ namespace FileZillaServerWeb
             }
             try
             {
+                Project prj = new ProjectBLL().GetModel(projectID);
+                if (prj == null)
+                {
+                    return;
+                }
+                string taskNo = prj.TASKNO;
                 // 需要转移对象的 empId
                 string employeeID = ddlAssignTo.SelectedValue;
                 string transferToEmpNo = eBll.GetModel(employeeID).EMPLOYEENO;
@@ -2578,12 +2585,34 @@ namespace FileZillaServerWeb
                 // 更新任务完成人
                 ProjectSharing ps = new ProjectSharing();
                 ProjectSharingBLL psBll = new ProjectSharingBLL();
+                TaskRemindingBLL trBll = new TaskRemindingBLL();
+
                 ps.ID = Guid.NewGuid().ToString();
                 ps.PROJECTID = projectID;
                 ps.FINISHEDPERSON = employeeID;
                 ps.CREATEDATE = DateTime.Now;
                 if (psBll.Add(ps))
                 {
+                    string newProportin = txtNewProportion.Text.Trim();
+                    if (!String.IsNullOrEmpty(newProportin))
+                    {
+                        ProjectProportion pp = new ProjectProportion();
+                        pp.ID = Guid.NewGuid().ToString();
+                        pp.PROJECTID = projectID;
+                        pp.PROPORTION = Convert.ToDecimal(newProportin);
+                        new ProjectProportionBLL().Add(pp);
+                    }
+
+                    // 发送到的员工类型，2是工程师
+                    string toUserType = "2";
+                    if (!trBll.IsExist(transferToEmpNo, taskNo, null, "0", toUserType))
+                    {
+                        int addTaskRemindingFlag = trBll.Add(transferToEmpNo, string.Empty, taskNo, null, "0", DateTime.Now.ToString(), null, "0", "0", toUserType);
+                        if (addTaskRemindingFlag > 0)
+                        {
+                            LogHelper.WriteLine("【任务监控】成功添加任务【" + taskNo + "】分配给完成人【" + taskNo + "】提醒");
+                        }
+                    }
                     ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('分配成功！');window.location.href='SerialNumberGenerating.aspx?projectID=" + projectID + "';", true);
                     return;
                 }
@@ -2597,6 +2626,13 @@ namespace FileZillaServerWeb
                 ClientScript.RegisterStartupScript(this.GetType(), Guid.NewGuid().ToString(), "alert('分配异常！');", true);
                 return;
             }
+        }
+
+        protected void ddlAssignTo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string employeeId = ddlAssignTo.SelectedValue;
+            decimal proportion = new EmployeeProportionBLL().GetModelList(" AND employeeId = '" + employeeId + "' ").FirstOrDefault()?.PROPORTION ?? 0m;
+            txtDefaultProportion.Text = "默认 " + proportion.ToString();
         }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Interface\TaskTrendInterface.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectModify.cs" />
+    <Compile Include="ProjectProportion.cs" />
     <Compile Include="ProjectSharing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightDown.cs" />

@@ -627,7 +627,7 @@ namespace FileZillaServerDAL
                         zffs.configvalue PAYMENTMETHOD,
                         SHOP SHOP_,TRANSACTIONSTATUS TRANSACTIONSTATUS_,PAYMENTMETHOD PAYMENTMETHOD_,
 
-                        p.ORDERDATE,p.WANGWANGNAME,p.TASKNO,p.EXPIREDATE,p.TIMENEEDED,p.ORDERAMOUNT,p.PROPORTION,p.QQ,
+                        p.ORDERDATE,p.WANGWANGNAME,p.TASKNO,p.EXPIREDATE,p.TIMENEEDED,p.ORDERAMOUNT,p.PROPORTION,p.QQ, e2.employeeNo enteringPerson,
                         p.MOBILEPHONE,p.EMAIL,p.isFinished,jyzt.configvalue TRANSACTIONSTATUS,p.REFUND,p.REMARKS,p.ISCREATEDFOLDER,p.MATERIALISUPLOAD,
                         re.PROVINCENAME,jjrj.configvalue VALUATESOFTWARE,
                         zylb.configvalue SPECIALTYCATEGORY,jmrj.configvalue MODELINGSOFTWARE,
@@ -701,7 +701,9 @@ namespace FileZillaServerDAL
             }
             strSqlFrom.Append(@" LEFT JOIN 
                     (select ID,employeeno from employee) emp
-                     on PS.FINISHEDPERSON = emp.ID");
+                     on PS.FINISHEDPERSON = emp.ID 
+                     LEFT JOIN EMPLOYEE E2
+                     ON p.enteringPerson = e2.ID ");
             //2017-04-13 11-00-42 End
 
             strSqlFrom.Append(sbWhere);
@@ -975,7 +977,7 @@ namespace FileZillaServerDAL
         public DataTable GetProjectForEmployeeHome(string employeeID, string where, int pageIndex, int pageSize, out int totalAmount)
         {
             totalAmount = 0;
-            StringBuilder selectForAll = new StringBuilder( "SELECT p.ID prjID, p.TASKNO, p.EXPIREDATE, p.ISFINISHED, e.EMPLOYEENO");
+            StringBuilder selectForAll = new StringBuilder( "SELECT p.ID prjID, p.TASKNO, p.orderAmount, p.EXPIREDATE, p.ISFINISHED, e.EMPLOYEENO");
             StringBuilder selectForCount = new StringBuilder( "SELECT COUNT(*) ");
             StringBuilder fromClause = new StringBuilder();
             fromClause.AppendFormat(@" FROM project p

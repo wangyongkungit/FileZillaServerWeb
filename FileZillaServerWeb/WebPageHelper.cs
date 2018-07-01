@@ -9,7 +9,14 @@ namespace FileZillaServerWeb
 {
     public class WebPageHelper : Page
     {
-        public WebPageHelper() { }
+        public WebPageHelper()
+        {
+            //if (UserProfile.GetInstance() == null)
+            //{
+            //    Response.Redirect("Tip.html", true);
+            //    Response.End();
+            //}
+        }
 
         public void ValidatePermission(string requestUrl)
         {

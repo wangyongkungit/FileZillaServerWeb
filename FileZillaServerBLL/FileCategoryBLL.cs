@@ -312,7 +312,12 @@ namespace FileZillaServerBLL
                         Project prj = new ProjectBLL().GetModel(projectId);
                         taskNo = prj.TASKNO;
                         string rootPath = Convert.ToString(ConfigurationManager.AppSettings["taskAllotmentPath"]);
+                        string employeePath = Convert.ToString(ConfigurationManager.AppSettings["employeePath"]);
                         string taskNoFinalFolder = Directory.GetDirectories(rootPath, taskNo + "*", SearchOption.TopDirectoryOnly).FirstOrDefault();
+                        string lastFolder = string.Empty;
+                        string[] folders = taskNoFinalFolder.Split('\\');
+                        lastFolder = folders[folders.Length - 1];
+                        taskFolderWithoutEmpNo = string.Format("{0}{1}\\{2}", employeePath, "{0}", lastFolder);
                         if (!string.IsNullOrEmpty(taskNoFinalFolder))
                         {
                             taskRootFolder = taskNoFinalFolder;

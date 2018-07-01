@@ -136,9 +136,9 @@ namespace FileZillaServerBLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dicConditon, string transactionType, int pageIndex, int pageSize, out int totalAmount)
+        public DataSet GetListJoinEmpAndPrj(Dictionary<string,string> dicConditon, Dictionary<string, bool> dicSelectFlag, string transactionType, int pageIndex, int pageSize, out int totalAmount, out int sumAmount, out DataTable exportDataTable)
         {
-            return dal.GetListJoinEmpAndPrj(dicConditon, transactionType, pageIndex, pageSize, out totalAmount);
+            return dal.GetListJoinEmpAndPrj(dicConditon, dicSelectFlag, transactionType, pageIndex, pageSize, out totalAmount, out sumAmount, out exportDataTable);
         }
 
         /// <summary>
@@ -147,6 +147,16 @@ namespace FileZillaServerBLL
         public decimal GetRewardAndAmercementAmount(string employeeId)
         {
             return dal.GetRewardAndAmercementAmount(employeeId);
+        }
+
+        /// <summary>
+        /// 获取其他
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        public decimal GetOtherAmount(string employeeId)
+        {
+            return dal.GetOtherAmount(employeeId);
         }
         #endregion  ExtensionMethod
     }

@@ -19,6 +19,7 @@ namespace FileZillaServerModel
         private decimal? _transactionamount = 0.00M;
         private string _transactiondescription;
         private DateTime? _transactiondate;
+        private DateTime? _plandate;
         private int? _transactiontype;
         private string _employeeid;
         private string _projectid;
@@ -55,6 +56,14 @@ namespace FileZillaServerModel
         {
             set { _transactiondate = value; }
             get { return _transactiondate; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? PLANDATE
+        {
+            set { _plandate = value; }
+            get { return _plandate; }
         }
         /// <summary>
         /// 

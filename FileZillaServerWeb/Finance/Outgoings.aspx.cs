@@ -47,7 +47,10 @@ namespace FileZillaServerWeb.Finance
         /// </summary>
         private void LoadTransaction()
         {
+            int sumAmount = 0;
             int totalRowsCount = 0;
+            DataTable dtExport;
+            Dictionary<string, bool> dicSelectFlag = new Dictionary<string, bool>();
             string employeeID = ddlEmployeeName.SelectedValue;
             Dictionary<string, string> dicCondition = new Dictionary<string, string>();
             string transacType = ddlTransacType.SelectedValue;
@@ -57,7 +60,7 @@ namespace FileZillaServerWeb.Finance
             }
             dicCondition.Add("employeeId", employeeID);
             AspNetPager1.PageSize = 10;
-            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount).Tables[0];
+            DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, dicSelectFlag, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount, out sumAmount, out dtExport).Tables[0];
             AspNetPager1.RecordCount = totalRowsCount; Page.Title += totalRowsCount;
             gvTransaction.DataSource = dtTransac;
             gvTransaction.DataBind();

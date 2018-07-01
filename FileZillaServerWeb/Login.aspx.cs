@@ -21,7 +21,7 @@ namespace FileZillaServerWeb
     /// 创建时间：2016-03-02
     /// 修改历史：2017-03-02 Yongkun Wang 创建
     /// </summary>
-    public partial class Login : WebPageHelper
+    public partial class Login : Page
     {
         EmployeeBLL empBll = new EmployeeBLL();
 
@@ -243,5 +243,24 @@ namespace FileZillaServerWeb
             }
         }
         #endregion
+
+        /// <summary>
+        /// 弹出消息框
+        /// </summary>
+        /// <param name="message"></param>
+        public void Alert(string message)
+        {
+            message = message.Replace("'", "''");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('" + message + "')", true);
+        }
+
+        /// <summary>
+        /// 执行JavaScript脚本
+        /// </summary>
+        /// <param name="script"></param>
+        public void ExecuteScript(string script)
+        {
+            ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), script, true);
+        }
     }
 }

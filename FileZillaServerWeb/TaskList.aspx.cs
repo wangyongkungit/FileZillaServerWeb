@@ -232,7 +232,7 @@ namespace FileZillaServerWeb
             for (int i = 0; i < lstRole.Count; i++)
             {
                 //如果角色名称中包含管理员，则判定是管理员
-                if (lstRole[i].RoleName == "管理员")
+                if (lstRole[i].RoleName.Contains("管理员"))
                 {
                     isAdmin = true;
                     break;

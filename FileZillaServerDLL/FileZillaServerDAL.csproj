@@ -62,6 +62,7 @@
     <Compile Include="MySqlHelper.cs" />
     <Compile Include="ProjectDAL.cs" />
     <Compile Include="ProjectModifyDAL.cs" />
+    <Compile Include="ProjectProportionDAL.cs" />
     <Compile Include="ProjectSharingDAL.cs" />
     <Compile Include="ProjectSpecialtyDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

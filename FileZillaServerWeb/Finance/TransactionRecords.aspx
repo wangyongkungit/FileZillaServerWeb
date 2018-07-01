@@ -55,6 +55,7 @@
                     </div>
                     <div class="right">
                         <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click" CssClass="mya" />
+                        <asp:Button ID="btnExport" runat="server" Text="导出" OnClick="btnExport_Click" CssClass="mya" />
                     </div>
                 </div>
                 <asp:GridView ID="gvTransaction" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCommand="gvTransaction_RowCommand" CssClass="tbl">
@@ -99,18 +100,27 @@
                         <span>暂无记录</span>
                     </EmptyDataTemplate>
                 </asp:GridView>
-                <div class="aspNetPager">
-                    <webdiyer:aspnetpager id="AspNetPager1" runat="server" onpagechanged="AspNetPager_PageChanged" height="30"
-                        firstpagetext="首页" lastpagetext="尾页" nextpagetext="下一页" prevpagetext="上一页" showpageindexbox="Never"
-                        alwaysshow="true" urlpaging="False" reverseurlpageindex="True" textbeforepageindexbox="跳到第" textafterpageindexbox="页"
-                        cssclass="pagination" pagingbuttonlayouttype="UnorderedList" pagingbuttonspacing="0" currentpagebuttonclass="active">
-                </webdiyer:aspnetpager>
-                    <div style="height: 30px; line-height: 30px; float: right;">
-                        <label>跳转到</label><asp:TextBox ID="tb_pageindex" runat="server"></asp:TextBox><label>页</label>
-                        <asp:Button ID="btnGoPage" runat="server" Text="转到" OnClick="btnGoPage_Click" ValidationGroup="pageGo" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="必须输入页索引" ForeColor="Red" ControlToValidate="tb_pageindex" Display="Dynamic" ValidationGroup="pageGo" />
-                        <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="tb_pageindex" Operator="DataTypeCheck" Type="Integer" ErrorMessage="页索引必须是整数" ForeColor="Red" Display="Dynamic" />
-                        <asp:Label ID="lbl_error" runat="server" ForeColor="Red" EnableViewState="false"></asp:Label>
+                <div>
+                    <div style="float:left;">
+                        <label>共</label>
+                        <asp:Label ID="lblRecordCount" runat="server"></asp:Label>
+                        <label>条记录</label>
+                        <label style="margin-left:9px;">金额合计：</label>
+                        <asp:Label ID="lblSumAmount" runat="server"></asp:Label>
+                    </div>
+                    <div class="aspNetPager">
+                        <webdiyer:AspNetPager ID="AspNetPager1" runat="server" OnPageChanged="AspNetPager_PageChanged" Height="30"
+                            FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" ShowPageIndexBox="Never"
+                            AlwaysShow="true" UrlPaging="False" ReverseUrlPageIndex="True" TextBeforePageIndexBox="跳到第" TextAfterPageIndexBox="页"
+                            CssClass="pagination" PagingButtonLayoutType="UnorderedList" PagingButtonSpacing="0" CurrentPageButtonClass="active">
+                        </webdiyer:AspNetPager>
+                        <div style="height: 30px; line-height: 30px; float: right;">
+                            <label>跳转到</label><asp:TextBox ID="tb_pageindex" runat="server"></asp:TextBox><label>页</label>
+                            <asp:Button ID="btnGoPage" runat="server" Text="转到" OnClick="btnGoPage_Click" ValidationGroup="pageGo" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="必须输入页索引" ForeColor="Red" ControlToValidate="tb_pageindex" Display="Dynamic" ValidationGroup="pageGo" />
+                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="tb_pageindex" Operator="DataTypeCheck" Type="Integer" ErrorMessage="页索引必须是整数" ForeColor="Red" Display="Dynamic" />
+                            <asp:Label ID="lbl_error" runat="server" ForeColor="Red" EnableViewState="false"></asp:Label>
+                        </div>
                     </div>
                 </div>
             </div>

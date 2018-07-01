@@ -20,17 +20,8 @@
                 <!-- 头部区域（可配合layui已有的水平导航） -->
                 <ul class="layui-nav layui-layout-left layui-bg-green">
                     <li class="layui-nav-item">
-                        <%--<a href="">前台</a>--%>
                         <%= EmployeeNo %>
                     </li>
-                    <!--<li class="layui-nav-item">
-                    <a href="javascript:;">其它系统</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">邮件管理</a></dd>
-                        <dd><a href="">消息管理</a></dd>
-                        <dd><a href="">授权管理</a></dd>
-                    </dl>
-                </li>-->
                 </ul>
                 <%= EmployeeNo %>
                 <ul class="layui-nav layui-layout-right">
@@ -51,26 +42,7 @@
                 <div class="layui-side-scroll">
                     <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                     <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                        <%--<li class="layui-nav-item layui-nav-itemed">--%>
-                            <%--<a class="" href="javascript:;">我自己</a>
-                            <dl class="layui-nav-child">
-                                <dd><a href="javascript:;">C004</a></dd>
-                                <dd><a href="javascript:;">C005</a></dd>
-                                <dd><a href="javascript:;">C006</a></dd>
-                                <dd><a href="javascript:;">C011</a></dd>
-                            </dl>--%>
                             <asp:TreeView ID="tvEmployees" runat="server" OnSelectedNodeChanged="tvEmployees_SelectedNodeChanged" CssClass="treeview" ForeColor="White"></asp:TreeView>
-                        <%--</li>--%>
-                        <!--<li class="layui-nav-item">
-                        <a href="javascript:;">解决方案</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="">超链接</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">云市场</a></li>
-                    <li class="layui-nav-item"><a href="">发布商品</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -79,23 +51,23 @@
                 <!-- 内容主体区域 -->
                 <div style="padding: 15px;">
                     <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md5" style="height: inherit;">
+                        <div class="layui-col-md5 topheight">
                             <div style="border: 1px; background-color: #dddddd; height: inherit;">
                                 <div style="height: 260px; padding: 10px;">
                                     <div class="layui-row layui-col-md6">
-                                        <h6 style="background-color:#007bff; height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-radius:5px;padding:2px 0px 2px 10px;"
+                                        <h6 style="background-color:#007bff; height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
                                             onclick='SetQualityScore("<%= EmployeeID %>", "<%= EmployeeNo %>", "1");'><a>我的技能</a></h6>
                                         <div id="divMySkills" runat="server" css="skill"></div>
                                     </div>
                                     <div class="layui-row layui-col-md6">
-                                        <h6 style="background-color:#28a745;height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-radius:5px;padding:2px 0px 2px 10px;"
+                                        <h6 style="background-color:#28a745;height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400;border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
                                              onclick='SetMyCertificate("<%= EmployeeID %>");'><a>我的证件</a></h6>
-                                        <img id="imgCerficate" runat="server" style="width:100%;height:216px; overflow:hidden; border-radius:7px;" />
+                                        <img id="imgCerficate" runat="server" style="width:100%;height:216px; overflow:hidden; border-bottom-left-radius:7px;border-bottom-right-radius:7px;" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-md2" style="height: inherit;">
+                        <div class="layui-col-md2 topheight">
                             <div style="background: #c3e4b1; height: 100%;">
                                 <div style="height: 260px; padding: 10px;">
                                     <div id="chart1" style="width:95%; height:95%;float:left;">
@@ -104,7 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-md1" style="height: inherit;">
+                        <div class="layui-col-md1 topheight">
                             <div style="background-color: #a2c1a6; height: 100%;">
                                 <div style="height: 260px; text-align: center; padding-top: 25px;">
                                     <span>已完成项目</span>
@@ -122,10 +94,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-md4" style="height: inherit;">
+                        <div class="layui-col-md4 topheight">
                             <div style="background: #e2e2e2; height: inherit;">
                                 <div style="height: 260px; padding: 10px;">
-                                    <h6 style="background-color:#007bff; height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-radius:5px;padding:2px 0px 2px 10px;"
+                                    <h6 style="background-color:#007bff; height:28px;line-height:28px;color:white;font-size:20px;font-weight:400; border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
                                             ><a>工作动态</a></h6>
                                     <asp:GridView ID="gvTaskTrend" runat="server" AutoGenerateColumns="false" CssClass="layui-table" lay-even ShowHeader="false" >
                             <Columns>
@@ -170,71 +142,74 @@
                                         <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"  CssClass="layui-btn" style="width:100%; height:34px;line-height:34px;"/>
                                     </div>
                                 </div>
-<%--                                <asp:GridView ID="gvList" runat="server" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px;">
+                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" OnRowCommand="gvProject_RowCommand" Width="100%" CssClass="layui-table" lay-size="sm" lay-even Style="margin-top: 0px; text-align: center;">
                                     <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
-                                </asp:GridView>--%>
-                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" OnRowCommand="gvProject_RowCommand" Width="100%" CssClass="layui-table" lay-size="sm" lay-even style="margin-top:0px; text-align:center;">
-                                    <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
-                        <Columns>
-                            <asp:TemplateField HeaderText="项目编号">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblProjectNo" runat="server" Text='<%# Eval("TASKNO") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="完成期限">
-                                <ItemTemplate>
-                                    <asp:HiddenField ID="hidExpireDate" runat="server" Value='<%# Eval("EXPIREDATE") %>' />
-                                    <asp:Label ID="lblExpireDate" runat="server" Text='<%# Convert.ToDateTime(Eval("EXPIREDATE")).ToString("MM-dd HH:mm") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="完成人">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblFinishedPerson" runat="server" Text='<%# Eval("EMPLOYEENO") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="是否完成">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblIsFinished" runat="server" Text='<%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "&#10004" : "&#10007" %>'></asp:Label>
-                                    <asp:Button ID="btnSetFinished" runat="server" Text="我已完成" Visible='<%# Convert.ToInt32(Eval("ISFINISHED")) == 0 %>' CommandName="setFinished" CommandArgument='<%# Eval("prjId") %>' CssClass="taskmovebutton" OnClientClick="return confirm('确定置为完成？');" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="剩余时间">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblTimeRemain" runat="server" Text="--"></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="提成金额">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblProportionAmount" runat="server" Text=''></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="修改剩余时间">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text="--"></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="操作">
-                                <ItemTemplate>
-                                    <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" style="float:left; margin-right:10px;" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
-                                    <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style='display:<%= IsBranchLeader ? "block" : "none" %>;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", 500, "<%# Eval("taskno")%>");' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                    <div class="aspNetPager">
-                        <webdiyer:AspNetPager ID="AspNetPager1" runat="server" OnPageChanged="AspNetPager_PageChanged"
-                            FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" ShowPageIndexBox="Never"
-                            AlwaysShow="true" UrlPaging="False" ReverseUrlPageIndex="True" TextBeforePageIndexBox="跳到第" TextAfterPageIndexBox="页"
-                            CssClass="pagination"  PagingButtonLayoutType="UnorderedList" PagingButtonSpacing="0" CurrentPageButtonClass="active" >
-                        </webdiyer:AspNetPager>
-<%--                        <div style="height:30px; line-height:30px;">
-                        <label>跳转到</label><asp:TextBox ID="tb_pageindex" runat="server"></asp:TextBox><label>页</label>
-                        <asp:Button ID="btnGoPage" runat="server" Text="转到" OnClick="btnGoPage_Click" ValidationGroup="pageGo" />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="必须输入页索引" ForeColor="Red" ControlToValidate="tb_pageindex" Display="Dynamic" ValidationGroup="pageGo" />
-                        <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="tb_pageindex" Operator="DataTypeCheck" Type="Integer" ErrorMessage="页索引必须是整数" ForeColor="Red" Display="Dynamic" />
-                        <asp:Label ID="lbl_error" runat="server" ForeColor="Red" EnableViewState="false"></asp:Label>
-                            </div>--%>
-                    </div>
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="项目编号">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblProjectNo" runat="server" Text='<%# Eval("TASKNO") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="完成期限">
+                                            <ItemTemplate>
+                                                <asp:HiddenField ID="hidExpireDate" runat="server" Value='<%# Eval("EXPIREDATE") %>' />
+                                                <asp:Label ID="lblExpireDate" runat="server" Text='<%# Convert.ToDateTime(Eval("EXPIREDATE")).ToString("MM-dd HH:mm") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="完成人">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblFinishedPerson" runat="server" Text='<%# Eval("EMPLOYEENO") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="是否完成">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblIsFinished" runat="server" Text='<%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "&#10004" : "&#10007" %>'></asp:Label>
+                                                <asp:Button ID="btnSetFinished" runat="server" Text="我已完成" Visible='<%# Convert.ToInt32(Eval("ISFINISHED")) == 0 %>' CommandName="setFinished" CommandArgument='<%# Eval("prjId") %>' CssClass="taskmovebutton" OnClientClick="return confirm('确定置为完成？');" />
+                                                <asp:HiddenField ID="hidIsFinished" runat="server" Value='<%# Eval("ISFINISHED") %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="剩余时间">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblTimeRemain" runat="server" Text="--"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="预计提成">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblExpectAmount" runat="server"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="提成金额">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblProportionAmount" runat="server" Text=''></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="修改剩余时间">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text="--"></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="操作">
+                                            <ItemTemplate>
+                                                <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" style="float: left; margin-right: 10px;" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
+                                                <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style='display: <%= IsBranchLeader ? "block" : "none" %>; display: <%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "none" : "block"%>' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", "<%# Eval("orderAmount")%>", "<%# Eval("taskno")%>");' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                                <div class="aspNetPager">
+                                    <webdiyer:AspNetPager ID="AspNetPager1" runat="server" OnPageChanged="AspNetPager_PageChanged"
+                                        FirstPageText="首页" LastPageText="尾页" NextPageText="下一页" PrevPageText="上一页" ShowPageIndexBox="Never"
+                                        AlwaysShow="true" UrlPaging="False" ReverseUrlPageIndex="True" TextBeforePageIndexBox="跳到第" TextAfterPageIndexBox="页"
+                                        CssClass="pagination" PagingButtonLayoutType="UnorderedList" PagingButtonSpacing="0" CurrentPageButtonClass="active">
+                                    </webdiyer:AspNetPager>
+                                    <%--<div style="height:30px; line-height:30px;">
+                                        <label>跳转到</label><asp:TextBox ID="tb_pageindex" runat="server"></asp:TextBox><label>页</label>
+                                        <asp:Button ID="btnGoPage" runat="server" Text="转到" OnClick="btnGoPage_Click" ValidationGroup="pageGo" />
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="必须输入页索引" ForeColor="Red" ControlToValidate="tb_pageindex" Display="Dynamic" ValidationGroup="pageGo" />
+                                        <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="tb_pageindex" Operator="DataTypeCheck" Type="Integer" ErrorMessage="页索引必须是整数" ForeColor="Red" Display="Dynamic" />
+                                        <asp:Label ID="lbl_error" runat="server" ForeColor="Red" EnableViewState="false"></asp:Label>
+                                    </div>--%>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -242,7 +217,6 @@
                     <div class="layui-row" style="border: 0px solid #ffd800;">
                      <!-- 文件列表部分 -->
                      <div id="project" class="container" style="clear:both; float:left;">
-                     <%--<p>{{taskno}}</p>--%>
                         <div id="meun">
                             <div class="row">
                                 <div class="col -12" style="text-align: left;">
@@ -414,7 +388,6 @@
             </div>
         </div>
         <div style="display:none;">
-            <%--<asp:HiddenField ID="hidEmployeeID" runat="server" Value='<%# EmployeeID %>' />--%>
             <input type="hidden" id="hidEmployeeID" value="<%= EmployeeID %>" />
         </div>
     </form>
