@@ -613,6 +613,91 @@ namespace FileZillaServerWeb.HttpHandler
         }
         #endregion
 
+        #region 预览文件
+        public void PreviewFile()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            // 校验参数
+            string[] parametersRequired = { "fileHistoryId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> resultPra = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(resultPra);
+                return;
+            }
+
+            string actPath = string.Empty;
+            string taskRootFolder = string.Empty;
+            string taskFolderWithoutEmpNo = string.Empty;
+            try
+            {
+                string fileHistoryId = context.Request["fileHistoryId"];
+                string previewFolder = ConfigurationManager.AppSettings["filePreviewFolder"].ToString();
+                // 根据 ID 获取到 fileHistory 对象
+                FileHistory fileHistory = new FileHistoryBLL().GetModel(fileHistoryId);
+                DataTable dtPrjIdAndCategory = new FileCategoryBLL().GetProjectIdByFileHistoryId(fileHistoryId).Tables[0];
+                string projectId = Convert.ToString(dtPrjIdAndCategory.Rows[0]["PROJECTID"]);
+                string category = Convert.ToString(dtPrjIdAndCategory.Rows[0]["category"]);
+                string folderName = Convert.ToString(dtPrjIdAndCategory.Rows[0]["folderName"]);
+                bool flag = new FileCategoryBLL().GetFilePathByProjectId(projectId, category, folderName, false, out actPath, out taskRootFolder, out taskFolderWithoutEmpNo, out errorCode);
+                string physicalFileName = Path.Combine(actPath, fileHistory.FILENAME);
+                if (File.Exists(physicalFileName))
+                {
+                    System.Web.HttpServerUtility server = System.Web.HttpContext.Current.Server;
+                    string previewHtmlFile = Path.Combine(previewFolder, fileHistory.ID + ".html");
+                    LogHelper.WriteLine("previewHtmlFile Path: " + previewHtmlFile);
+                    if (!File.Exists(previewHtmlFile))
+                    {
+                        string extName = Path.GetExtension(physicalFileName);
+                        switch (extName)
+                        {
+                            case ".doc":
+                            case ".docx":
+                            case ".rtf":
+                                Office2HtmlHelper.Word2Html(physicalFileName, previewFolder, fileHistory.ID);
+                                break;
+                            case ".xls":
+                            case ".xlsx":
+                                Office2HtmlHelper.Excel2Html(physicalFileName, previewFolder, fileHistory.ID);
+                                break;
+                            default:
+                                return;
+                        }
+                    }
+
+                    List<PreviewResult> lstPre = new List<PreviewResult>();
+                    if (File.Exists(previewHtmlFile))
+                    {
+                        string htmlFile = string.Format("/FilePreview/{0}.html", fileHistory.ID);
+
+                        PreviewResult pre = new PreviewResult();
+                        pre.previewUrl = htmlFile;
+                        lstPre.Add(pre);
+                    }
+                    else
+                    {
+                        errorCode = 1;
+                        returnMsg = "文件未能成功生成！";
+                    }
+                    JsonResult<PreviewResult> resultPre = new JsonResult<PreviewResult> { Code = errorCode, Message = returnMsg, Rows = 0, Result = lstPre };
+                    GenerateJson(resultPre);
+                    return;
+                }
+                errorCode = 6001;
+                returnMsg = ErrorCode.GetCodeMessage(errorCode);
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+            catch (Exception ex)
+            {
+                errorCode = 1;
+                LogHelper.WriteLine("预览生成出错：" + ex.Message + ex.StackTrace);
+            }
+        }
+        #endregion
+
         public bool IsReusable
         {
             get

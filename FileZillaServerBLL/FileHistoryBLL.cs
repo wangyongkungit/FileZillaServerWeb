@@ -140,6 +140,11 @@ namespace FileZillaServerBLL
             return dal.GetTaskNoById(fileHistoryId);
         }
 
+        public string GetProjectIdById(string fileHistoryId)
+        {
+            return dal.GetProjectIdById(fileHistoryId);
+        }
+
         /// <summary>
         /// 判断是否已经设置了完成人，即是否已经分配
         /// </summary>

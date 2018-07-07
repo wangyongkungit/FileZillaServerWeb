@@ -1,4 +1,5 @@
-﻿function SetQualityScore(parameters, employeeNo, type) {
+﻿
+function SetQualityScore(parameters, employeeNo, type) {
     var dialog = jDialog.iframe("SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
         title: '我的技能设置',
         width: 1100,
@@ -26,6 +27,7 @@ var ViewPrjFiles = function (prjID, taskNo) {
     vm.projectid = prjID;
     vm.taskno = taskNo;
     setTimeout('changeActive()', 1800);
+    //setTimeout('bindClipEvent()', 1600);
 };
 
 $("#withdraw").bind("click", function () {
@@ -213,7 +215,20 @@ var changeActive = function () {
             this.style.backgroundColor = '#FF3333';             //选中的tab颜色
         }, false)
     }
-}
+};
+
+var clip = null;
+var bindClipEvent = function () {
+    //clip = new ZeroClipboard.Client();
+    //clip.setHandCursor(true);
+    //clip.addEventListener("mouseOver", function (client) {
+    //    clip.setText($("#aDownload").attr("href"));
+    //});
+    //clip.addEventListener("complete", function (client, text) {
+    //    alert("链接已成功复制到剪贴板！");
+    //});
+    //clip.glue("copyHref", "clip_container");
+};
 
 var GetTrends = function () {
     var jsonTrend;

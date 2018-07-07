@@ -33,6 +33,17 @@ funcList["downloadFile"] = {
     interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=DownloadFile"
 };
 
+// Preview file
+funcList["previewFile"] = {
+    func: previewFile,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=PreviewFile"
+};
+
+// Share link
+funcList["ShareLink"] = {
+    func: ShareLink
+};
+
 //when project id changed
 funcList["refreshProject"] = {
     func: refreshProject,

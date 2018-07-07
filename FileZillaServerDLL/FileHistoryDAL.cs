@@ -346,6 +346,17 @@ namespace FileZillaServerDAL
             return Convert.ToString(obj);
         }
 
+        public string GetProjectIdById(string fileHistoryId)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(@"SELECT ID FROM project
+                            WHERE ID IN 
+                            ( SELECT projectId FROM filecategory WHERE ID IN
+                            (SELECT parentId FROM filehistory WHERE ID = '" + fileHistoryId + "') )");
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString());
+            return Convert.ToString(obj);
+        }
+
         /// <summary>
         /// 判断是否已经设置了完成人，即是否已经分配
         /// </summary>

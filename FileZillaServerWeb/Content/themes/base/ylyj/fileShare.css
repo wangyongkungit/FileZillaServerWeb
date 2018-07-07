@@ -1,0 +1,68 @@
+﻿body {
+    background-color: #edf1f5;
+    /*background-image: url(../../../../Images/footer-cloud.png);*/
+    font-family:'Microsoft YaHei',sans-serif;
+}
+.cloud-bg {
+    width: 100%;
+    height: 301px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: url(../../../../Images/footer-cloud.png);
+}
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    border-radius: 4px;
+    width: 460px;
+    margin: -240px 0 0 -230px;
+    z-index:1;
+}
+.banner {
+    text-align: center;
+    height: 110px;
+    line-height: 110px;
+    background-color: #edf1f5;
+}
+.centerheader {
+    background-color:#438aee;
+    height:78px;
+    line-height:78px;
+    color:white;
+    padding-left:28px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+.shopname {
+    font-family:KaiTi,FangSong,LiSu,sans-serif;
+    font-size:x-large;
+    margin-right:8px;
+}
+.getpassword {
+    width: 280px;
+    border: 1px solid #f2f2f2;
+    padding: 8px 10px;
+    height: 19px;
+    line-height: 19px;
+    background: #f2f2f2;
+    border-radius: 4px;
+}
+.btngetfile {
+    border-radius: 4px;
+    margin-left: 14px;
+    height: 34px;
+    line-height: 34px;
+    cursor:pointer;
+    color:#FFF;
+    background-color:#438aee;
+    border:0px;
+}
+.file {
+    width:86%;
+    padding-top:30px;
+    padding-bottom:30px;
+    margin:0 auto;
+}

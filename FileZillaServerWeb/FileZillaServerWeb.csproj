@@ -57,6 +57,10 @@
       <HintPath>..\packages\Jil.2.15.4\lib\net45\Jil.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -233,6 +237,7 @@
     <Content Include="Content\themes\base\ylyj\employeeDemonationDetails.css" />
     <Content Include="Content\themes\base\ylyj\employeeHome.css" />
     <Content Include="Content\themes\base\ylyj\employeelist.css" />
+    <Content Include="Content\themes\base\ylyj\fileShare.css" />
     <Content Include="Content\themes\base\ylyj\loglist.css" />
     <Content Include="Content\themes\base\ylyj\materialConfig.css" />
     <Content Include="Content\themes\base\ylyj\outgoings.css" />
@@ -258,12 +263,14 @@
     <Content Include="employeeHome.aspx" />
     <Content Include="EmployeeManage\EmployeeList.aspx" />
     <Content Include="Error\404.html" />
+    <Content Include="FileOperation\FileShare.aspx" />
     <Content Include="FileZillaLogs.aspx" />
     <Content Include="Finance\Outgoings.aspx" />
     <Content Include="Finance\payoff.aspx" />
     <Content Include="Finance\payoffList.aspx" />
     <Content Include="Finance\TransactionRecords.aspx" />
     <Content Include="HtmlPage1.html" />
+    <Content Include="HttpHandler\FilePreview.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\beach.jpg" />
     <Content Include="Images\bg-grey-stripe.png" />
@@ -278,6 +285,7 @@
     <Content Include="Images\edit.png" />
     <Content Include="Images\filezillalogo.png" />
     <Content Include="Images\folder.png" />
+    <Content Include="Images\footer-cloud.png" />
     <Content Include="Images\hot.gif" />
     <Content Include="Images\key40.png" />
     <Content Include="Images\l04.png" />
@@ -285,6 +293,7 @@
     <Content Include="Images\listup.jpg" />
     <Content Include="Images\ll04.png" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\loadingAnimation.gif" />
     <Content Include="Images\loadinglist.gif" />
     <Content Include="Images\log_list.jpg" />
     <Content Include="Images\new.gif" />
@@ -650,6 +659,8 @@
     <Content Include="Scripts\ylyj\tasklist.js" />
     <Content Include="Scripts\ylyj\employeeDemonation.js" />
     <Content Include="Scripts\ylyj\withdraw.js" />
+    <Content Include="Scripts\zeroclipboard\ZeroClipboard.js" />
+    <Content Include="Scripts\zeroclipboard\ZeroClipboard.swf" />
     <Content Include="SerialNumberGenerating.aspx" />
     <Content Include="SpecialtyQualityConfig.aspx" />
     <Content Include="TaskAssignConfiguration.aspx" />
@@ -899,6 +910,13 @@
     <Compile Include="EmployeeManage\EmployeeList.aspx.designer.cs">
       <DependentUpon>EmployeeList.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FileOperation\FileShare.aspx.cs">
+      <DependentUpon>FileShare.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileOperation\FileShare.aspx.designer.cs">
+      <DependentUpon>FileShare.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FileZillaLogs.aspx.cs">
       <DependentUpon>FileZillaLogs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -939,6 +957,13 @@
     </Compile>
     <Compile Include="HttpHandler\FileHandler.ashx.cs">
       <DependentUpon>FileHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="HttpHandler\FilePreview.aspx.cs">
+      <DependentUpon>FilePreview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HttpHandler\FilePreview.aspx.designer.cs">
+      <DependentUpon>FilePreview.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

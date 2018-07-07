@@ -263,3 +263,78 @@ function downloadFile(p1) {
         }
     });
 }
+
+function previewFile(p1) {
+    let _this = this;
+    let prameters = "&fileHistoryId=" + p1.filehistoryid;
+    let handlerurl = funcList["previewFile"]["interface"] + prameters;
+    switch (p1.fileExt) {
+        case ".doc":
+        case ".docx":
+        case ".xls":
+        case ".xlsx":
+        case ".rtf":
+            PreviewOffice(p1.filehistoryid, p1.fileExt, handlerurl);
+            break;
+        case ".jpg":
+        case ".png":
+        case ".bmp":
+        case ".jpeg":
+        case ".gif":
+        case ".txt":
+        case ".pdf":
+            PreviewOtherFile(p1.filehistoryid);
+            break;
+        default:
+            alert("很抱歉，暂不支持此类型文件的预览！");
+            break;
+    }
+}
+
+var PreviewOffice = function (fileHistoryId, ext, handlerurl) {
+    $.ajax({
+        async: true,
+        url: handlerurl,
+        dataType: 'jsonp',
+        crossDomain: true,
+        beforeSend: function (data) {
+            $("#loadingimg" + fileHistoryId).css("display", "inline-block");
+        },
+        success: function (data) {
+            if (data.Code === 0) {
+                console.log(data.Code);
+                console.log(data);
+                $("#aPreview").attr("href", "/FilePreview/" + fileHistoryId + ".html");
+                document.getElementById("aPreview").click();
+            } else {
+                alert("操作失败！");
+            }
+        },
+        complete: function (result) {
+            $("#loadingimg" + fileHistoryId).css("display", "none");
+        }
+    });
+}
+
+var PreviewOtherFile = function (fileHistoryId) {
+    $("#aPreview").attr("href", "/HttpHandler/FilePreview.aspx?fileHistoryId=" + fileHistoryId);
+    document.getElementById("aPreview").click();
+}
+
+var ShareLink = function (fileHistoryId) {
+    $("#linkContent").bind("focus", function () {
+        $(this).select();
+    });
+    console.log(fileHistoryId);
+    $("#divCopyText" + fileHistoryId).dialog({
+        resizable: true,
+        width: 520,
+        height: 440,
+        modal: true
+    });
+    $(".ui-resizable").css("height", "340px");
+    $(".ui-widget-content").css("height", "220px");
+    var currentWidth = $(window).width();
+    var currentHeight = $(window).height();
+    $(".ui-resizable").css("left", ((currentWidth - 520) / 2) + "px").css("top", ((currentHeight - 440) / 2) + "px");
+}

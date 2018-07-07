@@ -54,6 +54,19 @@
                         </div>
                     </div>
                     <div class="right">
+                        <div class="lbl">
+                        <label>计划时间：</label>
+                        </div>
+                        <div class="txt">
+                            <asp:TextBox ID="txtPlanDate" runat="server" CssClass="Wdate" onFocus="WdatePicker({dateFmt:'yyyy-MM'})" Width="160"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="left">&nbsp;
+                    </div>
+                    <div class="left">
+                        &nbsp;
+                    </div>
+                    <div class="right">
                         <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click" CssClass="mya" />
                         <asp:Button ID="btnExport" runat="server" Text="导出" OnClick="btnExport_Click" CssClass="mya" />
                     </div>
@@ -79,6 +92,14 @@
                             <ItemTemplate>
                                 <asp:Label ID="lblTransactionDate" runat="server" Text='<%# Eval("TransactionDate") %>'></asp:Label>
                             </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="计划时间">
+                           <ItemTemplate>
+                               <asp:Label ID="lblPlanDate" runat="server" Text='<%# Convert.ToDateTime(Eval("PlanDate")).ToString("yyyy-MM") %>'></asp:Label>
+                           </ItemTemplate>
+                           <EditItemTemplate>
+                               <asp:TextBox ID="txtPlanDate" runat="server" Text='<%# Convert.ToDateTime(Eval("PlanDate")).ToString("yyyy-MM") %>' CssClass="Wdate" onFocus="WdatePicker({dateFmt:'yyyy-MM'})"></asp:TextBox>
+                           </EditItemTemplate>
                         </asp:TemplateField>
                         <asp:TemplateField HeaderText="交易类型">
                             <ItemTemplate>

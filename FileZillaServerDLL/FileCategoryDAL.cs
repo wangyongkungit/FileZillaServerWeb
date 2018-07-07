@@ -421,9 +421,9 @@ namespace FileZillaServerDAL
         {
             StringBuilder sbSql = new StringBuilder();
             sbSql.AppendFormat(@"SELECT fc.FOLDERNAME, fc.expireDate FROM filecategory fc
-                                 WHERE projectid = '" + projectId + @"'
-                                 AND parentId NOT IN(
-                                    SELECT ID FROM filecategory WHERE projectId = '" + projectId + @"'
+                                 WHERE projectid = '" + projectId + @"' AND category = '3'
+                                 AND Id NOT IN(
+                                    SELECT parentID FROM filecategory WHERE projectId = '" + projectId + @"' AND category = '4'
                                 )
                                  ORDER BY CREATEDATE DESC LIMIT 0, 1");
             DataSet ds = DbHelperMySQL.Query(sbSql.ToString());

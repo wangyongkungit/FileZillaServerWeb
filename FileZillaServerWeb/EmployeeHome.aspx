@@ -23,7 +23,7 @@
                         <%= EmployeeNo %>
                     </li>
                 </ul>
-                <%= EmployeeNo %>
+                <%= UserName %>
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item">
                         <a href="javascript:;">
@@ -186,6 +186,7 @@
                                         <asp:TemplateField HeaderText="修改剩余时间">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblModifyTaskTimeRemain" runat="server" Text="--"></asp:Label>
+                                                <asp:Button ID="btnSetModifyTasksFinished" runat="server" Text="我已完成" Visible="false" CommandName="setModifyFinished" CommandArgument='<%# Eval("prjId") %>' CssClass="taskmovebutton" OnClientClick="return confirm('确定置为完成？');" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="操作">
@@ -266,8 +267,13 @@
                                                     <td>
                                                         <div class="btn-group btn-group-sm">
                                                             <button type="button" class="btn btn-default btn-danger" @click="deleteFile(file.fileHistoryId)">删除</button>
-                                                            <%--<button type="button" class="btn btn-default btn-success" @click="downloadFile(file.fileHistoryId)">下载</button>--%>
-                                                            <a :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
+                                                            <a id="aDownload" :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
+                                                            <button type="button" class="btn btn-dark" @click="previewFile(file.fileHistoryId, file.fileExt)">预览</button>                                                            
+                                                            <span id="clip_container" style="display:none;">
+                                                                <input id="copyHref" type="button" class="btn btn-info" value="复制链接" />
+                                                            </span>
+                                                            <a id="aPreview" target="_blank" style="visibility:hidden"></a>
+                                                            <img :id="'loadingimg'+file.fileHistoryId" src="Images/loadingAnimation.gif" style="display:none;" />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -417,7 +423,8 @@
         })
     </script>
     
-   <script src="Scripts/echarts/echarts.common.min.js"></script>
-    <script src="Scripts/ylyj/employeeHome.js?v=18063001"></script>
+    <script src="Scripts/echarts/echarts.common.min.js"></script>
+    <script src="Scripts/zeroclipboard/ZeroClipboard.js"></script>
+    <script src="Scripts/ylyj/employeeHome.js?v=18063002"></script>
 </body>
 </html>

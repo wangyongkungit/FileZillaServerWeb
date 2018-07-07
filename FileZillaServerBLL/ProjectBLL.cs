@@ -279,6 +279,31 @@ namespace FileZillaServerBLL
         {
             return dal.GetPrjIDByTaskNo(taskNo);
         }
-		#endregion  ExtensionMethod
+
+        /// <summary>
+        /// 判断完成稿是否存在
+        /// </summary>
+        /// <param name="projectID"></param>
+        /// <param name="modifyFolderName"></param>
+        /// <returns></returns>
+        public bool IsExistFinalModifyScript(string projectID, string modifyFolderName)
+        {
+            return dal.IsExistFinalModifyScript(projectID, modifyFolderName);
+        }
+
+        /// <summary>
+        /// 添加一条修改任务记录
+        /// </summary>
+        /// <param name="projectID">对应的普通任务的ID</param>
+        /// <param name="folderName">目录名</param>
+        /// <param name="isFinished">是否完成</param>
+        /// <param name="reviewStatus">是否审核通过</param>
+        /// <param name="dtCreate">创建时间</param>
+        /// <returns></returns>
+        public bool AddProjectModify(string projectID, string folderName, int isFinished, int reviewStatus, DateTime dtCreate)
+        {
+            return dal.AddProjectModify(projectID, folderName, isFinished, reviewStatus, dtCreate);
+        }
+        #endregion  ExtensionMethod
     }
 }

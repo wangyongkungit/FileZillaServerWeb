@@ -191,6 +191,7 @@ namespace FileZillaServerBLL
             string parentId = context.Request["parentId"];
             string description = context.Request["description"];
             string expireDate = context.Request["expiredate"];
+            int modifyTaskDefaultWorkHours = Convert.ToInt32(string.IsNullOrEmpty(ConfigurationManager.AppSettings["modifyTaskDefaultWorkHours"]) ? 3.ToString() : ConfigurationManager.AppSettings["modifyTaskDefaultWorkHours"]);
             string title = dtConfig.AsEnumerable().Where(item => Convert.ToString(item["configKey"]) == categoryId).Select(item => item.Field<string>("configValue")).FirstOrDefault();
             string rootPath = ConfigurationManager.AppSettings["taskAllotmentPath"];
             FileCategory fileCategory = new FileCategory();
@@ -216,7 +217,7 @@ namespace FileZillaServerBLL
             fileCategory.FOLDERNAME = title;
             fileCategory.CREATEDATE = DateTime.Now;
             fileCategory.CREATEUSER = UserProfile.GetInstance().ID;
-            DateTime dtExpire = IsDate(expireDate) ? Convert.ToDateTime(expireDate) : DateTime.MinValue;
+            DateTime dtExpire = IsDate(expireDate) ? Convert.ToDateTime(expireDate) : DateTime.Now.AddHours(modifyTaskDefaultWorkHours);
             fileCategory.EXPIREDATE = dtExpire;
             fileCategory.PARENTID = parentId;
             fileCategory.CLASSSORT = GlobalConfig.dicMap[categoryId];

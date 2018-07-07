@@ -1013,6 +1013,41 @@ namespace FileZillaServerDAL
             string projectID = Convert.ToString(obj);
             return projectID;
         }
+
+        /// <summary>
+        /// 判断完成稿是否存在
+        /// </summary>
+        /// <param name="projectID"></param>
+        /// <param name="modifyFolderName"></param>
+        /// <returns></returns>
+        public bool IsExistFinalModifyScript(string projectID, string modifyFolderName)
+        {
+            string sql = string.Format("SELECT count(*) from projectmodify WHERE projectid = '{0}' AND foldername = '{1}' AND isfinished = 1", projectID, modifyFolderName);
+            DataSet ds = MySqlHelper.GetDataSet(sql);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                return Convert.ToInt32(ds.Tables[0].Rows[0][0]) > 0;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 添加一条修改任务记录
+        /// </summary>
+        /// <param name="projectID">对应的普通任务的ID</param>
+        /// <param name="folderName">目录名</param>
+        /// <param name="isFinished">是否完成</param>
+        /// <param name="reviewStatus">是否审核通过</param>
+        /// <param name="dtCreate">创建时间</param>
+        /// <returns></returns>
+        public bool AddProjectModify(string projectID, string folderName, int isFinished, int reviewStatus, DateTime dtCreate)
+        {
+            string sql = string.Format(@"INSERT INTO projectmodify ( ID ,PROJECTID ,FOLDERNAME ,ISFINISHED ,REVIEWSTATUS ,createdate )
+	                                    VALUES ('{0}','{1}','{2}',{3},{4},'{5}')",
+                                              Guid.NewGuid(), projectID, folderName, isFinished, reviewStatus, dtCreate);
+            int r = MySqlHelper.ExecuteNonQuery(sql);
+            return r > 0;
+        }
         #endregion  ExtensionMethod
     }
 }

@@ -635,10 +635,10 @@ namespace FileZillaServerWeb
                     }
                     txtFinishedPerson.Text = finishedPerson.ToString().TrimEnd('│');
                 }
-                else
-                {
-                    divAssign.Visible = true;
-                }
+                //else
+                //{
+                //    divAssign.Visible = true;
+                //}
 
                 ProjectSpecialtyBLL pspBll = new ProjectSpecialtyBLL();
                 DataTable dtSpecialtyList = pspBll.GetSpecialtyInnerJoinProject(projectID, string.Empty).Tables[0];
@@ -2587,6 +2587,13 @@ namespace FileZillaServerWeb
                 ProjectSharingBLL psBll = new ProjectSharingBLL();
                 TaskRemindingBLL trBll = new TaskRemindingBLL();
 
+                // 会存在分配错误的情况，因此需要将之前的完成人提成比例删除
+                ProjectSharing psToDel = psBll.GetModelList(" PROJECTID = '" + projectID + "'").FirstOrDefault();
+                if (psToDel != null)
+                {
+                    psBll.Delete(psToDel.ID);
+                }
+
                 ps.ID = Guid.NewGuid().ToString();
                 ps.PROJECTID = projectID;
                 ps.FINISHEDPERSON = employeeID;
@@ -2596,6 +2603,12 @@ namespace FileZillaServerWeb
                     string newProportin = txtNewProportion.Text.Trim();
                     if (!String.IsNullOrEmpty(newProportin))
                     {
+                        // 会存在分配错误的情况，因此需要将之前的项目提成比例删除
+                        ProjectProportion ppToDel = new ProjectProportionBLL().GetModelList(" PROJECTID = '" + projectID + "'").FirstOrDefault();
+                        if (ppToDel != null)
+                        {
+                            new ProjectProportionBLL().Delete(ppToDel.ID);
+                        }
                         ProjectProportion pp = new ProjectProportion();
                         pp.ID = Guid.NewGuid().ToString();
                         pp.PROJECTID = projectID;

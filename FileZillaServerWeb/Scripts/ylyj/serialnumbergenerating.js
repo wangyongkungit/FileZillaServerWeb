@@ -380,6 +380,10 @@ $(document).ready(function () {
     //        }
     //    });
     //});
+    var getfilecode = $("#ContentPlaceHolder1_txtTaskName").val();
+    var lastfourchar = getfilecode.substr(getfilecode.length - 4);
+    getfilecode = lastfourchar.split("").reverse().join("");
+    vm.taskno = getfilecode;
 })
 
 //切换上传进度DIV的显示与隐藏
@@ -419,28 +423,51 @@ var changeActive = function () {
             }
         }
     }
+
+    //var copyHrefs = document.getElementsByClassName("copyhref");
+    //for (var ii = 0; ii < copyHrefs.length; ii++) {
+    //    var clipboard = new Clipboard("#" + copyHrefs[0].id);
+
+    //    clipboard.on('success', function (e) {
+    //        console.log("succ:" + e);
+    //    });
+    //    clipboard.on('error', function (e) {
+    //        console.log("err:" + e);
+    //    });
+    //}
+    //var clipboard = new Clipboard('#copyHref');
+
+    //clipboard.on('success', function (e) {
+    //    console.log("succ:"+e);
+    //});
+    //clipboard.on('error', function (e) {
+    //    console.log("err:"+e);
+    //});
 }
 setTimeout('changeActive()', 1200);
 
-//document.onkeydown = function () {
-//    var isFocus = $("#ContentPlaceHolder1_txtOrderDate").is(":focus");
-//    if (true == isFocus) {
-//        //alert("有");
+var clip = null;
+var bindClipEvent = function () {
+    //clip = new ZeroClipboard.Client();
+    //clip.setHandCursor(true);
+    //clip.addEventListener("mouseOver", function (client) {
+    //    clip.setText("4444433333");
+    //});
+    //clip.addEventListener("complete", function (client, text) {
+    //    alert("链接已成功复制到剪贴板！");
+    //});
+    //clip.glue("copyHref", "clip_container");
+};
 
-//        console.log(11);
-//        if (/*window.event &&*/ window.event.keyCode == 13) {
-//            window.event.returnValue = false;
-//        }
-//    } else {
-//        console.log(22);
-//        //alert("无");
-//    }
-//    //if (document.getElementById.activeElement.id == "ContentPlaceHolder1_txtOrderDate") {
-//    //    if (window.event && window.event.keyCode == 13) {
-//    //        //alert(1);
-//    //        console.log(222);
-//    //        window.event.returnValue = false;
-//    //    }
-//    //}
+//var CopyUrl = function (copyText) {
+//    bindClipEvent(copyText);
+//};
+
+//var ShareLink = function (fileHistoryId, getcode) {
+//    var text = "链接：http://bimpan.iok.la:8/FileOperation/FileShare.aspx?fileHistoryId=" + fileHistoryId + " 提取码：" + getcode + "";
+//    $("#divCopyText" + fileHistoryId).dialog({
+//        resizable: false,
+//        height: 240,
+//        modal: true
+//    })
 //}
-

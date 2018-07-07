@@ -92,6 +92,7 @@ var vm = new Vue({
         changeFilesTab: function (filetype) {
             this.projectfile.parentId = filetype;
             changeActive();
+            bindClipEvent();
         },
         //delete file
         deleteFile: function (fileHistoryId) {
@@ -106,6 +107,21 @@ var vm = new Vue({
                 "filehistoryid": fileHistoryId
             };
             funcList["downloadFile"]["func"].call(this, p1);
+        },
+        // preview file
+        previewFile: function (fileHistoryId, fileExt) {
+            let p1 = {
+                "filehistoryid": fileHistoryId,
+                "fileExt": fileExt
+            };
+            funcList["previewFile"]["func"].call(this, p1);
+        },
+        // Share link
+        ShareLink: function (fileHistoryId) {
+            let p1 = {
+                "filehistoryid": fileHistoryId
+            };
+            funcList["ShareLink"]["func"].call(this, fileHistoryId);
         }
     },
     mounted: function () {

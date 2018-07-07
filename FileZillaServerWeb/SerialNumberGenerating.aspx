@@ -11,6 +11,8 @@
     <script src="Scripts/jQuery-UI/jquery-ui.min.js"></script>
     <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
 
+    <%--<script src="Scripts/zeroclipboard/ZeroClipboard.js"></script>--%>    
+    <script src="Scripts/clipboardjs/clipboard.min.js"></script>
     <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
     
     <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />    
@@ -111,6 +113,7 @@
                 <%--<asp:Button ID="btnModifyDelete" runat="server" OnClick="btnModifyDelete_Click"/>--%>
                 <%--<asp:Button ID="btnDownload" runat="server" Text="下载" OnClick="btnDownload_Click" />--%>
                 <%--<asp:Button ID="btnFileReplace" runat="server" OnClick="btnFileReplace_Click" ClientIDMode="Static" />--%>
+                <a id="aPreview" target="_blank" style="visibility:hidden"></a>
             </div>
             <h1>任务<asp:Label ID="lblOperateType" runat="server" Text="生成"></asp:Label></h1>
             <hr />
@@ -351,7 +354,7 @@
                 <asp:Label ID="lblGenerateSuccess" runat="server" Visible="false" Text="&#10004" Font-Bold="true" Font-Size="X-Large" ForeColor="#00C600" />
                 <input id="btnCopy" name="btnCopy" type="button" value="复制到剪贴板" data-clipboard-action="copy" data-clipboard-target="#txtTaskName" class="button" style="display:none;" />                
             </div>
-            <div class="result" style="width:auto; margin: 0 auto; text-align:center;" id="divAssign" runat="server" visible="false">
+            <div class="result" style="width:auto; margin: 0 auto; text-align:center;" id="divAssign" runat="server">
                 <div>
                     <label>分配给：</label>
                     <asp:DropDownList ID="ddlAssignTo" runat="server" OnSelectedIndexChanged="ddlAssignTo_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
@@ -369,7 +372,6 @@
 
 
     <div id="project" class="container" style="clear:both;">
-     <%--<p>{{taskno}}</p>--%>
         <div id="meun">
             <div class="row">
                 <div class="col -12" style="text-align: left;">
@@ -420,7 +422,16 @@
                                         <div class="btn-group btn-group-sm">
                                             <button type="button" class="btn btn-default btn-danger" @click="deleteFile(file.fileHistoryId)">删除</button>
                                             <%--<button type="button" class="btn btn-default btn-success">下载</button>--%>
-                                            <a :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
+                                            <a id="aDownload" :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
+                                            <button type="button" class="btn btn-dark" @click="previewFile(file.fileHistoryId, file.fileExt)">预览</button>
+                                                <input :id="'copyHref'+file.fileHistoryId" type="button" class="btn btn-info copyhref" data-clipboard-action="copy" value="分享" @click="ShareLink(file.fileHistoryId)" />
+                                            <%--<span style="display:none;" :id="'spnCopyText'+file.fileHistoryId">链接：http://bimpan.iok.la:8/FileOperation/FileShare.aspx?fileHistoryId={{file.fileHistoryId}} 提取码：{{taskno}}</span>--%>
+                                            <div style="display:none;width:400px;height:260px;" :id="'divCopyText'+file.fileHistoryId" title="链接内容">                                                
+                                                <p style="float:left; margin:0 7px 50px 0;">
+                                                    <textarea id="linkContent" style="width:480px; height:130px;">链接：http://bimpan.iok.la:8/FileOperation/FileShare.aspx?fileHistoryId={{file.fileHistoryId}} 提取码：{{taskno}}</textarea>
+                                                </p>
+                                            </div>
+                                            <img :id="'loadingimg'+file.fileHistoryId" src="Images/loadingAnimation.gif" style="display:none;" />
                                         </div>
                                     </td>
                                 </tr>

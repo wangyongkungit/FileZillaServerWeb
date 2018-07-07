@@ -17,21 +17,74 @@ namespace FileZillaServerWeb
 {
     public partial class employeeHome : WebPageHelper
     {
+        #region 公共变量声明
         FileZillaServerBLL.EmployeeDominationBLL eDal = new FileZillaServerBLL.EmployeeDominationBLL();
         TaskAssignConfigDetailsBLL tacdBll = new TaskAssignConfigDetailsBLL();
         EmployeeAccountBLL empAcctBll = new EmployeeAccountBLL();
         CerficateBLL cBll = new CerficateBLL();
         ProjectDAL prjDal = new ProjectDAL();
         TaskTrendBLL ttBll = new TaskTrendBLL();
+        TaskRemindingBLL trBll = new TaskRemindingBLL();
         WithdrawDetailsBLL wdBll = new WithdrawDetailsBLL();
         EmployeeProportionBLL epBll = new EmployeeProportionBLL();
-        protected static string EmployeeID { get; set; }
-        protected static string UserName { get; set; }
-        protected static string EmployeeNo { get; set; }
-        protected static bool IsBranchLeader { get; set; }
-        protected static List<Cerficate> lstCerficate { get; set; }
-        protected static List<string> xData = new List<string>();
-        protected static List<int> yData = new List<int>();
+        protected string EmployeeID
+        {
+            get
+            {
+                return (string)ViewState["EmployeeID"];
+            }
+            set
+            {
+                ViewState["EmployeeID"] = value;
+            }
+        }
+        protected string UserName
+        {
+            get
+            {
+                return (string)ViewState["UserName"];
+            }
+            set
+            {
+                ViewState["UserName"] = value;
+            }
+        }
+        protected string EmployeeNo
+        {
+            get
+            {
+                return (string)ViewState["EmployeeNo"];
+            }
+            set
+            {
+                ViewState["EmployeeNo"] = value;
+            }
+        }
+        protected bool IsBranchLeader
+        {
+            get
+            {
+                return Convert.ToBoolean(ViewState["IsBranchLeader"]);
+            }
+            set
+            {
+                ViewState["IsBranchLeader"] = value;
+            }
+        }
+        protected List<Cerficate> lstCerficate
+        {
+            get
+            {
+                return (List<Cerficate>)ViewState["lstCerficate"];
+            }
+            set
+            {
+                ViewState["lstCerficate"] = value;
+            }
+        }
+        protected List<string> xData = new List<string>();
+        protected List<int> yData = new List<int>();
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -122,7 +175,7 @@ namespace FileZillaServerWeb
 
         private void LoadSpecialties()
         {
-            string employeeID = EmployeeID;
+            string employeeID = Convert.ToString(EmployeeID ?? string.Empty);
             DataTable dt = tacdBll.GetTaskAssignDetails(employeeID, "0").Tables[0];
             StringBuilder sbSkill = new StringBuilder();
 
@@ -162,7 +215,7 @@ namespace FileZillaServerWeb
 
         protected void LoadTaskTrend()
         {
-            List<TaskTrend> lstTrend = ttBll.GetTop10ModelList(" employeeID = '" + EmployeeID + "'");
+            List<TaskTrend> lstTrend = ttBll.GetTop10ModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'");
             gvTaskTrend.DataSource = lstTrend;
             gvTaskTrend.DataBind();
         }
@@ -177,7 +230,7 @@ namespace FileZillaServerWeb
             {
                 sbWhere.Append(anyCondition);
             }
-            DataTable dtProject = prjDal.GetProjectForEmployeeHome(EmployeeID, sbWhere.ToString(), AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount);
+            DataTable dtProject = prjDal.GetProjectForEmployeeHome(Convert.ToString(EmployeeID ?? string.Empty), sbWhere.ToString(), AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount);
 
             if (string.IsNullOrEmpty(sbWhere.ToString()))
             {
@@ -190,8 +243,8 @@ namespace FileZillaServerWeb
 
         private void LoadBalance()
         {
-            EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + EmployeeID + "'").FirstOrDefault();
-            decimal withdraw = wdBll.GetModelList(" employeeID = '" + EmployeeID + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
+            EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
+            decimal withdraw = wdBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
             //lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
         }
 
@@ -232,7 +285,7 @@ namespace FileZillaServerWeb
             {
                 #region 计算提成金额
                 string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
-                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + EmployeeID + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
+                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
                 Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
                 lblProportionAmount.Text = tcje.ToString();
 
@@ -247,12 +300,12 @@ namespace FileZillaServerWeb
                 // 如果未设置，则采用默认提成
                 else
                 {
-                    EmployeeProportion empPro = epBll.GetModelList(" AND EMPLOYEEID = '" + EmployeeID + "'").FirstOrDefault();
+                    EmployeeProportion empPro = epBll.GetModelList(" AND EMPLOYEEID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
                     proportion = empPro?.PROPORTION ?? 0m;
                 }
                 Label lblExpectAmount = e.Row.FindControl("lblExpectAmount") as Label;
                 Project prj = new ProjectBLL().GetModel(prjId);
-                lblExpectAmount.Text = (prj.ORDERAMOUNT * Convert.ToDouble(proportion)).ToString(); 
+                lblExpectAmount.Text = (prj.ORDERAMOUNT * Convert.ToDouble(proportion)).ToString();
                 #endregion
 
                 #region 计算剩余时间
@@ -312,7 +365,10 @@ namespace FileZillaServerWeb
                 DataTable dt = new FileCategoryBLL().GetExpireDateByProjectId(projectId).Tables[0];
                 if (dt.Rows.Count > 0)
                 {
+                    Button btnSetModifyTasksFinished = e.Row.FindControl("btnSetModifyTasksFinished") as Button;
+                    btnSetModifyTasksFinished.Visible = true;
                     string folderName = Convert.ToString(dt.Rows[0]["folderName"]);
+                    btnSetModifyTasksFinished.CommandArgument = projectId + "|" + folderName;
                     if (folderName.Contains("修改"))
                     {
                         string strExpireDate = Convert.ToString(dt.Rows[0]["expireDate"]);
@@ -371,7 +427,7 @@ namespace FileZillaServerWeb
 
         protected void gvProject_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            // 置为完成
+            // 将任务置为完成
             if (e.CommandName == "setFinished")
             {
                 string prjId = e.CommandArgument.ToString();
@@ -380,6 +436,47 @@ namespace FileZillaServerWeb
                 new ProjectBLL().Update(prj);
                 LoadProject();
                 ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('设置成功！');", true);
+            }
+            // 将修改任务置为完成
+            else if (e.CommandName == "setModifyFinished")
+            {
+                ProjectBLL pBll = new ProjectBLL();
+                string[] args = e.CommandArgument.ToString().Split('|');
+                string projectID = args[0];
+                string modfItem = args[1];
+                Project project = pBll.GetModel(projectID);
+                // 查询修改任务的完成稿是否存在
+                bool isExistFinalModifyScript = pBll.IsExistFinalModifyScript(projectID, modfItem);
+                if (!isExistFinalModifyScript)
+                {
+                    bool addFlag = pBll.AddProjectModify(projectID, modfItem, 1, 1, DateTime.Now);
+                    if (addFlag)
+                    {
+                        LogHelper.WriteLine(string.Format("【Success】ID【{0}】任务修改记录的完成稿【{1}】创建成功", projectID, modfItem));
+                        if (!trBll.IsExist(project.ENTERINGPERSON, project.TASKNO, modfItem, "1", "1"))
+                        {
+                            int addTaskRemindingFlag = trBll.Add(EmployeeNo, project.ENTERINGPERSON, project.TASKNO, modfItem, "0", DateTime.Now.ToString(), null, "1", "1", "1");
+                            if (addTaskRemindingFlag > 0)
+                            {
+                                LoadProject();
+                                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('设置成功！');", true);
+                                LogHelper.WriteLine(string.Format("【任务监控】售后完成任务【{0}】-【{1}】的提醒添加成功", project.TASKNO, modfItem));
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        LogHelper.WriteLine(string.Format("【任务监控】ID【{0}】任务修改记录的完成稿【{1}】创建失败", projectID, modfItem));
+                        ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('设置失败！');", true);
+                        return;
+                    }
+                }
+                else
+                {
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('设置失败！修改完成稿已存在。');", true);
+                    return;
+                }
             }
         }
     }
