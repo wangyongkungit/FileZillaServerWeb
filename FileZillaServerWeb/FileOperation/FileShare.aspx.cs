@@ -27,15 +27,24 @@ namespace FileZillaServerWeb.FileOperation
 
         protected void LoadData()
         {
-            string fileHistoryId = Request.QueryString["fileHistoryId"];
-            if (string.IsNullOrEmpty(fileHistoryId))
+            try
             {
-                return;
+                string fileHistoryId = Request.QueryString["fileHistoryId"];
+                if (string.IsNullOrEmpty(fileHistoryId))
+                {
+                    return;
+                }
+                string prjId = fhBll.GetProjectIdById(fileHistoryId);
+                Project prj = new ProjectBLL().GetModel(prjId);
+                DataTable dtShopName = new ConfigureBLL().GetConfig("店铺编号名称");
+                lblShopName.Text = dtShopName.AsEnumerable().Where(item => item.Field<string>("configKey") == prj.SHOP).Select(item2 => item2.Field<string>("configValue")).FirstOrDefault();
             }
-            string prjId = fhBll.GetProjectIdById(fileHistoryId);
-            Project prj = new ProjectBLL().GetModel(prjId);
-            DataTable dtShopName = new ConfigureBLL().GetConfig("店铺编号名称");
-            lblShopName.Text = dtShopName.AsEnumerable().Where(item => item.Field<string>("configKey") == prj.SHOP).Select(item2 => item2.Field<string>("configValue")).FirstOrDefault();
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine("文件分享初始化异常，" + ex.Message + ex.StackTrace);
+                lblShopName.Text = "Shop 初始化异常";
+                lblShopName.ForeColor = System.Drawing.Color.Red;
+            }
         }
 
         protected void btnGetFile_Click(object sender, EventArgs e)
@@ -45,21 +54,31 @@ namespace FileZillaServerWeb.FileOperation
 
         private void ValidatePassword()
         {
-            string fileHistoryId = Request.QueryString["fileHistoryId"];
-            if (string.IsNullOrEmpty(fileHistoryId))
+            try
             {
+                string fileHistoryId = Request.QueryString["fileHistoryId"];
+                if (string.IsNullOrEmpty(fileHistoryId))
+                {
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('参数不正确！')", true);
+                    return;
+                }
+                string taskNo = fhBll.GetTaskNoById(fileHistoryId);
+                string password = taskNo.Substring(taskNo.Length - 4, 4);
+                char[] arr = password.ToCharArray().Reverse().ToArray();
+                password = new string(arr);
+                if (txtGetPassword.Text.Trim() != password)
+                {
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('提取码不正确！')", true);
+                    return;
+                }
+                DownloadFile(fileHistoryId);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLine("文件提取异常，" + ex.Message + ex.StackTrace);
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('提取异常！')", true);
                 return;
             }
-            string taskNo = fhBll.GetTaskNoById(fileHistoryId);
-            string password = taskNo.Substring(taskNo.Length - 4, 4);
-            char[] arr = password.ToCharArray().Reverse().ToArray();
-            password = new string(arr);
-            if (txtGetPassword.Text.Trim() != password)
-            {
-                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('提取码不正确！')", true);
-                return;
-            }
-            DownloadFile(fileHistoryId);
         }
 
         protected void DownloadFile(string fileHistoryId)
@@ -156,6 +175,11 @@ namespace FileZillaServerWeb.FileOperation
                     }
                     Response.End();
                 }
+            }
+            else
+            {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('文件已被移动或删除！')", true);
+                return;
             }
         }
     }

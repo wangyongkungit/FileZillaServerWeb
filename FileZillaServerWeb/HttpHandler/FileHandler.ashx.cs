@@ -179,6 +179,7 @@ namespace FileZillaServerWeb.HttpHandler
                 return;
             }
 
+            string fileIconPath = Convert.ToString(ConfigurationManager.AppSettings["fileIconPath"]) ?? string.Empty;
             FileHistoryBLL fileHistoryBLL = new FileHistoryBLL();
             List<FileHistory> fileHistories = fileHistoryBLL.GetFileHistories(context, out errorCode);
             // 如果有结果
@@ -192,6 +193,7 @@ namespace FileZillaServerWeb.HttpHandler
                     file.fileHistoryId = item.ID;
                     file.fileName = item.FILENAME;
                     file.fileExt = item.FILEEXTENSION;
+                    file.fileIconPath = string.Format("{0}{1}", fileIconPath, FileIconHelper.GetFileIcon(item.FILEEXTENSION));
                     file.description = item.DESCRIPTION;
                     filesForTabs.Add(file);
                 }
@@ -654,7 +656,7 @@ namespace FileZillaServerWeb.HttpHandler
                         {
                             case ".doc":
                             case ".docx":
-                            case ".rtf":
+                            //case ".rtf":
                                 Office2HtmlHelper.Word2Html(physicalFileName, previewFolder, fileHistory.ID);
                                 break;
                             case ".xls":

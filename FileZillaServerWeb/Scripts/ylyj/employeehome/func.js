@@ -66,7 +66,7 @@ function getFiles(p1) {
         crossDomain: true,
         success: function (data) {
             if (data.Code === 0) {
-                console.log("getFiles:", data.Result);
+                //console.log("getFiles:", data.Result);
                 _this.projectfile.files = data.Result;
             } else {
                 alert("failed");
@@ -154,7 +154,7 @@ function getReplytodata(p1) {
         success: function (data) {
             console.log(data);
             if (data.Code === 0) {
-                console.log("getReplytodata", "sucuess");
+                //console.log("getReplytodata", "sucuess");
                 _this.newtab.replyto = data.Result;
             }
             else {
@@ -180,11 +180,12 @@ function addNewTab(p1) {
         success: function (data) {
             _this.newtab.returnmessage = data.Message;
             if (data.Code === 0) {
-                console.log("success");
+                //console.log("success");
                 _this.newtab.categoryselected = -1;
                 _this.newtab.desc = "";
                 //refresh file tab data
                 funcList["getFileTabs"]["func"].call(_this, p1);
+                document.getElementById("fileTabTitle").click();
             } else {
                 console.log("addNewTab", "failed");
             }
@@ -211,7 +212,7 @@ function addReplytoTab(p1) {
                 funcList["getReplytodata"]["func"].call(_this, p1);
                 _this.newtab.replytoselected = -1;
                 _this.newtab.desc = "";
-
+                document.getElementById("fileTabTitle").click();
             } else {
                 console.log("addReplytoTab", "failed");
             }
@@ -219,6 +220,7 @@ function addReplytoTab(p1) {
     });
 }
 
+// 删除文件
 function deleteFile(p1) {
     if (!confirm("确认要删除吗？")) {
         return;
@@ -248,6 +250,7 @@ function deleteFile(p1) {
     });
 }
 
+// 下载文件
 function downloadFile(p1) {
     let _this = this;
     let prameters = "&fileHistoryId=" + p1.filehistoryid;
@@ -264,16 +267,17 @@ function downloadFile(p1) {
     });
 }
 
+// 预览文件
 function previewFile(p1) {
     let _this = this;
     let prameters = "&fileHistoryId=" + p1.filehistoryid;
     let handlerurl = funcList["previewFile"]["interface"] + prameters;
-    switch (p1.fileExt) {
+    switch (p1.fileExt.toLowerCase()) {
         case ".doc":
         case ".docx":
         case ".xls":
         case ".xlsx":
-        case ".rtf":
+        //case ".rtf":
             PreviewOffice(p1.filehistoryid, p1.fileExt, handlerurl);
             break;
         case ".jpg":
@@ -285,12 +289,18 @@ function previewFile(p1) {
         case ".pdf":
             PreviewOtherFile(p1.filehistoryid);
             break;
+        case ".zip":
+        case ".rar":
+        case ".7z":
+            PreviewFileOnline(p1.filehistoryid);
+            break;
         default:
             alert("很抱歉，暂不支持此类型文件的预览！");
             break;
     }
 }
 
+// 预览 Office 文件
 var PreviewOffice = function (fileHistoryId, ext, handlerurl) {
     $.ajax({
         async: true,
@@ -316,8 +326,15 @@ var PreviewOffice = function (fileHistoryId, ext, handlerurl) {
     });
 }
 
+// 预览其他类型的文件
 var PreviewOtherFile = function (fileHistoryId) {
     $("#aPreview").attr("href", "/HttpHandler/FilePreview.aspx?fileHistoryId=" + fileHistoryId);
+    document.getElementById("aPreview").click();
+}
+
+// 使用在线预览服务
+var PreviewFileOnline = function (fileHistoryId) {
+    $("#aPreview").attr("href", "http://ow365.cn/?i=16255&furl=http://bimpan.iok.la:8/HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId=" + fileHistoryId);
     document.getElementById("aPreview").click();
 }
 

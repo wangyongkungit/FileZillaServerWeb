@@ -42,7 +42,7 @@ namespace FileZillaServerWeb.HttpHandler
                 string physicalFileName = Path.Combine(actPath, fileHistory.FILENAME);
                 if (File.Exists(physicalFileName))
                 {
-                    string extName = Path.GetExtension(physicalFileName);
+                    string extName = Path.GetExtension(physicalFileName).ToLower();
                     switch (extName)
                     {
                         case ".pdf":
@@ -67,8 +67,7 @@ namespace FileZillaServerWeb.HttpHandler
             }
             catch (Exception ex)
             {
-                LogHelper.WriteLine($"文件{fileHistoryId}预览出错" + ex.Message + ex.StackTrace);
-                Response.Write("<h3>ERROR</h3>");
+                LogHelper.WriteLine($"文件{fileHistoryId}预览出错" + ex.Message);
                 Response.End();
             }
         }
@@ -94,25 +93,27 @@ namespace FileZillaServerWeb.HttpHandler
         {
             imgPreview.ImageUrl = physicalFileName;
             // 以二进制方式读文件
-            FileStream aFile = new FileStream(physicalFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            // 创建一个二进制数据流读入器，和打开的文件关联
-            BinaryReader brMyfile = new BinaryReader(aFile);
-            // 把文件指针重新定位到文件的开始
-            brMyfile.BaseStream.Seek(0, SeekOrigin.Begin);
-            //获取照片的字节数组
-            byte[] photo = brMyfile.ReadBytes(Convert.ToInt32(aFile.Length.ToString()));
-            // 关闭以上new的各个对象
-            brMyfile.Close();
-            Response.Write(photo);
-            if (photo.Length > 0)
+            using (FileStream aFile = new FileStream(physicalFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
-                MemoryStream ms = new MemoryStream(photo);
-                Response.Clear();
-                Response.ContentType = "image/gif";
-                Response.OutputStream.Write(photo, 0, photo.Length);
+                // 创建一个二进制数据流读入器，和打开的文件关联
+                BinaryReader brMyfile = new BinaryReader(aFile);
+                // 把文件指针重新定位到文件的开始
+                brMyfile.BaseStream.Seek(0, SeekOrigin.Begin);
+                //获取照片的字节数组
+                byte[] photo = brMyfile.ReadBytes(Convert.ToInt32(aFile.Length.ToString()));
+                // 关闭以上new的各个对象
+                brMyfile.Close();
+                Response.Write(photo);
+                if (photo.Length > 0)
+                {
+                    MemoryStream ms = new MemoryStream(photo);
+                    Response.Clear();
+                    Response.ContentType = "image/gif";
+                    Response.OutputStream.Write(photo, 0, photo.Length);
+                    Response.End();
+                }
                 Response.End();
             }
-            Response.End();
         }
     }
 }

@@ -13,7 +13,7 @@
 
     <%--<script src="Scripts/zeroclipboard/ZeroClipboard.js"></script>--%>    
     <script src="Scripts/clipboardjs/clipboard.min.js"></script>
-    <script src="Scripts/ylyj/serialnumbergenerating.js?v=1860902"></script>
+    <script src="Scripts/ylyj/serialnumbergenerating.js?v=18070701"></script>
     
     <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />    
     <script type="text/javascript">
@@ -376,7 +376,7 @@
             <div class="row">
                 <div class="col -12" style="text-align: left;">
                     <div class="btn-group btn-group-lg">
-                        <button type="button" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">文件列表</button>
+                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">文件列表</button>
                         <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
                         <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
                     </div>
@@ -404,19 +404,8 @@
                         <table class="table table-bordered table-hover  table-striped">
                             <tbody>
                                 <tr v-for=" file in projectfile.files" v-show="projectfile.parentId == file.categoryId">
-                                    <td>
-                                        {{file.operateContent}}
-                                        <!-- 图标: -->
-                                        <!-- <span :title="file.filedesc">{{file.fileName}}</span>
-                                        <span :title="">{{file.filePath}}</span>
-                                        <a href="dotPeek.rar">rar</a>
-                                        <a href="uploadfile.html">html</a> -->
-                                    </td>
                                     <td :title="file.description">
-                                        {{file.fileName}}
-                                    </td>
-                                    <td>
-                                        {{file.operateUser}}
+                                        <img :src="file.fileIconPath" style="margin-right:8px;" />{{file.fileName}}
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
@@ -511,7 +500,7 @@
                             <select class="form-control" name="category" id="category" v-model="newtab.categoryselected" @change="categoryChange()">
                                 <option v-for="item in newtab.category" :value="item.key">{{item.value}}</option>
                             </select>
-                            <span> {{newtab.categoryselected}}</span>
+                            <%--<span> {{newtab.categoryselected}}</span>--%>
                         </div>
 
                         <div class="form-group" v-show="showreply">
@@ -521,7 +510,7 @@
                                     {{item.Title}}
                                 </option>
                             </select>
-                            <span> {{newtab.replytoselected}}</span>
+                            <%--<span> {{newtab.replytoselected}}</span>--%>
                         </div>
 
                         <div class="form-group">
@@ -551,10 +540,10 @@
 
     <link href="Content/themes/base/ylyj/serialnumber.css?v=18426" rel="stylesheet" />
 
-    <script src="Scripts/vue/vue.js"></script>
-    <script src="Scripts/ylyj/employeehome/func.js"></script>
-    <script src="Scripts/ylyj/employeehome/settings.js"></script>
-    <script src="Scripts/ylyj/employeehome/vuepage.js"></script>    
+    <script src="Scripts/vue/vue.js?v=18070701"></script>
+    <script src="Scripts/ylyj/employeehome/func.js?v=18070701"></script>
+    <script src="Scripts/ylyj/employeehome/settings.js?v=18070701"></script>
+    <script src="Scripts/ylyj/employeehome/vuepage.js?v=18070701"></script>    
 
     <script src="Scripts/webuploader/webuploader.js"></script>
     <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>

@@ -37,11 +37,13 @@ select option {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
-    /*background-color:#fff;*/
+    font-size: 14px;
 }
 
 .tbl tr {
     background-color: #F1F4F9;
+    height:28px;
+    line-height:28px;
 }
 
 .tbl tr td {
@@ -52,6 +54,7 @@ select option {
 }
 
 .tbl tr th {
+    font-size:16px;
     height: 32px;
     line-height: 32px;
     color: #fff;

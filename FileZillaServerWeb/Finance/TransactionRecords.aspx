@@ -9,11 +9,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div style="width: 900px; margin: 0 auto; text-align: center;">
+        <div style="width: 1000px; margin: 0 auto; text-align: center;">
             <h1 id="title" runat="server">我的交易记录</h1>
             <div style="width: 1000px; margin: 0 auto;">
-<%--                <label>员工：</label>
-                <asp:DropDownList ID="ddlEmployeeName" runat="server" />--%>
                 <hr />
                 <div class="row">
                     <div class="left">
@@ -44,7 +42,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="left" style="width:60%;">                        
+                    <div class="left" style="width:60%;">
                         <div class="lbl" style="width:80px;">
                             <label>时间：</label>
                         </div>
@@ -71,29 +69,29 @@
                         <asp:Button ID="btnExport" runat="server" Text="导出" OnClick="btnExport_Click" CssClass="mya" />
                     </div>
                 </div>
-                <asp:GridView ID="gvTransaction" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCommand="gvTransaction_RowCommand" CssClass="tbl">
+                <asp:GridView ID="gvTransaction" runat="server" AutoGenerateColumns="false" DataKeyNames="ID" OnRowCommand="gvTransaction_RowCommand" CssClass="tbl" RowStyle-Height="28">
                     <Columns>
-                        <asp:TemplateField HeaderText="员工编号">
+                        <asp:TemplateField HeaderText="员工编号" ItemStyle-Width="80" ItemStyle-Height="28">
                             <ItemTemplate>
                                 <asp:Label ID="lblEmployeeNo" runat="server" Text='<%# Eval("employeeNo") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="员工姓名">
+                        <asp:TemplateField HeaderText="员工姓名" ItemStyle-Width="80">
                             <ItemTemplate>
                                 <asp:Label ID="lblEmployeeName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="任务编号">
+                        <asp:TemplateField HeaderText="任务编号" ItemStyle-Width="200">
                             <ItemTemplate>
                                 <asp:Label ID="lblTaskNo" runat="server" Text='<%# Eval("TaskNo") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="交易时间">
+                        <asp:TemplateField HeaderText="交易时间" ItemStyle-Width="150">
                             <ItemTemplate>
                                 <asp:Label ID="lblTransactionDate" runat="server" Text='<%# Eval("TransactionDate") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="计划时间">
+                        <asp:TemplateField HeaderText="计划时间" ItemStyle-Width="70">
                            <ItemTemplate>
                                <asp:Label ID="lblPlanDate" runat="server" Text='<%# Convert.ToDateTime(Eval("PlanDate")).ToString("yyyy-MM") %>'></asp:Label>
                            </ItemTemplate>
@@ -101,21 +99,21 @@
                                <asp:TextBox ID="txtPlanDate" runat="server" Text='<%# Convert.ToDateTime(Eval("PlanDate")).ToString("yyyy-MM") %>' CssClass="Wdate" onFocus="WdatePicker({dateFmt:'yyyy-MM'})"></asp:TextBox>
                            </EditItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="交易类型">
+                        <asp:TemplateField HeaderText="交易类型" ItemStyle-Width="80">
                             <ItemTemplate>
                                 <asp:Label ID="lblTransactionType" runat="server" Text='<%# Eval("TransactionType") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="交易金额">
+                        <asp:TemplateField HeaderText="交易金额" ItemStyle-Width="80">
                             <ItemTemplate>
                                 <asp:Label ID="lblTransactionAmount" runat="server" Text='<%# Eval("TransactionAmount") %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <%--<asp:TemplateField HeaderText="操作">
-                            <ItemTemplate>
-                                <asp:Button ID="btnDelete" runat="server" CommandName="del" CommandArgument='<%# Eval("ID") %>' Text="删除" CssClass="mya" OnClientClick="return confirm('确定要删除吗？');" />
-                            </ItemTemplate>
-                        </asp:TemplateField>--%>
+                       <asp:TemplateField HeaderText="说明" ItemStyle-Width="300">
+                           <ItemTemplate>
+                               <asp:Label ID="lblTransactionDescription" runat="server" Text='<%# Eval("TransactionDescription") %>' ToolTip='<%# Eval("TransactionDescription") %>'></asp:Label>
+                           </ItemTemplate>
+                       </asp:TemplateField>
                     </Columns>
                     <EmptyDataTemplate>
                         <span>暂无记录</span>

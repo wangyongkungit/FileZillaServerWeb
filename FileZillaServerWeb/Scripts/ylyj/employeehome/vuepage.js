@@ -132,7 +132,7 @@ var vm = new Vue({
 
 Vue.filter('convTime', function (value) {
     var unixTimestamp = new Date(value * 1000);
-    commonTime = unixTimestamp.toLocaleString('chinese', { hour12: false });   //转换为24小时制的时间格式  
+    commonTime = unixTimestamp.toLocaleString();   //转换为24小时制的时间格式   //'chinese', { hour12: false }
     return commonTime;
 });
 

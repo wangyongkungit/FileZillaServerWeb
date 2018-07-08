@@ -61,7 +61,7 @@ namespace FileZillaServerWeb.Finance
             dicCondition.Add("employeeId", employeeID);
             AspNetPager1.PageSize = 10;
             DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, dicSelectFlag, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount, out sumAmount, out dtExport).Tables[0];
-            AspNetPager1.RecordCount = totalRowsCount; Page.Title += totalRowsCount;
+            AspNetPager1.RecordCount = totalRowsCount;
             gvTransaction.DataSource = dtTransac;
             gvTransaction.DataBind();
         }

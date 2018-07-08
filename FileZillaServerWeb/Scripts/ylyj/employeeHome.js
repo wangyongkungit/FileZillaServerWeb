@@ -256,7 +256,7 @@ var appForTrends = new Vue({
         var _this = this;
         this.timer = setInterval(function () {
             _this.trends = GetTrends();
-        }, 40000);
+        }, 1100000);
     },
     beforeDestroy: function () {
         if (this.timer) {
