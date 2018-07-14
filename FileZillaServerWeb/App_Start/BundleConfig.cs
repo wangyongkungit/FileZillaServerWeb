@@ -37,6 +37,28 @@ namespace FileZillaServerWeb
             // 使用 http://modernizr.com 上的生成工具来仅选取所需的测试
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Scripts/modernizr-*"));
+
+            bundles.Add(new StyleBundle("~/bundles/employeehomecss").Include(
+                "~/Scripts/bootstrap4/css/bootstrap.css",
+                "~/Content/themes/base/ylyj/employeeHome.css",
+                "~/Scripts/webuploader/webuploader.css",
+                "~/Scripts/dialog/jDialog/jDialog.css",
+                "~/layui-master/src/css/layui.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/jQueryAndBootStrap").Include(
+                "~/Scripts/jquery-3.3.1.min.js",
+                "~/Scripts/jquery-ui-1.8.20.js",
+                "~/Scripts/dialog/jDialog.js",
+                "~/Scripts/bootstrap4/js/bootstrap.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/vuejs").Include(
+                "~/Scripts/vue/vue.js",
+                "~/Scripts/ylyj/employeehome/func.js",
+                "~/Scripts/ylyj/employeehome/settings.js",
+                "~/Scripts/ylyj/employeehome/vuepage.js"
+                ));
         }
     }
 }

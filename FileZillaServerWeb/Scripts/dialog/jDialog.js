@@ -9,7 +9,7 @@
         src = scripts[length - 1].src,
         pos = src.indexOf('/static/'),
         //scriptPath = src.substr(0, pos) + 'js/jDialog/';
-        scriptPath = src.substr(0, pos) + 'Scripts/dialog/jDialog/';
+        scriptPath = src.substr(0, pos) + '/Scripts/dialog/jDialog/';
 
     //alert(scripts); alert(src); alert(scriptPath);
     if (!window.importScriptList) window.importScriptList = {};

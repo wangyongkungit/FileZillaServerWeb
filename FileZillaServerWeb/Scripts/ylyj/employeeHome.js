@@ -1,6 +1,6 @@
 ﻿
 function SetQualityScore(parameters, employeeNo, type) {
-    var dialog = jDialog.iframe("SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
+    var dialog = jDialog.iframe("/SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
         title: '我的技能设置',
         width: 1100,
         height: 610
@@ -8,7 +8,7 @@ function SetQualityScore(parameters, employeeNo, type) {
 };
 
 function SetMyCertificate(employeeID) {
-    var dialog = jDialog.iframe("MaterialConfig.aspx?employeeID=" + employeeID, {
+    var dialog = jDialog.iframe("/MaterialConfig.aspx?employeeID=" + employeeID, {
         title: '我的证件设置',
         width: 1100,
         height: 610
@@ -16,7 +16,7 @@ function SetMyCertificate(employeeID) {
 };
 
 function TransferTask(prjID, employeeID, amount, taskno) {
-    var dialog = jDialog.iframe("TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
+    var dialog = jDialog.iframe("/TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
         title: '任务转移 ' + taskno,
         width: 800,
         height: 410
@@ -31,21 +31,21 @@ var ViewPrjFiles = function (prjID, taskNo) {
 };
 
 $("#withdraw").bind("click", function () {
-    var dialog = jDialog.iframe("withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+    var dialog = jDialog.iframe("/withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现',
         width: 1200,
         height: 610
     })
 });
 $("#withdrawRecords").bind("click", function () {
-    var dialog = jDialog.iframe("withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+    var dialog = jDialog.iframe("/withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现记录',
         width: 1200,
         height: 610
     })
 });
 $("#transactionRecords").bind("click", function () {
-    var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+    var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '交易记录',
         width: 1200,
         height: 780,
@@ -85,7 +85,7 @@ var LoadEcharts = function () {
     var jsonResult;
     $.ajaxSetup({ cache: false });
     $.ajax({
-        url: "MyHandler.ashx",
+        url: "/MyHandler.ashx",
         async : false,
         type: "post",
         data: { method: "GetEmployeeAccount", employeeID: $("#hidEmployeeID").val() },
@@ -135,21 +135,21 @@ var LoadEcharts = function () {
     myChart.on('click', function (param) {
         var index = param.dataIndex;
         if (index === 1) {
-            var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
+            var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
                 title: '已发记录',
                 width: 1200,
                 height: 780
             })
         }
         else if (index === 2) {
-            var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
+            var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
                 title: '奖罚记录',
                 width: 1200,
                 height: 780
             })
         }
         else if (index === 3) {
-            var dialog = jDialog.iframe("../../finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
+            var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
                 title: '其他',
                 width: 1200,
                 height: 780
@@ -233,7 +233,7 @@ var bindClipEvent = function () {
 var GetTrends = function () {
     var jsonTrend;
     $.ajax({
-        url: "MyHandler.ashx",
+        url: "/MyHandler.ashx",
         async: false,
         type: "get",
         data: { method: "GetTrends", employeeID: $("#hidEmployeeID").val() },

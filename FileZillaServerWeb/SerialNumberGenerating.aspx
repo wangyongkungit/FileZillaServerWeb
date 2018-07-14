@@ -15,81 +15,8 @@
     <script src="Scripts/clipboardjs/clipboard.min.js"></script>
     <script src="Scripts/ylyj/serialnumbergenerating.js?v=18070701"></script>
     
-    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />    
-    <script type="text/javascript">
-
-        $(function(){
-            var selctedValues = $("#hidDdlSpecialtySelectedValue").val();
-            var arr=selctedValues.split(",");
-            for(var i=0;i<arr.length;i++)
-            {
-                $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='"+arr[i]+"']").attr("selected",true);
-            }
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='']").attr("disabled",true).attr("selected",false);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='0']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='1']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='2']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='3']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='4']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='5']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='6']").attr("disabled",true);
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").multiselect({
-                multiple:"multiple",
-                checkAllText:"",
-                uncheckAllText:"",
-                noneSelectedText:"请选择",
-                selectedText:"#项已选",
-                selectedList: 2,
-                height: 540
-            });
-            $(".ui-corner-all").css("top", "140px");
-
-            $("#ContentPlaceHolder1_txtProjectName").blur(function(){ autoCompleteFillTaskBook();});
-            $("#ContentPlaceHolder1_ddlValuateMode").change(function(){ autoCompleteFillTaskBook();});
-            $("#ContentPlaceHolder1_ddlProvince").change(function(){ autoCompleteFillTaskBook();});
-            $("#ContentPlaceHolder1_ddlModelingSoftware").change(function(){ autoCompleteFillTaskBook();});
-            $("#ContentPlaceHolder1_txtValuateSoftware").blur(function(){ autoCompleteFillTaskBook();});
-            $("#ContentPlaceHolder1_ddlSpecialtyCategory").change(function(){ autoCompleteFillTaskBook();});
-        });
-
-        var autoCompleteFillTaskBook=function(){
-            //var arrVar=["工程名称：","计价模式：","省份：","建模软件：","计价软件：","专业："];
-            //var inputIds=["ContentPlaceHolder1_txtProjectName","ContentPlaceHolder1_ddlValuateMode","ContentPlaceHolder1_ddlProvince",
-            //    "ContentPlaceHolder1_ddlModelingSoftware","ContentPlaceHolder1_txtValuateSoftware","ContentPlaceHolder1_ddlSpecialtyCategory"];
-            //var taskBookText;
-            //var arrLength=arrVar.length;
-            //for(var i=0;i<arrVar.length;i++){
-            //    //taskBookText+=arrVar[i]
-            //    var inputValue=$("#"+inputIds[i]+"").val();
-            //    if(inputValue){
-            //        taskBookText+=arrVar[i]+inputIds[i];
-            //    }
-            //}
-
-            // 工程名称、计价模式、省份、算量软件（模式）、专业类别
-            var projectName="",valuateMode="",province="",modelingSoftware="",valuateSoftware="",specialty="";
-            if($("#ContentPlaceHolder1_txtProjectName").val()!=""){
-                projectName="工程名称："+$("#ContentPlaceHolder1_txtProjectName").val() + "    ";
-            }
-            if($("#ContentPlaceHolder1_ddlValuateMode").find("option:selected").text()!="-请选择-"){
-                valuateMode="计价模式："+$("#ContentPlaceHolder1_ddlValuateMode").find("option:selected").text()+ "   ";
-            }
-            if($("#ContentPlaceHolder1_ddlProvince").find("option:selected").text()!="-请选择-"){
-                province="省份："+$("#ContentPlaceHolder1_ddlProvince").find("option:selected").text()+ "    ";
-            }
-            if($("#ContentPlaceHolder1_ddlModelingSoftware").find("option:selected").text()!="-请选择-"){
-                modelingSoftware="建模软件："+$("#ContentPlaceHolder1_ddlModelingSoftware").find("option:selected").text()+ "    ";
-            }
-            if($("#ContentPlaceHolder1_txtValuateSoftware").val()!=""){
-                valuateSoftware="计价软件："+$("#ContentPlaceHolder1_txtValuateSoftware").val()+ "    ";
-            }
-            if($("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option:selected").text()!=""){
-                specialty="专业："+$("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option:selected").text();
-            }
-
-            $("#ContentPlaceHolder1_txtAssignmentBook").val(projectName+valuateMode+province+modelingSoftware+valuateSoftware+specialty);
-        };
-    </script>
+    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+    <link href="Content/themes/base/ylyj/serialnumber.css?v=1871101" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -122,10 +49,10 @@
                     <div class="formSearchLeft">
                         <label>完成期限：</label>
                     </div>
-                    <asp:TextBox ID="txtExpireDate" runat="server" CssClass="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH'})" required="required" />
+                    <asp:TextBox ID="txtExpireDate" runat="server" CssClass="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH'})" required="required" Width="135" Height="30" />
                     <span class="asterisk">*</span>
                 </div>
-                <div class="formSearch" style="width:260px; padding:0px 0px;">
+                <div class="formSearch" style="width:265px; padding:0px 0px;">
                     <div class="formSearchLeft">
                         <label>下单时间：</label>
                     </div>
@@ -134,7 +61,7 @@
                         title="单击选择日期时间" style="cursor:pointer;" />
                     <span class="asterisk">*</span>
                 </div>
-                <div class="formSearch" style="width:240px; padding:0px 0px; padding-right:10px;">
+                <div class="formSearch" style="width:250px; padding:0px 0px; padding-right:10px;">
                     <div class="formSearchLeft">
                         <label>店铺：</label>
                     </div>
@@ -153,7 +80,7 @@
                     <div class="formSearchLeft">
                         <label>客户旺旺号：</label>
                     </div>
-                    <asp:TextBox ID="txtWangwangName" runat="server" required="required" MaxLength="60" />
+                    <asp:TextBox ID="txtWangwangName" runat="server" required="required" MaxLength="60" Width="132" />
                     <span class="asterisk">*</span>
                 </div>
                 <div class="formSearch">
@@ -168,7 +95,7 @@
                     <div class="formSearchLeft">
                         <label>所需时间：</label>
                     </div>
-                    <asp:TextBox ID="txtTimeNeeded" runat="server" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" MaxLength="3" Width="30" required="required" />
+                    <asp:TextBox ID="txtTimeNeeded" runat="server" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" MaxLength="3" Width="40" required="required" />
                     <asp:DropDownList ID="ddlTimeNeeded" runat="server" Width="55">
                         <asp:ListItem Value="H" Text="小时"></asp:ListItem>
                         <asp:ListItem Value="d" Text="天"></asp:ListItem>
@@ -176,16 +103,17 @@
                     <span class="asterisk">*</span>
                 </div>
                 <div class="formSearch">
-                    <div class="formSearchLeft" style="width:96px;">
-                        <label>资料是否上传：</label>
+                    <div class="formSearchLeft" style="width:110px;">
+                        <label style="width:100%;">资料是否上传：</label>
                     </div>
-                    <asp:DropDownList ID="ddlMaterialIsUpload" runat="server" Width="120">
+                    <asp:DropDownList ID="ddlMaterialIsUpload" runat="server" Width="90">
                         <asp:ListItem Text="未上传" Value="0"></asp:ListItem>
                         <asp:ListItem Text="已上传" Value="1"></asp:ListItem>
                     </asp:DropDownList>
                     <span class="asterisk">*</span>
                 </div>
-                <img class="fulltext" src="Images/listdown.jpg" title="展开" />
+                <%--<img class="fulltext" src="Images/listdown.jpg" title="展开" />--%>
+                <span class="arrow-down">&gt;</span>
                 <div class="hidediv">
                 <div class="formSearch">
                     <div class="formSearchLeft">
@@ -371,15 +299,18 @@
   </form>
 
 
-    <div id="project" class="container" style="clear:both;">
+    <div id="project" class="container" style="clear:both; font-family:'Microsoft YaHei',sans-serif;">
         <div id="meun">
             <div class="row">
                 <div class="col -12" style="text-align: left;">
                     <div class="btn-group btn-group-lg">
-                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">文件列表</button>
+                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">任务资料</button>
                         <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
                         <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
                     </div>
+                    <%--<div class="btn-group">
+                        <button type="button" class="btn btn-warning" @click="sendDingtalkMessage(projectfile.parentId)">发送提醒</button>
+                    </div>--%>
                 </div>
             </div>
         </div>
@@ -537,8 +468,6 @@
     <%--<script src="http://cdn.bootcss.com/jqueryui/1.11.0/jquery-ui.min.js"></script>--%>
 
     <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
-
-    <link href="Content/themes/base/ylyj/serialnumber.css?v=18426" rel="stylesheet" />
 
     <script src="Scripts/vue/vue.js?v=18070701"></script>
     <script src="Scripts/ylyj/employeehome/func.js?v=18070701"></script>

@@ -3,7 +3,7 @@
     padding-bottom:30px;
 }
 .container {
-    width:1100px;
+    width:1200px;
     margin:0 auto;
     height:100%;
     background-color:#f1f4f9;
@@ -39,7 +39,7 @@ h1 {
     height:auto;
 }
 .formSearch {
-    width:250px;
+    width:256px;
     height:45px;
     /*margin:5px 0px 0px 5px;*/
     padding:5px 0px 0px 5px;
@@ -102,10 +102,10 @@ label {
     border-left-style:solid;
 }
 .formSearch input:focus {
-    border:1px solid #fafafa;
-    -webkit-box-shadow:0px 0px 6px #007eff;
+    border:2px solid #3388ff;
+    /*-webkit-box-shadow:0px 0px 6px #007eff;
     -moz-box-shadow:0px 0px 5px #007eff;
-    box-shadow:0px 0px 5px #007eff;
+    box-shadow:0px 0px 5px #007eff;*/
 }
 .formSearch textarea {
     font-family:'Microsoft YaHei',sans-serif;
@@ -159,8 +159,25 @@ label {
     background-color:#f0f0f0;
     font-family:'Microsoft YaHei';
 }
+.arrow-down {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #a6b4bb;
+    font-size: 28px;
+    display: inline-block;
+    margin-top: 50px;
+    transform: rotate(90deg) scale(1,1.4);
+    cursor: pointer;
+    user-select: none;
+}
 .wcg {
-    width: 120px; height: 30px; line-height: 40px; float: left; background-color: ActiveBorder;
+    width: 120px;
+    height: 30px;
+    line-height: 40px;
+    float: left;
+    background-color: ActiveBorder;
 }
 .attach_bottom {
     border-bottom:1px solid #d5d5d5;

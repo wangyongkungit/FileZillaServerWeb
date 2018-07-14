@@ -14,10 +14,11 @@ namespace FileZillaServerWeb
         void Application_Start(object sender, EventArgs e)
         {
             // 在应用程序启动时运行的代码
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //BundleTable.EnableOptimizations = false;
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterOpenAuth();
             //routeCollection.MapPageRoute("RouteForCustomer", "Customer/{Id}", "~/Customer.aspx")
-            //RouteTable.Routes.MapPageRoute("empHome1", "home.html/{*employeeid}", "~/employeeHome.aspx");
+            RouteTable.Routes.MapPageRoute("empHome1", "h/{*employeeid}", "~/employeeHome.aspx");
             //RouteTable.Routes.MapPageRoute("empHome2", "home/employeeId.html", "~/employeeHome.aspx");
         }
 

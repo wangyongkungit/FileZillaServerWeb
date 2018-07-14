@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  This file contains basic settings needed for most web apps.
+  For full Combres settings (with explanation), refer to the sample definition file: combres_full_with_annotation.xml
+  Also, refer to Combres' documentation: http://combres.codeplex.com/documentation	
+-->
+<combres xmlns='urn:combres'>
+  <filters>
+    <filter type="Combres.Filters.FixUrlsInCssFilter, Combres" />
+  </filters>
+  <resourceSets url="~/combres.axd"
+                defaultDuration="30"
+                defaultVersion="auto"
+                defaultDebugEnabled="false"
+                defaultIgnorePipelineWhenDebug="true"
+                localChangeMonitorInterval="30"
+                remoteChangeMonitorInterval="60"
+                >
+    <resourceSet name="employeehomeCss" type="css" debugEnabled="false" compressionEnabled="true">
+      <resource path="~/Scripts/bootstrap4/css/bootstrap.css" />
+      <resource path="~/Content/themes/base/ylyj/employeeHome.css" />
+      <resource path="~/Scripts/webuploader/webuploader.css" />
+      <resource path="~/Scripts/dialog/jDialog/jDialog.css" />
+      <resource path="~/layui-master/src/css/layui.css" />
+    </resourceSet>
+    <resourceSet name="jQueryAndBootStrapJs" type="js" debugEnabled="false" compressionEnabled="true">
+      <!--<resource path="~/Scripts/jquery-3.3.1.min.js" />-->
+      <resource path="~/Scripts/jquery-ui-1.8.20.min.js" />
+      <resource path="~/Scripts/dialog/jDialog.js" />
+      <resource path="~/Scripts/bootstrap4/js/bootstrap.js" />
+    </resourceSet>
+    <!--<resourceSet name="vueJs" type="js">
+      <resource path="~/Scripts/vue/vue.js" />
+      <resource path="~/Scripts/ylyj/employeehome/func.js" />
+      <resource path="~/Scripts/ylyj/employeehome/settings.js" />
+      <resource path="~/Scripts/ylyj/employeehome/vuepage.js" />
+    </resourceSet>-->
+  </resourceSets>
+</combres>

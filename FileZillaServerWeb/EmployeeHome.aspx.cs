@@ -82,8 +82,63 @@ namespace FileZillaServerWeb
                 ViewState["lstCerficate"] = value;
             }
         }
-        protected List<string> xData = new List<string>();
-        protected List<int> yData = new List<int>();
+        protected List<string> lstProjectID
+        {
+            get
+            {
+                return (List<string>)ViewState["lstProjectID"];
+            }
+            set
+            {
+                ViewState["lstProjectID"] = value;
+            }
+        }
+        protected string projectIdNeed
+        {
+            get
+            {
+                return (string)ViewState["projectIdNeed"];
+            }
+            set
+            {
+                ViewState["projectIdNeed"] = value;
+            }
+        }
+        protected List<TransactionDetails> lstTcje
+        {
+            get
+            {
+                return (List<TransactionDetails>)ViewState["tcje"];
+            }
+            set
+            {
+                ViewState["tcje"] = value;
+            }
+        }
+        protected List<ProjectProportion> lstPrjProportion
+        {
+            get
+            {
+                return (List<ProjectProportion>)ViewState["lstPrjProportion"];
+            }
+            set
+            {
+                ViewState["lstPrjProportion"] = value;
+            }
+        }
+        protected EmployeeProportion empProportion
+        {
+            get
+            {
+                return (EmployeeProportion)ViewState["empProportion"];
+            }
+            set
+            {
+                ViewState["empProportion"] = value;
+            }
+        }
+        //protected List<string> xData = new List<string>();
+        //protected List<int> yData = new List<int>();
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -91,11 +146,11 @@ namespace FileZillaServerWeb
             Title = "我的主页";
             if (!IsPostBack)
             {
-                string employeeId = Request.QueryString["employeeID"];
+                string employeeId = GetQueryString("employeeID"); // Request.QueryString["employeeID"];
                 LoadTvEmployee();
                 LoadSpecialties();
                 LoadCerficate();
-                LoadBalance();
+                //LoadBalance();
                 //LoadTaskTrend();
                 LoadDataNeedReload();
             }
@@ -103,13 +158,13 @@ namespace FileZillaServerWeb
 
         protected void LoadDataNeedReload()
         {
-            LoadPieChart();
+            //LoadPieChart();
             LoadProject();
         }
 
         private void LoadTvEmployee()
         {
-            string employeeID = Request.QueryString["employeeID"];
+            string employeeID = GetQueryString("employeeID"); // Request.QueryString["employeeID"];
             string employeeWhere = string.Empty;
             UserProfile user = UserProfile.GetInstance();
             EmployeeID = user.ID;
@@ -121,7 +176,10 @@ namespace FileZillaServerWeb
             //    bool isAdmin = user.Role.Any(item => item.RoleName == "超级管理员");
             //    employeeID = user.ID;
             //}
-            employeeID = employeeID ?? user.ID;
+            if (string.IsNullOrEmpty(employeeID))
+            {
+                employeeID = user.ID;
+            }
             employeeWhere = " e.ID = '" + employeeID + "'";
             DataTable dtEmployee = eDal.GetListDistinctParentEmpID(employeeWhere).Tables[0];
             DataTable dtEmployeeChild = eDal.GetListChildEmployee(string.Empty).Tables[0];
@@ -170,7 +228,10 @@ namespace FileZillaServerWeb
         protected void tvEmployees_SelectedNodeChanged(object sender, EventArgs e)
         {
             string employeeID = tvEmployees.SelectedValue;
-            Response.Redirect("EmployeeHome.aspx?employeeID=" + employeeID);
+            //Response.Redirect("EmployeeHome.aspx?employeeID=" + employeeID);
+            string userId = UserProfile.GetInstance().ID;
+            Response.Redirect("~/h/" + (employeeID == userId ? string.Empty : employeeID));
+            //ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "window.location.href='/h/"+ (employeeID == userId ? string.Empty : employeeID) + "';", true);
         }
 
         private void LoadSpecialties()
@@ -183,47 +244,46 @@ namespace FileZillaServerWeb
             {
                 dt.AsEnumerable().Where(item => item.Field<Int64>("available") == 1).ToList().ForEach(item => sbSkill.Append("<span class=\"skillSpan\">" + item.Field<string>("specialtyName") + "</span>"));
             }
-            //lblMySkills.Text = sbSkill.ToString().TrimEnd('，');
-            //lblMySkills.ToolTip = sbSkill.ToString().TrimEnd('，');
             divMySkills.InnerHtml = sbSkill.ToString();
         }
 
         protected void LoadCerficate()
         {
-            Cerficate cerficate = cBll.GetModelList(" employeeID = '" + EmployeeID + "' AND isMain = 1 ").FirstOrDefault();
-            if (cerficate != null)
-            {
-                imgCerficate.Src = Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
-            }
+            //Cerficate cerficate = cBll.GetModelList(" employeeID = '" + EmployeeID + "' AND isMain = 1 ").FirstOrDefault();
+            //if (cerficate != null)
+            //{
+            //    imgCerficate.Src = "/FileOperation/ImageCompression.ashx?empID=" + EmployeeID + ""; // Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
+            //}
+            imgCerficate.ImageUrl = "/FileOperation/ImageCompression.ashx?empID=" + EmployeeID;
         }
 
-        protected void LoadPieChart()
-        {
-            //EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + EmployeeID + "'").FirstOrDefault();
+        //protected void LoadPieChart()
+        //{
+        //    EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + EmployeeID + "'").FirstOrDefault();
 
-            //xData = new List<string>() { "剩余", "已发", "奖罚", "其他" };
-            //yData = new List<int>() { 10, 20, 30, 40 };
-            //ChartMoney.Series[0]["PieLabelStyle"] = "Outside";//将文字移到外侧
-            //ChartMoney.Series[0]["PieLineColor"] = "Black";//绘制黑色的连线。
-            //ChartMoney.Series[0].Points.DataBindXY(xData, yData);
-        }
+        //    xData = new List<string>() { "剩余", "已发", "奖罚", "其他" };
+        //    yData = new List<int>() { 10, 20, 30, 40 };
+        //    ChartMoney.Series[0]["PieLabelStyle"] = "Outside";//将文字移到外侧
+        //    ChartMoney.Series[0]["PieLineColor"] = "Black";//绘制黑色的连线。
+        //    ChartMoney.Series[0].Points.DataBindXY(xData, yData);
+        //}
 
-        public static void LoadEmployeeAccount()
-        {
+        //public static void LoadEmployeeAccount()
+        //{
 
-        }
+        //}
 
-        protected void LoadTaskTrend()
-        {
-            List<TaskTrend> lstTrend = ttBll.GetTop10ModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'");
-            gvTaskTrend.DataSource = lstTrend;
-            gvTaskTrend.DataBind();
-        }
+        //protected void LoadTaskTrend()
+        //{
+        //    List<TaskTrend> lstTrend = ttBll.GetTop10ModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'");
+        //    gvTaskTrend.DataSource = lstTrend;
+        //    gvTaskTrend.DataBind();
+        //}
 
         protected void LoadProject()
         {
             int totalRowsCount = 0;
-            AspNetPager1.PageSize = 10;// Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
+            AspNetPager1.PageSize = 10;
             StringBuilder sbWhere = new StringBuilder();
             string anyCondition = txtAnyCondition.Text.Trim();
             if (!string.IsNullOrEmpty(anyCondition))
@@ -231,6 +291,16 @@ namespace FileZillaServerWeb
                 sbWhere.Append(anyCondition);
             }
             DataTable dtProject = prjDal.GetProjectForEmployeeHome(Convert.ToString(EmployeeID ?? string.Empty), sbWhere.ToString(), AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount);
+            if (dtProject != null && dtProject.Rows.Count > 0)
+            {
+                StringBuilder sbPrjId = new StringBuilder();
+                dtProject.AsEnumerable().Select(item => (string)item["prjID"]).ToList().ForEach(item => sbPrjId.AppendFormat("'{0}',", item));
+                projectIdNeed = sbPrjId.ToString().TrimEnd(',');
+                lstTcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' AND TRANSACTIONTYPE = 7 AND PROJECTID IN (" + projectIdNeed + ") ");
+                lstPrjProportion = new ProjectProportionBLL().GetModelList(" projectId IN (" + projectIdNeed + ")");
+            }
+
+            empProportion = epBll.GetModelList(" AND EMPLOYEEID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
 
             if (string.IsNullOrEmpty(sbWhere.ToString()))
             {
@@ -241,12 +311,12 @@ namespace FileZillaServerWeb
             gvProject.DataBind();
         }
 
-        private void LoadBalance()
-        {
-            EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
-            decimal withdraw = wdBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
-            //lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
-        }
+        //private void LoadBalance()
+        //{
+        //    EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
+        //    decimal withdraw = wdBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
+        //    lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
+        //}
 
         #region 页码事件
         /// <summary>
@@ -285,27 +355,44 @@ namespace FileZillaServerWeb
             {
                 #region 计算提成金额
                 string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
-                decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
+                //decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
                 Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
-                lblProportionAmount.Text = tcje.ToString();
+                //lblProportionAmount.Text = tcje.ToString();
+                if (lstTcje != null && lstTcje.Count() > 0)
+                {
+                    TransactionDetails td = lstTcje.Where(item => item.PROJECTID == prjId && item.EMPLOYEEID == EmployeeID).FirstOrDefault();
+                    if (td != null && td.TRANSACTIONAMOUNT != null)
+                    {
+                        lblProportionAmount.Text = td.TRANSACTIONAMOUNT.ToString();
+                    }
+                    else
+                    {
+                        lblProportionAmount.Text = "0";
+                    }
+                }
+                else
+                {
+                    lblProportionAmount.Text = "0";
+                }
 
                 decimal proportion = 0m;
                 // 先看此项目是否单独设置了提成
-                ProjectProportion projectProportion = new ProjectProportionBLL().GetModelList(" projectId = '" + prjId + "'").FirstOrDefault();
+                ProjectProportion projectProportion = lstPrjProportion?.Where(item => item.PROJECTID == prjId).FirstOrDefault();  // new ProjectProportionBLL().GetModelList(" projectId = '" + prjId + "'").FirstOrDefault();
                 // 如果设置了单独提成，则采用单独设置的比例
                 if (projectProportion != null)
                 {
                     proportion = projectProportion.PROPORTION ?? 0m;
                 }
                 // 如果未设置，则采用默认提成
-                else
+                else if (empProportion != null)
                 {
-                    EmployeeProportion empPro = epBll.GetModelList(" AND EMPLOYEEID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
-                    proportion = empPro?.PROPORTION ?? 0m;
+                    proportion = empProportion?.PROPORTION ?? 0m;
                 }
                 Label lblExpectAmount = e.Row.FindControl("lblExpectAmount") as Label;
-                Project prj = new ProjectBLL().GetModel(prjId);
-                lblExpectAmount.Text = (prj.ORDERAMOUNT * Convert.ToDouble(proportion)).ToString();
+                HiddenField hidOrderAmount = e.Row.FindControl("hidOrderAmount") as HiddenField;
+                decimal orderAmount = Convert.ToDecimal(hidOrderAmount.Value);
+                //Project prj = new ProjectBLL().GetModel(prjId);
+                lblExpectAmount.Text = (orderAmount * Convert.ToDecimal(proportion)).ToString();
                 #endregion
 
                 #region 计算剩余时间
@@ -478,6 +565,16 @@ namespace FileZillaServerWeb
                     return;
                 }
             }
+        }
+
+        public string GetQueryString(string key, string defaultValue = "")
+        {
+            if (Page.RouteData.Values.Keys.Contains(key) && Page.RouteData.Values[key] != null)
+                return Page.RouteData.Values[key].ToString();
+            else if (!string.IsNullOrWhiteSpace(Request.QueryString[key]))
+                return Request.QueryString[key];
+            else
+                return defaultValue;
         }
     }
 }

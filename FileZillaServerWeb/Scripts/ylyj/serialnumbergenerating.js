@@ -1,98 +1,4 @@
-﻿//$(document).ready(function(){
-//    $("#bottom").removeClass("fixed");
-//    var contentHeight=document.body.scrollHeight;
-//    var winHeight=window.innerHeight;
-//    if(winHeight<contentHeight){
-//        $("#bottom").addClass("fixed");
-//    }
-//    else{
-//        $("#bottom").removeClass("fixed");
-//    }
-//})
-
-//function copyText(objId) {
-//    try {
-//        var obj = document.getElementById(objId);
-//        var rng = document.body.createTextRange();
-//        rng.moveToElementText(obj);
-//        rng.scrollIntoView();
-//        rng.select();
-//        rng.execCommand("Copy");
-//        rng.collapse(false);
-//        alert("已经复制到粘贴板!你可以使用Ctrl+V 贴到需要的地方去了哦!");
-//    } catch (e) {
-//        alert("您的浏览器不支持此复制功能，请选中相应内容并使用Ctrl+C进行复制!");
-//    }
-//}
-
-//$(document).ready(function () {
-//    InitProvince("ddlProvince");
-//});
-////获取当前网址
-//var path = document.URL;
-////获取主机之后的目录
-//var pathName = document.location.pathname;
-//var position = path.indexOf(pathName);
-////
-//var localHostPath = path.substr(0, position);
-////xml地址
-//var xmlPath = localHostPath + "/Config/Area.xml";
-//loadProvince(xmlPath);
-//function loadProvince(path) {
-//    var xmlDoc = null;
-//    xmlDoc = jQuery.get(path, function (date) {
-//        var $s1 = $("#ddlProvince");
-//        var root = jQuery(date).find("address")[0];
-//        $(root).children("province").each(function () {
-//            appendOptionTo($s1, $(this).attr("name"), $(this).attr("code"));
-//        });
-//        function appendOptionTo($o, k, v, d) {
-//            var $opt = $("<option>").text(k).val(v);
-//            $opt.appendTo($o);
-//        }
-//    });
-//}
-//function catch_keydown(sel) {
-//    switch (event.keyCode) {
-//        case 13:
-//            //Enter; 
-//            sel.options[sel.length] = new Option("", "", false, true);
-//            event.returnValue = false;
-//            break;
-//        case 27:
-//            //Esc; 
-//            alert("text:" + sel.options[sel.selectedIndex].text + ", value:" + sel.options[sel.selectedIndex].value + ";");
-//            event.returnValue = false;
-//            break;
-//        case 46:
-//            //Delete; 
-//            if (confirm("删除当前选项!?")) {
-//                sel.options[sel.selectedIndex] = null;
-//                if (sel.length > 0) {
-//                    sel.options[0].selected = true;
-//                }
-//            }
-//            event.returnValue = false;
-//            break;
-//        case 8:
-//            //Back Space; 
-//            var s = sel.options[sel.selectedIndex].text;
-//            sel.options[sel.selectedIndex].text = s.substr(0, s.length - 1);
-//            event.returnValue = false;
-//            break;
-//    }
-
-//}
-//function catch_press(sel) {
-//    sel.options[sel.selectedIndex].text = sel.options[sel.selectedIndex].text + String.fromCharCode(event.keyCode);
-//    event.returnValue = false;
-//}
-//$(document).ready(function () {
-//    $('#ddlValuateSoftware').editableSelect({
-//        effects: 'slide'
-//    });
-//})
-//清空文本框
+﻿//清空文本框
 function ClearAllTextBox() {
     var obj = window.document.forms[0];
     for (i = 0; i < obj.elements.length; i++) {
@@ -150,17 +56,6 @@ function Compress(type, ID, i, finishedPerson) {
         }
     });
 }
-////下载
-//function Download(type, ID) {
-//    $("#hidTaskType").val(type);
-//    $("#hidProjectOrModifyID").val(ID);
-//    $("#btnDownload").click();
-//}
-////删除附件
-//function Delete(ID) {
-//    $("#hidDeleteID").val(ID);
-//    $("#btnModifyDelete").click();
-//}
 //验证是否选择了需要上传的文件
 function ValidateUpload(fupId) {
     var val = $('#' + fupId).val();
@@ -351,18 +246,22 @@ $(document).ready(function () {
         $(this).select();
     });
 
-    $(".fulltext").bind("click", function () {
+    // 展开全部
+    $(".arrow-down").bind("click", function () {
         $(".hidediv").toggle();
         var img = $(this);
-        if (img.attr("src") === "Images/listdown.jpg") {
-            img.attr("src", "Images/listup.jpg");
+        if (img.text() === ">") {
+            img.text("<");
             img.attr("title", "折叠");
         }
-        else if (img.attr("src") === "Images/listup.jpg") {
-            img.attr("src", "Images/listdown.jpg");
+        else if (img.text() === "<") {
+            img.text(">");
             img.attr("title", "展开");
         }
     });
+
+    autoCompleteFillTaskBook();
+    SetSpecialtyValue();
 
     //
     //$("#ContentPlaceHolder1_txtOrderDate").click(function () {
@@ -423,51 +322,76 @@ var changeActive = function () {
             }
         }
     }
-
-    //var copyHrefs = document.getElementsByClassName("copyhref");
-    //for (var ii = 0; ii < copyHrefs.length; ii++) {
-    //    var clipboard = new Clipboard("#" + copyHrefs[0].id);
-
-    //    clipboard.on('success', function (e) {
-    //        console.log("succ:" + e);
-    //    });
-    //    clipboard.on('error', function (e) {
-    //        console.log("err:" + e);
-    //    });
-    //}
-    //var clipboard = new Clipboard('#copyHref');
-
-    //clipboard.on('success', function (e) {
-    //    console.log("succ:"+e);
-    //});
-    //clipboard.on('error', function (e) {
-    //    console.log("err:"+e);
-    //});
 }
 setTimeout('changeActive()', 1200);
 
-var clip = null;
-var bindClipEvent = function () {
-    //clip = new ZeroClipboard.Client();
-    //clip.setHandCursor(true);
-    //clip.addEventListener("mouseOver", function (client) {
-    //    clip.setText("4444433333");
-    //});
-    //clip.addEventListener("complete", function (client, text) {
-    //    alert("链接已成功复制到剪贴板！");
-    //});
-    //clip.glue("copyHref", "clip_container");
+function SetSpecialtyValue() {
+    var selctedValues = $("#hidDdlSpecialtySelectedValue").val();
+    var arr = selctedValues.split(",");
+    for (var i = 0; i < arr.length; i++) {
+        $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='" + arr[i] + "']").attr("selected", true);
+    }
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='']").attr("disabled", true).attr("selected", false);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='0']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='1']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='2']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='3']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='4']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='5']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option[value='6']").attr("disabled", true);
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").multiselect({
+        multiple: "multiple",
+        checkAllText: "",
+        uncheckAllText: "",
+        noneSelectedText: "请选择",
+        selectedText: "#项已选",
+        selectedList: 2,
+        height: 540
+    });
+    $(".ui-corner-all").css("top", "140px");
+
+    $("#ContentPlaceHolder1_txtProjectName").blur(function () { autoCompleteFillTaskBook(); });
+    $("#ContentPlaceHolder1_ddlValuateMode").change(function () { autoCompleteFillTaskBook(); });
+    $("#ContentPlaceHolder1_ddlProvince").change(function () { autoCompleteFillTaskBook(); });
+    $("#ContentPlaceHolder1_ddlModelingSoftware").change(function () { autoCompleteFillTaskBook(); });
+    $("#ContentPlaceHolder1_txtValuateSoftware").blur(function () { autoCompleteFillTaskBook(); });
+    $("#ContentPlaceHolder1_ddlSpecialtyCategory").change(function () { autoCompleteFillTaskBook(); });
+}
+
+function autoCompleteFillTaskBook() {
+    //var arrVar=["工程名称：","计价模式：","省份：","建模软件：","计价软件：","专业："];
+    //var inputIds=["ContentPlaceHolder1_txtProjectName","ContentPlaceHolder1_ddlValuateMode","ContentPlaceHolder1_ddlProvince",
+    //    "ContentPlaceHolder1_ddlModelingSoftware","ContentPlaceHolder1_txtValuateSoftware","ContentPlaceHolder1_ddlSpecialtyCategory"];
+    //var taskBookText;
+    //var arrLength=arrVar.length;
+    //for(var i=0;i<arrVar.length;i++){
+    //    //taskBookText+=arrVar[i]
+    //    var inputValue=$("#"+inputIds[i]+"").val();
+    //    if(inputValue){
+    //        taskBookText+=arrVar[i]+inputIds[i];
+    //    }
+    //}
+
+    // 工程名称、计价模式、省份、算量软件（模式）、专业类别
+    var projectName = "", valuateMode = "", province = "", modelingSoftware = "", valuateSoftware = "", specialty = "";
+    if ($("#ContentPlaceHolder1_txtProjectName").val() != "") {
+        projectName = "工程名称：" + $("#ContentPlaceHolder1_txtProjectName").val() + "    ";
+    }
+    if ($("#ContentPlaceHolder1_ddlValuateMode").find("option:selected").text() != "-请选择-") {
+        valuateMode = "计价模式：" + $("#ContentPlaceHolder1_ddlValuateMode").find("option:selected").text() + "   ";
+    }
+    if ($("#ContentPlaceHolder1_ddlProvince").find("option:selected").text() != "-请选择-") {
+        province = "省份：" + $("#ContentPlaceHolder1_ddlProvince").find("option:selected").text() + "    ";
+    }
+    if ($("#ContentPlaceHolder1_ddlModelingSoftware").find("option:selected").text() != "-请选择-") {
+        modelingSoftware = "建模软件：" + $("#ContentPlaceHolder1_ddlModelingSoftware").find("option:selected").text() + "    ";
+    }
+    if ($("#ContentPlaceHolder1_txtValuateSoftware").val() != "") {
+        valuateSoftware = "计价软件：" + $("#ContentPlaceHolder1_txtValuateSoftware").val() + "    ";
+    }
+    if ($("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option:selected").text() != "") {
+        specialty = "专业：" + $("#ContentPlaceHolder1_ddlSpecialtyCategory").find("option:selected").text();
+    }
+
+    $("#ContentPlaceHolder1_txtAssignmentBook").val(projectName + valuateMode + province + modelingSoftware + valuateSoftware + specialty);
 };
-
-//var CopyUrl = function (copyText) {
-//    bindClipEvent(copyText);
-//};
-
-//var ShareLink = function (fileHistoryId, getcode) {
-//    var text = "链接：http://bimpan.iok.la:8/FileOperation/FileShare.aspx?fileHistoryId=" + fileHistoryId + " 提取码：" + getcode + "";
-//    $("#divCopyText" + fileHistoryId).dialog({
-//        resizable: false,
-//        height: 240,
-//        modal: true
-//    })
-//}

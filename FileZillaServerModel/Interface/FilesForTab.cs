@@ -22,6 +22,11 @@ namespace FileZillaServerModel.Interface
         /// </summary>
         public string fileExt { get; set; }
 
+        /// <summary>
+        /// 文件图标
+        /// </summary>
+        public string fileIconPath { get; set; }
+
         public string description { get; set; }
     }
 }

@@ -355,3 +355,22 @@ var ShareLink = function (fileHistoryId) {
     var currentHeight = $(window).height();
     $(".ui-resizable").css("left", ((currentWidth - 520) / 2) + "px").css("top", ((currentHeight - 440) / 2) + "px");
 }
+
+function sendDingtalkMessage(p1) {
+    let _this = this;
+    let prameters = "&categoryId=" + p1.fileHistoryId;
+    let handlerurl = funcList["sendDingtalkMessage"]["interface"] + prameters;
+
+    $.ajax({
+        async: true,
+        url: handlerurl,
+        dataType: 'jsonp',
+        crossDomain: true,
+        success: function (data) {
+
+        },
+        error: function () {
+
+        }
+    });
+}

@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -59,8 +60,10 @@
   <ItemGroup>
     <Compile Include="DateTimeHelper.cs" />
     <Compile Include="ErrorCode.cs" />
+    <Compile Include="FileIconHelper.cs" />
     <Compile Include="FileOperateLogHelper.cs" />
     <Compile Include="HttpHandlerBase\CCHttpHandler.cs" />
+    <Compile Include="ImageHelper.cs" />
     <Compile Include="Office2HtmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

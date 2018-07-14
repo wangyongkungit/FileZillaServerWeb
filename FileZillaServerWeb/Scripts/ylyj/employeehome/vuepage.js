@@ -92,7 +92,6 @@ var vm = new Vue({
         changeFilesTab: function (filetype) {
             this.projectfile.parentId = filetype;
             changeActive();
-            bindClipEvent();
         },
         //delete file
         deleteFile: function (fileHistoryId) {

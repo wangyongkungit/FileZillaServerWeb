@@ -404,3 +404,7 @@ body {
 .topheight {
     height: inherit;
 }
+.tblproject tr th{
+    text-align:center;
+    font-size:13px;
+}

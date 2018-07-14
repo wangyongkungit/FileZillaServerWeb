@@ -1,16 +1,24 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="employeeHome.aspx.cs" Inherits="FileZillaServerWeb.employeeHome" %>
 <%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
+<%@ Import Namespace="Combres" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>我的主页</title>
-    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
-    <link href="Content/themes/base/ylyj/employeeHome.css?v=180610" rel="stylesheet" />
-    <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />    
-    <link href="<%= ResolveUrl("~/Scripts/dialog/jDialog/jDialog.css") %>" rel="stylesheet" />
-    <link href="layui-master/src/css/layui.css" rel="stylesheet" />
+    <%--<%= WebExtensions.CombresLink("employeehomeCss") %>--%>
+<%--    <%= System.Web.Optimization.Styles.Render("~/bundles/employeehomecss") %>--%>
+    <link href="/Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/themes/base/ylyj/employeeHome.css?v=180610" rel="stylesheet" />
+    <link href="/Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />    
+    <link href="/Scripts/dialog/jDialog/jDialog.css" rel="stylesheet" />
+    <link href="/layui-master/src/css/layui.css" rel="stylesheet" />
+    <style type="text/css">
+        #imgCerficate {
+            width:100%;height:216px; overflow:hidden; border-bottom-left-radius:7px;border-bottom-right-radius:7px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -27,11 +35,11 @@
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            <img src="UploadFiles/beach.jpg" class="layui-nav-img">
+                            <img src="/UploadFiles/beach.jpg" class="layui-nav-img" />
                             <%= UserName %>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="PasswordModify.aspx" target="_blank">密码修改</a></dd>
+                            <dd><a href="/PasswordModify.aspx" target="_blank">密码修改</a></dd>
                         </dl>
                     </li>
                     <%--<li class="layui-nav-item"><a href="">退了</a></li>--%>
@@ -56,13 +64,18 @@
                                 <div style="height: 260px; padding: 10px;">
                                     <div class="layui-row layui-col-md6">
                                         <h6 style="background-color:#007bff; height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
-                                            onclick='SetQualityScore("<%= EmployeeID %>", "<%= EmployeeNo %>", "1");'><a>我的技能</a></h6>
+                                            onclick='SetQualityScore("<%= EmployeeID %>", "<%= EmployeeNo %>", "1");'><a>我的技能</a>
+                                            <span style="float:right; margin-right:8px;">&gt;</span>
+                                        </h6>
                                         <div id="divMySkills" runat="server" css="skill"></div>
                                     </div>
                                     <div class="layui-row layui-col-md6">
                                         <h6 style="background-color:#28a745;height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400;border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
-                                             onclick='SetMyCertificate("<%= EmployeeID %>");'><a>我的证件</a></h6>
-                                        <img id="imgCerficate" runat="server" style="width:100%;height:216px; overflow:hidden; border-bottom-left-radius:7px;border-bottom-right-radius:7px;" />
+                                             onclick='SetMyCertificate("<%= EmployeeID %>");'><a>我的证件</a>
+                                            <span style="float:right; margin-right:8px;">&gt;</span>
+                                        </h6>
+                                        <%--<img id="imgCerficate" runat="server" style="width:100%;height:216px; overflow:hidden; border-bottom-left-radius:7px;border-bottom-right-radius:7px;" />--%>
+                                        <asp:Image ID="imgCerficate" runat="server" />
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +155,7 @@
                                         <asp:Button ID="btnSearch" runat="server" Text="查询" OnClick="btnSearch_Click"  CssClass="layui-btn" style="width:100%; height:34px;line-height:34px;"/>
                                     </div>
                                 </div>
-                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" OnRowCommand="gvProject_RowCommand" Width="100%" CssClass="layui-table" lay-size="sm" lay-even Style="margin-top: 0px; text-align: center;">
+                                <asp:GridView ID="gvProject" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvProject_RowDataBound" DataKeyNames="prjID,isFinished" OnRowCommand="gvProject_RowCommand" Width="100%" CssClass="layui-table tblproject" lay-size="sm" lay-even Style="margin-top: 0px; text-align: center;">
                                     <HeaderStyle ForeColor="White" BackColor="#666666" Font-Bold="true" />
                                     <Columns>
                                         <asp:TemplateField HeaderText="项目编号">
@@ -163,7 +176,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="是否完成">
                                             <ItemTemplate>
-                                                <asp:Label ID="lblIsFinished" runat="server" Text='<%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "&#10004" : "&#10007" %>'></asp:Label>
+                                                <asp:Label ID="lblIsFinished" runat="server" Text='<%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "&#10004;" : "&#10007;" %>'></asp:Label>
                                                 <asp:Button ID="btnSetFinished" runat="server" Text="我已完成" Visible='<%# Convert.ToInt32(Eval("ISFINISHED")) == 0 %>' CommandName="setFinished" CommandArgument='<%# Eval("prjId") %>' CssClass="taskmovebutton" OnClientClick="return confirm('确定置为完成？');" />
                                                 <asp:HiddenField ID="hidIsFinished" runat="server" Value='<%# Eval("ISFINISHED") %>' />
                                             </ItemTemplate>
@@ -173,12 +186,13 @@
                                                 <asp:Label ID="lblTimeRemain" runat="server" Text="--"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="预计提成">
+                                        <asp:TemplateField HeaderText="预计提成／&yen;">
                                             <ItemTemplate>
+                                                <asp:HiddenField ID="hidOrderAmount"  runat="server" Value='<%# Eval("orderAmount") %>' />
                                                 <asp:Label ID="lblExpectAmount" runat="server"></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="提成金额">
+                                        <asp:TemplateField HeaderText="提成金额／&yen;">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblProportionAmount" runat="server" Text=''></asp:Label>
                                             </ItemTemplate>
@@ -217,12 +231,12 @@
 
                     <div class="layui-row" style="border: 0px solid #ffd800;">
                      <!-- 文件列表部分 -->
-                     <div id="project" class="container" style="clear:both; float:left;">
+                     <div id="project" class="container" style="clear:both; float:left; font-family:'Microsoft YaHei',sans-serif;">
                         <div id="meun">
                             <div class="row">
                                 <div class="col -12" style="text-align: left;">
                                     <div class="btn-group btn-group-lg">
-                                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">文件列表</button>
+                                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">任务资料</button>
                                         <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
                                         <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
                                     </div>
@@ -251,18 +265,18 @@
                                             <tbody>
                                                 <tr v-for=" file in projectfile.files" v-show="projectfile.parentId==file.categoryId">
                                                     <td :title="file.description">
-                                                        <img :src="file.fileIconPath" style="margin-right:8px;" />{{file.fileName}}
+                                                        <img :src="'/'+file.fileIconPath" style="margin-right:8px;" />{{file.fileName}}
                                                     </td>
                                                     <td>
                                                         <div class="btn-group btn-group-sm">
                                                             <button type="button" class="btn btn-default btn-danger" @click="deleteFile(file.fileHistoryId)">删除</button>
-                                                            <a id="aDownload" :href="'HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
+                                                            <a id="aDownload" :href="'/HttpHandler/FileHandler.ashx?FuncName=DownloadFile&fileHistoryId='+file.fileHistoryId" class="btn btn-success">下载</a>
                                                             <button type="button" class="btn btn-dark" @click="previewFile(file.fileHistoryId, file.fileExt)">预览</button>                                                            
                                                             <span id="clip_container" style="display:none;">
                                                                 <input id="copyHref" type="button" class="btn btn-info" value="复制链接" />
                                                             </span>
                                                             <a id="aPreview" target="_blank" style="visibility:hidden"></a>
-                                                            <img :id="'loadingimg'+file.fileHistoryId" src="Images/loadingAnimation.gif" style="display:none;" />
+                                                            <img :id="'loadingimg'+file.fileHistoryId" src="/Images/loadingAnimation.gif" style="display:none;" />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -375,7 +389,7 @@
                 </div>
             </div>
 
-            <div class="layui-footer">
+            <div class="layui-footer" style="color:#666;">
                 <!-- 底部固定区域 -->
                 &copy; bimpan.iok.la - Yiliangyijia Consultation Co. Ltd.
             </div>
@@ -386,32 +400,38 @@
     </form>
 
     <%--jQuery, bootStrap--%>
-    <script src="Scripts/jquery-3.3.1.min.js"></script>
-    <script src="Scripts/jquery-ui-1.8.20.js"></script>
+        <script src="<%= ResolveUrl("~/Scripts/jquery-3.3.1.min.js") %>"></script>
+    <%= WebExtensions.CombresLink("jQueryAndBootStrapJs") %>
+
+<%--    <%= System.Web.Optimization.Scripts.Render("~/bundles/jQueryAndBootStrap") %>--%>
+<%--    <script src="Scripts/jquery-3.3.1.min.js"></script>
+    <script src="Scripts/jquery-ui-1.8.20.min.js"></script>
     <script src="Scripts/dialog/jDialog.js"></script>
-    <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
+    <script src="Scripts/bootstrap4/js/bootstrap.js"></script>--%>
 
     <%--Vue--%>
-    <script src="Scripts/vue/vue.js?v=18070701"></script>
-    <script src="Scripts/ylyj/employeehome/func.js?v=18070701"></script>
-    <script src="Scripts/ylyj/employeehome/settings.js?v=18070701"></script>
-    <script src="Scripts/ylyj/employeehome/vuepage.js?v=18070705"></script>
+    <%--<%= WebExtensions.CombresLink("vueJs") %>--%>
+<%--    <%= System.Web.Optimization.Scripts.Render("~/bundles/vuejs") %>--%>
+    <script src="<%= ResolveUrl("~/Scripts/vue/vue.min.js?v=18070701") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/func.js?v=18070701") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/settings.js?v=18070701") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/vuepage.js?v=18070705") %>"></script>
 
     <%--web uploader, datepicker--%>
-    <script src="Scripts/webuploader/webuploader.js"></script>
-    <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>
-    <script src="Scripts/My97DatePicker/WdatePicker.js"></script>
+    <script src="<%= ResolveUrl("~/Scripts/webuploader/webuploader.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/uploadfile.js") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/My97DatePicker/WdatePicker.js") %>"></script>
 
     <%--layui--%>
-    <script src="layui-master/src/layui.js"></script>
+    <script src="<%= ResolveUrl("~/layui-master/src/layui.js") %>"></script>
     <script type="text/javascript">
         layui.use("element", function () {
             var element = layui.element;
-        })
+        });
     </script>
     
-    <script src="Scripts/echarts/echarts.common.min.js"></script>
-    <script src="Scripts/zeroclipboard/ZeroClipboard.js"></script>
-    <script src="Scripts/ylyj/employeeHome.js?v=18070701"></script>
+    <script src="<%= ResolveUrl("~/Scripts/echarts/echarts.common.min.js") %>"></script>
+    <%--<script src="Scripts/zeroclipboard/ZeroClipboard.js"></script>--%>
+    <script src="<%= ResolveUrl("~/Scripts/ylyj/employeeHome.js?v=18070701") %>"></script>
 </body>
 </html>
