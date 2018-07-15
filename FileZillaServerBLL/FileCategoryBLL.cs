@@ -405,13 +405,44 @@ namespace FileZillaServerBLL
             return categories;
         }
 
+        public string GetExistFileNotFinishCategory(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            string projectId = context.Request["projectId"];
+            DataSet ds = this.GetExistFileNotFinishCategory(projectId);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                StringBuilder sbNotFinished = new StringBuilder();
+                ds.Tables[0].AsEnumerable().ToList().ForEach(item => sbNotFinished.AppendFormat("{0}、", item.Field<string>("folderName")));
+                return sbNotFinished.ToString().TrimEnd('、');
+            }
+            return string.Empty;
+        }
+
         public DataSet GetExpireDateByProjectId(string projectId)
         {
             return dal.GetExpireDateByProjectId(projectId);
         }
         #endregion
 
-        public static bool IsDate(string strDate)
+        public DataSet GetIsRemindCategoriesId(HttpContext context, out int errCode)
+        {
+            errCode = 0;
+            string filecategoryId = context.Request["categoryId"];
+            return this.GetIsRemindByFilecategoryId(filecategoryId);
+        }
+
+        public DataSet GetIsRemindByFilecategoryId(string filecategoryId)
+        {
+            return dal.GetIsRemindByFilecategoryId(filecategoryId);
+        }
+
+        public DataSet GetExistFileNotFinishCategory(string projectId)
+        {
+            return dal.GetExistFileNotFinishCategory(projectId);
+        }
+
+            public static bool IsDate(string strDate)
         {
             try
             {

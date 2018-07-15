@@ -4,11 +4,13 @@ using FileZillaServerProfile;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb
 {
@@ -42,10 +44,17 @@ namespace FileZillaServerWeb
                 string description = txtDescription.Text.Trim();
                 string rootPath = AppDomain.CurrentDomain.BaseDirectory;
                 string fileSavePath = ConfigurationManager.AppSettings["fileSavePath"].ToString();
+                string thumbnailsPath = ConfigurationManager.AppSettings["thumbnailsPath"].ToString();
                 string savePath = Path.Combine(rootPath, fileSavePath, fileName);
                 try
                 {
                     fup.SaveAs(savePath);
+                    string fileThumbnails = Path.Combine(rootPath, thumbnailsPath, fileName);
+                    System.Drawing.Image img = new Bitmap(savePath, true);
+                    //aFile.Close();
+                    System.Drawing.Image imgThumbnails = new ImageHelper().GetHvtThumbnail(img, 800, 0);
+
+                    imgThumbnails.Save(fileThumbnails, System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
                 catch (Exception ex)
                 {

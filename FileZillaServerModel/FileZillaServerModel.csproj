@@ -56,6 +56,7 @@
     <Compile Include="Interface\PreviewResult.cs" />
     <Compile Include="Interface\SubFileOperateLog.cs" />
     <Compile Include="Interface\SubTabs.cs" />
+    <Compile Include="Interface\TaskRemindEntity.cs" />
     <Compile Include="Interface\TaskTrendInterface.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="ProjectModify.cs" />

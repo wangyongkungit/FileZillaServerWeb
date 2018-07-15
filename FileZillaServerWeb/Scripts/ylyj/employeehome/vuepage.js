@@ -57,6 +57,16 @@ var vm = new Vue({
             }
             //add new tab
             if (this.newtab.categoryselected === 3 || this.newtab.categoryselected === 5 || this.newtab.categoryselected === 2) {
+                // 新的修改任务
+                if (this.newtab.categoryselected === 3) {
+                    var taskNotFinished = getExistFileNotFinishCategory(this.projectid);
+                    if (taskNotFinished) {
+                        // 如果选择否，则直接 return 不再执行创建新 tab 的操作
+                        if (!confirm("当前任务尚有 " + taskNotFinished + " 未完成，仍然要创建新的修改任务？")) {
+                            return;
+                        }
+                    }
+                }
                 let p1 = {
                     "projectid": this.projectid,
                     "categoryid": this.newtab.categoryselected,
@@ -68,7 +78,7 @@ var vm = new Vue({
             }
             //reply a tab
             else {
-                if (this.newtab.replytoselected < 0 || this.newtab.replytoselected == "") {
+                if (this.newtab.replytoselected < 0 || this.newtab.replytoselected === "") {
                     alert("请选择回复");
                     return;
                 }
@@ -121,6 +131,20 @@ var vm = new Vue({
                 "filehistoryid": fileHistoryId
             };
             funcList["ShareLink"]["func"].call(this, fileHistoryId);
+        },
+        // 判断是否进行过提醒
+        GetIsRemind: function (fileHistoryId) {
+            let p1 = {
+                "filehistoryid": fileHistoryId
+            };
+            funcList["GetIsRemind"]["func"].call(this, fileHistoryId);
+        },
+        // 发送提醒
+        sendDingtalkMessage: function (fileHistoryId) {
+            let p1 = {
+                "filehistoryid": fileHistoryId
+            };
+            funcList["sendDingtalkMessage"]["func"].call(this, fileHistoryId);
         }
     },
     mounted: function () {

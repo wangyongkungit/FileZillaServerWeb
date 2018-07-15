@@ -18,20 +18,20 @@ public class CCHttpHandler : IHttpHandler, IRequiresSessionState
 
     public HttpContext context { get; set; }
 
-    public UserProfile objUserInfo
-    {
-        get
-        {
-            if (HttpContext.Current.Session["Profile"] != null)
-                return (UserProfile)HttpContext.Current.Session["Profile"];
-            HttpContext.Current.Session["Profile"] = (object)new UserProfile();
-            return (UserProfile)HttpContext.Current.Session["Profile"];
-        }
-        set
-        {
-            HttpContext.Current.Session["Profile"] = (object)value;
-        }
-    }
+    //public UserProfile objUserInfo
+    //{
+    //    get
+    //    {
+    //        if (HttpContext.Current.Session["Profile"] != null)
+    //            return (UserProfile)HttpContext.Current.Session["Profile"];
+    //        HttpContext.Current.Session["Profile"] = (object)new UserProfile();
+    //        return (UserProfile)HttpContext.Current.Session["Profile"];
+    //    }
+    //    set
+    //    {
+    //        HttpContext.Current.Session["Profile"] = (object)value;
+    //    }
+    //}
 
     bool IHttpHandler.IsReusable => throw new NotImplementedException();
 

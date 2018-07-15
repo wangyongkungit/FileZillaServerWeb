@@ -11,17 +11,22 @@ namespace FileZillaServerWeb
     {
         public WebPageHelper()
         {
-            //if (UserProfile.GetInstance() == null)
-            //{
-            //    Response.Redirect("Tip.html", true);
-            //    Response.End();
-            //}
+            if (UserProfile.GetInstance() == null)
+            {
+                //HttpContext.Current.Response.Redirect("~/Tip.html", true);
+                //HttpContext.Current.Response.End();
+            }
         }
 
         public void ValidatePermission(string requestUrl)
         {
             string rawUrl = requestUrl.TrimStart('/');
             UserProfile user = UserProfile.GetInstance();
+            if (user == null)
+            {
+                //HttpContext.Current.Response.Redirect("~/Tip.html", true);
+                //HttpContext.Current.Response.End();
+            }
             bool flag = false;
             for (int i = 0; i < user.Menu.Count; i++)
             {
@@ -33,8 +38,8 @@ namespace FileZillaServerWeb
             }
             if (!flag)
             {
-                Response.Redirect("Tip.html", true);
-                Response.End();
+                HttpContext.Current.Response.Redirect("~/Tip.html", true);
+                HttpContext.Current.Response.End();
             }
         }
 

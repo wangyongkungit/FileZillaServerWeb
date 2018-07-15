@@ -24,6 +24,7 @@ function myfunction(file, progressbar, progress) {
             taskid: taskid,
             FuncName: "UpadlodPart"
         },
+        compress: false
     });
     uploader.on('beforeFileQueued', function (file) {
         var arr = ["exe", "lsp", "fas", "vlx", "gryphon"];

@@ -18,6 +18,18 @@ namespace FileZillaServerWeb.Finance
         TransactionDetailsBLL tdBll = new TransactionDetailsBLL();
         EmployeeAccountBLL empAcctBll = new EmployeeAccountBLL();
 
+        protected string SearchType
+        {
+            get
+            {
+                return (string)ViewState["SearchType"];
+            }
+            set
+            {
+                ViewState["SearchType"] = value;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -40,6 +52,7 @@ namespace FileZillaServerWeb.Finance
             ddlEmployeeName.DataTextField = "NOANDNAME";
             ddlEmployeeName.DataValueField = "ID";
             ddlEmployeeName.DataBind();
+            ddlEmployeeName.Items.Insert(0, new ListItem("-全部-", string.Empty));
         }
 
         /// <summary>
@@ -49,6 +62,7 @@ namespace FileZillaServerWeb.Finance
         {
             int sumAmount = 0;
             int totalRowsCount = 0;
+            string taskNoForSearch = txtTaskNoSearch.Text.Trim();
             DataTable dtExport;
             Dictionary<string, bool> dicSelectFlag = new Dictionary<string, bool>();
             string employeeID = ddlEmployeeName.SelectedValue;
@@ -58,10 +72,27 @@ namespace FileZillaServerWeb.Finance
             {
                 dicCondition.Add("transacType", transacType);
             }
-            dicCondition.Add("employeeId", employeeID);
+            if (SearchType == "byTask")
+            {
+                if (!string.IsNullOrEmpty(taskNoForSearch))
+                {
+                    dicCondition.Add("taskNo", taskNoForSearch);
+                }
+            }
+            else if (SearchType == "byEmp")
+            {
+                if (!string.IsNullOrEmpty(employeeID))
+                {
+                    dicCondition.Add("employeeId", employeeID);
+                }
+            }
             AspNetPager1.PageSize = 10;
             DataTable dtTransac = tdBll.GetListJoinEmpAndPrj(dicCondition, dicSelectFlag, string.Empty, AspNetPager1.CurrentPageIndex, AspNetPager1.PageSize, out totalRowsCount, out sumAmount, out dtExport).Tables[0];
             AspNetPager1.RecordCount = totalRowsCount;
+            if (SearchType == "byTask")
+            {
+                ddlEmployeeName.SelectedValue = dtTransac.AsEnumerable().Select(item => (string)item.Field<string>("EMPLOYEEID")).FirstOrDefault();
+            }
             gvTransaction.DataSource = dtTransac;
             gvTransaction.DataBind();
         }
@@ -71,9 +102,19 @@ namespace FileZillaServerWeb.Finance
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void btnSearch_Click(object sender, EventArgs e)
+        protected void btnSearchByEmpNo_Click(object sender, EventArgs e)
         {
+            SearchType = "byEmp";
             if (!string.IsNullOrEmpty(ddlEmployeeName.SelectedValue))
+            {
+                LoadTransaction();
+            }
+        }
+
+        protected void btnSearchByTaskNo_Click(object sender, EventArgs e)
+        {
+            SearchType = "byTask";
+            if (!string.IsNullOrEmpty(txtTaskNoSearch.Text.Trim()))
             {
                 LoadTransaction();
             }
@@ -106,7 +147,19 @@ namespace FileZillaServerWeb.Finance
             transac.TRANSACTIONAMOUNT = Convert.ToDecimal(txtAmount.Text.Trim());
             transac.TRANSACTIONTYPE = Convert.ToInt32(ddlTransacType.SelectedValue);
             transac.TRANSACTIONDESCRIPTION = txtDescription.Text.Trim();
-            transac.PROJECTID = new ProjectBLL().GetPrjIDByTaskNo(txtTaskNo.Text.Trim());
+            string taskNoForSearch = txtTaskNoSearch.Text.Trim();
+            string taskNoForAdd = txtTaskNo.Text.Trim();
+            string taskNo = string.Empty;
+            if (string.IsNullOrEmpty(taskNoForAdd))
+            {
+                taskNo = taskNoForSearch;
+            }
+            transac.PROJECTID = new ProjectBLL().GetPrjIDByTaskNo(taskNoForSearch);
+            if (string.IsNullOrEmpty(transac.PROJECTID))
+            {
+                ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('任务编号有误！');", true);
+                return;
+            }
             transac.EMPLOYEEID = employeeID;
             DateTime dtTransacDate = DateTime.Now;
             string strTransacDate = txtTransacDate.Text.Trim();

@@ -429,6 +429,29 @@ namespace FileZillaServerDAL
             DataSet ds = DbHelperMySQL.Query(sbSql.ToString());
             return ds;
         }
+
+        public DataSet GetIsRemindByFilecategoryId(string filecategoryId)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            sbSql.AppendFormat(@"SELECT tr.Id, tr.ISREMINDED FROM filecategory fc
+                                 INNER JOIN taskreminding tr
+                                 ON fc.FOLDERNAME = tr.MODIFYFOLDER
+                                LEFT JOIN project p
+                                ON fc.PROJECTID = p.ID
+                                 WHERE tr.FOLDER = p.TASKNO AND 
+                                fc.ID = '{0}'", filecategoryId);
+            DataSet ds = DbHelperMySQL.Query(sbSql.ToString());
+            return ds;
+        }
+
+        public DataSet GetExistFileNotFinishCategory(string projectId)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            sbSql.AppendFormat(@"SELECT folderName FROM filecategory WHERE PROJECTID = '{0}' AND CATEGORY = '3' AND ID NOT IN (
+                                SELECT PARENTID FROM filecategory WHERE CATEGORY = '4' AND PROJECTID = '{0}' ) ORDER BY ORDERSORT ", projectId);
+            DataSet ds = DbHelperMySQL.Query(sbSql.ToString());
+            return ds;
+        }
         #endregion  ExtensionMethod
     }
 }

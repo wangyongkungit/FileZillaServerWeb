@@ -4,19 +4,19 @@
 <asp:Content ID="head1" ContentPlaceHolderID="head" runat="server">
         
 
-    <link href="Scripts/jQuery-UI/jquery-ui.css" rel="stylesheet" />
-    <link href="Scripts/jQuery-UI/jquery.multiselect.css" rel="stylesheet" />
-    <link href="Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />   
+    <link href="/Scripts/jQuery-UI/jquery-ui.css" rel="stylesheet" />
+    <link href="/Scripts/jQuery-UI/jquery.multiselect.css" rel="stylesheet" />
+    <link href="/Scripts/webuploader/webuploader.css?v=180610" rel="stylesheet" />   
     
-    <script src="Scripts/jQuery-UI/jquery-ui.min.js"></script>
-    <script src="Scripts/jQuery-UI/jquery.multiselect.js"></script>
+    <script src="/Scripts/jQuery-UI/jquery-ui.min.js"></script>
+    <script src="/Scripts/jQuery-UI/jquery.multiselect.js"></script>
 
-    <%--<script src="Scripts/zeroclipboard/ZeroClipboard.js"></script>--%>    
-    <script src="Scripts/clipboardjs/clipboard.min.js"></script>
-    <script src="Scripts/ylyj/serialnumbergenerating.js?v=18070701"></script>
+    <%--<script src="/Scripts/zeroclipboard/ZeroClipboard.js"></script>--%>    
+    <script src="/Scripts/clipboardjs/clipboard.min.js"></script>
+    <script src="/Scripts/ylyj/serialnumbergenerating.js?v=18070701"></script>
     
-    <link href="Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
-    <link href="Content/themes/base/ylyj/serialnumber.css?v=1871101" rel="stylesheet" />
+    <link href="/Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/themes/base/ylyj/serialnumber.css?v=1871101" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -73,7 +73,8 @@
                     <div class="formSearchLeft">
                         <label>金额：</label>
                     </div>
-                    <asp:TextBox ID="txtOrderAmount" runat="server" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" MaxLength="4" required="required" />
+                    <asp:TextBox ID="txtOrderAmount" runat="server" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" MaxLength="4" required="required"
+                        ToolTip="修改金额会同步生成交易记录，请勿随意操作！" />
                     <span class="asterisk">*</span>
                 </div>
                 <div class="formSearch">
@@ -113,8 +114,8 @@
                     <span class="asterisk">*</span>
                 </div>
                 <%--<img class="fulltext" src="Images/listdown.jpg" title="展开" />--%>
-                <span class="arrow-down">&gt;</span>
-                <div class="hidediv">
+                <span class="arrow-down" title="展开全部字段">&gt;</span>
+                <div class="hideFields">
                 <div class="formSearch">
                     <div class="formSearchLeft">
                         <label>工程名称：</label>
@@ -264,6 +265,12 @@
                     </div>
                     <asp:TextBox ID="txtAssignmentBook" runat="server" TextMode="MultiLine" placeholder="请直接在此键入任务书内容，在“同步创建目录”选择“是”时，系统会同步生成任务书。" Width="380" Height="40" MaxLength="2200" />
                 </div>
+                <div class="formSearch">
+                    <div class="formSearchLeft">
+                        <label title="修改任务状态会发送钉钉提醒给工程师，请谨慎操作！">任务状态：</label>
+                    </div>
+                    <asp:DropDownList ID="ddlTaskStatus" runat="server" ToolTip="修改任务状态会发送钉钉提醒给工程师，请谨慎操作！"></asp:DropDownList>
+                </div>
                 <div class="formSearch" style="width:500px;">
                 </div>
                 <div class="formSearch" style="width: 150px;">
@@ -304,13 +311,17 @@
             <div class="row">
                 <div class="col -12" style="text-align: left;">
                     <div class="btn-group btn-group-lg">
-                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">任务资料</button>
-                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
-                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
+                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)" title="点击可查看任务资料">任务资料</button>
+                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)" title="查看文件操作记录">操作历史</button>
+                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)" title="添加一个新的资料标签，如 修改1、疑问1">&#10010;</button>
                     </div>
-                    <%--<div class="btn-group">
-                        <button type="button" class="btn btn-warning" @click="sendDingtalkMessage(projectfile.parentId)">发送提醒</button>
-                    </div>--%>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-warning" @click="GetIsRemind(projectfile.parentId)" title="点击可主动发送、再次发送钉钉消息给该任务的工程师">发送提醒</button> <%-- --%>
+                    </div>
+                    <div id="myAlert" class="alert alert-success hidealert">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>操作成功！</strong>系统稍后将发送提醒。
+                    </div>
                 </div>
             </div>
         </div>
@@ -365,12 +376,13 @@
             <!-- Upload File -->
             <div class="row">
                 <div class="col-3">
-                    <span>描述:</span>
-                    <input type="text" name="desc" id="filedesc" v-model="projectfile.filedesc">
+                    <span>描述：</span>
+                    <input type="text" name="desc" id="filedesc" v-model="projectfile.filedesc" placeholder="可输入文件的简单描述"
+                        title="可输入针对该文件的描述信息，上传后鼠标悬浮在文件名之上会显示该信息">
                 </div>
                 <div class="col-9">
                     <div style="margin: 0 0 0 50px;">
-                        <div id="file1" style="float: left;">请选择</div>
+                        <div id="file1" style="float: left;" title="点击后选择一个文件可将选中文件上传到服务器">浏览</div>
                         <span id="pfile1"></span>
                         <div id="file1progress" class="progress" style="width: 500px; float: left; margin: 10px 0 0 20px;">
                             <div id="file1progressbar" class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%;"></div>
@@ -422,12 +434,12 @@
         </div>
 
         <div id="addtab" v-show="showaddtab">
-            添加一个新目录
+            添加一个新的标签（如修改1、疑问1）
             <div class="row">
                 <div class="col-12">
                     <form class="form-inline" role="form">
                         <div class="form-group">
-                            <label for="category">选择列表 : </label>
+                            <label for="category">选择标签：</label>
                             <select class="form-control" name="category" id="category" v-model="newtab.categoryselected" @change="categoryChange()">
                                 <option v-for="item in newtab.category" :value="item.key">{{item.value}}</option>
                             </select>
@@ -435,7 +447,7 @@
                         </div>
 
                         <div class="form-group" v-show="showreply">
-                            <label for="replyto">回复 : </label>
+                            <label for="replyto">回复：</label>
                             <select class="form-control" name="replyto" id="replyto" v-model="newtab.replytoselected">
                                 <option v-for="item in newtab.replyto" :value="item.Id">
                                     {{item.Title}}
@@ -445,15 +457,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="category">描述 : </label>
-                            <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc">
+                            <label for="category">描述：</label>
+                            <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc" title="可输入该修改任务的描述性文字">
                         </div>
 
                         <div class="form-group" v-show="newtab.categoryselected == 3">
                             <label for="category">交稿时间：</label>
-                            <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:00:00'})">
+                            <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:00:00'})" placeholder="请填写交稿时间">
                         </div>
-                        <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
+                        <button type="button" class="btn btn-secondary" @click="addTab()" id="add">添加</button>
                     </form>
                     <div class="form-group">
                         <p>{{this.newtab.returnmessage}}</p>
@@ -463,17 +475,21 @@
             </div>
         </div>
     </div>
+
+    <div style="position: absolute; top: 20px; right: 40px;">
+        <a href="UploadFiles/WebSiteDocs/kf.html" target="_blank" title="查看系统使用手册">使用手册</a>
+    </div>
     
-<%--    <script src="Scripts/clipboard.min.js?v=18426"></script>--%>
+<%--    <script src="/Scripts/clipboard.min.js?v=18426"></script>--%>
     <%--<script src="http://cdn.bootcss.com/jqueryui/1.11.0/jquery-ui.min.js"></script>--%>
 
-    <script src="Scripts/bootstrap4/js/bootstrap.js"></script>
+    <script src="/Scripts/bootstrap4/js/bootstrap.js"></script>
 
-    <script src="Scripts/vue/vue.js?v=18070701"></script>
-    <script src="Scripts/ylyj/employeehome/func.js?v=18070701"></script>
-    <script src="Scripts/ylyj/employeehome/settings.js?v=18070701"></script>
-    <script src="Scripts/ylyj/employeehome/vuepage.js?v=18070701"></script>    
+    <script src="/Scripts/vue/vue.js?v=18070701"></script>
+    <script src="/Scripts/ylyj/employeehome/func.js?v=18070701"></script>
+    <script src="/Scripts/ylyj/employeehome/settings.js?v=18070701"></script>
+    <script src="/Scripts/ylyj/employeehome/vuepage.js?v=18070701"></script>    
 
-    <script src="Scripts/webuploader/webuploader.js"></script>
-    <script src="Scripts/ylyj/employeehome/uploadfile.js"></script>
+    <script src="/Scripts/webuploader/webuploader.js"></script>
+    <script src="/Scripts/ylyj/employeehome/uploadfile.js"></script>
 </asp:Content>

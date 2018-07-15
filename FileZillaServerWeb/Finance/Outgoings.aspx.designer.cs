@@ -22,6 +22,24 @@ namespace FileZillaServerWeb.Finance {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// txtTaskNoSearch 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtTaskNoSearch;
+        
+        /// <summary>
+        /// btnSearchByTaskNo 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchByTaskNo;
+        
+        /// <summary>
         /// ddlEmployeeName 控件。
         /// </summary>
         /// <remarks>
@@ -31,13 +49,13 @@ namespace FileZillaServerWeb.Finance {
         protected global::System.Web.UI.WebControls.DropDownList ddlEmployeeName;
         
         /// <summary>
-        /// btnSearch 控件。
+        /// btnSearchByEmpNo 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected global::System.Web.UI.WebControls.Button btnSearchByEmpNo;
         
         /// <summary>
         /// ddlTransacType 控件。

@@ -7,7 +7,7 @@
 }
 .header {
     width:100%;
-    height:70px;
+    height:90px;
     margin-bottom:10px;
     background-color:#f1f4f9;
 }
@@ -23,10 +23,17 @@
 .formSearch {
     width:250px;
     height:28px;
+    line-height:28px;
     margin:5px 0px 0px 5px;
     float:left;
     font-size:13px;
     font-family:'Microsoft YaHei';
+}
+.formSearchLeft {
+    width:70px;
+    height:28px;
+    line-height:28px;
+    float:left;
 }
 .header input[type="text"],input[type="email"] {
     width:120px;

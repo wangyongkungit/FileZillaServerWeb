@@ -162,9 +162,10 @@
         height:23px;
 }
 .chk {
-    width:30px;
+    width:15px;
     text-align:center;
     display:inline-block;
+    visibility:hidden;
 }
 .xmbh {
     width:180px;
@@ -175,10 +176,9 @@
     width:90px;
     display:-moz-inline-box;
     display:inline-block;
-    cursor:pointer;
 }
 .wcr {
-    width:100px;
+    width:70px;
     display:-moz-inline-box;
     display:inline-block;
     overflow:hidden;
@@ -192,7 +192,7 @@
     text-overflow:ellipsis;
 }
 .sfwc {
-    width:70px;
+    width:65px;
     display:-moz-inline-box;
     display:inline-block;
 }
@@ -221,12 +221,17 @@
     text-overflow:clip;
 }
 .jyzt {
-    width:90px;
+    width:74px;
+    display:-moz-inline-box;
+    display:inline-block;
+}
+.rwzt {
+    width:70px;
     display:-moz-inline-box;
     display:inline-block;
 }
 .expand {
-    width:35px;
+    width:30px;
     cursor:pointer;
     text-align:center;
     display:inline-block;
@@ -236,11 +241,11 @@
     display:inline-block;
 }
 .proportion {
-    width:35px;
+    width:30px;
     display:inline-block;
 }
 .expand:hover {
-                
+
 }
 .item {
     padding:1px 20px 1px 2px;

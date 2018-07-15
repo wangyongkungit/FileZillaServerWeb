@@ -23,5 +23,6 @@ namespace FileZillaServerCommonHelper
         文件分类 = 12,
         奖励与处罚类型 = 13,
         文件操作类型 = 14,
+        任务状态 = 15
     }
 }

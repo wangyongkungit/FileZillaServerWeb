@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -150,8 +151,6 @@ namespace FileZillaServerWeb
                 LoadTvEmployee();
                 LoadSpecialties();
                 LoadCerficate();
-                //LoadBalance();
-                //LoadTaskTrend();
                 LoadDataNeedReload();
             }
         }
@@ -249,36 +248,16 @@ namespace FileZillaServerWeb
 
         protected void LoadCerficate()
         {
-            //Cerficate cerficate = cBll.GetModelList(" employeeID = '" + EmployeeID + "' AND isMain = 1 ").FirstOrDefault();
+            Cerficate certificate = cBll.GetModelList(" employeeID = '" + EmployeeID + "' AND isMain = 1 ").FirstOrDefault();
             //if (cerficate != null)
             //{
             //    imgCerficate.Src = "/FileOperation/ImageCompression.ashx?empID=" + EmployeeID + ""; // Convert.ToString(ConfigurationManager.AppSettings["fileSavePath"]) + "/" + cerficate.FILEPATH;
             //}
-            imgCerficate.ImageUrl = "/FileOperation/ImageCompression.ashx?empID=" + EmployeeID;
+            if (certificate != null)
+            {
+                imgCerficate.ImageUrl = "~/" + Path.Combine(ConfigurationManager.AppSettings["thumbnailsPath"].ToString(), certificate.FILEPATH); // "/FileOperation/ImageCompression.ashx?empID=" + EmployeeID;
+            }
         }
-
-        //protected void LoadPieChart()
-        //{
-        //    EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + EmployeeID + "'").FirstOrDefault();
-
-        //    xData = new List<string>() { "剩余", "已发", "奖罚", "其他" };
-        //    yData = new List<int>() { 10, 20, 30, 40 };
-        //    ChartMoney.Series[0]["PieLabelStyle"] = "Outside";//将文字移到外侧
-        //    ChartMoney.Series[0]["PieLineColor"] = "Black";//绘制黑色的连线。
-        //    ChartMoney.Series[0].Points.DataBindXY(xData, yData);
-        //}
-
-        //public static void LoadEmployeeAccount()
-        //{
-
-        //}
-
-        //protected void LoadTaskTrend()
-        //{
-        //    List<TaskTrend> lstTrend = ttBll.GetTop10ModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'");
-        //    gvTaskTrend.DataSource = lstTrend;
-        //    gvTaskTrend.DataBind();
-        //}
 
         protected void LoadProject()
         {
@@ -311,13 +290,7 @@ namespace FileZillaServerWeb
             gvProject.DataBind();
         }
 
-        //private void LoadBalance()
-        //{
-        //    EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "'").FirstOrDefault();
-        //    decimal withdraw = wdBll.GetModelList(" employeeID = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' and isconfirmed = 0").Sum(item => item.WITHDRAWAMOUNT) ?? 0m;
-        //    lblCanWithdrawAmount.Text = (empAcct.AMOUNT - withdraw).ToString();
-        //}
-
+        #region Some Events
         #region 页码事件
         /// <summary>
         /// 页索引发生改变事件
@@ -348,33 +321,25 @@ namespace FileZillaServerWeb
         //}
         #endregion
 
-        #region Repeat Databound
+        #region Repeat Databound，计算提成金额、任务剩余时间和修改剩余时间
         protected void gvProject_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                #region 计算提成金额
-                string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
-                //decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
-                Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
-                //lblProportionAmount.Text = tcje.ToString();
-                if (lstTcje != null && lstTcje.Count() > 0)
+                #region 设置任务状态样式
+                Label lblTaskStatus = e.Row.FindControl("lblTaskStatus") as Label;
+                if (lblTaskStatus != null && !string.IsNullOrEmpty(lblTaskStatus.Text.Trim()))
                 {
-                    TransactionDetails td = lstTcje.Where(item => item.PROJECTID == prjId && item.EMPLOYEEID == EmployeeID).FirstOrDefault();
-                    if (td != null && td.TRANSACTIONAMOUNT != null)
+                    if (lblTaskStatus.Text.Trim() == "暂停")
                     {
-                        lblProportionAmount.Text = td.TRANSACTIONAMOUNT.ToString();
-                    }
-                    else
-                    {
-                        lblProportionAmount.Text = "0";
+                        lblTaskStatus.ForeColor = System.Drawing.ColorTranslator.FromHtml("#FF0000");
                     }
                 }
-                else
-                {
-                    lblProportionAmount.Text = "0";
-                }
+                #endregion
 
+                #region 计算提成金额
+                #region 预计提成
+                string prjId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
                 decimal proportion = 0m;
                 // 先看此项目是否单独设置了提成
                 ProjectProportion projectProportion = lstPrjProportion?.Where(item => item.PROJECTID == prjId).FirstOrDefault();  // new ProjectProportionBLL().GetModelList(" projectId = '" + prjId + "'").FirstOrDefault();
@@ -395,7 +360,23 @@ namespace FileZillaServerWeb
                 lblExpectAmount.Text = (orderAmount * Convert.ToDecimal(proportion)).ToString();
                 #endregion
 
-                #region 计算剩余时间
+                #region 实际提成
+                //decimal tcje = new TransactionDetailsBLL().GetModelList(" AND employeeId = '" + Convert.ToString(EmployeeID ?? string.Empty) + "' AND TRANSACTIONTYPE = 7 AND PROJECTID = '" + prjId + "' ").Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
+                Label lblProportionAmount = e.Row.FindControl("lblProportionAmount") as Label;
+                //lblProportionAmount.Text = tcje.ToString();
+                if (lstTcje != null && lstTcje.Count() > 0)
+                {
+                    decimal transactionAmount = lstTcje.Where(item => item.PROJECTID == prjId && item.EMPLOYEEID == EmployeeID).Sum(item => item.TRANSACTIONAMOUNT) ?? 0m;
+                    lblProportionAmount.Text = transactionAmount.ToString();
+                }
+                else
+                {
+                    lblProportionAmount.Text = "0";
+                }
+                #endregion
+                #endregion
+
+                #region 计算任务剩余时间
                 bool isFinished = Convert.ToInt32(gvProject.DataKeys[e.Row.RowIndex].Values[1]) == 1;
                 Label lblTimeRemain = e.Row.FindControl("lblTimeRemain") as Label;
                 //未完成的，才显示剩余时间
@@ -446,7 +427,7 @@ namespace FileZillaServerWeb
                 }
                 #endregion
 
-                #region 修改剩余时间
+                #region 计算修改剩余时间
                 string projectId = gvProject.DataKeys[e.Row.RowIndex].Values[0].ToString();
                 Label lblModifyTaskTimeRemain = e.Row.FindControl("lblModifyTaskTimeRemain") as Label;
                 DataTable dt = new FileCategoryBLL().GetExpireDateByProjectId(projectId).Tables[0];
@@ -512,6 +493,7 @@ namespace FileZillaServerWeb
             LoadProject();
         }
 
+        #region GridView Row Command，将任务或修改任务置为完成
         protected void gvProject_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             // 将任务置为完成
@@ -566,6 +548,8 @@ namespace FileZillaServerWeb
                 }
             }
         }
+        #endregion
+        #endregion
 
         public string GetQueryString(string key, string defaultValue = "")
         {

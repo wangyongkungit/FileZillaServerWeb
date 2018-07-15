@@ -112,5 +112,17 @@ namespace FileZillaServerDAL
             int rows = MySqlHelper.ExecuteNonQuery(insertSql);
             return rows;
         }
+
+        /// <summary>
+        /// 设置为再次发送
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public bool SetRemind(string ID)
+        {
+            string sql = "update taskreminding set ISREMINDED = 0, SENTCOUNT = IFNULL(SENTCOUNT, 0) + 1 WHERE id = '" + ID + "'";
+            int rows = MySqlHelper.ExecuteNonQuery(sql);
+            return rows > 0;
+        }
     }
 }

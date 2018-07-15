@@ -177,16 +177,19 @@
                                 <span class="chk">
                                     <input type="checkbox" id="chkAll" name="chkAll" onclick="CheckAll(this, 'Item');" />
                                 </span>
-                                <span class="xmbh" onclick="GetSort('taskNo');" title="点击可排序">项目编号&#8645</span>
-                                <span class="wcqx" onclick="GetSort('expireDate');" title="点击可排序">完成期限&#8645</span>
+                                <span class="xmbh">项目编号</span>
+                                <span class="wcqx">完成期限</span>
                                 <span class="wcr">完成人</span>
                                 <span class="lrr">录入人</span>
                                 <span class="sfwc">是否完成</span>
                                 <span class="sysj">剩余时间</span>
-                                <span class="dp" onclick="GetSort('shop');" title="点击可排序">店铺</span>
+                                <span class="dp">店铺</span>
                                 <span class="wwm">旺旺名</span>
                                 <span class="jyzt">交易状态</span>
+                                <span class="rwzt">任务状态</span>
                                 <span class="expand">&nbsp;</span>
+                                <span class="edit">&nbsp;</span>
+                                <span class="proportion">&nbsp;</span>
                             </td>
                         </tr>
                 </HeaderTemplate>
@@ -218,6 +221,9 @@
                                 <asp:Label ID="lblWangwangName" runat="server" Text='<%# Eval("wangwangName") %>' /></span>
                             <span class="jyzt">
                                 <asp:Label ID="lblTransactionStatus" runat="server" Text='<%# Eval("transactionStatus") %>' /></span>
+                            <span class="rwzt">
+                                <asp:Label ID="lblTaskStatus" runat="server" Text='<%# Eval("taskStatus") %>'></asp:Label>
+                            </span>
                             <span class="expand" id='<%# "ex"+ Container.ItemIndex %>' onclick="Expand('<%# Container.ItemIndex %>','<%# "cls"+ Container.ItemIndex %>')" title="点击展开">
                                 <img src="Images/listdown.jpg" />
                             </span>

@@ -29,11 +29,11 @@
       <resource path="~/Scripts/dialog/jDialog.js" />
       <resource path="~/Scripts/bootstrap4/js/bootstrap.js" />
     </resourceSet>
-    <!--<resourceSet name="vueJs" type="js">
-      <resource path="~/Scripts/vue/vue.js" />
+    <resourceSet name="customeVueJs" type="js" debugEnabled="false" compressionEnabled="true">
+      <!--<resource path="~/Scripts/vue/vue.js" />-->
       <resource path="~/Scripts/ylyj/employeehome/func.js" />
       <resource path="~/Scripts/ylyj/employeehome/settings.js" />
       <resource path="~/Scripts/ylyj/employeehome/vuepage.js" />
-    </resourceSet>-->
+    </resourceSet>
   </resourceSets>
 </combres>

@@ -21,16 +21,16 @@
                 <div class="formSearchLeft">
                     <label>员工姓名：</label>
                 </div>
-                <asp:TextBox ID="TextBox1" runat="server" placeholder="员工姓名" />
+                <asp:TextBox ID="txtEmployeeName" runat="server" placeholder="员工姓名" />
             </div>
             <div class="formSearch">
                 <div class="formSearchLeft">
                     <label>手机：</label>
                 </div>
-                <asp:TextBox ID="TextBox2" runat="server" placeholder="手机" />
+                <asp:TextBox ID="txtMobilePhone" runat="server" placeholder="手机" />
             </div>
             <div class="formSearch">
-                <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="button" />
+                <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="button" OnClick="btnSearch_Click" />
             </div>
         </div>
 

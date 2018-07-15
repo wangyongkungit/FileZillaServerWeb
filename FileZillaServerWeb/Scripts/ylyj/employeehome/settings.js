@@ -16,6 +16,13 @@ funcList["getFileTabs"] = {
     interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=GetCategories"
 };
 
+// 获取尚未创建完成稿的修改任务
+funcList["getExistFileNotFinishCategory"] = {
+    func: getExistFileNotFinishCategory,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=GetExistFileNotFinishCategory"
+};
+
+// 获取文件
 funcList["getFiles"] = {
     func: getFiles,
     interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=GetFilesByProject"
@@ -42,6 +49,18 @@ funcList["previewFile"] = {
 // Share link
 funcList["ShareLink"] = {
     func: ShareLink
+};
+
+// 判断是否进行过提醒
+funcList["GetIsRemind"] = {
+    func: GetIsRemind,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=GetIsRemind"
+};
+
+// 发送钉钉提醒
+funcList["sendDingtalkMessage"] = {
+    func: sendDingtalkMessage,
+    interface: urlserver + "/HttpHandler/FileHandler.ashx?FuncName=SendDingtalkMessage"
 };
 
 //when project id changed

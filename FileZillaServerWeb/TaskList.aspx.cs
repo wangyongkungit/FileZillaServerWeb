@@ -228,7 +228,7 @@ namespace FileZillaServerWeb
             //是否是管理员
             bool isAdmin = false;
             bool isCustomerService = false;
-            List<Role> lstRole = UserProfile.instance.Role;
+            List<Role> lstRole = UserProfile.GetInstance().Role;
             for (int i = 0; i < lstRole.Count; i++)
             {
                 //如果角色名称中包含管理员，则判定是管理员
@@ -245,7 +245,7 @@ namespace FileZillaServerWeb
             //不是管理员的话，只能看当前登录人录入的信息
             if (isCustomerService)
             {
-                dicCondition.Add("enteringPerson", UserProfile.instance.EmployeeNO);
+                dicCondition.Add("enteringPerson", UserProfile.GetInstance().EmployeeNO);
             }
             //如果是管理员并且输入了录入人编号，则加入录入人的筛选条件
             else if (isAdmin && !string.IsNullOrEmpty(enteringPerson))

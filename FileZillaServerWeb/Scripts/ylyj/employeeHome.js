@@ -1,25 +1,49 @@
 ﻿
 function SetQualityScore(parameters, employeeNo, type) {
+    var dialogWidth = 1100;
+    var dialogHeight = 610;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
         title: '我的技能设置',
         width: 1100,
-        height: 610
+        height: 610,
+        top: _top,
+        left: _left
     });
 };
 
 function SetMyCertificate(employeeID) {
+    var dialogWidth = 1100;
+    var dialogHeight = 610;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/MaterialConfig.aspx?employeeID=" + employeeID, {
         title: '我的证件设置',
         width: 1100,
-        height: 610
+        height: 610,
+        top: _top,
+        left: _left
     });
 };
 
 function TransferTask(prjID, employeeID, amount, taskno) {
+    var dialogWidth = 800;
+    var dialogHeight = 410;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
         title: '任务转移 ' + taskno,
         width: 800,
-        height: 410
+        height: 410,
+        top: _top,
+        left: _left
     });
 };
 
@@ -31,25 +55,48 @@ var ViewPrjFiles = function (prjID, taskNo) {
 };
 
 $("#withdraw").bind("click", function () {
+    var dialogWidth = 800;
+    var dialogHeight = 410;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现',
         width: 1200,
-        height: 610
+        height: 610,
+        top: _top,
+        left: _left
     })
 });
 $("#withdrawRecords").bind("click", function () {
+    var dialogWidth = 800;
+    var dialogHeight = 410;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现记录',
         width: 1200,
-        height: 610
+        height: 610,
+        top: _top,
+        left: _left
     })
 });
 $("#transactionRecords").bind("click", function () {
+    var dialogWidth = 1200;
+    var dialogHeight = 680;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '交易记录',
-        width: 1200,
-        height: 780,
-        left: 280
+        width: dialogWidth,
+        height: dialogHeight,
+        top: _top,
+        left: _left
     })
 });
 
@@ -135,30 +182,55 @@ var LoadEcharts = function () {
     myChart.on('click', function (param) {
         var index = param.dataIndex;
         if (index === 1) {
+            var dialogWidth = 1200;
+            var dialogHeight = 780;
+            var currentWidth = $(top.window).width();
+            var currentHeight = $(top.window).height();
+            var _top = (currentHeight - dialogHeight) / 2;
+            var _left = (currentWidth - dialogWidth) / 2;
             var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
                 title: '已发记录',
-                width: 1200,
-                height: 780
+                width: dialogWidth,
+                height: dialogHeight,
+                top: _top,
+                left: _left
             })
         }
         else if (index === 2) {
+            var dialogWidth = 1200;
+            var dialogHeight = 780;
+            var currentWidth = $(top.window).width();
+            var currentHeight = $(top.window).height();
+            var _top = (currentHeight - dialogHeight) / 2;
+            var _left = (currentWidth - dialogWidth) / 2;
             var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
                 title: '奖罚记录',
-                width: 1200,
-                height: 780
+                width: dialogWidth,
+                height: dialogHeight,
+                top: _top,
+                left: _left
             })
         }
         else if (index === 3) {
+            var dialogWidth = 1200;
+            var dialogHeight = 780;
+            var currentWidth = $(top.window).width();
+            var currentHeight = $(top.window).height();
+            var _top = (currentHeight - dialogHeight) / 2;
+            var _left = (currentWidth - dialogWidth) / 2;
             var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
                 title: '其他',
-                width: 1200,
-                height: 780
+                width: dialogWidth,
+                height: dialogHeight,
+                top: _top,
+                left: _left
             })
         }
     });
 }
 
 $().ready(function () {
+    $("#lblCurrentYear").text(new Date().getFullYear());
     LoadEcharts();
 });
 

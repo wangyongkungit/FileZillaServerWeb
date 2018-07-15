@@ -25,7 +25,6 @@ function refreshProject(p1) {
 }
 //get filetabs 
 function getFileTabsByProjectid(p1) {
-    console.log(p1);
 
     let _this = this;
     if (p1.projectid != "") {
@@ -50,6 +49,30 @@ function getFileTabsByProjectid(p1) {
             }
         });
     }
+}
+
+// 获取尚未创建完成稿的修改任务
+function getExistFileNotFinishCategory(projectId) {
+    var taskNotFinished = "";
+    let prameters = "&projectId=" + projectId;
+    let handlerurl = funcList["getExistFileNotFinishCategory"]["interface"] + prameters;
+
+    $.ajax({
+        // 改为同步
+        async: false,
+        url: handlerurl,
+        dataType: 'jsonp',
+        // 跨域不支持同步，因此注释
+        //crossDomain: true,
+        success: function (data) {
+            if (data.Code === 0) {
+                taskNotFinished = data.Result[0];
+            } else {
+                console.log("get not finished modify task failed");
+            }
+        }
+    });
+    return taskNotFinished;
 }
 
 //get files
@@ -338,6 +361,7 @@ var PreviewFileOnline = function (fileHistoryId) {
     document.getElementById("aPreview").click();
 }
 
+// 分享链接
 var ShareLink = function (fileHistoryId) {
     $("#linkContent").bind("focus", function () {
         $(this).select();
@@ -356,9 +380,44 @@ var ShareLink = function (fileHistoryId) {
     $(".ui-resizable").css("left", ((currentWidth - 520) / 2) + "px").css("top", ((currentHeight - 440) / 2) + "px");
 }
 
-function sendDingtalkMessage(p1) {
+// 判断是否发送过提醒
+function GetIsRemind(filehistoryid) {
     let _this = this;
-    let prameters = "&categoryId=" + p1.fileHistoryId;
+    let prameters = "&categoryId=" + filehistoryid;
+    let handlerurl = funcList["GetIsRemind"]["interface"] + prameters;
+
+    if (!filehistoryid) {
+        alert("请选中需要提醒的修改任务！");
+        return;
+    }
+
+    $.ajax({
+        async: true,
+        url: handlerurl,
+        dataType: 'jsonp',
+        crossDomain: true,
+        success: function (data) {
+            if (data.Result[0].IsRemind === true) {
+                if (confirm("已经发送过提醒，确认再次提醒吗？")) {
+                    sendDingtalkMessage(filehistoryid, data.Result[0].Id);
+                }
+            }
+            else {
+                $("#myAlert").removeClass("hidealert");
+                window.setTimeout(function () {
+                    $("#myAlert").addClass("hidealert");
+                }, 10000);
+            }
+        },
+        error: function () {
+
+        }
+    });
+}
+
+// 再次发送提醒
+function sendDingtalkMessage(filehistoryid, taskremindid) {
+    let prameters = "&categoryId=" + filehistoryid + "&taskRemindId=" + taskremindid;
     let handlerurl = funcList["sendDingtalkMessage"]["interface"] + prameters;
 
     $.ajax({
@@ -367,7 +426,15 @@ function sendDingtalkMessage(p1) {
         dataType: 'jsonp',
         crossDomain: true,
         success: function (data) {
-
+            if (data.Code === 0) {
+                $("#myAlert").removeClass("hidealert");
+                window.setTimeout(function () {
+                    $("#myAlert").addClass("hidealert");
+                }, 10000);
+            }
+            else {
+                alert('发送失败');
+            }
         },
         error: function () {
 

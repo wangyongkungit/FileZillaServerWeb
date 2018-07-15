@@ -18,9 +18,9 @@
     cursor:pointer;
     margin-top:59px;
 }
-.hidediv {
-    display:none;
-    transition-duration:0.3s;
+.hideFields {
+    display: none;
+    transition-duration: 0.3s;
 }
 hr {
     background-color:#CD1637;
@@ -102,7 +102,7 @@ label {
     border-left-style:solid;
 }
 .formSearch input:focus {
-    border:2px solid #3388ff;
+    border:1px solid #3388ff;
     /*-webkit-box-shadow:0px 0px 6px #007eff;
     -moz-box-shadow:0px 0px 5px #007eff;
     box-shadow:0px 0px 5px #007eff;*/
@@ -285,3 +285,7 @@ label {
     text-align:center;
     position:fixed;
 }*/
+
+.hidealert {
+    display:none;
+}

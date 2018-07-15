@@ -50,6 +50,28 @@ namespace FileZillaServerWeb.HttpHandler
                 return;
             }
         }
+
+        public void GetExistFileNotFinishCategory()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            string[] parametersRequired = { "projectId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> resultPar = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null, Req_Date = DateTime.Now };
+                GenerateJson(resultPar);
+                return;
+            }
+            FileCategoryBLL fcBll = new FileCategoryBLL();
+            string notFinished = fcBll.GetExistFileNotFinishCategory(context, out errorCode);
+
+            string message = ErrorCode.GetCodeMessage(errorCode);
+            List<string> lstNotFinished = new List<string>();
+            lstNotFinished.Add(notFinished);
+            JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = lstNotFinished, Req_Date = DateTime.Now };
+            GenerateJson(result);
+            return;
+        }
         #endregion
 
         #region GetReplyToTab
@@ -656,7 +678,7 @@ namespace FileZillaServerWeb.HttpHandler
                         {
                             case ".doc":
                             case ".docx":
-                            //case ".rtf":
+                                //case ".rtf":
                                 Office2HtmlHelper.Word2Html(physicalFileName, previewFolder, fileHistory.ID);
                                 break;
                             case ".xls":
@@ -697,6 +719,72 @@ namespace FileZillaServerWeb.HttpHandler
                 errorCode = 1;
                 LogHelper.WriteLine("预览生成出错：" + ex.Message + ex.StackTrace);
             }
+        }
+        #endregion
+
+        #region 发送钉钉消息
+        /// <summary>
+        /// 判断是否提醒过
+        /// </summary>
+        public void GetIsRemind()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            // 校验参数
+            string[] parametersRequired = { "categoryId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+
+            string taskRemindId = string.Empty;
+            bool isReminded = false;
+            FileCategoryBLL fcBll = new FileCategoryBLL();
+            DataSet dsIsRemind = fcBll.GetIsRemindCategoriesId(context, out errorCode);
+            if (dsIsRemind != null && dsIsRemind.Tables.Count > 0 && dsIsRemind.Tables[0].Rows.Count > 0)
+            {
+                if ((string)dsIsRemind.Tables[0].Rows[0]["ISREMINDED"] == "1")
+                {
+                    isReminded = true;
+                    errorCode = 7001;
+                }
+            }
+            string message = ErrorCode.GetCodeMessage(errorCode);
+            TaskRemindEntity taskRemindEntity = new TaskRemindEntity { Id = taskRemindId, IsRemind = isReminded };
+            List<TaskRemindEntity> taskRemindEntities = new List<TaskRemindEntity>();
+            taskRemindEntities.Add(taskRemindEntity);
+            JsonResult<TaskRemindEntity> result2 = new JsonResult<TaskRemindEntity> { Code = errorCode, Message = message, Rows = 0, Result = taskRemindEntities };
+            GenerateJson(result2);
+            return;
+        }
+
+        /// <summary>
+        /// 发送提醒
+        /// </summary>
+        public void SendDingtalkMessage()
+        {
+            string returnMsg = string.Empty;
+            int errorCode = 0;
+            // 校验参数
+            string[] parametersRequired = { "categoryId", "taskRemindId" };
+            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
+            {
+                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
+                GenerateJson(result);
+                return;
+            }
+
+            string taskRemindId = context.Request["taskRemindId"];
+            FileCategoryBLL fcBll = new FileCategoryBLL();
+            bool isSuccess = new TaskRemindingBLL().SetRemind(taskRemindId);
+            errorCode = isSuccess ? 0 : 1;
+
+            string message = ErrorCode.GetCodeMessage(errorCode);
+            JsonResult<string> result2 = new JsonResult<string> { Code = errorCode, Message = message, Rows = 0, Result = null };
+            GenerateJson(result2);
+            return;
         }
         #endregion
 

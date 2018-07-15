@@ -76,7 +76,7 @@ function AlertDialog(msg, result, projectId) {
         $.ajax({
             url: "/HttpHandler/FileHandler.ashx",
             type: "POST",
-            data: { "RequestType": "AjaxRequest", "FuncName": "AddFileCategory", "projectId": projectId, "categoryId": "1", "description": "任务书", "expiredate":"" },
+            data: { "RequestType": "AjaxRequest", "FuncName": "AddFileCategory", "projectId": projectId, "categoryId": "1", "description": "任务书", "expiredate": "" },
             success: function (data) {
                 vm.projectid = projectId;
                 console.log("rws:" + data.Code);
@@ -99,12 +99,19 @@ function AlertDialog(msg, result, projectId) {
         //    }
         //})
     }
+    var dialogWidth = 303;
+    var dialogHeight = 141;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
+
     var dialog = jDialog.alert(msg, {
         handler: function (button, dialog) {
             dialog.close();
             //为True时，自动跳转到登录页
             if (result == 'True') {
-                window.location.href = 'Login.aspx';
+                window.location.href = '/Login.aspx';
             }
         }
     }, {
@@ -124,7 +131,9 @@ function AlertDialog(msg, result, projectId) {
                     alert('esc key pressed!');
                     evt.data.dialog.close();
                 }
-            }
+            },
+            left: _left,
+            top: _top
         });
 }
 //订单时间错误设置获取焦点
@@ -167,6 +176,13 @@ function AlertConfirm() {
                 dialog.close();
             }
         })
+    var dialogWidth = 303;
+    var dialogHeight = 141;
+    var currentWidth = $(top.window).width();
+    var currentHeight = $(top.window).height();
+    var _top = (currentHeight - dialogHeight) / 2;
+    var _left = (currentWidth - dialogWidth) / 2;
+    $(".j-dialog-shadow").css("left", _left + "px").css("top", _top + "px");
 }
 
 function AlertConfirm2() {
@@ -248,7 +264,7 @@ $(document).ready(function () {
 
     // 展开全部
     $(".arrow-down").bind("click", function () {
-        $(".hidediv").toggle();
+        $(".hideFields").toggle();
         var img = $(this);
         if (img.text() === ">") {
             img.text("<");
@@ -256,7 +272,7 @@ $(document).ready(function () {
         }
         else if (img.text() === "<") {
             img.text(">");
-            img.attr("title", "展开");
+            img.attr("title", "展开全部字段");
         }
     });
 

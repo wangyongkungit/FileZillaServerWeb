@@ -46,6 +46,7 @@ namespace FileZillaServerModel
         private string _finishedperson;
         private string _enteringperson;
         private DateTime? _createdate;
+        private string _taskstatus = "1";
         private decimal? _iscreatedfolder;
         private int? _materialisupload;
         private decimal? _isdeleted;
@@ -329,6 +330,14 @@ namespace FileZillaServerModel
         {
             set { _createdate = value; }
             get { return _createdate; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TASKSTATUS
+        {
+            set { _taskstatus = value; }
+            get { return _taskstatus; }
         }
         /// <summary>
         /// 

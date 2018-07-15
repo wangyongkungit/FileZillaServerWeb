@@ -15,6 +15,7 @@ using System.Text;
 using System.Configuration;
 using FileZillaServerDAL;
 using System.Runtime.InteropServices;
+using Yiliangyijia.Comm;
 
 namespace FileZillaServerWeb
 {
@@ -42,19 +43,23 @@ namespace FileZillaServerWeb
             }
         }
 
+        private string FinishedPerson
+        {
+            get
+            {
+                return (string)ViewState["FinishedPerson"];
+            }
+            set
+            {
+                ViewState["FinishedPerson"] = value;
+            }
+        }
+
         private ProjectBLL pBll = new ProjectBLL();
         private AttachmentBLL aBll = new AttachmentBLL();
         private ProjectModifyBLL pmBll = new ProjectModifyBLL();
         EmployeeBLL eBll = new EmployeeBLL();
         #endregion
-
-        //protected override void Render(HtmlTextWriter writer)
-        //{
-        //    System.IO.StringWriter sw = new System.IO.StringWriter();
-        //    HtmlTextWriter htw = new HtmlTextWriter(sw);
-        //    base.Render(writer);
-        //    writer.Write(sw.ToString().Replace("<body", "<body onload=\"WinOnLoad();\""));
-        //}
 
         #region PageLoad
         protected void Page_Load(object sender, EventArgs e)
@@ -93,6 +98,8 @@ namespace FileZillaServerWeb
                 else
                 {
                     Page.Title = "任务生成";
+                    // 给任务状态赋默认值——正常
+                    ddlTaskStatus.SelectedValue = "1";
                 }
             }
         }
@@ -139,6 +146,7 @@ namespace FileZillaServerWeb
                 //店铺编号
                 string shopID = ddlShop.SelectedValue;
                 double orderAmount = Convert.ToDouble(txtOrderAmount.Text);//订单金额
+                double beforeUpdateAmount = 0;
                 string taskFolderName = string.Format("{0}-{1}{2}", expireDate, shopID, orderDate);//任务名
                 DataSet ds = pBll.GetList(string.Format(" AND taskno = '{0}'", taskFolderName));
                 if (string.IsNullOrEmpty(projectID) && ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -170,6 +178,8 @@ namespace FileZillaServerWeb
                 string referrer = txtReferrer.Text.Trim();//推荐人
                 string cashBack = txtCashBack.Text.Trim();//返现金额
                 string remarks = txtRemarks.Text.Trim();//备注
+                string taskStatus = ddlTaskStatus.SelectedValue;//任务状态
+                string beforeUpdateTaskStatus = string.Empty;//存储修改之前的任务状态
                 int? timeNeeded = null;
                 if (!string.IsNullOrEmpty(txtTimeNeeded.Text.Trim()))
                 {
@@ -264,6 +274,7 @@ namespace FileZillaServerWeb
                         project.EXPIREDATE = dtExpireDate;
                         project.TIMENEEDED = timeNeeded;
                         project.SHOP = shopID;
+                        beforeUpdateAmount = project.ORDERAMOUNT ?? 0;
                         project.ORDERAMOUNT = orderAmount;
                         project.VALUATEMODE = valuateMode;
                         project.PROVINCE = province;
@@ -299,6 +310,8 @@ namespace FileZillaServerWeb
                         }
                         project.REMARKS = remarks;
                         project.MATERIALISUPLOAD = materialIsUpload;
+                        beforeUpdateTaskStatus = project.TASKSTATUS;
+                        project.TASKSTATUS = taskStatus;
                     }
                     //客服权限，仅能维护交易状态
                     else
@@ -311,6 +324,97 @@ namespace FileZillaServerWeb
                     bool modifyFlag = pBll.Update(project);
                     if (modifyFlag)
                     {
+                        #region 更新交易记录
+                        // Added below on July-14-2018
+                        // 更新交易记录表
+                        if (orderAmount != beforeUpdateAmount)
+                        {
+                            int transacType = 0;
+                            decimal transacAmount = 0m;
+                            string description = string.Empty;
+                            if (orderAmount > beforeUpdateAmount)
+                            {
+                                // 项目加款
+                                transacType = 8;
+                                transacAmount = (decimal)orderAmount - (decimal)beforeUpdateAmount;
+                                description = "项目加款";
+                            }
+                            else
+                            {
+                                // 项目减款
+                                transacType = 9;
+                                transacAmount = (decimal)orderAmount - (decimal)beforeUpdateAmount;
+                                description = "项目减款";
+                            }
+
+                            // 根据配置的比例计算提成金额
+                            decimal proportion = 0;
+                            // 需要调整的员工ID，默认是任务的完成人。但如果是分部下派的任务，那么就应该调整分部领导的交易记录和账户
+                            string needToAdjusEmpId = FinishedPerson;
+                            ProjectProportion projectProportion = new ProjectProportionBLL().GetModelList(" projectId = '" + projectID + "'").FirstOrDefault();
+                            if (projectProportion != null)
+                            {
+                                proportion = projectProportion.PROPORTION ?? 0m;
+                            }
+                            else
+                            {
+                                EmployeeProportion empProportion = new EmployeeProportionBLL().GetModelList(" AND employeeId = '" + FinishedPerson + "'").FirstOrDefault();
+                                // 如果是分部下的员工，则需要对分部领导作调整，而不对员工本身做调整
+                                if (!string.IsNullOrEmpty(empProportion.PARENTEMPLOYEEID))
+                                {
+                                    needToAdjusEmpId = empProportion.PARENTEMPLOYEEID;
+                                    empProportion = new EmployeeProportionBLL().GetModelList(" AND employeeId = '" + needToAdjusEmpId + "'").FirstOrDefault();
+                                }
+                                proportion = empProportion.PROPORTION ?? 0m;
+                            }
+                            // 将最后计算出的金额作为交易金额
+                            transacAmount *= proportion;
+
+                            TransactionDetails transactionDetails = new TransactionDetails();
+                            transactionDetails.ID = Guid.NewGuid().ToString();
+                            transactionDetails.PROJECTID = project.ID;
+                            transactionDetails.EMPLOYEEID = needToAdjusEmpId;
+                            transactionDetails.TRANSACTIONAMOUNT = transacAmount;
+                            transactionDetails.TRANSACTIONDATE = DateTime.Now;
+                            transactionDetails.PLANDATE = DateTimeHelper.GetFirstDateOfCurrentMonth();
+                            transactionDetails.TRANSACTIONTYPE = transacType;
+                            transactionDetails.TRANSACTIONDESCRIPTION = description;
+                            bool addFlag = new TransactionDetailsBLL().Add(transactionDetails);
+                            if (addFlag)
+                            {
+                                LogHelper.WriteLine("项目" + project.ID + "加减款更新成功");
+
+                                // 更新员工账户
+                                EmployeeAccountBLL eaBll = new EmployeeAccountBLL();
+                                EmployeeAccount empAcct = new EmployeeAccount();
+                                empAcct = eaBll.GetModelList(" employeeId = '" + needToAdjusEmpId + "'").FirstOrDefault();
+                                empAcct.AMOUNT += transacAmount;
+                                empAcct.LASTUPDATEDATE = DateTime.Now;
+                                if (eaBll.Update(empAcct))
+                                {
+                                    LogHelper.WriteLine("员工" + FinishedPerson + "账户更新成功");
+                                }
+                            }
+                        }
+                        // Added on July-14-2018 End 
+                        #endregion
+
+                        #region 更新任务状态
+                        if (beforeUpdateTaskStatus != taskStatus)
+                        {
+                            string atferStatus = taskStatus == "1" ? "正常" : "暂停";
+                            TaskRemindingBLL trBll = new TaskRemindingBLL();
+                            string employeeNo = new EmployeeBLL().GetModel(FinishedPerson)?.EMPLOYEENO;
+                            string toUserType = "2";// 2 是提醒给工程师的
+                            string taskType = "6";// 6 是任务状态变化
+                            int addTaskRemindingFlag = trBll.Add(employeeNo, project.ENTERINGPERSON, project.TASKNO, atferStatus, "0", DateTime.Now.ToString(), null, "1", taskType, toUserType);
+                            if (addTaskRemindingFlag > 0)
+                            {
+                                LogHelper.WriteLine(string.Format("【任务状态变更】任务【{0}】{1}的提醒添加成功", project.TASKNO, atferStatus));
+                            }
+                        }
+                        #endregion
+
                         if (!string.IsNullOrEmpty(specialtyCategory))
                         {
                             pspBll.Add(projectID, specialtyCategory, "0");
@@ -396,6 +500,7 @@ namespace FileZillaServerWeb
                     project.MATERIALISUPLOAD = materialIsUpload;
                     project.ENTERINGPERSON = enteringPerson;
                     project.CREATEDATE = DateTime.Now;
+                    project.TASKSTATUS = ddlTaskStatus.SelectedValue;
                     project.ISCREATEDFOLDER = 0;
                     project.ISDELETED = 0;
                     bool success = pBll.Add(project);
@@ -422,16 +527,16 @@ namespace FileZillaServerWeb
                             string newTaskPath = string.Format("{0}\\{1}", taskAllotmentPath, taskFolderName);
                             //新任务的任务书的路径
                             string assignmentBookDirectoryName = string.Format("{0}\\{1}", newTaskPath, "任务书");
-                            if (!Directory.Exists(assignmentBookDirectoryName))
+                            if (!Directory.Exists(newTaskPath))
                             {
-                                Directory.CreateDirectory(assignmentBookDirectoryName);
+                                Directory.CreateDirectory(newTaskPath);
                             }
-                            //任务书文本文件路径
-                            string txtFileName = string.Format("{0}\\{1}", assignmentBookDirectoryName, "任务书.txt");
-                            using (StreamWriter sw = new StreamWriter(txtFileName, false, Encoding.UTF8))
-                            {
-                                sw.Write(assignmentBookText);
-                            }
+                            ////任务书文本文件路径
+                            //string txtFileName = string.Format("{0}\\{1}", assignmentBookDirectoryName, "任务书.txt");
+                            //using (StreamWriter sw = new StreamWriter(txtFileName, false, Encoding.UTF8))
+                            //{
+                            //    sw.Write(assignmentBookText);
+                            //}
                         }
                         Session["projectID"] = project.ID;
                         lblGenerateSuccess.Visible = true;
@@ -477,12 +582,13 @@ namespace FileZillaServerWeb
                 DropDownListProvinceBind();
                 DropDownListDataBind(ddlModelingSoftware, dtConfig, ConfigTypeName.建模软件, "-请选择-");
                 //DropDownListDataBind(ddlValuateSoftware, dtConfig, ConfigTypeName.计价软件, string.Empty);
-                DropDownListDataBind(ddlPaymentMethod, dtConfig, ConfigTypeName.支付方式, "-请选择-");
+                DropDownListDataBind(ddlPaymentMethod, dtConfig, ConfigTypeName.支付方式, string.Empty);
                 DropDownListDataBind(ddlStructureForm, dtConfig, ConfigTypeName.建筑类型, "-请选择-");
                 DropDownListDataBind(ddlBuildingType, dtConfig, ConfigTypeName.结构类型, "-请选择-");
                 DropDownListDataBind(ddlSpecialtyCategory, dtConfig, ConfigTypeName.专业类别, "请选择");
                 //DropDownListDataBind(ddlSpecialtyCategoryMinor, dtConfig, ConfigTypeName.专业类别小类, "请选择");
                 DropDownListDataBind(ddlTransactionStatus, dtConfig, ConfigTypeName.交易状态, "-请选择-");
+                DropDownListDataBind(ddlTaskStatus, dtConfig, ConfigTypeName.任务状态, string.Empty);
             }
             catch (Exception ex)
             {
@@ -512,7 +618,7 @@ namespace FileZillaServerWeb
                 dropDownList.DataValueField = "configkey";
                 dropDownList.DataBind();
                 dtNew = null;
-                if (configTypeName != ConfigTypeName.支付方式)
+                if (!string.IsNullOrEmpty(tipString))
                 {
                     dropDownList.Items.Insert(0, new ListItem(tipString, string.Empty));
                 }
@@ -613,6 +719,7 @@ namespace FileZillaServerWeb
                     ddlPaymentMethod.SelectedValue = project.PAYMENTMETHOD;
                     txtReferrer.Text = project.REFERRER;
                     txtCashBack.Text = project.CASHBACK.ToString();
+                    ddlTaskStatus.SelectedValue = project.TASKSTATUS;
                     ddlMaterialIsUpload.SelectedValue = Convert.ToString(project.MATERIALISUPLOAD) ?? "0";
                     txtRemarks.Text = project.REMARKS;
                     txtExtraRequirement.Text = project.EXTRAREQUIREMENT;
@@ -632,6 +739,7 @@ namespace FileZillaServerWeb
                     for (int i = 0; i < dtFinishedPerson.Rows.Count; i++)
                     {
                         finishedPerson.Append(string.Format("{0}│", dtFinishedPerson.Rows[i]["employeeNo"]));
+                        FinishedPerson = dtFinishedPerson.Rows[i]["FinishedPerson"].ToString();
                     }
                     txtFinishedPerson.Text = finishedPerson.ToString().TrimEnd('│');
                 }

@@ -46,52 +46,49 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into project(");
-            strSql.Append(@"ID,TASKNO,PROJECTNAME,ORDERDATE,EXPIREDATE,TIMENEEDED,SHOP,ORDERAMOUNT,PROPORTION,VALUATEMODE,PROVINCE,MODELINGSOFTWARE,VALUATESOFTWARE,
-                        SPECIALTYCATEGORY,SPECIALTYCATEGORYMINOR,WANGWANGNAME,EMAIL,FLOORS,CONSTRUCTIONAREA,STRUCTUREFORM,BUILDINGTYPE,TRANSACTIONSTATUS,REFUND,MOBILEPHONE,QQ,PAYMENTMETHOD,EXTRAREQUIREMENT,
-                        REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED)");
+            strSql.Append("ID,TASKNO,PROJECTNAME,ORDERDATE,EXPIREDATE,TIMENEEDED,SHOP,ORDERAMOUNT,PROPORTION,VALUATEMODE,PROVINCE,MODELINGSOFTWARE,VALUATESOFTWARE,SPECIALTYCATEGORY,SPECIALTYCATEGORYMINOR,WANGWANGNAME,EMAIL,FLOORS,CONSTRUCTIONAREA,STRUCTUREFORM,BUILDINGTYPE,TRANSACTIONSTATUS,REFUND,MOBILEPHONE,QQ,PAYMENTMETHOD,EXTRAREQUIREMENT,REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,TASKSTATUS,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED)");
             strSql.Append(" values (");
-            strSql.Append(@"@ID,@TASKNO,@PROJECTNAME,@ORDERDATE,@EXPIREDATE,@TIMENEEDED,@SHOP,@ORDERAMOUNT,@PROPORTION,@VALUATEMODE,@PROVINCE,@MODELINGSOFTWARE,@VALUATESOFTWARE,
-                        @SPECIALTYCATEGORY,@SPECIALTYCATEGORYMINOR,@WANGWANGNAME,@EMAIL,@FLOORS,@CONSTRUCTIONAREA,@STRUCTUREFORM,@BUILDINGTYPE,@TRANSACTIONSTATUS,@REFUND,@MOBILEPHONE,@QQ,
-                        @PAYMENTMETHOD,@EXTRAREQUIREMENT,@REFERRER,@CASHBACK,@REMARKS,@ASSIGNMENTBOOK,@ISFINISHED,@FINISHEDPERSON,@ENTERINGPERSON,@CREATEDATE,@ISCREATEDFOLDER,@MATERIALISUPLOAD,@ISDELETED)");
+            strSql.Append("@ID,@TASKNO,@PROJECTNAME,@ORDERDATE,@EXPIREDATE,@TIMENEEDED,@SHOP,@ORDERAMOUNT,@PROPORTION,@VALUATEMODE,@PROVINCE,@MODELINGSOFTWARE,@VALUATESOFTWARE,@SPECIALTYCATEGORY,@SPECIALTYCATEGORYMINOR,@WANGWANGNAME,@EMAIL,@FLOORS,@CONSTRUCTIONAREA,@STRUCTUREFORM,@BUILDINGTYPE,@TRANSACTIONSTATUS,@REFUND,@MOBILEPHONE,@QQ,@PAYMENTMETHOD,@EXTRAREQUIREMENT,@REFERRER,@CASHBACK,@REMARKS,@ASSIGNMENTBOOK,@ISFINISHED,@FINISHEDPERSON,@ENTERINGPERSON,@CREATEDATE,@TASKSTATUS,@ISCREATEDFOLDER,@MATERIALISUPLOAD,@ISDELETED)");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40),
-					new MySqlParameter("@TASKNO", MySqlDbType.VarChar,120),
-					new MySqlParameter("@PROJECTNAME", MySqlDbType.VarChar,200),
-					new MySqlParameter("@ORDERDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@EXPIREDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@TIMENEEDED", MySqlDbType.Decimal,3),
-					new MySqlParameter("@SHOP", MySqlDbType.VarChar,2),
-					new MySqlParameter("@ORDERAMOUNT", MySqlDbType.Double,8),
-					new MySqlParameter("@PROPORTION", MySqlDbType.Decimal,3),
-					new MySqlParameter("@VALUATEMODE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@PROVINCE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@MODELINGSOFTWARE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@VALUATESOFTWARE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@SPECIALTYCATEGORY", MySqlDbType.VarChar,2),
-                    new MySqlParameter("@SPECIALTYCATEGORYMINOR",MySqlDbType.VarChar,2),
-					new MySqlParameter("@WANGWANGNAME", MySqlDbType.VarChar,100),
-					new MySqlParameter("@EMAIL", MySqlDbType.VarChar,120),
-					new MySqlParameter("@FLOORS", MySqlDbType.Decimal,3),
-					new MySqlParameter("@CONSTRUCTIONAREA", MySqlDbType.Double,8),
-					new MySqlParameter("@STRUCTUREFORM", MySqlDbType.VarChar,2),
-					new MySqlParameter("@BUILDINGTYPE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@TRANSACTIONSTATUS", MySqlDbType.VarChar,2),
-					new MySqlParameter("@REFUND", MySqlDbType.Double,10),
-					new MySqlParameter("@MOBILEPHONE", MySqlDbType.VarChar,18),
-					new MySqlParameter("@QQ", MySqlDbType.VarChar,12),
-					new MySqlParameter("@PAYMENTMETHOD", MySqlDbType.VarChar,2),
-					new MySqlParameter("@EXTRAREQUIREMENT", MySqlDbType.VarChar,255),
-					new MySqlParameter("@REFERRER", MySqlDbType.VarChar,120),
-					new MySqlParameter("@CASHBACK", MySqlDbType.Decimal,4),
-					new MySqlParameter("@REMARKS", MySqlDbType.VarChar,255),
-					new MySqlParameter("@ASSIGNMENTBOOK", MySqlDbType.VarChar,3000),
-					new MySqlParameter("@ISFINISHED", MySqlDbType.Decimal,1),
-					new MySqlParameter("@FINISHEDPERSON", MySqlDbType.VarChar,40),
-					new MySqlParameter("@ENTERINGPERSON", MySqlDbType.VarChar,40),
-					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@ISCREATEDFOLDER", MySqlDbType.Decimal,1),
-					new MySqlParameter("@MATERIALISUPLOAD", MySqlDbType.Int32,1),
-					new MySqlParameter("@ISDELETED", MySqlDbType.Decimal,1)};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@TASKNO", MySqlDbType.VarChar,120),
+                    new MySqlParameter("@PROJECTNAME", MySqlDbType.VarChar,200),
+                    new MySqlParameter("@ORDERDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@EXPIREDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@TIMENEEDED", MySqlDbType.Decimal,3),
+                    new MySqlParameter("@SHOP", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@ORDERAMOUNT", MySqlDbType.Double,8),
+                    new MySqlParameter("@PROPORTION", MySqlDbType.Decimal,3),
+                    new MySqlParameter("@VALUATEMODE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@PROVINCE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@MODELINGSOFTWARE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@VALUATESOFTWARE", MySqlDbType.VarChar,30),
+                    new MySqlParameter("@SPECIALTYCATEGORY", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@SPECIALTYCATEGORYMINOR", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@WANGWANGNAME", MySqlDbType.VarChar,100),
+                    new MySqlParameter("@EMAIL", MySqlDbType.VarChar,120),
+                    new MySqlParameter("@FLOORS", MySqlDbType.Decimal,3),
+                    new MySqlParameter("@CONSTRUCTIONAREA", MySqlDbType.Double,8),
+                    new MySqlParameter("@STRUCTUREFORM", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@BUILDINGTYPE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@TRANSACTIONSTATUS", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@REFUND", MySqlDbType.Double,10),
+                    new MySqlParameter("@MOBILEPHONE", MySqlDbType.VarChar,18),
+                    new MySqlParameter("@QQ", MySqlDbType.VarChar,12),
+                    new MySqlParameter("@PAYMENTMETHOD", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@EXTRAREQUIREMENT", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@REFERRER", MySqlDbType.VarChar,120),
+                    new MySqlParameter("@CASHBACK", MySqlDbType.Decimal,4),
+                    new MySqlParameter("@REMARKS", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@ASSIGNMENTBOOK", MySqlDbType.VarChar,3000),
+                    new MySqlParameter("@ISFINISHED", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@FINISHEDPERSON", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@ENTERINGPERSON", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@TASKSTATUS", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@ISCREATEDFOLDER", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@MATERIALISUPLOAD", MySqlDbType.Int32,1),
+                    new MySqlParameter("@ISDELETED", MySqlDbType.Decimal,1)};
             parameters[0].Value = model.ID;
             parameters[1].Value = model.TASKNO;
             parameters[2].Value = model.PROJECTNAME;
@@ -127,9 +124,10 @@ namespace FileZillaServerDAL
             parameters[32].Value = model.FINISHEDPERSON;
             parameters[33].Value = model.ENTERINGPERSON;
             parameters[34].Value = model.CREATEDATE;
-            parameters[35].Value = model.ISCREATEDFOLDER;
-            parameters[36].Value = model.MATERIALISUPLOAD;
-            parameters[37].Value = model.ISDELETED;
+            parameters[35].Value = model.TASKSTATUS;
+            parameters[36].Value = model.ISCREATEDFOLDER;
+            parameters[37].Value = model.MATERIALISUPLOAD;
+            parameters[38].Value = model.ISDELETED;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -182,49 +180,51 @@ namespace FileZillaServerDAL
             strSql.Append("FINISHEDPERSON=@FINISHEDPERSON,");
             strSql.Append("ENTERINGPERSON=@ENTERINGPERSON,");
             strSql.Append("CREATEDATE=@CREATEDATE,");
+            strSql.Append("TASKSTATUS=@TASKSTATUS,");
             strSql.Append("ISCREATEDFOLDER=@ISCREATEDFOLDER,");
             strSql.Append("MATERIALISUPLOAD=@MATERIALISUPLOAD,");
             strSql.Append("ISDELETED=@ISDELETED");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@TASKNO", MySqlDbType.VarChar,120),
-					new MySqlParameter("@PROJECTNAME", MySqlDbType.VarChar,200),
-					new MySqlParameter("@ORDERDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@EXPIREDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@TIMENEEDED", MySqlDbType.Decimal,3),
-					new MySqlParameter("@SHOP", MySqlDbType.VarChar,2),
-					new MySqlParameter("@ORDERAMOUNT", MySqlDbType.Double,8),
-					new MySqlParameter("@PROPORTION", MySqlDbType.Decimal,3),
-					new MySqlParameter("@VALUATEMODE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@PROVINCE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@MODELINGSOFTWARE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@VALUATESOFTWARE", MySqlDbType.VarChar,30),
-					new MySqlParameter("@SPECIALTYCATEGORY", MySqlDbType.VarChar,2),
-					new MySqlParameter("@SPECIALTYCATEGORYMINOR", MySqlDbType.VarChar,2),
-					new MySqlParameter("@WANGWANGNAME", MySqlDbType.VarChar,100),
-					new MySqlParameter("@EMAIL", MySqlDbType.VarChar,120),
-					new MySqlParameter("@FLOORS", MySqlDbType.Decimal,3),
-					new MySqlParameter("@CONSTRUCTIONAREA", MySqlDbType.Double,8),
-					new MySqlParameter("@STRUCTUREFORM", MySqlDbType.VarChar,2),
-					new MySqlParameter("@BUILDINGTYPE", MySqlDbType.VarChar,2),
-					new MySqlParameter("@TRANSACTIONSTATUS", MySqlDbType.VarChar,2),
-					new MySqlParameter("@REFUND", MySqlDbType.Double,10),
-					new MySqlParameter("@MOBILEPHONE", MySqlDbType.VarChar,18),
-					new MySqlParameter("@QQ", MySqlDbType.VarChar,12),
-					new MySqlParameter("@PAYMENTMETHOD", MySqlDbType.VarChar,2),
-					new MySqlParameter("@EXTRAREQUIREMENT", MySqlDbType.VarChar,255),
-					new MySqlParameter("@REFERRER", MySqlDbType.VarChar,120),
-					new MySqlParameter("@CASHBACK", MySqlDbType.Decimal,4),
-					new MySqlParameter("@REMARKS", MySqlDbType.VarChar,255),
-					new MySqlParameter("@ASSIGNMENTBOOK", MySqlDbType.VarChar,3000),
-					new MySqlParameter("@ISFINISHED", MySqlDbType.Decimal,1),
-					new MySqlParameter("@FINISHEDPERSON", MySqlDbType.VarChar,40),
-					new MySqlParameter("@ENTERINGPERSON", MySqlDbType.VarChar,40),
-					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@ISCREATEDFOLDER", MySqlDbType.Decimal,1),
-					new MySqlParameter("@MATERIALISUPLOAD", MySqlDbType.Int32,1),
-					new MySqlParameter("@ISDELETED", MySqlDbType.Decimal,1),
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40)};
+                    new MySqlParameter("@TASKNO", MySqlDbType.VarChar,120),
+                    new MySqlParameter("@PROJECTNAME", MySqlDbType.VarChar,200),
+                    new MySqlParameter("@ORDERDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@EXPIREDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@TIMENEEDED", MySqlDbType.Decimal,3),
+                    new MySqlParameter("@SHOP", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@ORDERAMOUNT", MySqlDbType.Double,8),
+                    new MySqlParameter("@PROPORTION", MySqlDbType.Decimal,3),
+                    new MySqlParameter("@VALUATEMODE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@PROVINCE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@MODELINGSOFTWARE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@VALUATESOFTWARE", MySqlDbType.VarChar,30),
+                    new MySqlParameter("@SPECIALTYCATEGORY", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@SPECIALTYCATEGORYMINOR", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@WANGWANGNAME", MySqlDbType.VarChar,100),
+                    new MySqlParameter("@EMAIL", MySqlDbType.VarChar,120),
+                    new MySqlParameter("@FLOORS", MySqlDbType.Decimal,3),
+                    new MySqlParameter("@CONSTRUCTIONAREA", MySqlDbType.Double,8),
+                    new MySqlParameter("@STRUCTUREFORM", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@BUILDINGTYPE", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@TRANSACTIONSTATUS", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@REFUND", MySqlDbType.Double,10),
+                    new MySqlParameter("@MOBILEPHONE", MySqlDbType.VarChar,18),
+                    new MySqlParameter("@QQ", MySqlDbType.VarChar,12),
+                    new MySqlParameter("@PAYMENTMETHOD", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@EXTRAREQUIREMENT", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@REFERRER", MySqlDbType.VarChar,120),
+                    new MySqlParameter("@CASHBACK", MySqlDbType.Decimal,4),
+                    new MySqlParameter("@REMARKS", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@ASSIGNMENTBOOK", MySqlDbType.VarChar,3000),
+                    new MySqlParameter("@ISFINISHED", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@FINISHEDPERSON", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@ENTERINGPERSON", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@TASKSTATUS", MySqlDbType.VarChar,2),
+                    new MySqlParameter("@ISCREATEDFOLDER", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@MATERIALISUPLOAD", MySqlDbType.Int32,1),
+                    new MySqlParameter("@ISDELETED", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40)};
             parameters[0].Value = model.TASKNO;
             parameters[1].Value = model.PROJECTNAME;
             parameters[2].Value = model.ORDERDATE;
@@ -259,10 +259,11 @@ namespace FileZillaServerDAL
             parameters[31].Value = model.FINISHEDPERSON;
             parameters[32].Value = model.ENTERINGPERSON;
             parameters[33].Value = model.CREATEDATE;
-            parameters[34].Value = model.ISCREATEDFOLDER;
-            parameters[35].Value = model.MATERIALISUPLOAD;
-            parameters[36].Value = model.ISDELETED;
-            parameters[37].Value = model.ID;
+            parameters[34].Value = model.TASKSTATUS;
+            parameters[35].Value = model.ISCREATEDFOLDER;
+            parameters[36].Value = model.MATERIALISUPLOAD;
+            parameters[37].Value = model.ISDELETED;
+            parameters[38].Value = model.ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -327,7 +328,7 @@ namespace FileZillaServerDAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"select ID,TASKNO,PROJECTNAME,ORDERDATE,EXPIREDATE,TIMENEEDED,SHOP,ORDERAMOUNT,PROPORTION,VALUATEMODE,PROVINCE,MODELINGSOFTWARE,VALUATESOFTWARE,
                             SPECIALTYCATEGORY,SPECIALTYCATEGORYMINOR,WANGWANGNAME,EMAIL,FLOORS,CONSTRUCTIONAREA,STRUCTUREFORM,BUILDINGTYPE,TRANSACTIONSTATUS,REFUND,MOBILEPHONE,QQ,
-                            PAYMENTMETHOD,EXTRAREQUIREMENT,REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED from project ");
+                            PAYMENTMETHOD,EXTRAREQUIREMENT,REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,TASKSTATUS,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED from project ");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,40)			};
@@ -522,6 +523,10 @@ namespace FileZillaServerDAL
                 {
                     model.CREATEDATE = DateTime.Parse(row["CREATEDATE"].ToString());
                 }
+                if (row["TASKSTATUS"] != null)
+                {
+                    model.TASKSTATUS = row["TASKSTATUS"].ToString();
+                }
                 if (row["ISCREATEDFOLDER"] != null && row["ISCREATEDFOLDER"].ToString() != "")
                 {
                     model.ISCREATEDFOLDER = decimal.Parse(row["ISCREATEDFOLDER"].ToString());
@@ -546,7 +551,7 @@ namespace FileZillaServerDAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"select ID,TASKNO,PROJECTNAME,ORDERDATE,EXPIREDATE,TIMENEEDED,SHOP,ORDERAMOUNT,PROPORTION,VALUATEMODE,PROVINCE,MODELINGSOFTWARE,VALUATESOFTWARE,
                         SPECIALTYCATEGORY,SPECIALTYCATEGORYMINOR,WANGWANGNAME,EMAIL,FLOORS,CONSTRUCTIONAREA,STRUCTUREFORM,BUILDINGTYPE,TRANSACTIONSTATUS,REFUND,MOBILEPHONE,QQ,
-                        PAYMENTMETHOD,EXTRAREQUIREMENT,REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED ");
+                        PAYMENTMETHOD,EXTRAREQUIREMENT,REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,TASKSTATUS,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED ");
             strSql.Append(" FROM project WHERE (ISDELETED IS NULL OR ISDELETED = 0) ");
             if (strWhere.Trim() != "")
             {
@@ -629,6 +634,7 @@ namespace FileZillaServerDAL
 
                         p.ORDERDATE,p.WANGWANGNAME,p.TASKNO,p.EXPIREDATE,p.TIMENEEDED,p.ORDERAMOUNT,p.PROPORTION,p.QQ, e2.employeeNo enteringPerson,
                         p.MOBILEPHONE,p.EMAIL,p.isFinished,jyzt.configvalue TRANSACTIONSTATUS,p.REFUND,p.REMARKS,p.ISCREATEDFOLDER,p.MATERIALISUPLOAD,
+                        CASE p.TASKSTATUS WHEN '1' THEN '正常' WHEN '2' THEN '暂停' END TASKSTATUS,
                         re.PROVINCENAME,jjrj.configvalue VALUATESOFTWARE,
                         zylb.configvalue SPECIALTYCATEGORY,jmrj.configvalue MODELINGSOFTWARE,
                         jjms.configvalue VALUATEMODE,p.EXTRAREQUIREMENT,
@@ -977,7 +983,8 @@ namespace FileZillaServerDAL
         public DataTable GetProjectForEmployeeHome(string employeeID, string where, int pageIndex, int pageSize, out int totalAmount)
         {
             totalAmount = 0;
-            StringBuilder selectForAll = new StringBuilder( "SELECT p.ID prjID, p.TASKNO, p.orderAmount, p.EXPIREDATE, p.ISFINISHED, e.EMPLOYEENO");
+            StringBuilder selectForAll = new StringBuilder( @"SELECT p.ID prjID, p.TASKNO, p.orderAmount, p.EXPIREDATE, p.ISFINISHED,
+               CASE p.taskStatus WHEN '1' THEN '正常' WHEN '2' THEN '暂停' END taskStatus, e.EMPLOYEENO");
             StringBuilder selectForCount = new StringBuilder( "SELECT COUNT(*) ");
             StringBuilder fromClause = new StringBuilder();
             fromClause.AppendFormat(@" FROM project p

@@ -36,7 +36,7 @@ namespace FileZillaServerProfile
         {
             get
             {
-                if (HttpContext.Current.Session["Profile"] == null)
+                if (HttpContext.Current.Session == null || HttpContext.Current.Session["Profile"] == null)
                 {
                     try
                     {
@@ -85,7 +85,7 @@ namespace FileZillaServerProfile
         public static UserProfile GetUserProfileByUserID(string employeeNO)
         {
             DataTable dtUser = GetDataSet.GetUesrProfileByUserID(employeeNO);
-            UserProfile user=new UserProfile();
+            UserProfile user = new UserProfile();
             user.ID = dtUser.Rows[0]["ID"].ToString();
             user.Name = dtUser.Rows[0]["name"].ToString();
             user.EmployeeNO = dtUser.Rows[0]["employeeno"].ToString();
@@ -181,12 +181,11 @@ namespace FileZillaServerProfile
         {
             if (instance == null)
             {
+                //HttpContext.Current.Response.Redirect("~/Tip.html", true);
+                //HttpContext.Current.Response.End();
                 return null;
             }
-            else
-            {
-                return instance;
-            }
+            return instance;
         }
     }
 }

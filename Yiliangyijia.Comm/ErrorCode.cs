@@ -97,6 +97,9 @@ namespace Yiliangyijia.Comm
                 case 6505:
                     msg = "目录删除失败";
                     break;
+                case 7001:
+                    msg = "提醒已发送过";
+                    break;
                 default:
                     break;
             }

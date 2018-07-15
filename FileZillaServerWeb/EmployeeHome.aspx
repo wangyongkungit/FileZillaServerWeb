@@ -34,6 +34,9 @@
                 <%= UserName %>
                 <ul class="layui-nav layui-layout-right">
                     <li class="layui-nav-item">
+                        <a href="/UploadFiles/WebSiteDocs/gc.html" target="_blank" title="查看系统使用手册">使用手册</a>
+                    </li>
+                    <li class="layui-nav-item">
                         <a href="javascript:;">
                             <img src="/UploadFiles/beach.jpg" class="layui-nav-img" />
                             <%= UserName %>
@@ -112,23 +115,6 @@
                                 <div style="height: 260px; padding: 10px;">
                                     <h6 style="background-color:#007bff; height:28px;line-height:28px;color:white;font-size:20px;font-weight:400; border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
                                             ><a>工作动态</a></h6>
-                                    <asp:GridView ID="gvTaskTrend" runat="server" AutoGenerateColumns="false" CssClass="layui-table" lay-even ShowHeader="false" >
-                            <Columns>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblCreateDate" runat="server" Text=' <%# Convert.ToDateTime(Eval("createDate")).ToString("M-d HH:mm") %> '> </asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblCreateDate" runat="server" Text='<%# Eval( "description ") %>' ToolTip='<%# Eval( "description ") %>'> </asp:Label>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                            <EmptyDataTemplate>
-                                <span>暂无动态</span>
-                            </EmptyDataTemplate>
-                        </asp:GridView>
                                     <div id="taskTrendApp">
                                         <ul>
                                             <li v-for="item in trends" style="list-style:circle; display:inline-block; height:28px; margin:5px 12px; padding:2px 4px; border-bottom:1px solid #c3e4b1;">
@@ -169,6 +155,11 @@
                                                 <asp:Label ID="lblExpireDate" runat="server" Text='<%# Convert.ToDateTime(Eval("EXPIREDATE")).ToString("MM-dd HH:mm") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="任务状态">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblTaskStatus" runat="server" Text='<%# Eval("taskStatus") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="完成人">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblFinishedPerson" runat="server" Text='<%# Eval("EMPLOYEENO") %>'></asp:Label>
@@ -206,7 +197,7 @@
                                         <asp:TemplateField HeaderText="操作">
                                             <ItemTemplate>
                                                 <input type="button" id="btnViewPrjFiles" value="查看资料" title="查看资料" class="taskmovebutton" style="float: left; margin-right: 10px;" onclick='ViewPrjFiles("<%# Eval("prjID") %>","<%# Eval("taskno") %>");' />
-                                                <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style='display: <%= IsBranchLeader ? "block" : "none" %>; display: <%# Convert.ToInt32(Eval("ISFINISHED")) == 1 ? "none" : "block"%>' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", "<%# Eval("orderAmount")%>", "<%# Eval("taskno")%>");' />
+                                                <input type="button" id="btnTransfer" value="转移任务" title="任务转移" class="taskmovebutton" style=' display: <%# (Convert.ToInt32(Eval("ISFINISHED")) != 1 && IsBranchLeader) ? "block" : "none"%> ;' onclick='TransferTask("<%# Eval("prjID") %>", "<%= EmployeeID %>", "<%# Eval("orderAmount")%>", "<%# Eval("taskno")%>");' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -236,9 +227,9 @@
                             <div class="row">
                                 <div class="col -12" style="text-align: left;">
                                     <div class="btn-group btn-group-lg">
-                                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)">任务资料</button>
-                                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)">操作历史</button>
-                                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)">&#10010;</button>
+                                        <button type="button" id="fileTabTitle" class="btn btn-default btn-primary" @click="changeTab(false,true,false)" title="点击可查看任务资料">任务资料</button>
+                                        <button type="button" class="btn btn-default btn-success" @click="changeTab(true,false,false)" title="查看文件操作记录">操作历史</button>
+                                        <button type="button" class="btn btn-default" @click="changeTab(false,false,true)" title="添加一个新的资料标签，如 完成稿、修改完成1">&#10010;</button>
                                     </div>
                                 </div>
                             </div>
@@ -289,12 +280,12 @@
                             <!-- Upload File -->
                             <div class="row">
                                 <div class="col-3">
-                                    <span>描述:</span>
-                                    <input type="text" name="desc" id="filedesc" v-model="projectfile.filedesc">
+                                    <span>描述：</span>
+                                    <input type="text" name="desc" id="filedesc" v-model="projectfile.filedesc" placeholder="可输入文件的简单描述" title="可输入针对该文件的描述信息，上传后鼠标悬浮在文件名之上会显示该信息">
                                 </div>
                                 <div class="col-9">
                                     <div style="margin: 0 0 0 50px;">
-                                        <div id="file1" style="float: left;">请选择</div>
+                                        <div id="file1" style="float: left;" title="点击后选择一个文件可将选中文件上传到服务器">浏览</div>
                                         <span id="pfile1"></span>
                                         <div id="file1progress" class="progress" style="width: 500px; float: left; margin: 10px 0 0 20px;">
                                             <div id="file1progressbar" class="progress-bar progress-bar-striped active" role="progressbar" style="width: 0%;"></div>
@@ -313,15 +304,15 @@
                                         <table class="table table-bordered table-hover  table-striped">
                                             <!-- 表头 -->
                                             <thead>
-                                                <td>
+                                                <th>
                                                     时间
-                                                </td>
-                                                <td>
+                                                </th>
+                                                <th>
                                                     操作人
-                                                </td>
-                                                <td>
+                                                </th>
+                                                <th>
                                                     内容
-                                                </td>
+                                                </th>
                                             </thead>
 
                                             <!-- 内容 -->
@@ -345,19 +336,19 @@
                         </div>
 
                         <div id="addtab" v-show="showaddtab">
-                            添加新标签
+                             添加一个新的标签（如修改完成1、疑问答复1）
                             <div class="row">
                                 <div class="col-12">
                                     <form class="form-inline" role="form">
                                         <div class="form-group">
-                                            <label for="category">选择列表 : </label>
+                                            <label for="category">选择标签：</label>
                                             <select class="form-control" name="category" id="category" v-model="newtab.categoryselected" @change="categoryChange()">
                                                 <option v-for="item in newtab.category" :value="item.key">{{item.value}}</option>
                                             </select>
                                         </div>
 
                                         <div class="form-group" v-show="showreply">
-                                            <label for="replyto">回复 : </label>
+                                            <label for="replyto">回复：</label>
                                             <select class="form-control" name="replyto" id="replyto" v-model="newtab.replytoselected">
                                                 <option v-for="item in newtab.replyto" :value="item.Id">
                                                     {{item.Title}}
@@ -366,8 +357,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="category">描述 : </label>
-                                            <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc">
+                                            <label for="category">描述：</label>
+                                            <input type="text" name="tabdesc" id="tabdesc" v-model="newtab.desc" title="可输入该修改任务的描述性文字">
                                         </div>
 
                                         <div class="form-group">
@@ -375,7 +366,7 @@
                                             <input type="text" name="tabexpiredate" id="tabexpiredate" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:00:00'})">
                                         </div>
 
-                                        <button type="button" class="btn btn-default" @click="addTab()" id="add">新增</button>
+                                        <button type="button" class="btn btn-secondary" @click="addTab()" id="add">添加</button>
                                     </form>
                                     <div class="form-group">
                                         <p>{{this.newtab.returnmessage}}</p>
@@ -391,7 +382,7 @@
 
             <div class="layui-footer" style="color:#666;">
                 <!-- 底部固定区域 -->
-                &copy; bimpan.iok.la - Yiliangyijia Consultation Co. Ltd.
+                &copy; <label id="lblCurrentYear"></label> bimpan.iok.la - Yiliangyijia Consultation Co. Ltd.
             </div>
         </div>
         <div style="display:none;">
@@ -410,9 +401,9 @@
     <script src="Scripts/bootstrap4/js/bootstrap.js"></script>--%>
 
     <%--Vue--%>
-    <%--<%= WebExtensions.CombresLink("vueJs") %>--%>
-<%--    <%= System.Web.Optimization.Scripts.Render("~/bundles/vuejs") %>--%>
-    <script src="<%= ResolveUrl("~/Scripts/vue/vue.min.js?v=18070701") %>"></script>
+    <script src="<%= ResolveUrl("~/Scripts/vue/vue.min.js?v=187151") %>"></script>
+<%--    <%= WebExtensions.CombresLink("customeVueJs") %>--%>
+<%--    <%= System.Web.Optimization.Scripts.Render("~/bundles/vuejs") %>--%>    
     <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/func.js?v=18070701") %>"></script>
     <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/settings.js?v=18070701") %>"></script>
     <script src="<%= ResolveUrl("~/Scripts/ylyj/employeehome/vuepage.js?v=18070705") %>"></script>

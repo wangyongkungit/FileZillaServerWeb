@@ -60,5 +60,15 @@ namespace FileZillaServerBLL
         {
             return trDal.Add(userNO, enteringPerson, folder, modifyFolder, isReminded, createDate, expireDate, isFinished, taskType, toUserType);
         }
+
+        /// <summary>
+        /// 设置为再次发送提醒
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public bool SetRemind(string ID)
+        {
+            return trDal.SetRemind(ID);
+        }
     }
 }
