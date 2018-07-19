@@ -418,7 +418,7 @@ namespace FileZillaServerDAL
                 sbFromAndWhere.AppendFormat(" AND taskNo like '%" + dic["taskNo"] + "%'");
             }
             // 查询结果集
-            var sqlDataSet = sbSelectColumn.Append(sbFromAndWhere).AppendFormat(" ORDER BY orderDate DESC LIMIT {0}, {1} ", (pageIndex - 1) * pageSize, pageSize);
+            var sqlDataSet = sbSelectColumn.Append(sbFromAndWhere).AppendFormat(" ORDER BY TRANSACTIONDATE DESC LIMIT {0}, {1} ", (pageIndex - 1) * pageSize, pageSize);
 
             // 查询记录总数
             var sqlCount = sbSelectCount.Append(sbFromAndWhere);
@@ -432,7 +432,7 @@ namespace FileZillaServerDAL
 
             if (dicSelectFlag.ContainsKey("needExport") && dicSelectFlag["needExport"])
             {
-                var sqlExport = sbExport.Append(sbFromAndWhere).AppendFormat(" ORDER BY orderDate DESC ");
+                var sqlExport = sbExport.Append(sbFromAndWhere).AppendFormat(" ORDER BY TRANSACTIONDATE DESC ");
                 exportDataTable = DbHelperMySQL.Query(sqlExport.ToString()).Tables[0];
             }
 

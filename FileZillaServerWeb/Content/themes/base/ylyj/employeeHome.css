@@ -167,15 +167,15 @@ body {
     transition-duration:0.3s;
 }
 #transactionRecords {
-    color: #773;
-    border: 1px solid #33fc30;
-    background-color: #33fc30;
+    color: #666;
+    border: 1px solid #feba55;
+    background-color: #feba55;
     font-size: 13px;
     font-family: Consolas,sans-serif;
     padding: 8px 16px;
     text-align: center;
     display: inline-block;
-    border-radius: 3px;
+    border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
     transition-duration: 0.3s;
@@ -190,8 +190,19 @@ body {
     background-color:#50b628;
 }
 #transactionRecords:hover {
-    color: #777;
-    background-color: #50b628;
+    color: #666;
+    background-color: #ffd06c;
+    border: 1px solid #ffd06c;
+}
+.finishedCount {
+    color:#fff;
+    font-size:16px;
+}
+#lblFinishedTaskCount {
+    color:#fff;
+    font-family:Arial,'Microsoft YaHei',sans-serif;
+    font-size:32px;
+    text-shadow:2px 2px #444;
 }
 .money .pie {
     width: 260px;

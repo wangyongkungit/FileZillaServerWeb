@@ -107,6 +107,10 @@ namespace FileZillaServerWeb.Finance
             SearchType = "byEmp";
             if (!string.IsNullOrEmpty(ddlEmployeeName.SelectedValue))
             {
+                if (AspNetPager1.CurrentPageIndex != 1)
+                {
+                    AspNetPager1.CurrentPageIndex = 1;
+                }
                 LoadTransaction();
             }
         }
@@ -116,6 +120,10 @@ namespace FileZillaServerWeb.Finance
             SearchType = "byTask";
             if (!string.IsNullOrEmpty(txtTaskNoSearch.Text.Trim()))
             {
+                if (AspNetPager1.CurrentPageIndex != 1)
+                {
+                    AspNetPager1.CurrentPageIndex = 1;
+                }
                 LoadTransaction();
             }
         }
@@ -266,6 +274,7 @@ namespace FileZillaServerWeb.Finance
                             ClientScript.RegisterClientScriptBlock(this.GetType(), Guid.NewGuid().ToString(), "alert('操作成功！');", true);
                         }
                     }
+                    AspNetPager1.CurrentPageIndex = 1;
                     LoadTransaction();
                 }
                 else

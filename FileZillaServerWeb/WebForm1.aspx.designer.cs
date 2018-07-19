@@ -22,49 +22,22 @@ namespace FileZillaServerWeb {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// AttachFile 控件。
+        /// FileUpload1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::Brettle.Web.NeatUpload.InputFile AttachFile;
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
         
         /// <summary>
-        /// Upload 控件。
+        /// Button8 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Upload;
-        
-        /// <summary>
-        /// pbProgressBar 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::Brettle.Web.NeatUpload.ProgressBar pbProgressBar;
-        
-        /// <summary>
-        /// DetailsDiv1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::Brettle.Web.NeatUpload.DetailsDiv DetailsDiv1;
-        
-        /// <summary>
-        /// DetailsSpan1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::Brettle.Web.NeatUpload.DetailsSpan DetailsSpan1;
+        protected global::System.Web.UI.WebControls.Button Button8;
         
         /// <summary>
         /// Button1 控件。

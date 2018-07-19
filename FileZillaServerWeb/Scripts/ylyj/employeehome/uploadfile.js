@@ -17,8 +17,7 @@ function myfunction(file, progressbar, progress) {
         chunked: true,
         chunkSize: 20 * 1024 * 1024,
         chunkRetry: 3,
-        threads: 3,
-        fileNumLimit: 40,
+        threads: 4,
         duplicate: true,
         formData: { // 上传分片的http请求中一同携带的数据
             taskid: taskid,
@@ -28,12 +27,12 @@ function myfunction(file, progressbar, progress) {
     });
     uploader.on('beforeFileQueued', function (file) {
         var arr = ["exe", "lsp", "fas", "vlx", "gryphon"];
-        if (arr.indexOf(file.ext) > -1) {
-            alert("请上传合法扩展名的文件！");
+        if (!vm.projectfile.parentId) {
+            alert("请选中一个标签后再上传！");
             return false;
         }
-        if (!vm.projectfile.parentId) {
-            alert("请选中一个 tab 后再上传！");
+        if (arr.indexOf(file.ext) > -1) {
+            alert("请上传合法扩展名的文件！");
             return false;
         }
     });

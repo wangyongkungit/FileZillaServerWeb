@@ -168,22 +168,6 @@ namespace FileZillaServerWeb.HttpHandler
         }
         #endregion
 
-        public void AddFile()
-        {
-            string returnMsg = string.Empty;
-            int errorCode = 0;
-            // 校验参数
-            string[] parametersRequired = { "parentId", "description" };
-            if (!CheckParamsRequired(parametersRequired, out errorCode, out returnMsg))
-            {
-                JsonResult<string> result = new JsonResult<string> { Code = errorCode, Message = returnMsg, Rows = 0, Result = null };
-                GenerateJson(result);
-                return;
-            }
-            // 上传文件
-
-        }
-
         #region 获取指定 project 下的文件列表
         /// <summary>
         /// 获取指定 project 下的文件列表
@@ -331,7 +315,7 @@ namespace FileZillaServerWeb.HttpHandler
                 projectId = fileCategory.PROJECTID;
                 folder = fileCategory.FOLDERNAME;
                 category = fileCategory.CATEGORY;
-                bool flag = MergeSplitFile(taskid, projectId, category, folder, filename, out physicalFileName, out errorCode);
+                bool flag =  MergeSplitFile(taskid, projectId, category, folder, filename, out physicalFileName, out errorCode);
                 if (flag)
                 {
                     userId = UserProfile.GetInstance()?.ID;
@@ -408,7 +392,7 @@ namespace FileZillaServerWeb.HttpHandler
                 //}
                 physicalFileName = actFileName;
                 DirectoryInfo savePathInfo = new DirectoryInfo(fileUploadTempFolder);
-                var allSplitFiles = savePathInfo.EnumerateFiles().Where(file => file.Name.StartsWith(filename) && file.Name.Contains(taskid));
+                var allSplitFiles = savePathInfo.EnumerateFiles().Where(file => file.Name.StartsWith(filename) && file.Name.Contains(taskid)).OrderBy(file => file.Length).ThenBy(file => file.Name);
                 using (FileStream fileStream = File.Create(actFileName, 10 * 1024 * 1024))
                 {
                     foreach (var file in allSplitFiles)

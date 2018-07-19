@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="FileZillaServerWeb.WebForm1" %>
 
-<%@ Register Assembly="Brettle.Web.NeatUpload" Namespace="Brettle.Web.NeatUpload" TagPrefix="Upload" %>
+<%--<%@ Register Assembly="Brettle.Web.NeatUpload" Namespace="Brettle.Web.NeatUpload" TagPrefix="Upload" %>--%>
 
 <!DOCTYPE html>
 
@@ -73,22 +73,24 @@
        </Upload:ProgressBar>--%>
 
         <div>
-           <Upload:InputFile ID="AttachFile" runat="server" />
+<%--           <Upload:InputFile ID="AttachFile" runat="server" />
            <asp:Button ID="Upload" runat="server" Text="Upload" OnClientClick="ToggleVisibility('ProgressBar','on')" OnClick="Upload_Click1" /></div>
            <div id="ProgressBar">
                <Upload:ProgressBar ID="pbProgressBar" runat="server" Inline="true" Width="680px" Height="120px">
-               </Upload:ProgressBar>
+               </Upload:ProgressBar>--%>
 
-               <Upload:DetailsDiv ID="DetailsDiv1" runat="server">
+<%--               <Upload:DetailsDiv ID="DetailsDiv1" runat="server">
                </Upload:DetailsDiv>
                <Upload:DetailsSpan ID="DetailsSpan1" runat="server">
-               </Upload:DetailsSpan>
+               </Upload:DetailsSpan>--%>
 
            </div>
         <div style="width:300px;height:20px;background-color:ActiveCaption;">
             <label id="lblStatus"></label>
         </div>
         <div>
+            <asp:FileUpload ID="FileUpload1" runat="server" />
+            <asp:Button ID="Button8" runat="server" OnClick="Button8_Click" Text="上传" />
             <br />
             <br />
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="创建修改任务" />

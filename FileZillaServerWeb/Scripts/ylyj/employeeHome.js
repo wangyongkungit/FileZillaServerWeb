@@ -1,47 +1,47 @@
 ﻿
 function SetQualityScore(parameters, employeeNo, type) {
-    var dialogWidth = 1100;
-    var dialogHeight = 610;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
+    var dialogWidth = currentWidth - 200;
+    var dialogHeight = currentHeight - 100;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
         title: '我的技能设置',
-        width: 1100,
-        height: 610,
+        width: dialogWidth,
+        height: dialogHeight,
         top: _top,
         left: _left
     });
 };
 
 function SetMyCertificate(employeeID) {
-    var dialogWidth = 1100;
-    var dialogHeight = 610;
+    var dialogWidth = $(top.window).width() - 50;
+    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/MaterialConfig.aspx?employeeID=" + employeeID, {
         title: '我的证件设置',
-        width: 1100,
-        height: 610,
+        width: dialogWidth,
+        height: dialogHeight,
         top: _top,
         left: _left
     });
 };
 
 function TransferTask(prjID, employeeID, amount, taskno) {
-    var dialogWidth = 800;
-    var dialogHeight = 410;
+    var dialogWidth = 600;
+    var dialogHeight = 300;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
         title: '任务转移 ' + taskno,
-        width: 800,
-        height: 410,
+        width: dialogWidth,
+        height: dialogHeight,
         top: _top,
         left: _left
     });
@@ -55,38 +55,38 @@ var ViewPrjFiles = function (prjID, taskNo) {
 };
 
 $("#withdraw").bind("click", function () {
-    var dialogWidth = 800;
-    var dialogHeight = 410;
+    var dialogWidth = $(top.window).width() - 50;
+    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现',
-        width: 1200,
-        height: 610,
+        width: dialogWidth,
+        height: dialogHeight,
         top: _top,
         left: _left
     })
 });
 $("#withdrawRecords").bind("click", function () {
-    var dialogWidth = 800;
-    var dialogHeight = 410;
+    var dialogWidth = $(top.window).width() - 50;
+    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现记录',
-        width: 1200,
-        height: 610,
+        width: dialogWidth,
+        height: dialogHeight,
         top: _top,
         left: _left
     })
 });
 $("#transactionRecords").bind("click", function () {
-    var dialogWidth = 1200;
-    var dialogHeight = 680;
+    var dialogWidth = $(top.window).width() - 50;
+    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
     var _top = (currentHeight - dialogHeight) / 2;
@@ -133,7 +133,7 @@ var LoadEcharts = function () {
     $.ajaxSetup({ cache: false });
     $.ajax({
         url: "/MyHandler.ashx",
-        async : false,
+        async: false,
         type: "post",
         data: { method: "GetEmployeeAccount", employeeID: $("#hidEmployeeID").val() },
         success: function (result) {
@@ -175,15 +175,16 @@ var LoadEcharts = function () {
                 }
             },
             selectedMode: "single",
-            data: jsonResult
+            data: jsonResult,
+            color: ['rgb(155,202,99)', 'rgb(216,160,86)', 'rgb(97,160,168)', 'rgb(228,167,164)']
         }
     };
     myChart.setOption(option);
     myChart.on('click', function (param) {
         var index = param.dataIndex;
         if (index === 1) {
-            var dialogWidth = 1200;
-            var dialogHeight = 780;
+            var dialogWidth = $(top.window).width() - 100;
+            var dialogHeight = $(top.window).height() - 90;
             var currentWidth = $(top.window).width();
             var currentHeight = $(top.window).height();
             var _top = (currentHeight - dialogHeight) / 2;
@@ -197,8 +198,8 @@ var LoadEcharts = function () {
             })
         }
         else if (index === 2) {
-            var dialogWidth = 1200;
-            var dialogHeight = 780;
+            var dialogWidth = $(top.window).width() - 100;
+            var dialogHeight = $(top.window).height() - 90;
             var currentWidth = $(top.window).width();
             var currentHeight = $(top.window).height();
             var _top = (currentHeight - dialogHeight) / 2;
@@ -212,8 +213,8 @@ var LoadEcharts = function () {
             })
         }
         else if (index === 3) {
-            var dialogWidth = 1200;
-            var dialogHeight = 780;
+            var dialogWidth = $(top.window).width() - 100;
+            var dialogHeight = $(top.window).height() - 90;
             var currentWidth = $(top.window).width();
             var currentHeight = $(top.window).height();
             var _top = (currentHeight - dialogHeight) / 2;

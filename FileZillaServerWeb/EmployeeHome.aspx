@@ -67,14 +67,14 @@
                                 <div style="height: 260px; padding: 10px;">
                                     <div class="layui-row layui-col-md6">
                                         <h6 style="background-color:#007bff; height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400; border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
-                                            onclick='SetQualityScore("<%= EmployeeID %>", "<%= EmployeeNo %>", "1");'><a>我的技能</a>
+                                            onclick='SetQualityScore("<%= EmployeeID %>", "<%= EmployeeNo %>", "1");' title="点击可配置技能"><a>我的技能</a>
                                             <span style="float:right; margin-right:8px;">&gt;</span>
                                         </h6>
                                         <div id="divMySkills" runat="server" css="skill"></div>
                                     </div>
                                     <div class="layui-row layui-col-md6">
                                         <h6 style="background-color:#28a745;height:28px;line-height:28px;cursor:pointer;color:white;font-size:20px;font-weight:400;border-top-left-radius:5px;border-top-right-radius:5px;padding:2px 0px 2px 10px;"
-                                             onclick='SetMyCertificate("<%= EmployeeID %>");'><a>我的证件</a>
+                                             onclick='SetMyCertificate("<%= EmployeeID %>");' title="点击可上传证件"><a>我的证件</a>
                                             <span style="float:right; margin-right:8px;">&gt;</span>
                                         </h6>
                                         <%--<img id="imgCerficate" runat="server" style="width:100%;height:216px; overflow:hidden; border-bottom-left-radius:7px;border-bottom-right-radius:7px;" />--%>
@@ -95,17 +95,17 @@
                         <div class="layui-col-md1 topheight">
                             <div style="background-color: #a2c1a6; height: 100%;">
                                 <div style="height: 260px; text-align: center; padding-top: 25px;">
-                                    <span>已完成项目</span>
+                                    <span class="finishedCount">已完成项目</span>
                                     <br />
                                     <br />
                                     <span style="padding-top: 12px;">
-                                        <asp:Label ID="lblFinishedTaskCount" runat="server" Font-Size="XX-Large" ForeColor="White"></asp:Label>
+                                        <asp:Label ID="lblFinishedTaskCount" runat="server" ToolTip="我手里的项目数"></asp:Label>
                                     </span>
                                     <br />
                                     <br />
                                     <br />
                                     <span style="display: inline-block; margin-top: 20px;">
-                                        <a id="transactionRecords" href="javascript:void(0);">交易记录</a>
+                                        <a id="transactionRecords" href="javascript:void(0);" title="查看账户交易明细">明细</a>
                                     </span>
                                 </div>
                             </div>

@@ -17,24 +17,24 @@ namespace FileZillaServerWeb
 
         protected void Upload_Click1(object sender, EventArgs e)
         {
-            if (IsValid)
-            {
-                string FileName = this.AttachFile.FileName;//获取上传文件的全路径  
-                string ExtenName = System.IO.Path.GetExtension(FileName);//获取扩展名  
-                string SaveFileName = System.IO.Path.Combine(Request.PhysicalApplicationPath + "\\Upload", FileName);//合并两个路径为上传到服务器上的全路径
-                if (this.AttachFile.ContentLength > 0)
-                {
-                    try
-                    {
-                        this.AttachFile.MoveTo(SaveFileName, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), "", "alert('Success');", true);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
-                }
-            }
+            //if (IsValid)
+            //{
+            //    string FileName = this.AttachFile.FileName;//获取上传文件的全路径  
+            //    string ExtenName = System.IO.Path.GetExtension(FileName);//获取扩展名  
+            //    string SaveFileName = System.IO.Path.Combine(Request.PhysicalApplicationPath + "\\Upload", FileName);//合并两个路径为上传到服务器上的全路径
+            //    if (this.AttachFile.ContentLength > 0)
+            //    {
+            //        try
+            //        {
+            //            this.AttachFile.MoveTo(SaveFileName, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
+            //            ClientScript.RegisterClientScriptBlock(this.GetType(), "", "alert('Success');", true);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            throw ex;
+            //        }
+            //    }
+            //}
         }
 
         protected void Upload_Click(object sender, EventArgs e)
@@ -51,6 +51,27 @@ namespace FileZillaServerWeb
         {
             TestBLL tBll = new TestBLL();
             tBll.Add();
-        }  
+        }
+
+        protected void Button8_Click(object sender, EventArgs e)
+        {
+            string FileName = this.FileUpload1.FileName;
+            string ExtenName = System.IO.Path.GetExtension(FileName);//获取扩展名  
+            string SaveFileName = System.IO.Path.Combine("\\Upload", FileName);//合并两个路径为上传到服务器上的全路径
+            if (this.FileUpload1.FileName.Length > 0)
+            {
+                try
+                {
+                    //this.AttachFile.MoveTo(SaveFileName, Brettle.Web.NeatUpload.MoveToOptions.Overwrite);
+                    string saveName = Server.MapPath("~/Upload/" + FileName);
+                    FileUpload1.SaveAs(saveName);
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "", "alert('Success');", true);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }
