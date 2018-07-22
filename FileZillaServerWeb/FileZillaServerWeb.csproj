@@ -309,6 +309,7 @@
     <Content Include="Images\bullet.png" />
     <Content Include="Images\download.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\Error\404_bg.png" />
     <Content Include="Images\fileTypes\doc-ico.png" />
     <Content Include="Images\fileTypes\docx-ico.png" />
     <Content Include="Images\fileTypes\filetypeicons.png" />

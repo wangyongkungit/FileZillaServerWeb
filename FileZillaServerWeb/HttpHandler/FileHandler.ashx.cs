@@ -392,7 +392,7 @@ namespace FileZillaServerWeb.HttpHandler
                 //}
                 physicalFileName = actFileName;
                 DirectoryInfo savePathInfo = new DirectoryInfo(fileUploadTempFolder);
-                var allSplitFiles = savePathInfo.EnumerateFiles().Where(file => file.Name.StartsWith(filename) && file.Name.Contains(taskid)).OrderBy(file => file.Length).ThenBy(file => file.Name);
+                var allSplitFiles = savePathInfo.EnumerateFiles().Where(file => file.Name.StartsWith(filename) && file.Name.Contains(taskid)).OrderBy(file => file.Name.Length).ThenBy(file => file.Name);
                 using (FileStream fileStream = File.Create(actFileName, 10 * 1024 * 1024))
                 {
                     foreach (var file in allSplitFiles)

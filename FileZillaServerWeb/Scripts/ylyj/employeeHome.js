@@ -16,10 +16,10 @@ function SetQualityScore(parameters, employeeNo, type) {
 };
 
 function SetMyCertificate(employeeID) {
-    var dialogWidth = $(top.window).width() - 50;
-    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
+    var dialogWidth = currentWidth - 50;
+    var dialogHeight = currentHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/MaterialConfig.aspx?employeeID=" + employeeID, {
@@ -32,10 +32,10 @@ function SetMyCertificate(employeeID) {
 };
 
 function TransferTask(prjID, employeeID, amount, taskno) {
-    var dialogWidth = 600;
-    var dialogHeight = 300;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
+    var dialogWidth = 600;
+    var dialogHeight = 300;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
@@ -55,10 +55,10 @@ var ViewPrjFiles = function (prjID, taskNo) {
 };
 
 $("#withdraw").bind("click", function () {
-    var dialogWidth = $(top.window).width() - 50;
-    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
+    var dialogWidth = currentWidth - 50;
+    var dialogHeight = dialogHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
@@ -70,10 +70,10 @@ $("#withdraw").bind("click", function () {
     })
 });
 $("#withdrawRecords").bind("click", function () {
-    var dialogWidth = $(top.window).width() - 50;
-    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
+    var dialogWidth = currentWidth() - 50;
+    var dialogHeight = currentHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
@@ -85,10 +85,10 @@ $("#withdrawRecords").bind("click", function () {
     })
 });
 $("#transactionRecords").bind("click", function () {
-    var dialogWidth = $(top.window).width() - 50;
-    var dialogHeight = $(top.window).height() - 50;
     var currentWidth = $(top.window).width();
     var currentHeight = $(top.window).height();
+    var dialogWidth = currentWidth - 50;
+    var dialogHeight = currentHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
     var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
@@ -176,17 +176,17 @@ var LoadEcharts = function () {
             },
             selectedMode: "single",
             data: jsonResult,
-            color: ['rgb(155,202,99)', 'rgb(216,160,86)', 'rgb(97,160,168)', 'rgb(228,167,164)']
+            color: ['rgb(40,167,69)', 'rgb(216,160,86)', 'rgb(97,160,168)', 'rgb(228,167,164)']
         }
     };
     myChart.setOption(option);
     myChart.on('click', function (param) {
         var index = param.dataIndex;
         if (index === 1) {
-            var dialogWidth = $(top.window).width() - 100;
-            var dialogHeight = $(top.window).height() - 90;
             var currentWidth = $(top.window).width();
             var currentHeight = $(top.window).height();
+            var dialogWidth = currentWidth - 100;
+            var dialogHeight = currentHeight - 90;
             var _top = (currentHeight - dialogHeight) / 2;
             var _left = (currentWidth - dialogWidth) / 2;
             var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
@@ -198,10 +198,10 @@ var LoadEcharts = function () {
             })
         }
         else if (index === 2) {
-            var dialogWidth = $(top.window).width() - 100;
-            var dialogHeight = $(top.window).height() - 90;
             var currentWidth = $(top.window).width();
             var currentHeight = $(top.window).height();
+            var dialogWidth = currentWidth - 100;
+            var dialogHeight = currentHeight - 90;
             var _top = (currentHeight - dialogHeight) / 2;
             var _left = (currentWidth - dialogWidth) / 2;
             var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
@@ -213,10 +213,10 @@ var LoadEcharts = function () {
             })
         }
         else if (index === 3) {
-            var dialogWidth = $(top.window).width() - 100;
-            var dialogHeight = $(top.window).height() - 90;
             var currentWidth = $(top.window).width();
             var currentHeight = $(top.window).height();
+            var dialogWidth = currentWidth - 100;
+            var dialogHeight = currentHeight - 90;
             var _top = (currentHeight - dialogHeight) / 2;
             var _left = (currentWidth - dialogWidth) / 2;
             var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
@@ -329,7 +329,7 @@ var appForTrends = new Vue({
         var _this = this;
         this.timer = setInterval(function () {
             _this.trends = GetTrends();
-        }, 1100000);
+        }, 110000);
     },
     beforeDestroy: function () {
         if (this.timer) {
