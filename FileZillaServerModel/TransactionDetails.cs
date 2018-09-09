@@ -18,6 +18,7 @@ namespace FileZillaServerModel
         private string _id;
         private decimal? _transactionamount = 0.00M;
         private string _transactiondescription;
+        private decimal? _transactionproportion;
         private DateTime? _transactiondate;
         private DateTime? _plandate;
         private int? _transactiontype;
@@ -48,6 +49,14 @@ namespace FileZillaServerModel
         {
             set { _transactiondescription = value; }
             get { return _transactiondescription; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal? TRANSACTIONPROPORTION
+        {
+            set { _transactionproportion = value; }
+            get { return _transactionproportion; }
         }
         /// <summary>
         /// on update CURRENT_TIMESTAMP

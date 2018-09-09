@@ -19,7 +19,7 @@ namespace FileZillaServerDAL
         /// <returns></returns>
         public DataTable GetUser(string userName, string passWord)
         {
-            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,
+            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`, emp.ISEXTERNAL,
                                  r.ID roleID,r.ROLENAME,
                                  m.MENUNAME,m.MENUPATH
                                  from employee emp
@@ -101,9 +101,9 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into employee(");
-            strSql.Append("ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,AVAILABLE,DINGTALKUSERID)");
+            strSql.Append("ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,ISEXTERNAL,AVAILABLE,DINGTALKUSERID)");
             strSql.Append(" values (");
-            strSql.Append("@ID,@EMPLOYEENO,@PASSWORD,@NAME,@SEX,@BIRTHDATE,@NATIVEPLACE,@MOBILEPHONE,@ADDRESS,@EMAIL,@BANKCARD,@DEPARTMENTID,@POLITICALSTATUS,@TYPE,@ISBRANCHLEADER,@AVAILABLE,@DINGTALKUSERID)");
+            strSql.Append("@ID,@EMPLOYEENO,@PASSWORD,@NAME,@SEX,@BIRTHDATE,@NATIVEPLACE,@MOBILEPHONE,@ADDRESS,@EMAIL,@BANKCARD,@DEPARTMENTID,@POLITICALSTATUS,@TYPE,@ISBRANCHLEADER,@ISEXTERNAL,@AVAILABLE,@DINGTALKUSERID)");
             MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,40),
 					new MySqlParameter("@EMPLOYEENO", MySqlDbType.VarChar,50),
@@ -120,7 +120,8 @@ namespace FileZillaServerDAL
 					new MySqlParameter("@POLITICALSTATUS", MySqlDbType.VarChar,20),
 					new MySqlParameter("@TYPE", MySqlDbType.Decimal,1),
 					new MySqlParameter("@ISBRANCHLEADER", MySqlDbType.Bit),
-					new MySqlParameter("@AVAILABLE", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@ISEXTERNAL", MySqlDbType.Bit),
+                    new MySqlParameter("@AVAILABLE", MySqlDbType.Decimal,1),
 					new MySqlParameter("@DINGTALKUSERID", MySqlDbType.VarChar,40)};
             parameters[0].Value = model.ID;
             parameters[1].Value = model.EMPLOYEENO;
@@ -137,8 +138,9 @@ namespace FileZillaServerDAL
             parameters[12].Value = model.POLITICALSTATUS;
             parameters[13].Value = model.TYPE;
             parameters[14].Value = model.ISBRANCHLEADER;
-            parameters[15].Value = model.AVAILABLE;
-            parameters[16].Value = model.DINGTALKUSERID;
+            parameters[15].Value = model.ISEXTERNAL;
+            parameters[16].Value = model.AVAILABLE;
+            parameters[17].Value = model.DINGTALKUSERID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -157,7 +159,7 @@ namespace FileZillaServerDAL
         public Employee GetModel(string ID)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,AVAILABLE,DINGTALKUSERID from employee ");
+            strSql.Append("select ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,ISEXTERNAL,AVAILABLE,DINGTALKUSERID from employee ");
             strSql.Append(" where AVAILABLE = 1 AND ID=@ID ");
             MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,40)			};
@@ -258,6 +260,17 @@ namespace FileZillaServerDAL
                         model.ISBRANCHLEADER = false;
                     }
                 }
+                if (row["ISEXTERNAL"] != null && row["ISEXTERNAL"].ToString() != "")
+                {
+                    if ((row["ISEXTERNAL"].ToString() == "1") || (row["ISEXTERNAL"].ToString().ToLower() == "true"))
+                    {
+                        model.ISEXTERNAL = true;
+                    }
+                    else
+                    {
+                        model.ISEXTERNAL = false;
+                    }
+                }
                 if (row["AVAILABLE"] != null && row["AVAILABLE"].ToString() != "")
                 {
                     model.AVAILABLE = decimal.Parse(row["AVAILABLE"].ToString());
@@ -279,7 +292,7 @@ namespace FileZillaServerDAL
         public DataSet GetList(string strWhere, string strSort)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,AVAILABLE,DINGTALKUSERID ");
+            strSql.Append("select ID,EMPLOYEENO,PASSWORD,NAME,SEX,BIRTHDATE,NATIVEPLACE,MOBILEPHONE,ADDRESS,EMAIL,BANKCARD,DEPARTMENTID,POLITICALSTATUS,TYPE,ISBRANCHLEADER,ISEXTERNAL,AVAILABLE,DINGTALKUSERID ");
             strSql.Append(" FROM employee where AVAILABLE = 1 ");
             if (!string.IsNullOrEmpty(strWhere))
             {
@@ -358,27 +371,29 @@ namespace FileZillaServerDAL
             strSql.Append("POLITICALSTATUS=@POLITICALSTATUS,");
             strSql.Append("TYPE=@TYPE,");
             strSql.Append("ISBRANCHLEADER=@ISBRANCHLEADER,");
+            strSql.Append("ISEXTERNAL=@ISEXTERNAL,");
             strSql.Append("AVAILABLE=@AVAILABLE,");
             strSql.Append("DINGTALKUSERID=@DINGTALKUSERID");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@EMPLOYEENO", MySqlDbType.VarChar,50),
-					new MySqlParameter("@PASSWORD", MySqlDbType.VarChar,200),
-					new MySqlParameter("@NAME", MySqlDbType.VarChar,100),
-					new MySqlParameter("@SEX", MySqlDbType.Bit),
-					new MySqlParameter("@BIRTHDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@NATIVEPLACE", MySqlDbType.VarChar,40),
-					new MySqlParameter("@MOBILEPHONE", MySqlDbType.VarChar,20),
-					new MySqlParameter("@ADDRESS", MySqlDbType.VarChar,255),
-					new MySqlParameter("@EMAIL", MySqlDbType.VarChar,50),
-					new MySqlParameter("@BANKCARD", MySqlDbType.VarChar,20),
-					new MySqlParameter("@DEPARTMENTID", MySqlDbType.VarChar,40),
-					new MySqlParameter("@POLITICALSTATUS", MySqlDbType.VarChar,20),
-					new MySqlParameter("@TYPE", MySqlDbType.Decimal,1),
-					new MySqlParameter("@ISBRANCHLEADER", MySqlDbType.Bit),
-					new MySqlParameter("@AVAILABLE", MySqlDbType.Decimal,1),
-					new MySqlParameter("@DINGTALKUSERID", MySqlDbType.VarChar,40),
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40)};
+                    new MySqlParameter("@EMPLOYEENO", MySqlDbType.VarChar,50),
+                    new MySqlParameter("@PASSWORD", MySqlDbType.VarChar,200),
+                    new MySqlParameter("@NAME", MySqlDbType.VarChar,100),
+                    new MySqlParameter("@SEX", MySqlDbType.Bit),
+                    new MySqlParameter("@BIRTHDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@NATIVEPLACE", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@MOBILEPHONE", MySqlDbType.VarChar,20),
+                    new MySqlParameter("@ADDRESS", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@EMAIL", MySqlDbType.VarChar,50),
+                    new MySqlParameter("@BANKCARD", MySqlDbType.VarChar,20),
+                    new MySqlParameter("@DEPARTMENTID", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@POLITICALSTATUS", MySqlDbType.VarChar,20),
+                    new MySqlParameter("@TYPE", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@ISBRANCHLEADER", MySqlDbType.Bit),
+                    new MySqlParameter("@ISEXTERNAL", MySqlDbType.Bit),
+                    new MySqlParameter("@AVAILABLE", MySqlDbType.Decimal,1),
+                    new MySqlParameter("@DINGTALKUSERID", MySqlDbType.VarChar,40),
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40)};
             parameters[0].Value = model.EMPLOYEENO;
             parameters[1].Value = model.PASSWORD;
             parameters[2].Value = model.NAME;
@@ -393,9 +408,10 @@ namespace FileZillaServerDAL
             parameters[11].Value = model.POLITICALSTATUS;
             parameters[12].Value = model.TYPE;
             parameters[13].Value = model.ISBRANCHLEADER;
-            parameters[14].Value = model.AVAILABLE;
-            parameters[15].Value = model.DINGTALKUSERID;
-            parameters[16].Value = model.ID;
+            parameters[14].Value = model.ISEXTERNAL;
+            parameters[15].Value = model.AVAILABLE;
+            parameters[16].Value = model.DINGTALKUSERID;
+            parameters[17].Value = model.ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)

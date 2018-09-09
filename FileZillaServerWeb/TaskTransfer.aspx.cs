@@ -144,6 +144,7 @@ namespace FileZillaServerWeb
             transactionDetails.ID = Guid.NewGuid().ToString();
             transactionDetails.TRANSACTIONAMOUNT = amountToLeader * proportion;
             transactionDetails.TRANSACTIONDESCRIPTION = "分部领导提成";
+            transactionDetails.TRANSACTIONPROPORTION = proportion;
             transactionDetails.TRANSACTIONTYPE = 6;
             transactionDetails.TRANSACTIONDATE = DateTime.Now;
             transactionDetails.PLANDATE = DateTimeHelper.GetFirstDateOfCurrentMonth();

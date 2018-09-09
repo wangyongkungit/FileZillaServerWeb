@@ -75,6 +75,19 @@ namespace FileZillaServerWeb
                     {
                         rblIsBranchLeader.SelectedValue = "1";
                     }
+                    else
+                    {
+                        rblIsBranchLeader.SelectedValue = "0";
+                    }
+                    // 是否是外分人员
+                    if (emp.ISEXTERNAL)
+                    {
+                        rblIsExternal.SelectedValue = "1";
+                    }
+                    else
+                    {
+                        rblIsExternal.SelectedValue = "0";
+                    }
                     //如果钉钉UserId未关联，则在相应文本框中进行提示
                     if (string.IsNullOrEmpty(emp.DINGTALKUSERID))
                     {
@@ -264,6 +277,7 @@ namespace FileZillaServerWeb
                 }
                 emp.TYPE = userType;
                 emp.ISBRANCHLEADER = rblIsBranchLeader.SelectedValue == "1";
+                emp.ISEXTERNAL = rblIsExternal.SelectedValue == "1";
                 //启用状态
                 emp.AVAILABLE = 1;
                 bool flag = eBll.Add(emp);
@@ -417,6 +431,7 @@ namespace FileZillaServerWeb
                 emp.MOBILEPHONE = mobilePhone;
                 emp.EMAIL = email;
                 emp.ISBRANCHLEADER = rblIsBranchLeader.SelectedValue == "1";
+                emp.ISEXTERNAL = rblIsExternal.SelectedValue == "1";
                 bool editFlag = eBll.Update(emp);
                 if (editFlag)
                 {

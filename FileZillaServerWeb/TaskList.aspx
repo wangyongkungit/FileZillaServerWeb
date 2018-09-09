@@ -3,7 +3,7 @@
 
 <asp:Content ID="head1" ContentPlaceHolderID="head" runat="server">
     <script src="Scripts/ylyj/tasklist.js?v=18426"></script>
-    <link href="Content/themes/base/ylyj/tasklist.css?v=18070101" rel="stylesheet" />
+    <link href="Content/themes/base/ylyj/tasklist.css?v=18090801" rel="stylesheet" />
 </asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -185,7 +185,7 @@
                                 <span class="sysj">剩余时间</span>
                                 <span class="dp">店铺</span>
                                 <span class="wwm">旺旺名</span>
-                                <span class="jyzt">交易状态</span>
+                                <span class="jyzt" title="双击某一行的交易状态，可进入编辑模式">交易状态</span>
                                 <span class="rwzt">任务状态</span>
                                 <span class="expand">&nbsp;</span>
                                 <span class="edit">&nbsp;</span>
@@ -218,9 +218,16 @@
                             <span class="dp">
                                 <asp:Label ID="lblShop" runat="server" Text='<%# Eval("shop") %>' /></span>
                             <span class="wwm">
-                                <asp:Label ID="lblWangwangName" runat="server" Text='<%# Eval("wangwangName") %>' /></span>
+                                <a href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%# Eval("WANGWANGNAME") %>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8" target="_blank" class="awwm">
+                                    <img border="0" src="http://amos.alicdn.com/online.aw?v=2&amp;uid=<%# Eval("WANGWANGNAME") %>&amp;site=cntaobao&amp;s=2&amp;charset=utf-8">
+                                    <%# Eval("WANGWANGNAME") %>
+                                </a>
+                            </span>
                             <span class="jyzt">
-                                <asp:Label ID="lblTransactionStatus" runat="server" Text='<%# Eval("transactionStatus") %>' /></span>
+                                <span id="<%# "spanStatus_" + Eval("ID") %>" ondblclick="EditTransactionStatus(this.id, <%# "'" + Eval("ID") + "'" %>)" class="jyzt-span" title="双击修改交易状态"><%# Eval("transactionStatus") %></span>
+                                <select id="<%# "ddl_" + Eval("ID") %>" style="display:none;">
+                                </select>
+                            </span>
                             <span class="rwzt">
                                 <asp:Label ID="lblTaskStatus" runat="server" Text='<%# Eval("taskStatus") %>'></asp:Label>
                             </span>

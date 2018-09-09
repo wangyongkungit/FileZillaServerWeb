@@ -72,6 +72,17 @@ namespace FileZillaServerWeb
                 ViewState["IsBranchLeader"] = value;
             }
         }
+        protected bool IsExternal
+        {
+            get
+            {
+                return Convert.ToBoolean(ViewState["IsExternal"]);
+            }
+            set
+            {
+                ViewState["IsExternal"] = value;
+            }
+        }
         protected List<Cerficate> lstCerficate
         {
             get
@@ -170,6 +181,7 @@ namespace FileZillaServerWeb
             UserName = user.Name;
             EmployeeNo = user.EmployeeNO;
             IsBranchLeader = user.isBranchLeader;
+            IsExternal = user.isExternal;
             //if (string.IsNullOrEmpty(employeeID))
             //{
             //    bool isAdmin = user.Role.Any(item => item.RoleName == "超级管理员");
@@ -288,6 +300,7 @@ namespace FileZillaServerWeb
             AspNetPager1.RecordCount = totalRowsCount;
             gvProject.DataSource = dtProject;
             gvProject.DataBind();
+            gvProject.Columns[1].Visible = IsExternal;
         }
 
         #region Some Events

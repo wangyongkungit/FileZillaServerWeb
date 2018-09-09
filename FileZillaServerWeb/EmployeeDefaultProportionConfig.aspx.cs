@@ -16,7 +16,18 @@ namespace FileZillaServerWeb
         EmployeeProportionBLL epBll = new EmployeeProportionBLL();
         EmployeeBLL eBll = new EmployeeBLL();
         DataTable dtAllEmployeeProportion = new DataTable();
-        DataTable dtManager = new DataTable();
+        //protected DataTable dtManager// = new DataTable();
+        //{
+        //    get
+        //    {
+        //        return (DataTable)ViewState["dtManager"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["dtManager"] = value;
+        //    }
+        //}
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,7 +42,7 @@ namespace FileZillaServerWeb
         protected void LoadDefaultProportion()
         {
             DataTable dt = epBll.GetListJoinEmployee(string.Empty).Tables[0];
-            dtManager = eBll.GetList(" AND isBranchLeader = 1 ", "EMPLOYEENO").Tables[0];
+            //dtManager = eBll.GetList(" AND isBranchLeader = 1 ", "EMPLOYEENO").Tables[0];
             gvEmployeeProportion.DataSource = dt;
             gvEmployeeProportion.DataBind();
         }
@@ -42,7 +53,8 @@ namespace FileZillaServerWeb
             {
                 string employeeID = gvEmployeeProportion.DataKeys[e.Row.RowIndex].Value.ToString();
                 DropDownList ddlManager = e.Row.FindControl("ddlManager") as DropDownList;
-                ddlManager.DataSource = dtManager.AsEnumerable().Where(item => item.Field<string>("ID") != employeeID).CopyToDataTable();
+                DataTable dtManager = eBll.GetList(" AND isBranchLeader = 1 AND ID <> '" + employeeID + "'", "EMPLOYEENO").Tables[0];
+                ddlManager.DataSource = dtManager;// dtManager.AsEnumerable().Where(item => item.Field<string>("ID") != employeeID).CopyToDataTable();
                 ddlManager.DataTextField = "employeeNo";
                 ddlManager.DataValueField = "ID";
                 ddlManager.DataBind();

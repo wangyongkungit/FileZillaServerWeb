@@ -983,7 +983,7 @@ namespace FileZillaServerDAL
         public DataTable GetProjectForEmployeeHome(string employeeID, string where, int pageIndex, int pageSize, out int totalAmount)
         {
             totalAmount = 0;
-            StringBuilder selectForAll = new StringBuilder( @"SELECT p.ID prjID, p.TASKNO, p.orderAmount, p.EXPIREDATE, p.ISFINISHED,
+            StringBuilder selectForAll = new StringBuilder(@"SELECT p.ID prjID, p.TASKNO, p.orderAmount, p.EXPIREDATE, p.ISFINISHED, p.WANGWANGNAME,jyzt.configvalue TRANSACTIONSTATUS,
                CASE p.taskStatus WHEN '1' THEN '正常' WHEN '2' THEN '暂停' END taskStatus, e.EMPLOYEENO");
             StringBuilder selectForCount = new StringBuilder( "SELECT COUNT(*) ");
             StringBuilder fromClause = new StringBuilder();
@@ -992,6 +992,9 @@ namespace FileZillaServerDAL
                                      ON p.id = ps.PROJECTID
                                      LEFT JOIN employee e
                                      ON ps.FINISHEDPERSON = e.ID
+                                        LEFT JOIN
+                                        (select configkey,configvalue from configvalue c where configtypeid=(select configtypeid from configtype WHERE configtypeName='交易状态')) jyzt
+                                        on p.TRANSACTIONSTATUS=jyzt.configkey
                                      WHERE p.ISDELETED = 0 AND ps.FINISHEDPERSON ='{0}'", employeeID);
             if (!string.IsNullOrEmpty(where))
             {

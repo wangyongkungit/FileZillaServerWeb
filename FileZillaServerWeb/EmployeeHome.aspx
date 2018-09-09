@@ -6,7 +6,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>我的主页</title>
+    <title>我的主页</title>    
+    <script src="/Scripts/ylyj/employeehome/browsercheck.js"></script>
     <%--<%= WebExtensions.CombresLink("employeehomeCss") %>--%>
 <%--    <%= System.Web.Optimization.Styles.Render("~/bundles/employeehomecss") %>--%>
     <link href="/Scripts/bootstrap4/css/bootstrap.css" rel="stylesheet" />
@@ -18,12 +19,18 @@
         #imgCerficate {
             width:100%;height:216px; overflow:hidden; border-bottom-left-radius:7px;border-bottom-right-radius:7px;
         }
+        .mshow {
+            display:block;
+        }
+        .mhide {
+            display:none;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="layui-layout layui-layout-admin">
-            <div class="layui-header">
+            <div class="layui-header"">
                 <div class="layui-logo">YLYJ OA</div>
                 <!-- 头部区域（可配合layui已有的水平导航） -->
                 <ul class="layui-nav layui-layout-left layui-bg-green">
@@ -149,6 +156,16 @@
                                                 <asp:Label ID="lblProjectNo" runat="server" Text='<%# Eval("TASKNO") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="旺旺号">
+                                            <ItemTemplate>
+                                                <%--<asp:Label ID="lblWangwangName" runat="server" Text='<%# Eval("WANGWANGNAME") %>'></asp:Label>
+                                                <asp:HyperLink ID="hlnkWangwangName" runat="server" Text='<%# Eval("WANGWANGNAME") %>' NavigateUrl="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%# Eval("WANGWANGNAME") %>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8"></asp:HyperLink>--%>
+                                                <a href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%# Eval("WANGWANGNAME") %>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8" target="_blank">
+                                                    <img border="0" src="http://amos.alicdn.com/online.aw?v=2&amp;uid=<%# Eval("WANGWANGNAME") %>&amp;site=cntaobao&amp;s=2&amp;charset=utf-8">
+                                                    <%# Eval("WANGWANGNAME") %>
+                                                </a>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                         <asp:TemplateField HeaderText="完成期限">
                                             <ItemTemplate>
                                                 <asp:HiddenField ID="hidExpireDate" runat="server" Value='<%# Eval("EXPIREDATE") %>' />
@@ -158,6 +175,11 @@
                                         <asp:TemplateField HeaderText="任务状态">
                                             <ItemTemplate>
                                                 <asp:Label ID="lblTaskStatus" runat="server" Text='<%# Eval("taskStatus") %>'></asp:Label>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="交易状态">
+                                            <ItemTemplate>
+                                                <asp:Label ID="lblTransactionStatus" runat="server" Text='<%# Eval("TRANSACTIONSTATUS") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField HeaderText="完成人">

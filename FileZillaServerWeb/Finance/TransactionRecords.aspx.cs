@@ -125,6 +125,7 @@ namespace FileZillaServerWeb.Finance
             {
                 gvTransaction.DataSource = dt;
                 gvTransaction.DataBind();
+                gvTransaction.Columns[8].Visible = UserProfile.GetInstance().Role.Any(item => item.RoleName.Contains("管理员"));
             }
             else
             {

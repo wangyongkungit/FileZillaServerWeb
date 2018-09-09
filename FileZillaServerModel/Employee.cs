@@ -26,6 +26,7 @@ namespace FileZillaServerModel
 		private string _politicalstatus;
         private decimal? _type;
         private bool _isbranchleader = false;
+        private bool _isexternal = false;
         private decimal? _available;
         private string _dingtalkuserid;
 		/// <summary>
@@ -147,6 +148,14 @@ namespace FileZillaServerModel
         {
             set { _isbranchleader = value; }
             get { return _isbranchleader; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ISEXTERNAL
+        {
+            set { _isexternal = value; }
+            get { return _isexternal; }
         }
         /// <summary>
         /// 是否启用

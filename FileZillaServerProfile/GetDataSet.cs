@@ -44,7 +44,7 @@ namespace FileZillaServerProfile
         /// <returns></returns>
         public static DataTable GetUesrProfileByUserID(string employeeNO)
         {
-            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.isBranchLeader,
+            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.isBranchLeader,emp.ISEXTERNAL,
                                  r.ID roleID,r.ROLENAME,
                                  m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
                                  from employee emp
@@ -72,7 +72,7 @@ namespace FileZillaServerProfile
         /// <returns></returns>
         public static DataTable GetUesrProfileByUserIDandPwdNew(string employeeNO, string passWord)
         {
-            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,
+            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.ISEXTERNAL,
                                  r.ID roleID,r.ROLENAME,
                                  m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
                                  from employee emp

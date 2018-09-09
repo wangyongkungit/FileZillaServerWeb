@@ -114,6 +114,11 @@
                                <asp:Label ID="lblTransactionDescription" runat="server" Text='<%# Eval("TransactionDescription") %>' ToolTip='<%# Eval("TransactionDescription") %>'></asp:Label>
                            </ItemTemplate>
                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="提成" ItemStyle-Width="70">
+                            <ItemTemplate>
+                                <asp:Label ID="lblTransactionProportion" runat="server" Text='<%# Eval("TransactionProportion") %>'></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                     <EmptyDataTemplate>
                         <span>暂无记录</span>

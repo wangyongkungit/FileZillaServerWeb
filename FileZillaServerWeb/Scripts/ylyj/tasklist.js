@@ -1,16 +1,16 @@
 ﻿
-     $(document).ready(function () { //这个就是传说的ready  
-         $(".tbl tr").mouseover(function () {//.not(':eq(0)')
-             //如果鼠标移到class为stripe的表格的tr上时，执行函数
-             $(this).addClass("over");
-         }).mouseout(function () {
-             //给这行添加class值为over，并且当鼠标一出该行时执行函数  
-             $(this).removeClass("over");
-         }) //移除该行的class  
-         //$(".tbl1 tr:even").addClass("alt");
-         //给class为stripe的表格的偶数行添加class值为alt
-         //$(".tbl1 tr:odd").addClass("alt2");
-     });
+$(document).ready(function () { //这个就是传说的ready  
+    $(".tbl tr").mouseover(function () {//.not(':eq(0)')
+        //如果鼠标移到class为stripe的表格的tr上时，执行函数
+        $(this).addClass("over");
+    }).mouseout(function () {
+        //给这行添加class值为over，并且当鼠标一出该行时执行函数  
+        $(this).removeClass("over");
+    }) //移除该行的class  
+    //$(".tbl1 tr:even").addClass("alt");
+    //给class为stripe的表格的偶数行添加class值为alt
+    //$(".tbl1 tr:odd").addClass("alt2");
+});
 /*
 //获取当前网址
 var path = document.URL;
@@ -38,7 +38,7 @@ function loadProvince(path) {
 }
 */
 //展开/折叠操作
-function Expand(obj0,obj) {
+function Expand(obj0, obj) {
     //var obj = document.getElementById("ttt");
     //obj.style.display = "none";
     //if (obj.nextSibling.style.display = "none") {
@@ -104,4 +104,66 @@ function GetSort(field) {
         $("#ContentPlaceHolder1_sortOrder").val(" ASC");
     }
     __doPostBack("Sort", field);
+}
+
+function EditTransactionStatus(spanId, projectId) {
+    $("#" + spanId).hide();
+    $("#ddl_" + projectId).show();
+    LoadTransactionStatus(spanId, "#ddl_" + projectId, projectId, $("#" + spanId).text());
+}
+
+function LoadTransactionStatus(spanId, selectId, projectId, currentStatus) {
+    var str = "";
+    $.ajaxSetup({ cache: false });
+    $.ajax({
+        url: "/MyHandler.ashx",
+        async: false,
+        type: "post",
+        data: { method: "GetAllTransactionStatus" },
+        success: function (result) {
+            for (var index in result) {
+                if (result[index].value === currentStatus) {
+                    str += "<option value=\"" + result[index].key + "\" selected=\"selected\">" + result[index].value + "</option>";
+                }
+                else {
+                    str += "<option value=\"" + result[index].key + "\" >" + result[index].value + "</option>";
+                }
+            }
+            $(selectId).html("").append(str);
+
+            $(selectId).on("change", function () {
+                UpdateTransactionStatusByProjectId(projectId, selectId, $(selectId + ' option:selected').val());
+                $(selectId).hide();
+                $("#" + spanId).text($(selectId + ' option:selected').text()).show();
+                $(selectId).unbind("change");
+            });
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function UpdateTransactionStatusByProjectId(projectId, selectId, newStatus) {
+    $.ajax({
+        url: "/MyHandler.ashx",
+        async: false,
+        type: "post",
+        data: { method: "UpdateTransactionStatusByProjectId", projectId: projectId, newStatus: newStatus },
+        success: function (result) {
+            if (result.success === "true") {
+                $(selectId + " option:selected").removeAttr("selected");
+                $(selectId).find("option[value='" + newStatus + "']").attr("selected", "selected");
+                alert("交易状态更新成功！");
+            }
+            else {
+                console.log(result);
+                alert("更新失败！");
+            }
+        },
+        error: function (data) {
+            console.log(data);
+            alert("更新失败！");
+        }
+    });
 }

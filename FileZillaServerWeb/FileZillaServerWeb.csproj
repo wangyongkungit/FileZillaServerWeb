@@ -709,6 +709,7 @@
     <Content Include="Scripts\ylyj\employeeDemonationDetails.js" />
     <Content Include="Scripts\ylyj\employeeHome.js" />
     <Content Include="Scripts\ylyj\employeehome\about.js" />
+    <Content Include="Scripts\ylyj\employeehome\browsercheck.js" />
     <Content Include="Scripts\ylyj\employeehome\func.js" />
     <Content Include="Scripts\ylyj\employeehome\jquery.js" />
     <Content Include="Scripts\ylyj\employeehome\settings.js" />

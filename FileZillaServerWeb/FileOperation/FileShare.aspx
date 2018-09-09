@@ -16,7 +16,7 @@
                     &nbsp;
                 </div>
                 <div class="centerheader">
-                    <asp:Label runat="server" ID="lblShopName" CssClass="shopname"></asp:Label> 给你加密分享了文件
+                    <asp:Label runat="server" ID="lblShopName" CssClass="shopname" Visible="false"></asp:Label> 给你加密分享了文件
                 </div>
                 <div class="file">
                     <span>请输入提取密码：</span>

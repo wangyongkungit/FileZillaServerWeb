@@ -60,8 +60,17 @@
                     <div class="groupLeft">
                         <label>是否分部领导：</label>
                     </div>
-                    <asp:RadioButtonList ID="rblIsBranchLeader" runat="server" RepeatDirection="Horizontal">
-                        <asp:ListItem Value="0" Text="否" Selected="True"></asp:ListItem>
+                    <asp:RadioButtonList ID="rblIsBranchLeader" runat="server" RepeatDirection="Horizontal" required="required">
+                        <asp:ListItem Value="0" Text="否"></asp:ListItem>
+                        <asp:ListItem Value="1" Text="是"></asp:ListItem>
+                    </asp:RadioButtonList>
+                </div>                
+                <div class="valGroup">
+                    <div class="groupLeft">
+                        <label>是否外部员工：</label>
+                    </div>
+                    <asp:RadioButtonList ID="rblIsExternal" runat="server" RepeatDirection="Horizontal" required="required">
+                        <asp:ListItem Value="0" Text="否"></asp:ListItem>
                         <asp:ListItem Value="1" Text="是"></asp:ListItem>
                     </asp:RadioButtonList>
                 </div>

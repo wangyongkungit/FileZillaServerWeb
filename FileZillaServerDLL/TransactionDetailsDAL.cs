@@ -41,13 +41,14 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into transactiondetails(");
-            strSql.Append("ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED)");
+            strSql.Append("ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONPROPORTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED)");
             strSql.Append(" values (");
-            strSql.Append("@ID,@TRANSACTIONAMOUNT,@TRANSACTIONDESCRIPTION,@TRANSACTIONDATE,@PLANDATE,@TRANSACTIONTYPE,@EMPLOYEEID,@PROJECTID,@CREATEDATE,@ISDELETED)");
+            strSql.Append("@ID,@TRANSACTIONAMOUNT,@TRANSACTIONDESCRIPTION,@TRANSACTIONPROPORTION,@TRANSACTIONDATE,@PLANDATE,@TRANSACTIONTYPE,@EMPLOYEEID,@PROJECTID,@CREATEDATE,@ISDELETED)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ID", MySqlDbType.VarChar,36),
                     new MySqlParameter("@TRANSACTIONAMOUNT", MySqlDbType.Decimal,12),
                     new MySqlParameter("@TRANSACTIONDESCRIPTION", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@TRANSACTIONPROPORTION", MySqlDbType.Decimal,3),
                     new MySqlParameter("@TRANSACTIONDATE", MySqlDbType.DateTime),
                     new MySqlParameter("@PLANDATE", MySqlDbType.DateTime),
                     new MySqlParameter("@TRANSACTIONTYPE", MySqlDbType.Int32,2),
@@ -58,13 +59,14 @@ namespace FileZillaServerDAL
             parameters[0].Value = model.ID;
             parameters[1].Value = model.TRANSACTIONAMOUNT;
             parameters[2].Value = model.TRANSACTIONDESCRIPTION;
-            parameters[3].Value = model.TRANSACTIONDATE;
-            parameters[4].Value = model.PLANDATE;
-            parameters[5].Value = model.TRANSACTIONTYPE;
-            parameters[6].Value = model.EMPLOYEEID;
-            parameters[7].Value = model.PROJECTID;
-            parameters[8].Value = model.CREATEDATE;
-            parameters[9].Value = model.ISDELETED;
+            parameters[3].Value = model.TRANSACTIONPROPORTION;
+            parameters[4].Value = model.TRANSACTIONDATE;
+            parameters[5].Value = model.PLANDATE;
+            parameters[6].Value = model.TRANSACTIONTYPE;
+            parameters[7].Value = model.EMPLOYEEID;
+            parameters[8].Value = model.PROJECTID;
+            parameters[9].Value = model.CREATEDATE;
+            parameters[10].Value = model.ISDELETED;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -85,6 +87,7 @@ namespace FileZillaServerDAL
             strSql.Append("update transactiondetails set ");
             strSql.Append("TRANSACTIONAMOUNT=@TRANSACTIONAMOUNT,");
             strSql.Append("TRANSACTIONDESCRIPTION=@TRANSACTIONDESCRIPTION,");
+            strSql.Append("TRANSACTIONPROPORTION=@TRANSACTIONPROPORTION,");
             strSql.Append("TRANSACTIONDATE=@TRANSACTIONDATE,");
             strSql.Append("PLANDATE=@PLANDATE,");
             strSql.Append("TRANSACTIONTYPE=@TRANSACTIONTYPE,");
@@ -96,6 +99,7 @@ namespace FileZillaServerDAL
             MySqlParameter[] parameters = {
                     new MySqlParameter("@TRANSACTIONAMOUNT", MySqlDbType.Decimal,12),
                     new MySqlParameter("@TRANSACTIONDESCRIPTION", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@TRANSACTIONPROPORTION", MySqlDbType.Decimal,3),
                     new MySqlParameter("@TRANSACTIONDATE", MySqlDbType.DateTime),
                     new MySqlParameter("@PLANDATE", MySqlDbType.DateTime),
                     new MySqlParameter("@TRANSACTIONTYPE", MySqlDbType.Int32,2),
@@ -106,14 +110,15 @@ namespace FileZillaServerDAL
                     new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
             parameters[0].Value = model.TRANSACTIONAMOUNT;
             parameters[1].Value = model.TRANSACTIONDESCRIPTION;
-            parameters[2].Value = model.TRANSACTIONDATE;
-            parameters[3].Value = model.PLANDATE;
-            parameters[4].Value = model.TRANSACTIONTYPE;
-            parameters[5].Value = model.EMPLOYEEID;
-            parameters[6].Value = model.PROJECTID;
-            parameters[7].Value = model.CREATEDATE;
-            parameters[8].Value = model.ISDELETED;
-            parameters[9].Value = model.ID;
+            parameters[2].Value = model.TRANSACTIONPROPORTION;
+            parameters[3].Value = model.TRANSACTIONDATE;
+            parameters[4].Value = model.PLANDATE;
+            parameters[5].Value = model.TRANSACTIONTYPE;
+            parameters[6].Value = model.EMPLOYEEID;
+            parameters[7].Value = model.PROJECTID;
+            parameters[8].Value = model.CREATEDATE;
+            parameters[9].Value = model.ISDELETED;
+            parameters[10].Value = model.ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -176,7 +181,7 @@ namespace FileZillaServerDAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED from transactiondetails ");
+            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONPROPORTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED from transactiondetails ");
             strSql.Append(" where ISDELETED = 0 AND ID=@ID ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ID", MySqlDbType.VarChar,36)           };
@@ -214,6 +219,10 @@ namespace FileZillaServerDAL
                 if (row["TRANSACTIONDESCRIPTION"] != null)
                 {
                     model.TRANSACTIONDESCRIPTION = row["TRANSACTIONDESCRIPTION"].ToString();
+                }
+                if (row["TRANSACTIONPROPORTION"] != null && row["TRANSACTIONPROPORTION"].ToString() != "")
+                {
+                    model.TRANSACTIONPROPORTION = decimal.Parse(row["TRANSACTIONPROPORTION"].ToString());
                 }
                 if (row["TRANSACTIONDATE"] != null && row["TRANSACTIONDATE"].ToString() != "")
                 {
@@ -260,7 +269,7 @@ namespace FileZillaServerDAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED ");
+            strSql.Append("select ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONPROPORTION,TRANSACTIONDATE,PLANDATE,TRANSACTIONTYPE,EMPLOYEEID,PROJECTID,CREATEDATE,ISDELETED ");
             strSql.Append(" FROM transactiondetails WHERE ISDELETED = 0 ");
             if (strWhere.Trim() != "")
             {
@@ -355,7 +364,7 @@ namespace FileZillaServerDAL
             StringBuilder sbSelectCount = new StringBuilder();
             StringBuilder sbSumAmount = new StringBuilder();
             StringBuilder sbExport = new StringBuilder();
-            sbSelectColumn.Append(@"SELECT td.ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONDATE,td.PLANDATE,
+            sbSelectColumn.Append(@"SELECT td.ID,TRANSACTIONAMOUNT,TRANSACTIONDESCRIPTION,TRANSACTIONPROPORTION,TRANSACTIONDATE,td.PLANDATE,
                            cf.configValue TRANSACTIONTYPE,td.EMPLOYEEID,td.PROJECTID,td.CREATEDATE,td.ISDELETED,
                         e.EMPLOYEENO, e.`NAME`, p.TASKNO ");
             sbSelectCount.Append("SELECT COUNT(*) ");

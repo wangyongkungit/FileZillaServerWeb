@@ -213,6 +213,20 @@
     overflow:hidden;
     text-overflow:clip;
 }
+.awwm {
+    width: 110px;
+    height: 23px;
+    display: block;
+    float: left;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: #111;
+}
+.awwm:hover {
+    text-decoration:underline;
+}
 .wwm span {
     /*width:140px;
     display:-moz-inline-box;
@@ -224,6 +238,9 @@
     width:74px;
     display:-moz-inline-box;
     display:inline-block;
+}
+.jyzt-span {
+    cursor:pointer;
 }
 .rwzt {
     width:70px;

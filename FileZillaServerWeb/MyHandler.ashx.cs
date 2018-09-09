@@ -1,4 +1,5 @@
 ﻿using FileZillaServerBLL;
+using FileZillaServerCommonHelper;
 using FileZillaServerModel;
 using FileZillaServerModel.Interface;
 using Jil;
@@ -47,6 +48,14 @@ namespace FileZillaServerWeb
                 case "GetTrends":
                     jsonResult = GetTrends(context);
                     break;
+                // 获取交易状态列表
+                case "GetAllTransactionStatus":
+                    jsonResult = GetAllTransactionStatus();
+                    break;
+                // 更新交易状态
+                case "UpdateTransactionStatusByProjectId":
+                    jsonResult = UpdateTransactionStatusByProjectId(context);
+                    break;
                 default:
                     break;
             }
@@ -70,7 +79,7 @@ namespace FileZillaServerWeb
             string employeeID = context.Request.Params["employeeID"];
             EmployeeAccount empAcct = empAcctBll.GetModelList(" employeeID = '" + employeeID + "'").FirstOrDefault();
             TransactionDetailsBLL transactionDetailsBll = new TransactionDetailsBLL();
-            
+
             //账户余额
             decimal amount = 0m;
             //decimal surplus = 0m;
@@ -200,7 +209,60 @@ namespace FileZillaServerWeb
             }
             sbJsonResult.Append(JsonConvert.SerializeObject(lstResult));
             return sbJsonResult.ToString();
-        } 
+        }
+        #endregion
+
+        #region 获取所有的交易状态值
+        /// <summary>
+        /// 获取所有的交易状态值
+        /// </summary>
+        /// <returns></returns>
+        private string GetAllTransactionStatus()
+        {
+            StringBuilder sbJsonResult = new StringBuilder();
+            ConfigureBLL cBll = new ConfigureBLL();
+            DataTable dtTransactionStatus = cBll.GetConfig(ConfigTypeName.交易状态.ToString());
+            if (dtTransactionStatus != null && dtTransactionStatus.Rows.Count > 0)
+            {
+                sbJsonResult.Append("[");
+                for (int i = 0; i < dtTransactionStatus.Rows.Count; i++)
+                {
+                    sbJsonResult.Append("{\"key\":\"" + dtTransactionStatus.Rows[i]["configKey"].ToString() + "\",\"value\":\"" + dtTransactionStatus.Rows[i]["configValue"].ToString() + "\"}");
+                    if (i != dtTransactionStatus.Rows.Count - 1)
+                    {
+                        sbJsonResult.Append(",");
+                    }
+                }
+                sbJsonResult.Append("]");
+            }
+            return sbJsonResult.ToString();
+        }
+        #endregion
+
+        #region 更新交易状态
+        /// <summary>
+        /// 更新交易状态
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private string UpdateTransactionStatusByProjectId(HttpContext context)
+        {
+            StringBuilder sbJsonResult = new StringBuilder();
+            ProjectBLL prjBll = new ProjectBLL();
+            string projectId = context.Request.Params["projectId"];
+            string newStatus = context.Request.Params["newStatus"];
+            Project project = prjBll.GetModel(projectId);
+            project.TRANSACTIONSTATUS = newStatus;
+            if (prjBll.Update(project))
+            {
+                sbJsonResult.Append("{\"success\":\"true\"}");
+            }
+            else
+            {
+                sbJsonResult.Append("{\"success\":\"false\"}");
+            }
+            return sbJsonResult.ToString();
+        }
         #endregion
     }
 }
