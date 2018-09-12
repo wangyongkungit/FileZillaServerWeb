@@ -6,10 +6,11 @@ $(document).ready(function () { //这个就是传说的ready
     }).mouseout(function () {
         //给这行添加class值为over，并且当鼠标一出该行时执行函数  
         $(this).removeClass("over");
-    }) //移除该行的class  
+    }); //移除该行的class  
     //$(".tbl1 tr:even").addClass("alt");
     //给class为stripe的表格的偶数行添加class值为alt
     //$(".tbl1 tr:odd").addClass("alt2");
+    RenderTransactionStatus(null);
 });
 /*
 //获取当前网址
@@ -135,6 +136,7 @@ function LoadTransactionStatus(spanId, selectId, projectId, currentStatus) {
                 UpdateTransactionStatusByProjectId(projectId, selectId, $(selectId + ' option:selected').val());
                 $(selectId).hide();
                 $("#" + spanId).text($(selectId + ' option:selected').text()).show();
+                RenderTransactionStatus("#" + spanId);
                 $(selectId).unbind("change");
             });
         },
@@ -166,4 +168,35 @@ function UpdateTransactionStatusByProjectId(projectId, selectId, newStatus) {
             alert("更新失败！");
         }
     });
+}
+
+function RenderTransactionStatus(spanId) {
+    if (spanId) {
+        RenderSpan($(spanId));
+    }
+    else {
+        var statusArr = $(".jyzt-span");
+        statusArr.each(function () {
+            RenderSpan($(this));
+        });
+    }
+}
+
+function RenderSpan(jquerySpan) {
+    var statusText = jquerySpan.text();
+    if (statusText) {
+        jquerySpan.removeClass("good").removeClass("bad").removeClass("shipped");
+        if (statusText === "已好评" || statusText === "已追评") {
+            jquerySpan.addClass("good");
+        }
+        else if (statusText === "已差评" || statusText === "已退款" || statusText === "罚款" || statusText === "无提成" || statusText === "无提成并罚款") {
+            jquerySpan.addClass("bad");
+        }
+        else if (statusText === "已发货") {
+            jquerySpan.addClass("shipped");
+        }
+    }
+    else {
+        jquerySpan.removeClass("jyzt-span");
+    }
 }

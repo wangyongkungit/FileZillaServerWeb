@@ -153,8 +153,14 @@
     line-height:23px;
     border-bottom:solid 1px #d0dee5;
 }
+.tbl tr:nth-child(odd) {
+    background-color:#f7f6f6;
+}
+.tbl tr:nth-child(even) {
+    background-color:#fff;
+}
 .tbl tr.over {
-    background: #EBEBE8; /*这个将是鼠标高亮行的背景色*/
+    background: #eef6cd; /*这个将是鼠标高亮行的背景色*/
 }
 .tbl td {
         font-size:13px;
@@ -235,12 +241,32 @@
     text-overflow:clip;
 }
 .jyzt {
-    width:74px;
-    display:-moz-inline-box;
-    display:inline-block;
+    width: 74px;
+    display: -moz-inline-box;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: clip;
 }
 .jyzt-span {
-    cursor:pointer;
+    cursor: default;
+    border: none;
+    border-bottom: 2px solid #777;
+    padding: 0px 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.jyzt-span:hover {
+    border-bottom:2px dashed #777;
+}
+.shipped {
+    border-bottom-color: #14dddd;
+}
+.good {
+    border-bottom-color: #fb3838;
+}
+.bad {
+    border-bottom-color: #3858d3;
 }
 .rwzt {
     width:70px;
