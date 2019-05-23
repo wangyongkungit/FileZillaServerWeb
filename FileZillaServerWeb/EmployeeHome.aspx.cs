@@ -149,6 +149,17 @@ namespace FileZillaServerWeb
                 ViewState["empProportion"] = value;
             }
         }
+        protected DateTime? toRegularDate
+        {
+            get
+            {
+                return (DateTime)ViewState["toRegularDate"];
+            }
+            set
+            {
+                ViewState["toRegularDate"] = value;
+            }
+        }
         //protected List<string> xData = new List<string>();
         //protected List<int> yData = new List<int>();
         #endregion
@@ -182,6 +193,7 @@ namespace FileZillaServerWeb
             EmployeeNo = user.EmployeeNO;
             IsBranchLeader = user.isBranchLeader;
             IsExternal = user.isExternal;
+            toRegularDate = user.toRegularDate;
             //if (string.IsNullOrEmpty(employeeID))
             //{
             //    bool isAdmin = user.Role.Any(item => item.RoleName == "超级管理员");
@@ -199,12 +211,14 @@ namespace FileZillaServerWeb
                 UserName = dtEmployee.AsEnumerable().Where(item => Convert.ToString(item["parentEmployeeID"]) == employeeID).Select(item => Convert.ToString(item["name"])).FirstOrDefault() ?? UserName;
                 EmployeeID = employeeID;
                 EmployeeNo = dtEmployee.AsEnumerable().Where(item => Convert.ToString(item["parentEmployeeID"]) == employeeID).Select(item => Convert.ToString(item["EMPLOYEENO"])).FirstOrDefault() ?? EmployeeNo;
+                toRegularDate = dtEmployee.AsEnumerable().Where(item => Convert.ToString(item["parentEmployeeID"]) == employeeID).Select(item => Convert.ToDateTime(item["toRegularDate"]))?.FirstOrDefault() ?? toRegularDate;
             }
             else if (dtEmployeeChild != null && dtEmployeeChild.Rows.Count > 0)
             {
                 UserName = dtEmployeeChild.AsEnumerable().Where(item => Convert.ToString(item["childEmployeeId"]) == employeeID).Select(item => Convert.ToString(item["name"])).FirstOrDefault() ?? UserName;
                 EmployeeID = employeeID;
                 EmployeeNo = dtEmployeeChild.AsEnumerable().Where(item => Convert.ToString(item["childEmployeeId"]) == employeeID).Select(item => Convert.ToString(item["EMPLOYEENO"])).FirstOrDefault() ?? EmployeeNo;
+                toRegularDate = dtEmployeeChild.AsEnumerable().Where(item => Convert.ToString(item["childEmployeeId"]) == employeeID).Select(item => Convert.ToDateTime(item["toRegularDate"]))?.FirstOrDefault() ?? toRegularDate;
             }
             var drEmployeeChilds = dtEmployeeChild.AsEnumerable().Where(item => 1 == 1).ToList();
             TreeNode tn = new TreeNode();
@@ -371,6 +385,15 @@ namespace FileZillaServerWeb
                 decimal orderAmount = Convert.ToDecimal(hidOrderAmount.Value);
                 //Project prj = new ProjectBLL().GetModel(prjId);
                 lblExpectAmount.Text = (orderAmount * Convert.ToDecimal(proportion)).ToString();
+                //2019-03-26，未转正期间的任务隐藏预计提成
+                Project project = new ProjectBLL().GetModel(prjId);
+                if (project.CREATEDATE != null && toRegularDate != null)
+                {
+                    if (project.CREATEDATE <= toRegularDate || toRegularDate == Convert.ToDateTime("2000/1/1 00:00:00"))
+                    {
+                        lblExpectAmount.Text = "--";
+                    }
+                }
                 #endregion
 
                 #region 实际提成

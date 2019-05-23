@@ -58,6 +58,51 @@ namespace FileZillaServerWeb {
         protected global::System.Web.UI.WebControls.RadioButton rdbEmployee;
         
         /// <summary>
+        /// rdbOtherUserType 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton rdbOtherUserType;
+        
+        /// <summary>
+        /// divOtherUserType 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOtherUserType;
+        
+        /// <summary>
+        /// txtUserType 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUserType;
+        
+        /// <summary>
+        /// divNoPrefix 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNoPrefix;
+        
+        /// <summary>
+        /// txtUserPrefix 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtUserPrefix;
+        
+        /// <summary>
         /// txtEmployeeNo 控件。
         /// </summary>
         /// <remarks>
@@ -121,6 +166,15 @@ namespace FileZillaServerWeb {
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
         
         /// <summary>
+        /// txtToRegularDate 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtToRegularDate;
+        
+        /// <summary>
         /// rblIsBranchLeader 控件。
         /// </summary>
         /// <remarks>
@@ -137,6 +191,15 @@ namespace FileZillaServerWeb {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rblIsExternal;
+        
+        /// <summary>
+        /// rblAddRole 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList rblAddRole;
         
         /// <summary>
         /// btnOK 控件。

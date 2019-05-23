@@ -64,7 +64,7 @@ namespace FileZillaServerWeb.Finance
             string amountTo = txtAmountTo.Text.Trim();
             string dateFrom = txtDateFrom.Text.Trim();
             string dateTo = txtDateTo.Text.Trim();
-            string transactionMonth = txtPlanDate.Text.Trim();
+            string planDate = txtPlanDate.Text.Trim();
             string taskNo = txtTaskNo.Text.Trim();
             string type = Request.QueryString["type"];
             string inCondition = string.Empty;
@@ -104,9 +104,9 @@ namespace FileZillaServerWeb.Finance
             {
                 dicCondition.Add("dateTo", dateTo);
             }
-            if (!string.IsNullOrEmpty(transactionMonth))
+            if (!string.IsNullOrEmpty(planDate))
             {
-                dicCondition.Add("transactionMonth", transactionMonth);
+                dicCondition.Add("planDate", planDate);
             }
             if (!string.IsNullOrEmpty(taskNo))
             {

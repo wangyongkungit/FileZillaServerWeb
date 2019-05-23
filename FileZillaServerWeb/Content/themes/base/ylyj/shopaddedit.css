@@ -1,0 +1,76 @@
+﻿body {
+    font-family: 'Microsoft YaHei';
+}
+
+.container {
+    width: 1100px;
+    margin: 0 auto;
+    height: 700px;
+}
+
+h1 {
+    color: #CD1637;
+    text-align: center;
+    font-family: 'Microsoft YaHei' 'sans-serif';
+    letter-spacing: 4px;
+}
+
+.header {
+    width: 100%;
+}
+
+.empadd {
+    width: 500px;
+    height: 580px;
+    margin: 0 auto;
+}
+
+.valGroup {
+    width: 460px;
+    height: 55px;
+    line-height: 55px;
+    margin: 0 auto;
+}
+
+    .valGroup input[type="text"], input[type="email"] {
+        width: 290px;
+        border: 1px solid #eee;
+        padding: 8px 10px;
+        font-family: "Microsoft YaHei";
+    }
+
+    .valGroup input[type="submit"], input[type="button"] {
+        width: 150px;
+        height: 35px;
+        margin-left: 20px;
+        background-color: #3DD18F;
+        border: 1px solid #29AF73;
+        border-radius: 3px;
+        cursor: pointer;
+        color: white;
+        font: 400 14px "Microsoft YaHei";
+        word-spacing: 1em;
+    }
+
+        .valGroup input[type="submit"]:hover, input[type="button"]:hover {
+            background-color: #29AF73;
+        }
+
+.groupLeft {
+    width: 120px;
+    height: 55px;
+    line-height: 55px;
+    text-align: right;
+    float: left;
+    padding-right: 8px;
+}
+
+.groupRight {
+    width: 440px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.txtUpper {
+    text-transform: uppercase;
+}

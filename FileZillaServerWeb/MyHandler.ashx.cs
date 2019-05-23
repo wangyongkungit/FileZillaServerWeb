@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Yiliangyijia.Comm;
+using Yiliangyijia.Comm.Taobao;
 
 namespace FileZillaServerWeb
 {
@@ -55,6 +56,10 @@ namespace FileZillaServerWeb
                 // 更新交易状态
                 case "UpdateTransactionStatusByProjectId":
                     jsonResult = UpdateTransactionStatusByProjectId(context);
+                    break;
+                // 获取淘宝订单信息
+                case "GetTaobaoOrderInfo":
+                    jsonResult = GetTaobaoOrderInfo(context);
                     break;
                 default:
                     break;
@@ -197,7 +202,7 @@ namespace FileZillaServerWeb
         {
             StringBuilder sbJsonResult = new StringBuilder();
             string employeeID = context.Request.Params["employeeID"];
-            List<TaskTrend> lstTrend = new TaskTrendBLL().GetTop10ModelList(" employeeID = '" + employeeID + "'");
+            List<TaskTrend> lstTrend = new TaskTrendBLL().GetTop10ModelList(" employeeID = '" + employeeID + "' AND type = 1");
             List<TaskTrendInterface> lstResult = new List<TaskTrendInterface>();
             foreach (var item in lstTrend)
             {
@@ -264,5 +269,52 @@ namespace FileZillaServerWeb
             return sbJsonResult.ToString();
         }
         #endregion
+
+        private string GetTaobaoOrderInfo(HttpContext context)
+        {
+            StringBuilder sbJsonResult = new StringBuilder();
+            DataTable dtShop = new ConfigureBLL().GetShopKeys();
+            string AccessKey = string.Empty;//AK
+            string SecretKey = string.Empty;//SK
+            string tid = context.Request.Params["tid"].Trim();
+            if (dtShop != null && dtShop.Rows.Count > 0)
+            {
+                for (int i = 0; i < dtShop.Rows.Count; i++)
+                {
+                    AccessKey = dtShop.Rows[i]["accessKey"]?.ToString();
+                    SecretKey = dtShop.Rows[i]["SecretKey"]?.ToString();
+                    if (!string.IsNullOrWhiteSpace(AccessKey) && !string.IsNullOrWhiteSpace(SecretKey))
+                    {
+                        SignatureEncryption SE = new SignatureEncryption();
+                        Get G = new Get();
+                        string requestId = Guid.NewGuid().ToString();//请求的UUID，每个请求都要求使用不同的UUID，服务端会拦截UUID重复的请求
+                        string timeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss+0000");//当前的时间戳，UTC时间，带时区，例如（20160619160421+0000)
+
+                        Dictionary<string, string> Parameter = new Dictionary<string, string>();
+                        Parameter.Add("fields", "tid,pay_time,total_fee, payment,received_payment, buyer_nick,shop_pick");//  type,status,payment,orders,promotion_details,,
+                        Parameter.Add("tid", tid);  // close 416046851854648869             有效的：293410926387038206    ，  274050855711040792
+
+                        string PostUrl = SE.ProduceUrl("trade", "TradeFullinfoGetRequest", Parameter);//生成Url链接  Step1: 构造 HTTP请求：设置访问地址 URL
+                        string HeadField = SE.HeadField(timeStamp, requestId, PostUrl);//生成头域字符串        Step2: 添加必须的头域
+                        string WaitForSignString = SE.GetStringA();//生成待签名字符串   Step3: 将上述请求转换为"待签名字符串 A"
+                        string Sign = SE.GetSignString(AccessKey, requestId, WaitForSignString);//签名
+
+                        string Authorization = SE.Ty(AccessKey, Sign);//添加鉴权头域 Authorization  这个是没用的 错误的 鉴权头域
+                        string Authorization2 = SE.GetAuthorizationHeader("GET", PostUrl, timeStamp, requestId, AccessKey, SecretKey);//添加鉴权头域 Authorization2    正确的鉴权头域  
+                        string GetPutDBInfo = G.GetResponseData(PostUrl, timeStamp, requestId, Authorization2);
+                        if (GetPutDBInfo.Contains("trade_fullinfo_get_response"))
+                        {
+                            sbJsonResult.Append(GetPutDBInfo.Replace("}}", ",\"shopid\":\"" + dtShop.Rows[i]["shopId"].ToString() + "\"}}"));
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(sbJsonResult.ToString()))
+            {
+                return sbJsonResult.ToString();
+            }
+            return sbJsonResult.Append("{\"success\":\"false\"}").ToString();
+        }
     }
 }

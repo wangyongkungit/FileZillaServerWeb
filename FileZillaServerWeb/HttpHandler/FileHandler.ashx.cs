@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Yiliangyijia.Comm;
+using Yiliangyijia.Comm.Taobao;
 
 namespace FileZillaServerWeb.HttpHandler
 {

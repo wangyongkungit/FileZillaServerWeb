@@ -55,6 +55,22 @@ namespace FileZillaServerWeb
             }
         }
 
+        protected string WangwangName
+        {
+            get
+            {
+                if (ViewState["WangwangName"] == null)
+                {
+                    return "";
+                }
+                return (string)ViewState["WangwangName"];
+            }
+            set
+            {
+                ViewState["WangwangName"] = value;
+            }
+        }
+
         private ProjectBLL pBll = new ProjectBLL();
         private AttachmentBLL aBll = new AttachmentBLL();
         private ProjectModifyBLL pmBll = new ProjectModifyBLL();
@@ -93,6 +109,7 @@ namespace FileZillaServerWeb
                     Session["projectID"] = null;
                     hidProjectID.Value = projectID;
                     hidProjectID2.Value = projectID;
+                    divGetTaobaoInfo1.Visible = divGetTaobaoInfo2.Visible = divGetTaobaoInfo3.Visible = false;
                     FormDataFill();
                 }
                 else
@@ -316,10 +333,13 @@ namespace FileZillaServerWeb
                     //客服权限，仅能维护交易状态
                     else
                     {
+                        beforeUpdateAmount = project.ORDERAMOUNT ?? 0;
                         project.ORDERAMOUNT = orderAmount;
                         project.TRANSACTIONSTATUS = ddlTransactionStatus.SelectedValue;
                         project.MATERIALISUPLOAD = materialIsUpload;
                         project.REFUND = Convert.ToInt16(refund);
+                        beforeUpdateTaskStatus = project.TASKSTATUS;
+                        project.TASKSTATUS = taskStatus;
                     }
                     bool modifyFlag = pBll.Update(project);
                     if (modifyFlag)
@@ -400,6 +420,7 @@ namespace FileZillaServerWeb
                         #endregion
 
                         #region 更新任务状态
+                        //LogHelper.WriteLine("before: " + beforeUpdateTaskStatus + ",  aftered:  " + taskStatus);
                         if (beforeUpdateTaskStatus != taskStatus)
                         {
                             string atferStatus = taskStatus == "1" ? "正常" : "暂停";
@@ -707,6 +728,7 @@ namespace FileZillaServerWeb
                     //ddlSpecialtyCategory.SelectedValue = project.SPECIALTYCATEGORY;
                     //ddlSpecialtyCategoryMinor.SelectedValue = project.SPECIALTYCATEGORYMINOR;
                     txtWangwangName.Text = project.WANGWANGNAME;
+                    WangwangName = project.WANGWANGNAME;
                     txtEmail.Text = project.EMAIL;
                     txtFloors.Text = project.FLOORS.ToString();
                     txtConstructionArea.Text = project.CONSTRUCTIONAREA.ToString();

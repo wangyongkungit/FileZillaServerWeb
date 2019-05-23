@@ -16,7 +16,7 @@ function init() {
 
 
 function refreshProject(p1) {
-    funcList["getHistoryData"]["func"].call(this, p1);
+    //funcList["getHistoryData"]["func"].call(this, p1);
     funcList["getFileTabs"]["func"].call(this, p1);
     funcList["getFiles"]["func"].call(this, p1);
     this.newtab.categoryselected = this.newtab.replytoselected = -1;
@@ -40,12 +40,18 @@ function getFileTabsByProjectid(p1) {
             url: handlerurl,
             dataType: 'jsonp',
             crossDomain: true,
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
             success: function (data) {
                 if (data.Code === 0) {
                     _this.projectfile.filetabs = data.Result;
                 } else {
                     alert("failed");
                 }
+            },
+            complete: function () {
+                $("#loading").css("display", "none");
             }
         });
     }
@@ -114,12 +120,18 @@ function getHistoryData(p1) {
         url: handlerurl,
         dataType: 'jsonp',
         crossDomain: true,
+        beforeSend: function () {
+            $("#loading").css("display", "block");
+        },
         success: function (data) {
             if (data.Code === 0) {
                 _this.projecthistory.data = data.Result;
             } else {
                 alert("failed");
             }
+        },
+        complete: function () {
+            $("#loading").css("display", "none");
         }
     });
 }
@@ -264,7 +276,7 @@ function deleteFile(p1) {
                     projectid: _this.projectid
                 };
                 funcList["getFiles"]["func"].call(_this, p1);
-                funcList["getHistoryData"]["func"].call(_this, p1);
+                //funcList["getHistoryData"]["func"].call(_this, p1);
                 alert("删除成功！");
             } else {
                 alert("failed");

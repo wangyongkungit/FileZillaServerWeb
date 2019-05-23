@@ -299,6 +299,40 @@ $(document).ready(function () {
     var lastfourchar = getfilecode.substr(getfilecode.length - 4);
     getfilecode = lastfourchar.split("").reverse().join("");
     vm.taskno = getfilecode;
+
+    $("#btnGetTaobaoInfo").bind("click", function () {
+        var tid = $.trim($("#txtTid").val());
+        if (!tid) {
+            alert("请输入订单号！");
+            return;
+        }
+        $.ajax({
+            url: "/MyHandler.ashx",
+            type: "post",
+            data: { method: "GetTaobaoOrderInfo", "tid": tid },
+            success: function (data) {
+                if (data && data.trade_fullinfo_get_response) {
+                    var res = data.trade_fullinfo_get_response.trade;
+                    $("#ContentPlaceHolder1_txtOrderDate").val(res.pay_time);
+                    $("#ContentPlaceHolder1_txtOrderAmount").val(res.payment);
+                    $("#ContentPlaceHolder1_txtWangwangName").val(res.buyer_nick);
+                    $("#ContentPlaceHolder1_ddlShop").val(data.trade_fullinfo_get_response.shopid);
+                    console.log(data.trade_fullinfo_get_response);
+                    //alert("成功获取并填充部分字段");
+                }
+                else if (data && data.success && data.success == false) {
+                    alert("获取失败，请联系管理员或自行填充字段");
+                    console.log("error");
+                }
+            },
+            beforeSend: function () {
+                $("#btnGetTaobaoInfo").val("正在获取...").attr("disabled", "disabled");
+            },
+            complete: function () {
+                $("#btnGetTaobaoInfo").val("获取信息").removeAttr("disabled");
+            }
+        })
+    })
 })
 
 //切换上传进度DIV的显示与隐藏

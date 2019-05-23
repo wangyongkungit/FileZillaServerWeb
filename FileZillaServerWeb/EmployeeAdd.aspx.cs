@@ -4,6 +4,8 @@ using FileZillaServerModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,9 +19,11 @@ namespace FileZillaServerWeb
         {
             if (!IsPostBack)
             {
+                ValidatePermission(Request.Url.LocalPath);
                 if (string.IsNullOrEmpty(Request.QueryString["UserId"]))
                 {
                     Page.Title = "员工添加";
+                    txtToRegularDate.Text = "2000-01-01";
                     EmployeeNoCreate();
                 }
                 else
@@ -37,6 +41,7 @@ namespace FileZillaServerWeb
         private void DataLoad()
         {
             string userId = Request.QueryString["UserId"];
+            divNoPrefix.Visible = false;
             btnOK.Text = "编辑";
             try
             {
@@ -54,14 +59,21 @@ namespace FileZillaServerWeb
                         rdbCustomerService.Checked = true;
                     }
                     //2是造价员
-                    else if (emp.TYPE == 2)
+                    else if (emp.TYPE == 2 && emp.EMPLOYEENO.ToUpper().StartsWith("C"))
                     {
                         rdbEmployee.Checked = true;
+                    }
+                    // 其他用户类型
+                    else
+                    {
+                        rdbOtherUserType.Checked = true;
                     }
                     txtEmployeeNo.Text = emp.EMPLOYEENO;
                     txtEmployeeNo.ReadOnly = true;
                     txtName.Text = emp.NAME;
                     txtMobilePhone.Text = emp.MOBILEPHONE;
+                    txtToRegularDate.Text = emp.TOREGULARDATE?.ToString("yyyy-MM-dd");
+                    txtUserType.Text = Convert.ToString(emp.TYPE);
                     if (emp.SEX)
                     {
                         rdbMale.Checked = true;
@@ -126,40 +138,62 @@ namespace FileZillaServerWeb
             {
                 userType = "0";
                 prefix = "A";
+                txtUserPrefix.Text = prefix;
             }
             //客服
             else if (rdbCustomerService.Checked)
             {
                 userType = "1";
                 prefix = "B";
+                txtUserPrefix.Text = prefix;
             }
             //造价员
             else if (rdbEmployee.Checked)
             {
                 userType = "2";
                 prefix = "C";
+                txtUserPrefix.Text = prefix;
+            }
+            // 其他用户类型
+            else if (rdbOtherUserType.Checked && !string.IsNullOrEmpty(txtUserPrefix.Text.Trim()))
+            {
+                prefix = txtUserPrefix.Text.Trim().ToUpper();
+                userType = txtUserType.Text;
+            }
+
+            //if (string.IsNullOrEmpty(userType))
+            //{
+            //    return;
+            //}
+            string maxNo = string.Empty;
+            if ((userType == "1" || userType == "2" || userType == "3") && !string.IsNullOrEmpty(prefix))
+            //{
+            //    maxNo = eBll.GetMaxEmployeeNO(userType);
+            //}
+            //else if (!string.IsNullOrEmpty(prefix))
+            {
+                maxNo = eBll.GetMaxEmployeeNoByOtherType(prefix);
             }
             else
             {
                 return;
             }
-            string maxNo = eBll.GetMaxEmployeeNO(userType);
             try
             {
                 //进行编号
                 //if (userType == "0")
                 //{
-                    if (Convert.ToInt16(maxNo) == 999)
-                    {
-                        LogHelper.WriteLine("编号已溢出。");
-                        txtEmployeeNo.Text = "3位数员工编号已溢出。";
-                        btnOK.Enabled = false;
-                        btnOK.Style["cursor"] = "not-allowed";
-                        return;
-                    }
-                    //获取相应编号的下一个编号
-                    maxNo = (Convert.ToInt16(maxNo) + 1).ToString().PadLeft(3, '0');
-                    txtEmployeeNo.Text = prefix+ maxNo;
+                if (Convert.ToInt16(maxNo) == 999)
+                {
+                    LogHelper.WriteLine("编号已溢出。");
+                    txtEmployeeNo.Text = "3位数员工编号已溢出。";
+                    btnOK.Enabled = false;
+                    btnOK.Style["cursor"] = "not-allowed";
+                    return;
+                }
+                //获取相应编号的下一个编号
+                maxNo = (Convert.ToInt16(maxNo) + 1).ToString().PadLeft(3, '0');
+                txtEmployeeNo.Text = prefix + maxNo;
                 //}
                 ////客服是用英文字母编号的
                 //else
@@ -198,6 +232,17 @@ namespace FileZillaServerWeb
         /// <param name="e"></param>
         protected void rdbUserType_CheckedChanged(object sender, EventArgs e)
         {
+            if (((RadioButton)sender).Text == "其他")
+            {
+                txtUserType.Text = txtUserPrefix.Text = txtEmployeeNo.Text = string.Empty;
+                txtUserType.Visible = divOtherUserType.Visible = true;
+            }
+            else
+            {
+
+                txtUserType.Text = string.Empty;
+                txtUserType.Visible = divOtherUserType.Visible = false;
+            }
             EmployeeNoCreate();
         }
 
@@ -258,6 +303,8 @@ namespace FileZillaServerWeb
                 }
                 //手机号码
                 emp.MOBILEPHONE = txtMobilePhone.Text.Trim();
+                //转正日期
+                emp.TOREGULARDATE = Convert.ToDateTime(txtToRegularDate.Text.Trim());
                 //员工类型，0：总经办，1：客服，2：造价员
                 decimal userType = 0;
                 //总经办
@@ -275,6 +322,14 @@ namespace FileZillaServerWeb
                 {
                     userType = 2;
                 }
+                // 其他用户类型
+                else if (rdbOtherUserType.Checked)
+                {
+                    if (!string.IsNullOrEmpty(txtUserType.Text.Trim()))
+                    {
+                        userType = Convert.ToDecimal(txtUserType.Text.Trim());
+                    }
+                }
                 emp.TYPE = userType;
                 emp.ISBRANCHLEADER = rblIsBranchLeader.SelectedValue == "1";
                 emp.ISEXTERNAL = rblIsExternal.SelectedValue == "1";
@@ -284,6 +339,36 @@ namespace FileZillaServerWeb
                 //本系统添加成功
                 if (flag)
                 {
+                    if (rblAddRole.SelectedValue == "1")
+                    {
+                        // 添加角色
+                        EmployeeRole empRole = new EmployeeRole();
+                        empRole.ID = Guid.NewGuid().ToString();
+                        empRole.EMPLOYEEID = emp.ID;
+                        // 1 客服
+                        if (emp.TYPE == 1)
+                        {
+                            empRole.ROLEID = "fea3a06f-6d97-45d3-93f7-b145c158eb27";
+                        }
+                        // 2 工程师
+                        else if (emp.TYPE == 2)
+                        {
+                            empRole.ROLEID = "2B43010866666af2b73d78c35288d565";
+                        }
+                        if (!string.IsNullOrEmpty(empRole.ROLEID))
+                        {
+                            new EmployeeRoleBLL().Add(empRole);
+                        }
+                    }
+
+                    // 创建员工编号同名目录
+                    string rootPath = Convert.ToString(ConfigurationManager.AppSettings["employeePath"]);
+                    string employeeFolder = Path.Combine(rootPath, emp.EMPLOYEENO);
+                    if (!Directory.Exists(employeeFolder))
+                    {
+                        Directory.CreateDirectory(employeeFolder);
+                    }
+
                     // 2018-05-19 添加
                     // 添加员工的任务分成配置
                     EmployeeProportionBLL epBll = new EmployeeProportionBLL();
@@ -309,6 +394,7 @@ namespace FileZillaServerWeb
                     empAcct.LASTUPDATEDATE = DateTime.Now;
                     EmployeeAccountBLL empAcctBll = new EmployeeAccountBLL();
                     empAcctBll.Add(empAcct);
+
                     // 员工账户结束
                     #region 调用钉钉接口，添加员工到钉钉
                     //如果选择了钉钉同步创建
@@ -326,24 +412,25 @@ namespace FileZillaServerWeb
                             string position = string.Empty;
                             //钉钉系统中对应的部门ID
                             string departmentid = string.Empty;
-                            //总经办
-                            if (rdbGMO.Checked)
-                            {
-                                position = rdbGMO.Text;
-                                departmentid = "37037510";
-                            }
-                            //客服
-                            else if (rdbCustomerService.Checked)
-                            {
-                                position = rdbCustomerService.Text;
-                                departmentid = "36958636";
-                            }
-                            //造价员
-                            else if (rdbEmployee.Checked)
-                            {
-                                position = rdbEmployee.Text;
-                                departmentid = "36961466";
-                            }
+                            ////总经办
+                            //if (rdbGMO.Checked)
+                            //{
+                            //    position = rdbGMO.Text;
+                            //    departmentid = "37037510";
+                            //}
+                            ////客服
+                            //else if (rdbCustomerService.Checked)
+                            //{
+                            //    position = rdbCustomerService.Text;
+                            //    departmentid = "36958636";
+                            //}
+                            ////造价员
+                            //else if (rdbEmployee.Checked)
+                            //{
+                            //    position = rdbEmployee.Text;
+                            //    departmentid = "36961466";
+                            //}
+                            departmentid = "110817907";
 
                             //\"orderInDepts\":\"{1:10}\",  \"remark\":\"\",    \"tel\":\"010-12333\",  \"workPlace\":\"\",  \"isHide\":false,  \"isSenior\":false
                             string param = "{\"name\":\"" + emp.NAME + "\",    \"department\":[" + departmentid + "],  \"position\":\"" + position + "\",  \"mobile\":\"" + emp.MOBILEPHONE +
@@ -408,7 +495,7 @@ namespace FileZillaServerWeb
             catch (Exception ex)
             {
                 string exMsg = ex.Message;
-                LogHelper.WriteLine(string.Format("员工添加出错。" + exMsg));  //写入文本日志
+                LogHelper.WriteLine(string.Format("员工添加出错。" + exMsg + ex.StackTrace));  //写入文本日志
                 string script = string.Format("AlertDialog('服务器错误，请联系管理员！<p>{0}</p>'), null", exMsg);
                 ExecuteScript(script);
             }
@@ -432,6 +519,14 @@ namespace FileZillaServerWeb
                 emp.EMAIL = email;
                 emp.ISBRANCHLEADER = rblIsBranchLeader.SelectedValue == "1";
                 emp.ISEXTERNAL = rblIsExternal.SelectedValue == "1";
+                emp.TOREGULARDATE = Convert.ToDateTime(txtToRegularDate.Text.Trim());
+                decimal userType = 99;
+                // 其他用户类型
+                if (!string.IsNullOrEmpty(txtUserType.Text.Trim()))
+                {
+                    userType = Convert.ToDecimal(txtUserType.Text.Trim());
+                }
+                emp.TYPE = userType;
                 bool editFlag = eBll.Update(emp);
                 if (editFlag)
                 {
@@ -446,9 +541,10 @@ namespace FileZillaServerWeb
 
         #endregion
 
+        #region Remarks
         protected void btnInvokeWebService_Click(object sender, EventArgs e)
         {
-            Employee emp=new Employee();
+            Employee emp = new Employee();
             emp.NAME = "李泓霖";
             emp.EMPLOYEENO = "009";
             emp.MOBILEPHONE = "18862323333";
@@ -470,7 +566,7 @@ namespace FileZillaServerWeb
                 //}
                 //else
                 //{
- 
+
                 //}
 
                 string position = string.Empty;
@@ -531,9 +627,10 @@ namespace FileZillaServerWeb
             }
             else
             {
- 
+
             }
         }
+        #endregion
 
         /// <summary>
         /// 关联钉钉UserId按钮单击事件
@@ -596,6 +693,11 @@ namespace FileZillaServerWeb
                 ExecuteScript("AlertDialog('操作失败！', null)");
                 return;
             }
+        }
+
+        protected void txtUserPrefix_TextChanged(object sender, EventArgs e)
+        {
+            EmployeeNoCreate();
         }
     }
 }

@@ -45,6 +45,18 @@
             <h1>任务<asp:Label ID="lblOperateType" runat="server" Text="生成"></asp:Label></h1>
             <hr />
             <div id="header" class="header">
+                <div class="formSearch" id="divGetTaobaoInfo1" runat="server">
+
+                </div>
+                <div class="formSearch" style="width:512px;" id="divGetTaobaoInfo2" runat="server">
+                    <div>
+                        <label>淘宝订单号：</label>
+                        <input id="txtTid" type="text" style="width:300px;" />
+                    </div>
+                </div>
+                <div class="formSearch" id="divGetTaobaoInfo3" runat="server">
+                    <input type="button" id="btnGetTaobaoInfo" value="获取信息" style="cursor:pointer;" />
+                </div>
                 <div class="formSearch">
                     <div class="formSearchLeft">
                         <label>完成期限：</label>
@@ -73,7 +85,7 @@
                     <div class="formSearchLeft">
                         <label>金额：</label>
                     </div>
-                    <asp:TextBox ID="txtOrderAmount" runat="server" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" MaxLength="4" required="required"
+                    <asp:TextBox ID="txtOrderAmount" runat="server" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" MaxLength="8" required="required"
                         ToolTip="修改金额会同步生成交易记录，请勿随意操作！" />
                     <span class="asterisk">*</span>
                 </div>
@@ -83,6 +95,9 @@
                     </div>
                     <asp:TextBox ID="txtWangwangName" runat="server" required="required" MaxLength="60" Width="132" />
                     <span class="asterisk">*</span>
+                    <a href="http://www.taobao.com/webww/ww.php?ver=3&amp;touid=<%= WangwangName %>&amp;siteid=cntaobao&amp;status=2&amp;charset=utf-8" target="_blank" class="awwm">
+                                    <img border="0" src="http://amos.alicdn.com/online.aw?v=2&amp;uid=<%= WangwangName %>&amp;site=cntaobao&amp;s=2&amp;charset=utf-8">                                    
+                                </a>
                 </div>
                 <div class="formSearch">
                     <div class="formSearchLeft" style="width:80px;">

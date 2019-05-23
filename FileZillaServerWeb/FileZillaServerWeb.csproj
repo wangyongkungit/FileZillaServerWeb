@@ -257,6 +257,7 @@
     <Content Include="Content\themes\base\WaterWave\default.css" />
     <Content Include="Content\themes\base\WaterWave\normalize.css" />
     <Content Include="Content\themes\base\ylyj\attendancelist.css" />
+    <Content Include="Content\themes\base\ylyj\customerServiceTrends.css" />
     <Content Include="Content\themes\base\ylyj\employeeadd.css" />
     <Content Include="Content\themes\base\ylyj\employeeDefaultProportionConfig.css" />
     <Content Include="Content\themes\base\ylyj\employeeDemonation.css" />
@@ -271,6 +272,8 @@
     <Content Include="Content\themes\base\ylyj\salaryconfigmanage.css" />
     <Content Include="Content\themes\base\ylyj\salarydetails.css" />
     <Content Include="Content\themes\base\ylyj\serialnumber.css" />
+    <Content Include="Content\themes\base\ylyj\shopaddedit.css" />
+    <Content Include="Content\themes\base\ylyj\shoplist.css" />
     <Content Include="Content\themes\base\ylyj\site.css" />
     <Content Include="Content\themes\base\ylyj\specialtyqualityconfig.css" />
     <Content Include="Content\themes\base\ylyj\taskassignconfiguration.css" />
@@ -281,6 +284,7 @@
     <Content Include="Content\themes\base\ylyj\transactionRecords.css" />
     <Content Include="Content\themes\base\ylyj\withdraw.css" />
     <Content Include="Content\themes\base\ylyj\withdrawapprove.css" />
+    <Content Include="CustomerServiceTrends.aspx" />
     <Content Include="DingtalkTest.aspx" />
     <Content Include="EmployeeAdd.aspx" />
     <Content Include="EmployeeDemonation.aspx" />
@@ -724,6 +728,8 @@
     <Content Include="Scripts\zeroclipboard\ZeroClipboard.js" />
     <Content Include="Scripts\zeroclipboard\ZeroClipboard.swf" />
     <Content Include="SerialNumberGenerating.aspx" />
+    <Content Include="ShopAddEdit.aspx" />
+    <Content Include="ShopList.aspx" />
     <Content Include="SpecialtyQualityConfig.aspx" />
     <Content Include="TaskAssignConfiguration.aspx" />
     <Content Include="EmployeeDefaultProportionConfig.aspx" />
@@ -936,6 +942,13 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CustomerServiceTrends.aspx.cs">
+      <DependentUpon>CustomerServiceTrends.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CustomerServiceTrends.aspx.designer.cs">
+      <DependentUpon>CustomerServiceTrends.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1109,6 +1122,20 @@
     </Compile>
     <Compile Include="SerialNumberGenerating.aspx.designer.cs">
       <DependentUpon>SerialNumberGenerating.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShopAddEdit.aspx.cs">
+      <DependentUpon>ShopAddEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShopAddEdit.aspx.designer.cs">
+      <DependentUpon>ShopAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShopList.aspx.cs">
+      <DependentUpon>ShopList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShopList.aspx.designer.cs">
+      <DependentUpon>ShopList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

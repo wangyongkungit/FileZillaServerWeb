@@ -94,6 +94,12 @@ var vm = new Vue({
         },
         //change Tab
         changeTab: function (showhistory, showfile, showaddtab) {
+            let p1 = {
+                projectid: this.projectid
+            };
+            if (showhistory && p1.projectid && !this.showhistory) {
+                funcList["getHistoryData"]["func"].call(this, p1);
+            }
             this.showhistory = showhistory;
             this.showfile = showfile;
             this.showaddtab = showaddtab;
@@ -164,6 +170,7 @@ vm.$watch("projectid", function (newVal, oldVal) {
         projectid: newVal
     };
     funcList["refreshProject"]["func"].call(this, p1);
+    this.changeTab(false, true, false);
 });
 
 

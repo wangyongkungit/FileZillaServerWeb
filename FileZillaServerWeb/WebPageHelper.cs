@@ -26,11 +26,12 @@ namespace FileZillaServerWeb
             {
                 //HttpContext.Current.Response.Redirect("~/Tip.html", true);
                 //HttpContext.Current.Response.End();
+                HttpContext.Current.Response.Redirect("/Login.aspx?returnurl=" + Request.RawUrl.ToString() + "");
             }
             bool flag = false;
             for (int i = 0; i < user.Menu.Count; i++)
             {
-                if (user.Menu[i].Path.Contains(rawUrl))
+                if (user.Menu[i].Path.ToUpper().Contains(rawUrl.ToUpper()))
                 {
                     flag = true;
                     break;
