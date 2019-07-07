@@ -243,7 +243,7 @@ namespace FileZillaServerDAL
         public DataSet GetListDistinctParentEmpID(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT DISTINCT parentEmployeeID, e.EMPLOYEENO, e.`NAME` from employeeDomination ed, employee e");
+            strSql.Append("SELECT DISTINCT parentEmployeeID, e.EMPLOYEENO, e.`NAME`, e.toRegularDate from employeeDomination ed, employee e");
             strSql.Append(" WHERE ed.PARENTEMPLOYEEID = e.ID AND e.AVAILABLE = 1");
             if (strWhere.Trim() != "")
             {
@@ -259,7 +259,7 @@ namespace FileZillaServerDAL
         public DataSet GetListChildEmployee(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT parentEmployeeId, childEmployeeId, e.EMPLOYEENO, e.`NAME` FROM employeedomination ed, employee e ");
+            strSql.Append("SELECT parentEmployeeId, childEmployeeId, e.EMPLOYEENO, e.`NAME`, e.toRegularDate FROM employeedomination ed, employee e ");
             strSql.Append(" WHERE ed.CHILDEMPLOYEEID = e.ID AND e.AVAILABLE = 1");
             if (strWhere.Trim() != "")
             {

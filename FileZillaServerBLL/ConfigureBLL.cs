@@ -78,5 +78,25 @@ namespace FileZillaServerBLL
         {
             return cDal.UpdateDefaultProportion(newProportion);
         }
+
+        public bool InsertShop(string shopId, string shopName, string accessKey, string secretKey)
+        {
+            return cDal.InsertShop(shopId, shopName, accessKey, secretKey);
+        }
+
+        public DataTable GetShopKeys()
+        {
+            return cDal.GetShopKeys();
+        }
+
+        public bool UpdateShopKeys(string Id, string accessKey, string secretKey)
+        {
+            return cDal.UpdateShopKeys(Id, accessKey, secretKey);
+        }
+
+        public bool DisableShop(string ID)
+        {
+            return cDal.DisableShop(ID);
+        }
     }
 }

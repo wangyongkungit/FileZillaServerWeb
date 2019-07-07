@@ -44,7 +44,7 @@ namespace FileZillaServerProfile
         /// <returns></returns>
         public static DataTable GetUesrProfileByUserID(string employeeNO)
         {
-            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.isBranchLeader,emp.ISEXTERNAL,
+            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.isBranchLeader,emp.ISEXTERNAL,emp.toRegularDate,
                                  r.ID roleID,r.ROLENAME,
                                  m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
                                  from employee emp
@@ -72,7 +72,7 @@ namespace FileZillaServerProfile
         /// <returns></returns>
         public static DataTable GetUesrProfileByUserIDandPwdNew(string employeeNO, string passWord)
         {
-            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.ISEXTERNAL,
+            string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.ISEXTERNAL,emp.toRegularDate,
                                  r.ID roleID,r.ROLENAME,
                                  m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
                                  from employee emp
@@ -84,7 +84,7 @@ namespace FileZillaServerProfile
                                  ON r.ID=rmm.ROLEID
                                  INNER JOIN menu m
                                  ON rmm.MENUID=m.ID
-	                             WHERE available = 1 AND EMPLOYEENO='{0}' AND PASSWORD = '{1}'", employeeNO, passWord);
+	                             WHERE available = 1 AND EMPLOYEENO='{0}' AND PASSWORD = '{1}' ORDER BY M.SORTorder", employeeNO, passWord);
             DataSet ds = MySqlHelper.GetDataSet(strSql);
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {

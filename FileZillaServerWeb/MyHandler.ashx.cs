@@ -270,6 +270,12 @@ namespace FileZillaServerWeb
         }
         #endregion
 
+        #region 获取淘宝订单信息
+        /// <summary>
+        /// 获取淘宝订单信息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         private string GetTaobaoOrderInfo(HttpContext context)
         {
             StringBuilder sbJsonResult = new StringBuilder();
@@ -316,5 +322,6 @@ namespace FileZillaServerWeb
             }
             return sbJsonResult.Append("{\"success\":\"false\"}").ToString();
         }
+        #endregion
     }
 }

@@ -60,7 +60,7 @@ $(function load() {
         //console.log(this.name + ",clicked");
         $.ajax({
             type: "GET",
-            url: "Handler/TaskHandler.ashx",
+            url: "/Handler/TaskHandler.ashx",
             data: "FuncName=GenerateJson",
             success: function (data) {
                 console.log(data);
@@ -74,8 +74,8 @@ $(function load() {
 function myfunction(file, progressbar, progress) {
     var taskid = WebUploader.Base.guid(); // 产生文件唯一标识符task_id
     var uploader = WebUploader.create({
-        swf: '../webuploader/Uploader.swf',
-        server: 'Handler/FileUpload.ashx',
+        swf: '/Scripts/webuploader/Uploader.swf',
+        server: '/Handler/FileUpload.ashx',
         pick: file,//这个id值需要变化
         auto: true,
         chunked: true,
@@ -101,7 +101,7 @@ function myfunction(file, progressbar, progress) {
     });
     uploader.on('uploadSuccess', function (file) { // 整个文件的所有分片都上传成功后，调用该方法
         var data = { 'taskid': taskid, 'filename': file.source['name'], 'FuncName': 'UploadSucess' };
-        $.get('Handler/FileUpload.ashx', data);
+        $.get('/Handler/FileUpload.ashx', data);
         $(progressbar).css('width', '100%');
         $(progressbar).text('100%');
         $(progressbar).addClass('progress-bar-success');

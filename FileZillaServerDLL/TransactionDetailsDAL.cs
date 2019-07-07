@@ -418,9 +418,9 @@ namespace FileZillaServerDAL
             {
                 sbFromAndWhere.AppendFormat(" AND transactiondate <= '{0}'", dic["dateTo"]);
             }
-            if (dic.ContainsKey("transactionMonth"))
+            if (dic.ContainsKey("planDate"))
             {
-                sbFromAndWhere.AppendFormat(" AND DATE_FORMAT(TRANSACTIONDATE,'%Y-%m')='{0}'", dic["transactionMonth"]);
+                sbFromAndWhere.AppendFormat(" AND DATE_FORMAT(planDate,'%Y-%m')='{0}'", dic["planDate"]);
             }
             if (dic.ContainsKey("taskNo"))
             {

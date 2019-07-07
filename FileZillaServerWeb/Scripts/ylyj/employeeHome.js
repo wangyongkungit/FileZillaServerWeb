@@ -6,7 +6,7 @@ function SetQualityScore(parameters, employeeNo, type) {
     var dialogHeight = currentHeight - 100;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
-    var dialog = jDialog.iframe("/SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
+    var dialog = jDialog.iframe("/Pages/Admin/SpecialtyQualityConfig.aspx?employeeID=" + parameters + "&type=" + type, {
         title: '我的技能设置',
         width: dialogWidth,
         height: dialogHeight,
@@ -22,7 +22,7 @@ function SetMyCertificate(employeeID) {
     var dialogHeight = currentHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
-    var dialog = jDialog.iframe("/MaterialConfig.aspx?employeeID=" + employeeID, {
+    var dialog = jDialog.iframe("/Pages/Account/MaterialConfig.aspx?employeeID=" + employeeID, {
         title: '我的证件设置',
         width: dialogWidth,
         height: dialogHeight,
@@ -38,7 +38,7 @@ function TransferTask(prjID, employeeID, amount, taskno) {
     var dialogHeight = 300;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
-    var dialog = jDialog.iframe("/TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
+    var dialog = jDialog.iframe("/Pages/Task/TaskTransfer.aspx?prjID=" + prjID + "&parentEmployeeID=" + employeeID + "&amount=" + amount, {
         title: '任务转移 ' + taskno,
         width: dialogWidth,
         height: dialogHeight,
@@ -61,7 +61,7 @@ $("#withdraw").bind("click", function () {
     var dialogHeight = dialogHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
-    var dialog = jDialog.iframe("/withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+    var dialog = jDialog.iframe("/Pages/Admin/withdraw.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现',
         width: dialogWidth,
         height: dialogHeight,
@@ -76,7 +76,7 @@ $("#withdrawRecords").bind("click", function () {
     var dialogHeight = currentHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
-    var dialog = jDialog.iframe("/withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+    var dialog = jDialog.iframe("/Pages/Admin//withdrawapprove.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '提现记录',
         width: dialogWidth,
         height: dialogHeight,
@@ -91,7 +91,7 @@ $("#transactionRecords").bind("click", function () {
     var dialogHeight = currentHeight - 50;
     var _top = (currentHeight - dialogHeight) / 2;
     var _left = (currentWidth - dialogWidth) / 2;
-    var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
+    var dialog = jDialog.iframe("/Pages/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "", {
         title: '交易记录',
         width: dialogWidth,
         height: dialogHeight,
@@ -169,7 +169,7 @@ var LoadEcharts = function () {
             var dialogHeight = currentHeight - 90;
             var _top = (currentHeight - dialogHeight) / 2;
             var _left = (currentWidth - dialogWidth) / 2;
-            var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
+            var dialog = jDialog.iframe("/Pages/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=yf", {
                 title: '已发记录',
                 width: dialogWidth,
                 height: dialogHeight,
@@ -184,7 +184,7 @@ var LoadEcharts = function () {
             var dialogHeight = currentHeight - 90;
             var _top = (currentHeight - dialogHeight) / 2;
             var _left = (currentWidth - dialogWidth) / 2;
-            var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
+            var dialog = jDialog.iframe("/Pages/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=jf", {
                 title: '奖罚记录',
                 width: dialogWidth,
                 height: dialogHeight,
@@ -199,7 +199,7 @@ var LoadEcharts = function () {
             var dialogHeight = currentHeight - 90;
             var _top = (currentHeight - dialogHeight) / 2;
             var _left = (currentWidth - dialogWidth) / 2;
-            var dialog = jDialog.iframe("/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
+            var dialog = jDialog.iframe("/Pages/finance/transactionRecords.aspx?employeeID=" + $("#hidEmployeeID").val() + "&type=qt", {
                 title: '其他',
                 width: dialogWidth,
                 height: dialogHeight,

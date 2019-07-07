@@ -104,7 +104,7 @@ namespace FileZillaServerBLL
 			return DataTableToList(ds.Tables[0]);
 		}
 
-                /// <summary>
+        /// <summary>
         /// 获得数据列表
         /// </summary>
         public DataSet GetTaskAssignDetails(string employeeID, string specialtyType)
@@ -112,6 +112,11 @@ namespace FileZillaServerBLL
             EmployeeDAL eDal = new EmployeeDAL();
             Employee emp = eDal.GetModel(employeeID);
             return dal.GetTaskAssignDetails(employeeID, emp.EMPLOYEENO, specialtyType);
+        }
+
+        public DataSet GetEmpNoSpecicaltyNameAndTaskAcountByEmpID()
+        {
+            return dal.GetEmpNoSpecicaltyNameAndTaskAcountByEmpID();
         }
 
         public DataTable GetSpecialtyConfig(string employeeID)

@@ -326,9 +326,13 @@ $(document).ready(function () {
                 }
             },
             beforeSend: function () {
+                $("#loading").css("display", "block");
+                $(".sk-fading-circle").css("display", "block");
                 $("#btnGetTaobaoInfo").val("正在获取...").attr("disabled", "disabled");
             },
             complete: function () {
+                $("#loading").css("display", "none");
+                $(".sk-fading-circle").css("display", "none");
                 $("#btnGetTaobaoInfo").val("获取信息").removeAttr("disabled");
             }
         })

@@ -18,8 +18,8 @@ namespace FileZillaServerWeb
             //BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterOpenAuth();
             //routeCollection.MapPageRoute("RouteForCustomer", "Customer/{Id}", "~/Customer.aspx")
-            RouteTable.Routes.MapPageRoute("empHome1", "h/{*employeeid}", "~/employeeHome.aspx");
-            //RouteTable.Routes.MapPageRoute("empHome2", "home/employeeId.html", "~/employeeHome.aspx");
+            RouteTable.Routes.MapPageRoute("empHome1", "h/{*employeeid}", "~/Pages/Account/employeeHome.aspx");
+            //RouteTable.Routes.MapPageRoute("empHome2", "home/employeeId.html", "~/Pages/Account/employeeHome.aspx");
         }
 
         void Application_End(object sender, EventArgs e)

@@ -175,25 +175,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="aa_WebForm2.aspx" />
-    <Content Include="About.aspx" />
-    <Content Include="Account\Login.aspx" />
-    <Content Include="Account\Manage.aspx" />
-    <Content Include="Account\OpenAuthProviders.ascx" />
-    <Content Include="Account\Register.aspx" />
-    <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="App_Data\combres.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\combres_full_with_annotation.xml" />
     <Content Include="App_Data\combres_minimal.xml" />
-    <Content Include="AttendanceList.aspx" />
+    <Content Include="Pages\Admin\AttendanceList.aspx" />
     <Content Include="BuildingRotate.html" />
     <Content Include="Config\Area.xml" />
     <Content Include="Config\TaskCHSName.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Contact.aspx" />
     <Content Include="Content\Fonts\fontomas-webfont.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -284,22 +276,16 @@
     <Content Include="Content\themes\base\ylyj\transactionRecords.css" />
     <Content Include="Content\themes\base\ylyj\withdraw.css" />
     <Content Include="Content\themes\base\ylyj\withdrawapprove.css" />
-    <Content Include="CustomerServiceTrends.aspx" />
-    <Content Include="DingtalkTest.aspx" />
-    <Content Include="EmployeeAdd.aspx" />
-    <Content Include="EmployeeDemonation.aspx" />
-    <Content Include="EmployeeDemonationDetails.aspx" />
-    <Content Include="EmployeeHome0.aspx" />
-    <Content Include="employeeHome.aspx" />
-    <Content Include="EmployeeManage\EmployeeList.aspx" />
+    <Content Include="Pages\CustomerService\CustomerServiceTrends.aspx" />
+    <Content Include="Pages\Admin\DingtalkTest.aspx" />
+    <Content Include="Pages\Admin\EmployeeAdd.aspx" />
+    <Content Include="Pages\Account\EmployeeDemonation.aspx" />
+    <Content Include="Pages\Account\EmployeeDemonationDetails.aspx" />
+    <Content Include="Pages\Account\employeeHome.aspx" />
+    <Content Include="Pages\Admin\EmployeeList.aspx" />
     <Content Include="Error\404.html" />
     <Content Include="FileOperation\FileShare.aspx" />
-    <Content Include="FileZillaLogs.aspx" />
-    <Content Include="Finance\Outgoings.aspx" />
-    <Content Include="Finance\payoff.aspx" />
-    <Content Include="Finance\payoffList.aspx" />
-    <Content Include="Finance\TransactionRecords.aspx" />
-    <Content Include="HtmlPage1.html" />
+    <Content Include="Pages\Admin\FileZillaLogs.aspx" />
     <Content Include="HttpHandler\FilePreview.aspx" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\beach.jpg" />
@@ -606,9 +592,13 @@
     <Content Include="Lib\Microsoft.Office.Interop.Excel.xml" />
     <Content Include="Lib\MySql.Data.dll" />
     <Content Include="Login.aspx" />
-    <Content Include="LogList.aspx" />
-    <Content Include="MaterialConfig.aspx" />
+    <Content Include="Pages\Admin\LogList.aspx" />
+    <Content Include="Pages\Account\MaterialConfig.aspx" />
     <Content Include="Materials\Images\drivinglicence.jpg" />
+    <Content Include="Pages\Finance\Outgoings.aspx" />
+    <Content Include="Pages\Finance\payoff.aspx" />
+    <Content Include="Pages\Finance\payoffList.aspx" />
+    <Content Include="Pages\Finance\TransactionRecords.aspx" />
     <Content Include="Scripts\bootstrap4\css\bootstrap-grid.css" />
     <Content Include="Scripts\bootstrap4\css\bootstrap-grid.min.css" />
     <Content Include="Scripts\bootstrap4\css\bootstrap-reboot.css" />
@@ -640,10 +630,10 @@
     <Content Include="Scripts\NeatUpload\refresh.png" />
     <Content Include="Scripts\NeatUpload\stop_refresh.png" />
     <Content Include="packages.config" />
-    <Content Include="PasswordModify.aspx" />
-    <Content Include="rwmb.aspx" />
-    <Content Include="SalaryConfigManagement.aspx" />
-    <Content Include="SalaryDetails.aspx" />
+    <Content Include="Pages\Account\PasswordModify.aspx" />
+    <Content Include="Pages\Task\rwmb.aspx" />
+    <Content Include="Pages\Admin\SalaryConfigManagement.aspx" />
+    <Content Include="Pages\Admin\SalaryDetails.aspx" />
     <Content Include="Scripts\base-loading.js" />
     <Content Include="Scripts\ClientMAC.js" />
     <Content Include="Scripts\clipboard.js" />
@@ -727,17 +717,17 @@
     <Content Include="Scripts\ylyj\withdraw.js" />
     <Content Include="Scripts\zeroclipboard\ZeroClipboard.js" />
     <Content Include="Scripts\zeroclipboard\ZeroClipboard.swf" />
-    <Content Include="SerialNumberGenerating.aspx" />
-    <Content Include="ShopAddEdit.aspx" />
-    <Content Include="ShopList.aspx" />
-    <Content Include="SpecialtyQualityConfig.aspx" />
-    <Content Include="TaskAssignConfiguration.aspx" />
-    <Content Include="EmployeeDefaultProportionConfig.aspx" />
-    <Content Include="TaskList.aspx" />
-    <Content Include="TaskProportionManagement.aspx" />
-    <Content Include="TaskSharingList.aspx" />
-    <Content Include="TaskTransfer.aspx" />
-    <Content Include="Tip.html" />
+    <Content Include="Pages\Task\SerialNumberGenerating.aspx" />
+    <Content Include="Pages\Admin\ShopAddEdit.aspx" />
+    <Content Include="Pages\Admin\ShopList.aspx" />
+    <Content Include="Pages\Admin\SpecialtyQualityConfig.aspx" />
+    <Content Include="Pages\Task\TaskAssignConfiguration.aspx" />
+    <Content Include="Pages\Admin\EmployeeDefaultProportionConfig.aspx" />
+    <Content Include="Pages\Task\TaskList.aspx" />
+    <Content Include="Pages\Admin\TaskProportionManagement.aspx" />
+    <Content Include="Pages\Task\TaskSharingList.aspx" />
+    <Content Include="Pages\Task\TaskTransfer.aspx" />
+    <Content Include="UserControl\CommonPage\Tip.html" />
     <Content Include="UploadFiles\20180512141426354_2017-07-08 23-09-26工资基本参数配置.png" />
     <Content Include="UploadFiles\20180610204517992_2017-07-08 23-09-54工资详细.png" />
     <Content Include="UploadFiles\beach.jpg" />
@@ -758,15 +748,15 @@
     <Content Include="UploadFiles\WebSiteDocs\kf.files\image001.png" />
     <Content Include="UploadFiles\WebSiteDocs\kf.files\image002.jpg" />
     <Content Include="UploadFiles\WebSiteDocs\kf.html" />
-    <Content Include="WebForm1.aspx" />
-    <Content Include="WebPageRedirect.aspx" />
+    <Content Include="UserControl\SiteMenu.ascx" />
+    <Content Include="Pages\Account\WebPageRedirect.aspx" />
     <Content Include="Content\Fonts\fontomas-webfont.ttf" />
     <Content Include="Content\Fonts\fontomas-webfont.eot" />
     <Content Include="Content\Fonts\fontomas-webfont.woff" />
     <Content Include="AttachmentHandler.ashx" />
-    <Content Include="Withdraw.aspx" />
-    <Content Include="WithdrawApprove.aspx" />
-    <Content Include="xs.html" />
+    <Content Include="Pages\Admin\Withdraw.aspx" />
+    <Content Include="Pages\Admin\WithdrawApprove.aspx" />
+    <Content Include="Pages\Task\xs.html" />
     <Content Include="MyHandler.ashx" />
     <Content Include="HttpHandler\FileHandler.ashx" />
     <Content Include="layui-master\.travis.yml" />
@@ -863,146 +853,75 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="TaskMonitoring.aspx" />
+    <Content Include="Pages\Task\TaskMonitoring.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="aa_WebForm2.aspx.cs">
-      <DependentUpon>aa_WebForm2.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="aa_WebForm2.aspx.designer.cs">
-      <DependentUpon>aa_WebForm2.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\Manage.aspx.cs">
-      <DependentUpon>Manage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\Manage.aspx.designer.cs">
-      <DependentUpon>Manage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\OpenAuthProviders.ascx.cs">
-      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
-      <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\Register.aspx.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\Register.aspx.designer.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Account\RegisterExternalLogin.aspx.cs">
-      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
-      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\Combres.cs" />
     <Compile Include="AttachmentHandler.ashx.cs">
       <DependentUpon>AttachmentHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="AttendanceList.aspx.cs">
+    <Compile Include="Pages\Admin\AttendanceList.aspx.cs">
       <DependentUpon>AttendanceList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AttendanceList.aspx.designer.cs">
+    <Compile Include="Pages\Admin\AttendanceList.aspx.designer.cs">
       <DependentUpon>AttendanceList.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Contact.aspx.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Contact.aspx.designer.cs">
-      <DependentUpon>Contact.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="CustomerServiceTrends.aspx.cs">
+    <Compile Include="Pages\CustomerService\CustomerServiceTrends.aspx.cs">
       <DependentUpon>CustomerServiceTrends.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CustomerServiceTrends.aspx.designer.cs">
+    <Compile Include="Pages\CustomerService\CustomerServiceTrends.aspx.designer.cs">
       <DependentUpon>CustomerServiceTrends.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DingtalkTest.aspx.cs">
+    <Compile Include="Pages\Admin\DingtalkTest.aspx.cs">
       <DependentUpon>DingtalkTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DingtalkTest.aspx.designer.cs">
+    <Compile Include="Pages\Admin\DingtalkTest.aspx.designer.cs">
       <DependentUpon>DingtalkTest.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeAdd.aspx.cs">
+    <Compile Include="Pages\Admin\EmployeeAdd.aspx.cs">
       <DependentUpon>EmployeeAdd.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EmployeeAdd.aspx.designer.cs">
+    <Compile Include="Pages\Admin\EmployeeAdd.aspx.designer.cs">
       <DependentUpon>EmployeeAdd.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeDemonation.aspx.cs">
+    <Compile Include="Pages\Account\EmployeeDemonation.aspx.cs">
       <DependentUpon>EmployeeDemonation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EmployeeDemonation.aspx.designer.cs">
+    <Compile Include="Pages\Account\EmployeeDemonation.aspx.designer.cs">
       <DependentUpon>EmployeeDemonation.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeDemonationDetails.aspx.cs">
+    <Compile Include="Pages\Account\EmployeeDemonationDetails.aspx.cs">
       <DependentUpon>EmployeeDemonationDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EmployeeDemonationDetails.aspx.designer.cs">
+    <Compile Include="Pages\Account\EmployeeDemonationDetails.aspx.designer.cs">
       <DependentUpon>EmployeeDemonationDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeHome0.aspx.cs">
-      <DependentUpon>EmployeeHome0.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EmployeeHome0.aspx.designer.cs">
-      <DependentUpon>EmployeeHome0.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="employeeHome.aspx.cs">
+    <Compile Include="Pages\Account\employeeHome.aspx.cs">
       <DependentUpon>employeeHome.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="employeeHome.aspx.designer.cs">
+    <Compile Include="Pages\Account\employeeHome.aspx.designer.cs">
       <DependentUpon>employeeHome.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeManage\EmployeeList.aspx.cs">
+    <Compile Include="Pages\Admin\EmployeeList.aspx.cs">
       <DependentUpon>EmployeeList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EmployeeManage\EmployeeList.aspx.designer.cs">
+    <Compile Include="Pages\Admin\EmployeeList.aspx.designer.cs">
       <DependentUpon>EmployeeList.aspx</DependentUpon>
     </Compile>
     <Compile Include="FileOperation\FileShare.aspx.cs">
@@ -1015,40 +934,12 @@
     <Compile Include="FileOperation\ImageCompression.ashx.cs">
       <DependentUpon>ImageCompression.ashx</DependentUpon>
     </Compile>
-    <Compile Include="FileZillaLogs.aspx.cs">
+    <Compile Include="Pages\Admin\FileZillaLogs.aspx.cs">
       <DependentUpon>FileZillaLogs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="FileZillaLogs.aspx.designer.cs">
+    <Compile Include="Pages\Admin\FileZillaLogs.aspx.designer.cs">
       <DependentUpon>FileZillaLogs.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Finance\Outgoings.aspx.cs">
-      <DependentUpon>Outgoings.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Finance\Outgoings.aspx.designer.cs">
-      <DependentUpon>Outgoings.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Finance\payoff.aspx.cs">
-      <DependentUpon>payoff.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Finance\payoff.aspx.designer.cs">
-      <DependentUpon>payoff.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Finance\payoffList.aspx.cs">
-      <DependentUpon>payoffList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Finance\payoffList.aspx.designer.cs">
-      <DependentUpon>payoffList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Finance\TransactionRecords.aspx.cs">
-      <DependentUpon>TransactionRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Finance\TransactionRecords.aspx.designer.cs">
-      <DependentUpon>TransactionRecords.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1070,71 +961,99 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="LogList.aspx.cs">
+    <Compile Include="Pages\Admin\LogList.aspx.cs">
       <DependentUpon>LogList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="LogList.aspx.designer.cs">
+    <Compile Include="Pages\Admin\LogList.aspx.designer.cs">
       <DependentUpon>LogList.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MaterialConfig.aspx.cs">
+    <Compile Include="Pages\Account\MaterialConfig.aspx.cs">
       <DependentUpon>MaterialConfig.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MaterialConfig.aspx.designer.cs">
+    <Compile Include="Pages\Account\MaterialConfig.aspx.designer.cs">
       <DependentUpon>MaterialConfig.aspx</DependentUpon>
     </Compile>
     <Compile Include="MyHandler.ashx.cs">
       <DependentUpon>MyHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="PasswordModify.aspx.cs">
+    <Compile Include="Pages\Finance\Outgoings.aspx.cs">
+      <DependentUpon>Outgoings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Finance\Outgoings.aspx.designer.cs">
+      <DependentUpon>Outgoings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Finance\payoff.aspx.cs">
+      <DependentUpon>payoff.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Finance\payoff.aspx.designer.cs">
+      <DependentUpon>payoff.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Finance\payoffList.aspx.cs">
+      <DependentUpon>payoffList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Finance\payoffList.aspx.designer.cs">
+      <DependentUpon>payoffList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Finance\TransactionRecords.aspx.cs">
+      <DependentUpon>TransactionRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Finance\TransactionRecords.aspx.designer.cs">
+      <DependentUpon>TransactionRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Account\PasswordModify.aspx.cs">
       <DependentUpon>PasswordModify.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="PasswordModify.aspx.designer.cs">
+    <Compile Include="Pages\Account\PasswordModify.aspx.designer.cs">
       <DependentUpon>PasswordModify.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="rwmb.aspx.cs">
+    <Compile Include="Pages\Task\rwmb.aspx.cs">
       <DependentUpon>rwmb.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="rwmb.aspx.designer.cs">
+    <Compile Include="Pages\Task\rwmb.aspx.designer.cs">
       <DependentUpon>rwmb.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SalaryConfigManagement.aspx.cs">
+    <Compile Include="Pages\Admin\SalaryConfigManagement.aspx.cs">
       <DependentUpon>SalaryConfigManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SalaryConfigManagement.aspx.designer.cs">
+    <Compile Include="Pages\Admin\SalaryConfigManagement.aspx.designer.cs">
       <DependentUpon>SalaryConfigManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SalaryDetails.aspx.cs">
+    <Compile Include="Pages\Admin\SalaryDetails.aspx.cs">
       <DependentUpon>SalaryDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SalaryDetails.aspx.designer.cs">
+    <Compile Include="Pages\Admin\SalaryDetails.aspx.designer.cs">
       <DependentUpon>SalaryDetails.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SerialNumberGenerating.aspx.cs">
+    <Compile Include="Pages\Task\SerialNumberGenerating.aspx.cs">
       <DependentUpon>SerialNumberGenerating.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SerialNumberGenerating.aspx.designer.cs">
+    <Compile Include="Pages\Task\SerialNumberGenerating.aspx.designer.cs">
       <DependentUpon>SerialNumberGenerating.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ShopAddEdit.aspx.cs">
+    <Compile Include="Pages\Admin\ShopAddEdit.aspx.cs">
       <DependentUpon>ShopAddEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ShopAddEdit.aspx.designer.cs">
+    <Compile Include="Pages\Admin\ShopAddEdit.aspx.designer.cs">
       <DependentUpon>ShopAddEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ShopList.aspx.cs">
+    <Compile Include="Pages\Admin\ShopList.aspx.cs">
       <DependentUpon>ShopList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ShopList.aspx.designer.cs">
+    <Compile Include="Pages\Admin\ShopList.aspx.designer.cs">
       <DependentUpon>ShopList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
@@ -1144,91 +1063,91 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="SpecialtyQualityConfig.aspx.cs">
+    <Compile Include="Pages\Admin\SpecialtyQualityConfig.aspx.cs">
       <DependentUpon>SpecialtyQualityConfig.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SpecialtyQualityConfig.aspx.designer.cs">
+    <Compile Include="Pages\Admin\SpecialtyQualityConfig.aspx.designer.cs">
       <DependentUpon>SpecialtyQualityConfig.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TaskAssignConfiguration.aspx.cs">
+    <Compile Include="Pages\Task\TaskAssignConfiguration.aspx.cs">
       <DependentUpon>TaskAssignConfiguration.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TaskAssignConfiguration.aspx.designer.cs">
+    <Compile Include="Pages\Task\TaskAssignConfiguration.aspx.designer.cs">
       <DependentUpon>TaskAssignConfiguration.aspx</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeDefaultProportionConfig.aspx.cs">
+    <Compile Include="Pages\Admin\EmployeeDefaultProportionConfig.aspx.cs">
       <DependentUpon>EmployeeDefaultProportionConfig.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="EmployeeDefaultProportionConfig.aspx.designer.cs">
+    <Compile Include="Pages\Admin\EmployeeDefaultProportionConfig.aspx.designer.cs">
       <DependentUpon>EmployeeDefaultProportionConfig.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TaskList.aspx.cs">
+    <Compile Include="Pages\Task\TaskList.aspx.cs">
       <DependentUpon>TaskList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TaskList.aspx.designer.cs">
+    <Compile Include="Pages\Task\TaskList.aspx.designer.cs">
       <DependentUpon>TaskList.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TaskMonitoring.aspx.cs">
+    <Compile Include="Pages\Task\TaskMonitoring.aspx.cs">
       <DependentUpon>TaskMonitoring.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TaskMonitoring.aspx.designer.cs">
+    <Compile Include="Pages\Task\TaskMonitoring.aspx.designer.cs">
       <DependentUpon>TaskMonitoring.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TaskProportionManagement.aspx.cs">
+    <Compile Include="Pages\Admin\TaskProportionManagement.aspx.cs">
       <DependentUpon>TaskProportionManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TaskProportionManagement.aspx.designer.cs">
+    <Compile Include="Pages\Admin\TaskProportionManagement.aspx.designer.cs">
       <DependentUpon>TaskProportionManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TaskSharingList.aspx.cs">
+    <Compile Include="Pages\Task\TaskSharingList.aspx.cs">
       <DependentUpon>TaskSharingList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TaskSharingList.aspx.designer.cs">
+    <Compile Include="Pages\Task\TaskSharingList.aspx.designer.cs">
       <DependentUpon>TaskSharingList.aspx</DependentUpon>
     </Compile>
-    <Compile Include="TaskTransfer.aspx.cs">
+    <Compile Include="Pages\Task\TaskTransfer.aspx.cs">
       <DependentUpon>TaskTransfer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TaskTransfer.aspx.designer.cs">
+    <Compile Include="Pages\Task\TaskTransfer.aspx.designer.cs">
       <DependentUpon>TaskTransfer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="UserControl\SiteMenu.ascx.cs">
+      <DependentUpon>SiteMenu.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="UserControl\SiteMenu.ascx.designer.cs">
+      <DependentUpon>SiteMenu.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebPageHelper.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebPageRedirect.aspx.cs">
+    <Compile Include="Pages\Account\WebPageRedirect.aspx.cs">
       <DependentUpon>WebPageRedirect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WebPageRedirect.aspx.designer.cs">
+    <Compile Include="Pages\Account\WebPageRedirect.aspx.designer.cs">
       <DependentUpon>WebPageRedirect.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Withdraw.aspx.cs">
+    <Compile Include="Pages\Admin\Withdraw.aspx.cs">
       <DependentUpon>Withdraw.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Withdraw.aspx.designer.cs">
+    <Compile Include="Pages\Admin\Withdraw.aspx.designer.cs">
       <DependentUpon>Withdraw.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WithdrawApprove.aspx.cs">
+    <Compile Include="Pages\Admin\WithdrawApprove.aspx.cs">
       <DependentUpon>WithdrawApprove.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WithdrawApprove.aspx.designer.cs">
+    <Compile Include="Pages\Admin\WithdrawApprove.aspx.designer.cs">
       <DependentUpon>WithdrawApprove.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -1236,9 +1155,6 @@
     <Folder Include="Content\themes\base\dialog\" />
     <Folder Include="Log\" />
     <Folder Include="Upload\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Account\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

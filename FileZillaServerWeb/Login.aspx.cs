@@ -85,7 +85,9 @@ namespace FileZillaServerWeb
                     }
                     else
                     {
-                        Response.Redirect("~/WebPageRedirect.aspx", true);       //原来用重定向非常耗时 注意哦
+                        Response.Redirect("~/Pages/Account/WebPageRedirect.aspx", true);       //原来用重定向非常耗时 注意哦
+                        Response.End();
+                        //ExecuteScript("window.location.href='/Pages/Account/WebPageRedidrect.aspx");
                     }
                     Response.End();
                     //ExecuteScript("window.location.href='WebPageRedirect.aspx';");

@@ -267,6 +267,62 @@ namespace FileZillaServerDAL
                 return null;
         }
 
+        public DataSet GetEmpNoSpecicaltyNameAndTaskAcountByEmpID()
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append(@"SELECT 'empName' AS `key`, `NAME` AS `value` 
+                    FROM employee WHERE id = @employeeID
+                    UNION ALL
+                    SELECT 'specialtyName' as `key`, IFNULL(LEFT(spc.specialtyName, 2), '-') as `value`
+                     FROM taskassignconfigdetails tacd
+                    LEFT JOIN
+                    (SELECT cv.configvalue specialtyName, cv.configKey specialtyKey from configvalue cv
+
+                                 INNER JOIN configtype ct
+
+                                 on cv.CONFIGTYPEID = ct.CONFIGTYPEID
+
+                                 WHERE ct.CONFIGTYPENAME = '专业类别') spc
+
+                                 ON spc.specialtyKey = tacd.SPECIALTYCATEGORY
+
+                                 AND tacd.specialtyType = '0'
+                    INNER JOIN employee e
+                    ON tacd.EMPLOYEEID = e.ID
+                    WHERE tacd.AVAILABLE = 1 AND tacd.employeeID = @employeeID LIMIT 0, 1
+                    UNION ALL
+                    SELECT  'taskInProgress' AS `key`, COUNT(*) as `value`
+                     FROM project P
+                    INNER JOIN projectsharing PS
+                    ON P.ID = PS.PROJECTID
+                     WHERE p.TASKSTATUS =1 AND PS.FINISHEDPERSON = @employeeID
+                      AND ISFINISHED = 0 AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= DATE(ORDERDATE)
+                    UNION ALL
+                    SELECT 'modifyInProgress' `key`,  CASE WHEN IFNULL(SUM(notFinishAmt), 0) < 0 THEN 0 ELSE IFNULL(SUM(notFinishAmt), 0) END AS `value` FROM
+                    (
+                    SELECT
+                    SUM(CASE WHEN PARENTID = '0' THEN 1 ELSE 0 END) - SUM(CASE WHEN parentid <> '0' THEN 1 ELSE 0 END) as notFinishAmt,
+                    fc.projectID
+                     FROM filecategory fc
+                    INNER JOIN project p
+                    ON fc.projectID = p.ID
+                     WHERE p.TASKSTATUS = 1 AND PROjectID in
+                    (SELECT p.ID FROM project p INNER JOIN projectsharing ps ON p.ID = ps.PROJECTID
+                     WHERE ps.finishedPerson = @employeeID)
+                     AND fc.category in (3, 4)
+                    AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= p.CREATEDATE
+                    GROUP BY fc.projectid
+                    ) mdf
+                    ");
+            strSql = new StringBuilder();
+            strSql.Append("SELECT * FROM taskCount");
+            //MySqlParameter[] parameters = {
+            //        new MySqlParameter("@employeeID", MySqlDbType.VarChar,40)};
+            //parameters[0].Value = employeeID;
+            DataSet ds = DbHelperMySQL.Query(strSql.ToString());
+            return ds;
+        }
+
         ///// <summary>
         ///// 获取记录总数
         ///// </summary>

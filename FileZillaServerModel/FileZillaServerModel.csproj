@@ -47,6 +47,7 @@
     <Compile Include="EmployeeAccount.cs" />
     <Compile Include="EmployeeDomination.cs" />
     <Compile Include="EmployeeProportion.cs" />
+    <Compile Include="EmployeeRole.cs" />
     <Compile Include="FileCategory.cs" />
     <Compile Include="FileHistory.cs" />
     <Compile Include="FileOperationLog.cs" />

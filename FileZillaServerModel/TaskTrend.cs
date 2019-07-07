@@ -20,6 +20,7 @@ namespace FileZillaServerModel
         private string _employeeid;
         private string _description;
         private DateTime? _createdate;
+        private bool _readstatus;
         private int? _type;
         /// <summary>
         /// 
@@ -60,6 +61,14 @@ namespace FileZillaServerModel
         {
             set { _createdate = value; }
             get { return _createdate; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool READSTATUS
+        {
+            set { _readstatus = value; }
+            get { return _readstatus; }
         }
         /// <summary>
         /// 

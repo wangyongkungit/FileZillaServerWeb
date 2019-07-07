@@ -10,7 +10,7 @@ $(function load() {
 function myfunction(file, progressbar, progress) {
     let taskid = WebUploader.Base.guid(); // 产生文件唯一标识符task_id
     var uploader = WebUploader.create({
-        swf: '../webuploader/Uploader.swf',
+        swf: '/Scripts/webuploader/Uploader.swf',
         server: '/HttpHandler/FileHandler.ashx',//note
         pick: file,//这个id值需要变化
         auto: true,

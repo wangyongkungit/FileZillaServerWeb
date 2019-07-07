@@ -38,22 +38,24 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into tasktrend(");
-            strSql.Append("ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,TYPE)");
+            strSql.Append("ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,READSTATUS,TYPE)");
             strSql.Append(" values (");
-            strSql.Append("@ID,@PROJECTID,@EMPLOYEEID,@DESCRIPTION,@CREATEDATE,@TYPE)");
+            strSql.Append("@ID,@PROJECTID,@EMPLOYEEID,@DESCRIPTION,@CREATEDATE,@READSTATUS,@TYPE)");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@DESCRIPTION", MySqlDbType.VarChar,255),
-					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@TYPE", MySqlDbType.Int32,1)};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@DESCRIPTION", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@READSTATUS", MySqlDbType.Bit),
+                    new MySqlParameter("@TYPE", MySqlDbType.Int32,1)};
             parameters[0].Value = model.ID;
             parameters[1].Value = model.PROJECTID;
             parameters[2].Value = model.EMPLOYEEID;
             parameters[3].Value = model.DESCRIPTION;
             parameters[4].Value = model.CREATEDATE;
-            parameters[5].Value = model.TYPE;
+            parameters[5].Value = model.READSTATUS;
+            parameters[6].Value = model.TYPE;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -76,21 +78,24 @@ namespace FileZillaServerDAL
             strSql.Append("EMPLOYEEID=@EMPLOYEEID,");
             strSql.Append("DESCRIPTION=@DESCRIPTION,");
             strSql.Append("CREATEDATE=@CREATEDATE,");
+            strSql.Append("READSTATUS=@READSTATUS,");
             strSql.Append("TYPE=@TYPE");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
-					new MySqlParameter("@DESCRIPTION", MySqlDbType.VarChar,255),
-					new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
-					new MySqlParameter("@TYPE", MySqlDbType.Int32,1),
-					new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
+                    new MySqlParameter("@PROJECTID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@EMPLOYEEID", MySqlDbType.VarChar,36),
+                    new MySqlParameter("@DESCRIPTION", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@CREATEDATE", MySqlDbType.DateTime),
+                    new MySqlParameter("@READSTATUS", MySqlDbType.Bit),
+                    new MySqlParameter("@TYPE", MySqlDbType.Int32,1),
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,36)};
             parameters[0].Value = model.PROJECTID;
             parameters[1].Value = model.EMPLOYEEID;
             parameters[2].Value = model.DESCRIPTION;
             parameters[3].Value = model.CREATEDATE;
-            parameters[4].Value = model.TYPE;
-            parameters[5].Value = model.ID;
+            parameters[4].Value = model.READSTATUS;
+            parameters[5].Value = model.TYPE;
+            parameters[6].Value = model.ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -153,7 +158,7 @@ namespace FileZillaServerDAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,TYPE from tasktrend ");
+            strSql.Append("select ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,READSTATUS,TYPE from tasktrend ");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
 					new MySqlParameter("@ID", MySqlDbType.VarChar,36)			};
@@ -200,6 +205,17 @@ namespace FileZillaServerDAL
                 {
                     model.CREATEDATE = DateTime.Parse(row["CREATEDATE"].ToString());
                 }
+                if (row["READSTATUS"] != null && row["READSTATUS"].ToString() != "")
+                {
+                    if ((row["READSTATUS"].ToString() == "1") || (row["READSTATUS"].ToString().ToLower() == "true"))
+                    {
+                        model.READSTATUS = true;
+                    }
+                    else
+                    {
+                        model.READSTATUS = false;
+                    }
+                }
                 if (row["TYPE"] != null && row["TYPE"].ToString() != "")
                 {
                     model.TYPE = int.Parse(row["TYPE"].ToString());
@@ -214,13 +230,31 @@ namespace FileZillaServerDAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,TYPE ");
+            strSql.Append("select ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,READSTATUS,TYPE ");
             strSql.Append(" FROM tasktrend ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
             }
             strSql.Append(" ORDER BY CREATEDATE DESC LIMIT 0, 5");
+            return DbHelperMySQL.Query(strSql.ToString());
+        }
+
+        public DataSet GetListPage(string strWhere, int pageIndex, int pageSize, out int totalRecordCount)
+        {
+            totalRecordCount = 0;
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select ID,PROJECTID,EMPLOYEEID,DESCRIPTION,CREATEDATE,READSTATUS,TYPE ");
+            strSql.Append(" FROM tasktrend ");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            string sqlCount = "SELECT COUNT(*) FROM taskTrend where 1 = 1 ";
+            sqlCount += (" And " + strWhere);
+            totalRecordCount = Convert.ToInt32( DbHelperMySQL.GetSingle(sqlCount));
+
+            strSql.AppendFormat(" ORDER BY CREATEDATE DESC LIMIT {0}, {1}", (pageIndex - 1) * pageSize, pageSize);
             return DbHelperMySQL.Query(strSql.ToString());
         }
 

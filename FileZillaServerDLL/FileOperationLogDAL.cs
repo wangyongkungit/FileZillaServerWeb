@@ -329,8 +329,8 @@ namespace FileZillaServerDAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"select f.ID,f.PROJECTID,f.EMPLOYEEID,f.FILENAME,f.OPERATETYPE,f.OPERATEDATE,f.OPERATEUSER operateUserId, f.OPERATECONTENT, e.EMPLOYEENO operateUser
-                         FROM fileoperationlog f
-                         LEFT JOIN employee e
+                         FROM employee e
+                         LEFT JOIN fileoperationlog f
                          ON f.EMPLOYEEID = e.ID ");
             if (strWhere.Trim() != "")
             {

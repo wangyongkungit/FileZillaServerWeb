@@ -88,6 +88,17 @@ namespace FileZillaServerBLL
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
         }
+
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public List<TaskTrend> GetModelListPage(string strWhere, int pageIndex, int pageSize, out int totalRecordCount)
+        {
+            totalRecordCount = 0;
+            DataSet ds = dal.GetListPage(strWhere, pageIndex, pageSize, out totalRecordCount);
+            return DataTableToList(ds.Tables[0]);
+        }
+
         /// <summary>
         /// 获得数据列表
         /// </summary>

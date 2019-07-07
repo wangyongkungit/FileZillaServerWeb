@@ -21,7 +21,8 @@ namespace FileZillaServerModel
 		private string _mobilephone;
 		private string _address;
 		private string _email;
-		private string _bankcard;
+        private DateTime? _toregulardate;
+        private string _bankcard;
 		private string _departmentid;
 		private string _politicalstatus;
         private decimal? _type;
@@ -109,10 +110,15 @@ namespace FileZillaServerModel
 			set{ _email=value;}
 			get{return _email;}
 		}
-		/// <summary>
-		/// 银行卡号
-		/// </summary>
-		public string BANKCARD
+        public DateTime? TOREGULARDATE
+        {
+            set { _toregulardate = value; }
+            get { return _toregulardate; }
+        }
+        /// <summary>
+        /// 银行卡号
+        /// </summary>
+        public string BANKCARD
 		{
 			set{ _bankcard=value;}
 			get{return _bankcard;}

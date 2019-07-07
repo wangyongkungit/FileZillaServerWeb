@@ -53,6 +53,7 @@
     <Compile Include="EmployeeDAL.cs" />
     <Compile Include="EmployeeDominationDAL.cs" />
     <Compile Include="EmployeeProportionDAL.cs" />
+    <Compile Include="EmployeeRoleDAL.cs" />
     <Compile Include="Extension\ProjectDAL.cs" />
     <Compile Include="Extension\SystemLogDALex.cs" />
     <Compile Include="FileCategoryDAL.cs" />

@@ -24,7 +24,8 @@ namespace FileZillaServerDAL
         public DataTable GetFileZilla(string userID, string operateType, string content, string startDateTime, string endDateTime, string fileName, int pageIndex, int pageSize, out int totalAmount)
         {
             totalAmount = 0;
-            StringBuilder strSql = new StringBuilder(@"SELECT fz.OPERATEUSERID,fz.content,fz.operatedate,fz.filename,fz.ipaddress,cfg.configvalue operatetype FROM fileZillaLog fz 
+            StringBuilder strSql = new StringBuilder(@"
+           /*  SELECT fz.OPERATEUSERID,fz.content,fz.operatedate,fz.filename,fz.ipaddress,cfg.configvalue operatetype FROM fileZillaLog fz 
             LEFT JOIN 
             (
                 select configkey,configvalue from configvalue cv
@@ -32,38 +33,59 @@ namespace FileZillaServerDAL
                  on cv.configtypeid=ct.configtypeid
             ) cfg
             ON fz.operatetype=cfg.configkey
-            WHERE 1=1 ");
+            WHERE 1=1  */
+
+SELECT fz.OPERATEUSERID,fz.content,fz.operatedate,fz.filename,fz.ipaddress,cfg.configvalue operatetype FROM fileZillaLog fz 
+            LEFT JOIN 
+            (
+                select configkey,configvalue from configvalue cv
+                 left join configtype ct
+                 on cv.configtypeid=ct.configtypeid
+            ) cfg
+            ON fz.operatetype=cfg.configkey
+            WHERE fz.ID  in
+ (    SELECT Id FROM
+(
+SELECT  ID 
+ FROM fileZillaLog fz   
+WHERE 1 = 1 
+");
+
+            StringBuilder sbWhere = new StringBuilder();
             if (!string.IsNullOrEmpty(userID))
             {
-                strSql.AppendFormat(" AND OPERATEUSERID='{0}'", userID);
+                sbWhere.AppendFormat(" AND OPERATEUSERID='{0}'", userID);
             }
             if (!string.IsNullOrEmpty(operateType))
             {
-                strSql.AppendFormat(" AND OPERATETYPE='{0}'", operateType);
+                sbWhere.AppendFormat(" AND OPERATETYPE='{0}'", operateType);
             }
             if (!string.IsNullOrEmpty(content))
             {
-                strSql.AppendFormat(" AND CONTENT LIKE '%{0}%'", content);
+                //sbWhere.AppendFormat(" AND CONTENT LIKE '%{0}%'", content);
+                sbWhere.AppendFormat(" AND LOCATE('{0}', CONTENT) > 0 ", content);
             }
             if (!string.IsNullOrEmpty(startDateTime))
             {
-                strSql.AppendFormat(" AND OPERATEDATE>='{0}'", startDateTime);
+                sbWhere.AppendFormat(" AND OPERATEDATE>='{0}'", startDateTime);
             }
             if (!string.IsNullOrEmpty(endDateTime))
             {
-                strSql.AppendFormat(" AND OPERATEDATE<='{0}'", endDateTime);
+                sbWhere.AppendFormat(" AND OPERATEDATE<='{0}'", endDateTime);
             }
             if (!string.IsNullOrEmpty(fileName))
             {
-                strSql.AppendFormat(" AND FILENAME LIKE '%{0}%'", fileName);
+                //sbWhere.AppendFormat(" AND FILENAME LIKE '%{0}%'", fileName);
+                sbWhere.AppendFormat(" AND LOCATE('{0}', FILENAME) > 0 ", fileName);
             }
             //DataSet dsRowsCount = MySqlHelper.GetDataSet(strSql.ToString());
             //if (dsRowsCount != null && dsRowsCount.Tables.Count > 0)
             //{
             //    totalAmount = dsRowsCount.Tables[0].Rows.Count;
             //}
-            totalAmount = GetTotalCount();
-            strSql.AppendFormat(" ORDER BY OPERATEDATE DESC LIMIT {0},{1}", (pageIndex - 1) * pageSize, pageSize);
+            totalAmount = GetTotalCount(sbWhere.ToString());
+            //strSql.AppendFormat(" ORDER BY OPERATEDATE DESC LIMIT {0},{1}", (pageIndex - 1) * pageSize, pageSize);
+            strSql.Append(sbWhere).AppendFormat(" ORDER BY operatedate DESC LIMIT {0},{1}) as aa ) ", (pageIndex - 1) * pageSize, pageSize);
             DataSet ds = MySqlHelper.GetDataSet(strSql.ToString());
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -73,9 +95,9 @@ namespace FileZillaServerDAL
                 return null;
         }
 
-        private int GetTotalCount()
+        private int GetTotalCount(string where)
         {
-            string strSql = "SELECT COUNT(*) FROM filezillalog";
+            string strSql = "SELECT COUNT(*) FROM filezillalog WHERE 1 = 1 " + where;
             string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnection"].ToString();
             CommandType cmdType = CommandType.Text;
             int cnt = Convert.ToInt32(MySqlHelper.ExecuteScalar(connectionString, cmdType, strSql, null));

@@ -34,6 +34,8 @@ namespace FileZillaServerProfile
 
         public List<Role> Role { get; set; }
 
+        public DateTime? toRegularDate { get; set; }
+
         public static UserProfile instance
         {
             get
@@ -93,6 +95,7 @@ namespace FileZillaServerProfile
             user.EmployeeNO = dtUser.Rows[0]["employeeno"].ToString();
             user.isBranchLeader = dtUser.Rows[0]["isBranchLeader"].ToString() == "1";
             user.isExternal = dtUser.Rows[0]["isExternal"].ToString() == "1";
+            user.toRegularDate = Convert.ToDateTime(dtUser.Rows[0]["toRegularDate"]);
             List<Menu> lstMenu = new List<Menu>();
             Menu menu = new Menu();
             int dtUserRowsCount = dtUser.Rows.Count;
@@ -134,6 +137,7 @@ namespace FileZillaServerProfile
                 user.ID = dtUser.Rows[0]["ID"].ToString();
                 user.Name = dtUser.Rows[0]["name"].ToString();
                 user.EmployeeNO = dtUser.Rows[0]["employeeno"].ToString();
+                user.toRegularDate = Convert.ToDateTime(dtUser.Rows[0]["toRegularDate"]);
                 List<Menu> lstMenu = new List<Menu>();
                 Menu menu = new Menu();
                 for (int i = 0; i < dtUser.Rows.Count; i++)
@@ -184,7 +188,7 @@ namespace FileZillaServerProfile
         {
             if (instance == null)
             {
-                //HttpContext.Current.Response.Redirect("~/Tip.html", true);
+                //HttpContext.Current.Response.Redirect("~/UserControl/CommonPage/Tip.html", true);
                 //HttpContext.Current.Response.End();
                 return null;
             }

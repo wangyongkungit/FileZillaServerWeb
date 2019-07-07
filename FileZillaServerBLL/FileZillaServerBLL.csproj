@@ -56,6 +56,7 @@
     <Compile Include="EmployeeBLL.cs" />
     <Compile Include="EmployeeDominationBLL.cs" />
     <Compile Include="EmployeeProportionBLL.cs" />
+    <Compile Include="EmployeeRoleBLL.cs" />
     <Compile Include="Extension\SystemLogBLLex.cs" />
     <Compile Include="FileCategoryBLL.cs" />
     <Compile Include="FileHistoryBLL.cs" />

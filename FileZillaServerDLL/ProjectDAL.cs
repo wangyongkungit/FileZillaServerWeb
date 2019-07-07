@@ -33,7 +33,7 @@ namespace FileZillaServerDAL
             strSql.Append("select count(1) from project");
             strSql.Append(" where ISEDLETED <> 1 AND ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40)           };
             parameters[0].Value = ID;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
@@ -286,7 +286,7 @@ namespace FileZillaServerDAL
             strSql.Append("delete from project ");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40)           };
             parameters[0].Value = ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
@@ -331,7 +331,7 @@ namespace FileZillaServerDAL
                             PAYMENTMETHOD,EXTRAREQUIREMENT,REFERRER,CASHBACK,REMARKS,ASSIGNMENTBOOK,ISFINISHED,FINISHEDPERSON,ENTERINGPERSON,CREATEDATE,TASKSTATUS,ISCREATEDFOLDER,MATERIALISUPLOAD,ISDELETED from project ");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40)           };
             parameters[0].Value = ID;
 
             Project model = new Project();
@@ -674,18 +674,18 @@ namespace FileZillaServerDAL
                         (select configkey,configvalue from configvalue c where configtypeid=(select configtypeid from configtype WHERE configtypeName='支付方式')) zffs
                         on p.PAYMENTMETHOD=zffs.configkey");
 
-                        //LEFT JOIN
-                        //(select ID,employeeno from employee) emp
-                        //on p.FINISHEDPERSON = emp.ID");
+            //LEFT JOIN
+            //(select ID,employeeno from employee) emp
+            //on p.FINISHEDPERSON = emp.ID");
 
-//LEFT JOIN 
-//(SELECT FINISHEDPERSON,PROJECTID FROM projectsharing WHERE
-// finishedperson IN (SELECT ID from employee WHERE EMPLOYEENO like '%{0}%')) PS
-//ON P.ID = PS.PROJECTID
+            //LEFT JOIN 
+            //(SELECT FINISHEDPERSON,PROJECTID FROM projectsharing WHERE
+            // finishedperson IN (SELECT ID from employee WHERE EMPLOYEENO like '%{0}%')) PS
+            //ON P.ID = PS.PROJECTID
 
-//LEFT JOIN 
-//(select ID,employeeno from employee) emp
-// on PS.FINISHEDPERSON = emp.ID");
+            //LEFT JOIN 
+            //(select ID,employeeno from employee) emp
+            // on PS.FINISHEDPERSON = emp.ID");
 
             //2017-04-13 11-00-42，Edit by Wang Yongkun，因优化了任务的多人完成功能，故修改完成人的关联查询
             if (dicCondition.ContainsKey("finishedPerson"))
@@ -809,7 +809,7 @@ namespace FileZillaServerDAL
             strSql.Append("update project set ISDELETED = 1");
             strSql.Append(" where ID=@ID ");
             MySqlParameter[] parameters = {
-					new MySqlParameter("@ID", MySqlDbType.VarChar,40)			};
+                    new MySqlParameter("@ID", MySqlDbType.VarChar,40)           };
             parameters[0].Value = ID;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
@@ -847,10 +847,10 @@ namespace FileZillaServerDAL
         /// <returns></returns>
         public DataTable GetFinalScript(string projectID)
         {
-//            string sql = string.Format(@"SELECT P.ID,TASKNO,EMPLOYEENO FROM PROJECT P
-//                                INNER JOIN EMPLOYEE E 
-//                                ON P.FINISHEDPERSON = E.ID
-//                                WHERE ISFINISHED=1 AND P.ID='{0}'", projectID);
+            //            string sql = string.Format(@"SELECT P.ID,TASKNO,EMPLOYEENO FROM PROJECT P
+            //                                INNER JOIN EMPLOYEE E 
+            //                                ON P.FINISHEDPERSON = E.ID
+            //                                WHERE ISFINISHED=1 AND P.ID='{0}'", projectID);
             string sql = string.Format(@"SELECT p.id,taskno,employeeno,ps.finishedperson from project p
                     INNER JOIN projectsharing ps
                     on p.id = ps.projectid
@@ -985,7 +985,7 @@ namespace FileZillaServerDAL
             totalAmount = 0;
             StringBuilder selectForAll = new StringBuilder(@"SELECT p.ID prjID, p.TASKNO, p.orderAmount, p.EXPIREDATE, p.ISFINISHED, p.WANGWANGNAME,jyzt.configvalue TRANSACTIONSTATUS,
                CASE p.taskStatus WHEN '1' THEN '正常' WHEN '2' THEN '暂停' END taskStatus, e.EMPLOYEENO");
-            StringBuilder selectForCount = new StringBuilder( "SELECT COUNT(*) ");
+            StringBuilder selectForCount = new StringBuilder("SELECT COUNT(*) ");
             StringBuilder fromClause = new StringBuilder();
             fromClause.AppendFormat(@" FROM project p
                                      LEFT JOIN projectsharing ps

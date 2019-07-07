@@ -54,7 +54,17 @@ namespace FileZillaServerBLL
         {
             return eDal.GetMaxEmployeeNO(userType);
         }
-        
+
+        /// <summary>
+        /// 根据既定类型以外的临时类型获取最新的员工编号
+        /// </summary>
+        /// <param name="userType"></param>
+        /// <returns></returns>
+        public string GetMaxEmployeeNoByOtherType(string userType)
+        {
+            return eDal.GetMaxEmployeeNoByOtherType(userType);
+        }
+
         /// <summary>
         /// 增加一条数据
         /// </summary>

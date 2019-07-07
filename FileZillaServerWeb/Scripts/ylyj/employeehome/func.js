@@ -42,6 +42,7 @@ function getFileTabsByProjectid(p1) {
             crossDomain: true,
             beforeSend: function () {
                 $("#loading").css("display", "block");
+                $(".sk-fading-circle").css("display", "block");
             },
             success: function (data) {
                 if (data.Code === 0) {
@@ -52,6 +53,7 @@ function getFileTabsByProjectid(p1) {
             },
             complete: function () {
                 $("#loading").css("display", "none");
+                $(".sk-fading-circle").css("display", "none");
             }
         });
     }
@@ -122,6 +124,7 @@ function getHistoryData(p1) {
         crossDomain: true,
         beforeSend: function () {
             $("#loading").css("display", "block");
+            $(".sk-fading-circle").css("display", "block");
         },
         success: function (data) {
             if (data.Code === 0) {
@@ -132,6 +135,7 @@ function getHistoryData(p1) {
         },
         complete: function () {
             $("#loading").css("display", "none");
+            $(".sk-fading-circle").css("display", "none");
         }
     });
 }
@@ -343,7 +347,8 @@ var PreviewOffice = function (fileHistoryId, ext, handlerurl) {
         dataType: 'jsonp',
         crossDomain: true,
         beforeSend: function (data) {
-            $("#loadingimg" + fileHistoryId).css("display", "inline-block");
+            //$("#loadingimg" + fileHistoryId).css("display", "inline-block");
+            $(".sk-fading-circle").css("display", "block");
         },
         success: function (data) {
             if (data.Code === 0) {
@@ -356,7 +361,8 @@ var PreviewOffice = function (fileHistoryId, ext, handlerurl) {
             }
         },
         complete: function (result) {
-            $("#loadingimg" + fileHistoryId).css("display", "none");
+            //$("#loadingimg" + fileHistoryId).css("display", "none");
+            $(".sk-fading-circle").css("display", "none");
         }
     });
 }
