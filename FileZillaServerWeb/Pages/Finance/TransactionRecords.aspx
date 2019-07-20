@@ -116,7 +116,7 @@
                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="提成" ItemStyle-Width="70">
                             <ItemTemplate>
-                                <asp:Label ID="lblTransactionProportion" runat="server" Text='<%# Eval("TransactionProportion") %>'></asp:Label>
+                                <asp:Label ID="lblTransactionProportion" runat="server" Text='<%# Eval("TransactionProportion") != DBNull.Value && Convert.ToDecimal(Eval("TransactionProportion")) != 0 ? string.Format("{0:0%}", Eval("TransactionProportion")) : 0.ToString() %>'></asp:Label>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
