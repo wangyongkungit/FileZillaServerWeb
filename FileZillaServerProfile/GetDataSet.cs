@@ -46,7 +46,7 @@ namespace FileZillaServerProfile
         {
             string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.isBranchLeader,emp.ISEXTERNAL,emp.toRegularDate,
                                  r.ID roleID,r.ROLENAME,
-                                 m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
+                                 m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS, m.Available
                                  from employee emp
                                  INNER JOIN employeerole emprole
                                  on emp.id=emprole.employeeid
@@ -74,7 +74,7 @@ namespace FileZillaServerProfile
         {
             string strSql = string.Format(@"SELECT emp.ID,emp.EMPLOYEENO,emp.`NAME`,emp.ISEXTERNAL,emp.toRegularDate,
                                  r.ID roleID,r.ROLENAME,
-                                 m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS
+                                 m.MENUNAME,m.MENUPATH,m.PARENTID,m.REMARKS, m.Available
                                  from employee emp
                                  INNER JOIN employeerole emprole
                                  on emp.id=emprole.employeeid
@@ -84,7 +84,7 @@ namespace FileZillaServerProfile
                                  ON r.ID=rmm.ROLEID
                                  INNER JOIN menu m
                                  ON rmm.MENUID=m.ID
-	                             WHERE available = 1 AND EMPLOYEENO='{0}' AND PASSWORD = '{1}' ORDER BY M.SORTorder", employeeNO, passWord);
+	                             WHERE emp.available = 1 AND EMPLOYEENO='{0}' AND PASSWORD = '{1}' ORDER BY M.SORTorder", employeeNO, passWord);
             DataSet ds = MySqlHelper.GetDataSet(strSql);
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {

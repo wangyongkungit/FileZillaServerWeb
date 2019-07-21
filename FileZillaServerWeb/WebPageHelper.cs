@@ -43,6 +43,17 @@ namespace FileZillaServerWeb
                 HttpContext.Current.Response.Redirect("~/UserControl/CommonPage/Tip.html", true);
                 HttpContext.Current.Response.End();
             }
+
+            string originalString = HttpContext.Current.Request.Url.OriginalString;
+            if (originalString.IndexOf("?") == -1 && originalString.IndexOf("=") == -1)
+            {
+                var disableEntity = user.Menu.Where(item => item.Path.ToUpper().Contains(rawUrl.ToUpper())).FirstOrDefault();
+                if (disableEntity != null && !disableEntity.Available)
+                {
+                    HttpContext.Current.Response.Redirect("~/UserControl/CommonPage/FunctionDisable.html", true);
+                    HttpContext.Current.Response.End();
+                }
+            }
         }
 
         /// <summary>

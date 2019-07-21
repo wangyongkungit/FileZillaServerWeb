@@ -106,6 +106,7 @@ namespace FileZillaServerProfile
                 menu.Path = dtUser.Rows[i]["MENUPATH"].ToString();
                 menu.ParentID = dtUser.Rows[i]["PARENTID"].ToString();
                 menu.Remarks = dtUser.Rows[i]["REMARKS"].ToString();
+                menu.Available = Convert.ToBoolean(dtUser.Rows[i]["Available"]);
                 lstMenu.Add(menu);
             }
             user.Menu = lstMenu;
@@ -147,6 +148,7 @@ namespace FileZillaServerProfile
                     menu.Path = dtUser.Rows[i]["MENUPATH"].ToString();
                     menu.ParentID = dtUser.Rows[i]["PARENTID"].ToString();
                     menu.Remarks = dtUser.Rows[i]["REMARKS"].ToString();
+                    menu.Available = Convert.ToBoolean(dtUser.Rows[i]["Available"]);
                     lstMenu.Add(menu);
                 }
                 user.Menu = lstMenu;

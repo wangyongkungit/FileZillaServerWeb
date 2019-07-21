@@ -276,6 +276,7 @@
     <Content Include="Content\themes\base\ylyj\transactionRecords.css" />
     <Content Include="Content\themes\base\ylyj\withdraw.css" />
     <Content Include="Content\themes\base\ylyj\withdrawapprove.css" />
+    <Content Include="UserControl\CommonPage\FunctionDisable.html" />
     <Content Include="Pages\CustomerService\CustomerServiceTrends.aspx" />
     <Content Include="Pages\Admin\DingtalkTest.aspx" />
     <Content Include="Pages\Admin\EmployeeAdd.aspx" />

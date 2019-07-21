@@ -15,5 +15,7 @@ namespace FileZillaServerProfile
         public string ParentID { get; set; }
 
         public string Remarks { get; set; }
+
+        public bool Available { get; set; }
     }
 }
